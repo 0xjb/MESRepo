@@ -20,6 +20,7 @@ namespace MES {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            Console.WriteLine("dong");
         }
     }
 }
