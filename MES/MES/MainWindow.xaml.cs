@@ -20,6 +20,7 @@ namespace MES
             Console.WriteLine("sycc!");
             Console.WriteLine("hej");
             Console.WriteLine("brchr");
+            Console.WriteLine("Jonas er gay");
         }
     }
 }
