@@ -17,6 +17,7 @@ namespace MES
             Console.WriteLine("jonas lugter af nuggi");
             Console.WriteLine("brrt");
             Console.WriteLine("meow");
+            Console.WriteLine("sycc!");
         }
     }
 }
