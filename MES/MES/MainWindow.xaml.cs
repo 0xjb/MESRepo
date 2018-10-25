@@ -13,7 +13,7 @@ namespace MES
             InitializeComponent();
             Console.WriteLine("dong");
             Console.WriteLine("oof");
-
+            Console.WriteLine("soof");
 
 
 
