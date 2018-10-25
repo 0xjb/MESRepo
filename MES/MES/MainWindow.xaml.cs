@@ -18,6 +18,7 @@ namespace MES
             Console.WriteLine("brrt");
             Console.WriteLine("meow");
             Console.WriteLine("sycc!");
+            Console.WriteLine("hej");
             Console.WriteLine("brchr");
         }
     }
