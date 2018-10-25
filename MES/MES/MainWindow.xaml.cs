@@ -14,6 +14,11 @@ namespace MES
             Console.WriteLine("dong");
             Console.WriteLine("oof");
 
+
+
+
+
+
             Console.WriteLine("jonas lugter af nuggi");
             Console.WriteLine("brrt");
         }
