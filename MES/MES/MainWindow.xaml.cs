@@ -10,7 +10,6 @@ namespace MES
     {
         public MainWindow()
         {
-            InitializeComponent();
             Console.WriteLine("dong");
             Console.WriteLine("oof");
             Console.WriteLine("soof");
@@ -21,7 +20,6 @@ namespace MES
             Console.WriteLine("hej");
             Console.WriteLine("brchr");
             Console.WriteLine("Jonas er gay");
-            1 = NUnit.FrameworkPackageSettings.NumberOfTestWorkers;
         }
     }
 }
