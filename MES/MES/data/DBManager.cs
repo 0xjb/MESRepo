@@ -63,6 +63,7 @@ namespace MES.data
 
                 NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
                 Console.WriteLine("5");
+
                 conn.Close();
                 return true;
             } catch (Exception ex)
