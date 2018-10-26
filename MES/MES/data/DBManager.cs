@@ -29,12 +29,12 @@ namespace MES.data
         {
             server = "tek-mmmi-db0a.tek.c.sdu.dk";
             port = "5432";
-            userId = "si3_2018_group_23_db";
+            userId = "si3_2018_group_23";
             password = "ear70.doling";
             database = "si3_2018_group_23_db";
 
-            connString = String.Format("Server={0};Port={1}"
-                + "User Id={2};Password={3};Database={4}",
+            connString = String.Format("Server={0};Port={1};"
+                + "User Id={2};Password={3};Database={4};",
                 server, port, userId, password, database);
 
             batchesTable = "batches";
@@ -44,8 +44,11 @@ namespace MES.data
         {
             try
             {
+                Console.WriteLine("1");
                 NpgsqlConnection conn = new NpgsqlConnection(connString);
+                Console.WriteLine("2");
                 conn.Open();
+                Console.WriteLine("3");
 
                 string sql = "CREATE TABLE batches ("
                 + "batchid FLOAT PRIMARY KEY,"
@@ -56,13 +59,15 @@ namespace MES.data
                 + "humidity FLOAT,"
                 + "vibration FLOAT,"
                 + "timestampx CHAR(19));";
+                Console.WriteLine("4");
 
                 NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-
+                Console.WriteLine("5");
                 conn.Close();
                 return true;
             } catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return false;
             }
         }
@@ -82,6 +87,7 @@ namespace MES.data
                 return true;
             } catch   (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return false;
             }
         }
@@ -107,6 +113,7 @@ namespace MES.data
                 return true;
             } catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return false;
             }
         }
@@ -158,6 +165,7 @@ namespace MES.data
                 return dt;
             } catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return null;
             }
         }
