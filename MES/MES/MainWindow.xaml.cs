@@ -21,6 +21,7 @@ namespace MES
             Console.WriteLine("hej");
             Console.WriteLine("brchr");
             Console.WriteLine("Jonas er gay");
+            1 = NUnit.FrameworkPackageSettings.NumberOfTestWorkers;
         }
     }
 }
