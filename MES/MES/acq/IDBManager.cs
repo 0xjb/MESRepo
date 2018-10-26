@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,9 @@ namespace MES.acq
 
         bool InsertIntoBatchesTable(IBatch batch);
 
-        ISet<IBatch> GetAllBatches();
+        DataTable GetAllBatches();
 
-        IBatch GetBatch(float batchId);
+        DataTable GetBatch(float batchId);
 
     }
 }

@@ -12,8 +12,6 @@ namespace MES.data
 {
     class DBManager : IDBManager
     {
-        private DataSet ds;
-        private DataTable dt;
 
         // database info
         private string server;
@@ -29,9 +27,6 @@ namespace MES.data
 
         public DBManager()
         {
-            ds = new DataSet();
-            dt = new DataTable();
-
             server = "tek-mmmi-db0a.tek.c.sdu.dk";
             port = "5432";
             userId = "si3_2018_group_23_db";
@@ -85,7 +80,7 @@ namespace MES.data
 
                 conn.Close();
                 return true;
-            } catch (Exception ex)
+            } catch   (Exception ex)
             {
                 return false;
             }
@@ -116,7 +111,7 @@ namespace MES.data
             }
         }
 
-        public ISet<IBatch> GetAllBatches()
+        public DataTable GetAllBatches()
         {
             try {
             NpgsqlConnection conn = new NpgsqlConnection(connString);
@@ -125,15 +120,17 @@ namespace MES.data
             string sql = "SELECT * FROM " + batchesTable;
 
             NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-            ds.Reset();
+
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
             da.Fill(ds);
             dt = ds.Tables[0];
 
             // connect grid to DataTable
-            // dataGridView.Datasource = dt;
+            // dataGridView.DataSource = dt;
 
             conn.Close();
-            return null;
+            return dt;
         } catch (Exception ex)
             {
             MessageBox.Show(ex.ToString());
@@ -141,12 +138,28 @@ namespace MES.data
             }
         }
 
-        public IBatch GetBatch(float batchId)
+        public DataTable GetBatch(float batchId)
         {
-            string sql = "SELECT * FROM " + batchesTable
-                + " WHERE batchid = " + batchId;
+            try
+            {
+                NpgsqlConnection conn = new NpgsqlConnection(connString);
+                conn.Open();
 
-            return null;
+                string sql = "SELECT * FROM " + batchesTable
+                    + " WHERE batchid = " + batchId;
+
+                NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
+
+                DataSet ds = new DataSet();
+                DataTable dt = new DataTable();
+                da.Fill(ds);
+                dt = ds.Tables[0];
+
+                return dt;
+            } catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

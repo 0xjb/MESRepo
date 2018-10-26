@@ -9,12 +9,19 @@ namespace MES.acq
     interface IBatch
     {
         float GetBatchId();
+
         float GetBeerId();
+
         int GetAcceptableProducts();
+
         int GetDefectProducts();
+
         float GetTemperature();
+
         float GetHumidity();
+
         float GetVibration();
+
         string GetTimestamp();
     }
 }
