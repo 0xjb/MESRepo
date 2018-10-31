@@ -66,8 +66,7 @@ namespace MES.data
 
                 conn.Close();
                 return true;
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
@@ -87,8 +86,7 @@ namespace MES.data
 
                 conn.Close();
                 return true;
-            }
-            catch (Exception ex)
+            } catch   (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
@@ -97,8 +95,7 @@ namespace MES.data
 
         public bool InsertIntoBatchesTable(IBatch batch)
         {
-            try
-            {
+            try {
                 NpgsqlConnection conn = new NpgsqlConnection(connString);
                 conn.Open();
 
@@ -115,36 +112,37 @@ namespace MES.data
                 NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
                 return true;
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
             }
         }
 
-        public string GetAllBatches()
+        public DataTable GetAllBatches()
         {
-            try
+            try {
+            NpgsqlConnection conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            string sql = "SELECT * FROM " + batchesTable;
+
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
+
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
+            da.Fill(ds);
+            dt = ds.Tables[0];
+
+            // connect grid to DataTable
+            // dataGridView.DataSource = dt;
+
+            conn.Close();
+            return dt;
+        } catch (Exception ex)
             {
-                // Connect to a PostgreSQL database
-                NpgsqlConnection conn = new NpgsqlConnection(connString);
-                conn.Open();
-
-                // Define a query returning a single row result set
-                NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM TEST", conn);
-
-                // Execute the query and obtain the value of the first column of the first row
-                string count = (string)command.ExecuteScalar();
-
-                Console.Write("{0}\n", count);
-                conn.Close();
-                return count;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return null;
+            MessageBox.Show(ex.ToString());
+            return null;
             }
         }
 
@@ -166,8 +164,7 @@ namespace MES.data
                 dt = ds.Tables[0];
 
                 return dt;
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return null;
