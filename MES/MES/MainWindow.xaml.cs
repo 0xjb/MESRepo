@@ -96,5 +96,4 @@ namespace MES
             batchSetup.Show();
         }
     }
-
 }
