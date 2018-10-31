@@ -19,9 +19,7 @@ namespace MES
 
         public void Setup()
         {
-            bool cre = dbManager.CreateBatchesTable();
-            // bool del = dbManager.DeleteBatchesTable();
-            Console.WriteLine(cre);
+            dbManager.GetAllBatches();
         }
 
     }
