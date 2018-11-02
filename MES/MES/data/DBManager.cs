@@ -40,7 +40,7 @@ namespace MES.data
         }
 
         /*
-         * Connects to the database and sends a SQL query(that does not return anything EX. INSERT statement).
+         * Connects to the database and sends an SQL query (that does not return anything EX. INSERT statement).
          */
         private bool SendSqlCommand(String statement)
         {
@@ -62,7 +62,7 @@ namespace MES.data
         }
 
         /*
-         * Connects to the database and sends a SQL query(that does return something EX. SELECT statement).
+         * Connects to the database and sends an SQL query (that does return something EX. SELECT statement).
          * Returns the result as a Dictionary containing Batches.
          */
         private IDictionary<float, IBatch> GetSqlCommand(String statement)
