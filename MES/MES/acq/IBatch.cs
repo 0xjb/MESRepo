@@ -23,5 +23,9 @@ namespace MES.acq
         float GetVibration();
 
         string GetTimestamp();
+
+        string GetMonthString();
+
+        string GetYearString();
     }
 }

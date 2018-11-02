@@ -146,6 +146,7 @@ namespace MES.data
             //conn.Open();
 
             string sql = "SELECT * FROM " + batchesTable + ";";
+
             return GetSqlCommand(sql);
 
             //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
@@ -166,6 +167,18 @@ namespace MES.data
             //    MessageBox.Show(ex.ToString());
             //    return null;
             //}
+        }
+
+        public IDictionary<float, IBatch> GetAllBatches(string month, string year)
+        {
+            if (month.Length == 2 && year.Length == 4)
+            {
+                string sql = "SELECT * FROM " + batchesTable
+                    + "WHERE timestampx LIKE '___" + month + "/" + year + "%'";
+
+                return GetSqlCommand(sql);
+            }
+            else return null;
         }
 
         public bool DeleteAllBatches()
