@@ -30,12 +30,12 @@ namespace MES
             //bool inserted = dbManager.InsertIntoBatchesTable(batch);
             //Console.WriteLine(inserted);
 
-            IDictionary<float, IBatch> batchlist = dbManager.GetAllBatches();
-            foreach (KeyValuePair<float, IBatch> element in batchlist)
-            {
-                Console.WriteLine(element.ToString());
-            }
-            //dbManager.GetBatch(7);
+            //IDictionary<float, IBatch> batchlist = dbManager.GetAllBatches();
+            //foreach (KeyValuePair<float, IBatch> element in batchlist)
+            //{
+            //    Console.WriteLine(element.ToString());
+            //}
+            Console.WriteLine(dbManager.GetBatch(7).ToString());
             //DataTable table = dbManager.GetBatch((float)1.2);
             //Console.WriteLine(table.Rows.Contains((float)1.2));
         }

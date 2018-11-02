@@ -39,7 +39,7 @@ namespace MES.data
             batchesTable = "batches";
         }
 
-        public void SendSqlCommand(String statement)
+        public bool SendSqlCommand(String statement)
         {
             try
             {
@@ -49,11 +49,12 @@ namespace MES.data
                 command.ExecuteNonQuery();
 
                 conn.Close();
+                return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-
+                return false;
             }
         }
 
@@ -112,8 +113,8 @@ namespace MES.data
             + "vibration FLOAT,"
             + "timestampx CHAR(19));";
 
-            SendSqlCommand(sql);
-            return true;
+            return SendSqlCommand(sql);
+            
         }
 
 
@@ -124,9 +125,9 @@ namespace MES.data
 
             string sql = "DELETE TABLE " + batchesTable;
 
-            SendSqlCommand(sql);
+            return SendSqlCommand(sql);
 
-            return true;
+            
 
         }
 
@@ -146,8 +147,8 @@ namespace MES.data
             //String sql = "INSERT INTO batches VALUES ( 5, 9, 90, 10, 7, 9, 2, '02/11/2018 09:53:35');";
 
 
-            SendSqlCommand(sql);
-            return true;
+            return SendSqlCommand(sql);
+            
         }
 
         public IDictionary<float, IBatch> GetAllBatches()
@@ -181,9 +182,9 @@ namespace MES.data
 
         public bool DeleteAllBatches()
         {
-            string sql = "";
+            string sql = "DELETE * FROM " + batchesTable;
 
-            return false;
+            return SendSqlCommand(sql);
         }
 
         public IBatch GetBatch(float batchId)
@@ -196,9 +197,16 @@ namespace MES.data
             string sql = "SELECT * FROM " + batchesTable
                 + " WHERE batchid = " + batchId;
 
-            GetSqlCommand(sql);
-
-            return null;
+            IDictionary<float, IBatch> batch = GetSqlCommand(sql);
+            IBatch result;
+            if ( batch.TryGetValue(batchId, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
 
             //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
