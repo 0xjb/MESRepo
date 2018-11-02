@@ -17,7 +17,9 @@ namespace MES.acq
 
         IDictionary<float, IBatch> GetAllBatches();
 
-        void GetBatch(float batchId);
+        bool DeleteAllBatches();
+
+        IBatch GetBatch(float batchId);
 
     }
 }

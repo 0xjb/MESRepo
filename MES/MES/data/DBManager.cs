@@ -53,7 +53,7 @@ namespace MES.data
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                
+
             }
         }
 
@@ -82,7 +82,7 @@ namespace MES.data
                     string timestamp = dRead.GetString(7);
 
                     IBatch batch = new Batch((float)batchId, (float)beerId,
-                        acceptableProducts, defectProducts, (float)temperature, 
+                        acceptableProducts, defectProducts, (float)temperature,
                         (float)humidity, (float)vibration, timestamp);
                     batches.Add((float)batchId, batch);
                 }
@@ -96,38 +96,38 @@ namespace MES.data
                 MessageBox.Show(ex.ToString());
                 return null;
             }
-            
+
         }
 
         public bool CreateBatchesTable()
         {
 
-                string sql = "CREATE TABLE " + batchesTable
-                + " (batchid FLOAT PRIMARY KEY,"
-                + "beerid FLOAT,"
-                + "acceptableproducts INT,"
-                + "defectproducts INT,"
-                + "temperature FLOAT,"
-                + "humidity FLOAT,"
-                + "vibration FLOAT,"
-                + "timestampx CHAR(19));";
+            string sql = "CREATE TABLE " + batchesTable
+            + " (batchid FLOAT PRIMARY KEY,"
+            + "beerid FLOAT,"
+            + "acceptableproducts INT,"
+            + "defectproducts INT,"
+            + "temperature FLOAT,"
+            + "humidity FLOAT,"
+            + "vibration FLOAT,"
+            + "timestampx CHAR(19));";
 
             SendSqlCommand(sql);
-                return true;
+            return true;
         }
-            
-             
-    
+
+
+
 
         public bool DeleteBatchesTable()
         {
-            
-                string sql = "DELETE TABLE " + batchesTable;
+
+            string sql = "DELETE TABLE " + batchesTable;
 
             SendSqlCommand(sql);
-            
+
             return true;
-            
+
         }
 
         public bool InsertIntoBatchesTable(IBatch batch)
@@ -147,30 +147,30 @@ namespace MES.data
 
 
             SendSqlCommand(sql);
-                return true;
+            return true;
         }
 
         public IDictionary<float, IBatch> GetAllBatches()
         {
             //try
             //{
-                //NpgsqlConnection conn = new NpgsqlConnection(connString);
-                //conn.Open();
+            //NpgsqlConnection conn = new NpgsqlConnection(connString);
+            //conn.Open();
 
-                string sql = "SELECT * FROM " + batchesTable + ";";
-                return GetSqlCommand(sql);
-                //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
+            string sql = "SELECT * FROM " + batchesTable + ";";
+            return GetSqlCommand(sql);
+            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
-                //DataSet ds = new DataSet();
-                //DataTable dt = new DataTable();
-                //da.Fill(ds);
-                //dt = ds.Tables[0];
+            //DataSet ds = new DataSet();
+            //DataTable dt = new DataTable();
+            //da.Fill(ds);
+            //dt = ds.Tables[0];
 
-                // connect grid to DataTable
-                // dataGridView.DataSource = dt;
+            // connect grid to DataTable
+            // dataGridView.DataSource = dt;
 
-                //conn.Close();
-                //return dt;
+            //conn.Close();
+            //return dt;
             //}
             //catch (Exception ex)
             //{
@@ -179,25 +179,35 @@ namespace MES.data
             //}
         }
 
-        public void GetBatch(float batchId)
+        public bool DeleteAllBatches()
+        {
+            string sql = "";
+
+            return false;
+        }
+
+        public IBatch GetBatch(float batchId)
         {
             //try
             //{
             //    NpgsqlConnection conn = new NpgsqlConnection(connString);
             //    conn.Open();
 
-                string sql = "SELECT * FROM " + batchesTable
-                    + " WHERE batchid = " + batchId;
+            string sql = "SELECT * FROM " + batchesTable
+                + " WHERE batchid = " + batchId;
 
             GetSqlCommand(sql);
-                //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
-                //DataSet ds = new DataSet();
-                //DataTable dt = new DataTable();
-                //da.Fill(ds);
-                //dt = ds.Tables[0];
+            return null;
 
-                //return dt;
+            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
+
+            //DataSet ds = new DataSet();
+            //DataTable dt = new DataTable();
+            //da.Fill(ds);
+            //dt = ds.Tables[0];
+
+            //return dt;
             //}
             //catch (Exception ex)
             //{
