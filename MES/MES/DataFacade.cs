@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MES.Acquintance;
 
 
-namespace MES.Acquintance
+namespace MES.Data
 {
-    public interface ILogic 
+    class DataFacade : IData
     {
-        void injectData(IData dataLayer);
     }
 }

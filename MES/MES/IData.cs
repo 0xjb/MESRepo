@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MES.Acquintance
 {
-    interface IData
+    public interface IData
     {
     }
 }

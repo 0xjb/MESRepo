@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MES.Data
+namespace MES.Acquintance
 {
-    class DataFacade
+    public interface IPresentation
     {
+        void InjectLogic(ILogic logicFacade);
     }
 }
+

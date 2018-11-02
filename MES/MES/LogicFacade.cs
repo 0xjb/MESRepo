@@ -7,10 +7,11 @@ using MES.Acquintance;
 
 namespace MES.Logic
 {
-    class LogicFacade : MES.Acquintance.ILogic
+
+    public class LogicFacade : ILogic
     {
         private IData data;
-        public void injectData(IData dataLayer)
+        public void InjectData(IData dataLayer)
         {
             data = dataLayer;
         }

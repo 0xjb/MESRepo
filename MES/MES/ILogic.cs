@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MES.Acquintance
 {
-    interface IPresentation 
+    public interface ILogic 
     {
+        void InjectData(IData dataLayer);
     }
 }

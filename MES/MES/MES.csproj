@@ -91,11 +91,18 @@
     <Compile Include="BatchReport.xaml.cs">
       <DependentUpon>BatchReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataFacade.cs" />
     <Compile Include="HumidityHistory.xaml.cs">
       <DependentUpon>HumidityHistory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IData.cs" />
+    <Compile Include="ILogic.cs" />
+    <Compile Include="IPresentation.cs" />
+    <Compile Include="LogicFacade.cs" />
     <Compile Include="OpcClient.cs" />
     <Compile Include="OpcTests.cs" />
+    <Compile Include="PresentationFacade.cs" />
+    <Compile Include="Starter.cs" />
     <Compile Include="TemperatureHistory.xaml.cs">
       <DependentUpon>TemperatureHistory.xaml</DependentUpon>
     </Compile>
@@ -194,6 +201,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

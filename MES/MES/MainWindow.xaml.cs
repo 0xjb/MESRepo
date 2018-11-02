@@ -20,7 +20,7 @@ namespace MES
         {
             opc.Connect();
 
-            
+
             InitializeComponent();
 
             SeriesCollection = new SeriesCollection
