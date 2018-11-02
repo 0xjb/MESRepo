@@ -50,8 +50,8 @@ namespace MES.data
                 conn.Open();
                 Console.WriteLine("3");
 
-                string sql = "CREATE TABLE batches ("
-                + "batchid FLOAT PRIMARY KEY,"
+                string sql = "CREATE TABLE " + batchesTable
+                + " (batchid FLOAT PRIMARY KEY,"
                 + "beerid FLOAT,"
                 + "acceptableproducts INT,"
                 + "defectproducts INT,"
@@ -66,7 +66,8 @@ namespace MES.data
 
                 conn.Close();
                 return true;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
@@ -86,7 +87,8 @@ namespace MES.data
 
                 conn.Close();
                 return true;
-            } catch   (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
@@ -95,7 +97,8 @@ namespace MES.data
 
         public bool InsertIntoBatchesTable(IBatch batch)
         {
-            try {
+            try
+            {
                 NpgsqlConnection conn = new NpgsqlConnection(connString);
                 conn.Open();
 
@@ -112,7 +115,8 @@ namespace MES.data
                 NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
                 return true;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
@@ -121,28 +125,30 @@ namespace MES.data
 
         public DataTable GetAllBatches()
         {
-            try {
-            NpgsqlConnection conn = new NpgsqlConnection(connString);
-            conn.Open();
-
-            string sql = "SELECT * FROM " + batchesTable;
-
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-
-            DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
-            da.Fill(ds);
-            dt = ds.Tables[0];
-
-            // connect grid to DataTable
-            // dataGridView.DataSource = dt;
-
-            conn.Close();
-            return dt;
-        } catch (Exception ex)
+            try
             {
-            MessageBox.Show(ex.ToString());
-            return null;
+                NpgsqlConnection conn = new NpgsqlConnection(connString);
+                conn.Open();
+
+                string sql = "SELECT * FROM " + batchesTable;
+
+                NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
+
+                DataSet ds = new DataSet();
+                DataTable dt = new DataTable();
+                da.Fill(ds);
+                dt = ds.Tables[0];
+
+                // connect grid to DataTable
+                // dataGridView.DataSource = dt;
+
+                conn.Close();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return null;
             }
         }
 
@@ -164,7 +170,8 @@ namespace MES.data
                 dt = ds.Tables[0];
 
                 return dt;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return null;
