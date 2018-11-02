@@ -39,7 +39,7 @@ namespace MES.data
             batchesTable = "batches";
         }
 
-        public bool SendSqlCommand(String statement)
+        private bool SendSqlCommand(String statement)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace MES.data
             }
         }
 
-        public IDictionary<float, IBatch> GetSqlCommand(String statement)
+        private IDictionary<float, IBatch> GetSqlCommand(String statement)
         {
             try
             {
@@ -97,12 +97,10 @@ namespace MES.data
                 MessageBox.Show(ex.ToString());
                 return null;
             }
-
         }
 
         public bool CreateBatchesTable()
         {
-
             string sql = "CREATE TABLE " + batchesTable
             + " (batchid FLOAT PRIMARY KEY,"
             + "beerid FLOAT,"
@@ -114,26 +112,17 @@ namespace MES.data
             + "timestampx CHAR(19));";
 
             return SendSqlCommand(sql);
-            
         }
-
-
-
 
         public bool DeleteBatchesTable()
         {
-
             string sql = "DELETE TABLE " + batchesTable;
 
             return SendSqlCommand(sql);
-
-            
-
         }
 
         public bool InsertIntoBatchesTable(IBatch batch)
         {
-
             string sql = "INSERT INTO " + batchesTable + " VALUES("
                 + batch.GetBatchId() + ", "
                 + batch.GetBeerId() + ", "
@@ -146,9 +135,7 @@ namespace MES.data
 
             //String sql = "INSERT INTO batches VALUES ( 5, 9, 90, 10, 7, 9, 2, '02/11/2018 09:53:35');";
 
-
             return SendSqlCommand(sql);
-            
         }
 
         public IDictionary<float, IBatch> GetAllBatches()
@@ -160,6 +147,7 @@ namespace MES.data
 
             string sql = "SELECT * FROM " + batchesTable + ";";
             return GetSqlCommand(sql);
+
             //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
             //DataSet ds = new DataSet();
@@ -198,8 +186,9 @@ namespace MES.data
                 + " WHERE batchid = " + batchId;
 
             IDictionary<float, IBatch> batch = GetSqlCommand(sql);
+
             IBatch result;
-            if ( batch.TryGetValue(batchId, out result))
+            if (batch.TryGetValue(batchId, out result))
             {
                 return result;
             }
