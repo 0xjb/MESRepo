@@ -8,7 +8,7 @@ using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
 namespace MES {
-    class OpcClient {
+    public class OpcClient {
         public Session session;
         public void Connect() {
             session = new Session();
@@ -25,9 +25,9 @@ namespace MES {
             DataValue changeRequest = new DataValue();
             changeRequest.Value = true;
 
-            //nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, reset));
-            //nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value, changeRequest));
-            //Write(nodesToWrite);
+            nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, reset));
+            nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value, changeRequest));
+            Write(nodesToWrite);
         }
         public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed) {
             // collection of nodes to be written

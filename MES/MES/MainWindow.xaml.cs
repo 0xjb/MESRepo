@@ -10,8 +10,17 @@ namespace MES
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public OpcClient opc = new OpcClient();
+
+            public MainWindow(OpcClient opc) : this()
         {
+            this.opc = opc;
+        }
+            public MainWindow()
+        {
+            opc.Connect();
+
+            
             InitializeComponent();
 
             SeriesCollection = new SeriesCollection
@@ -42,7 +51,7 @@ namespace MES
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-
+            opc.StartMachine(1, 2, 200, 4);
         }
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
@@ -63,8 +72,8 @@ namespace MES
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
         {
-            Alarms alarms = new Alarms();
-            this.Close();
+            Alarms alarms = new Alarms(this.opc);
+            this.Hide();
             alarms.Show();
         }
 

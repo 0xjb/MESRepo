@@ -7,16 +7,21 @@ namespace MES
     /// </summary>
     public partial class Alarms : Window
     {
-        public Alarms()
+        OpcClient opc;
+        public Alarms(OpcClient _opc)
         {
+            opc = _opc;
             InitializeComponent();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+
+            MainWindow mainwindow = new MainWindow(opc);
+            
             this.Close();
-            mainWindow.Show();
+            
+            mainwindow.Show();
         }
     }
 }
