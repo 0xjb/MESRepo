@@ -33,6 +33,15 @@ namespace MES.Data
             this.timeStamp = timeStamp;
         }
 
+        override
+        public string ToString()
+        {
+            return batchId + ", " + beerId + ", "
+            + acceptableProducts + ", " + defectProducts + ", "
+            + temperature + ", " + humidity + ", "
+            + vibration + ", " + timeStamp;
+        }
+
         public float GetBatchId()
         {
             return batchId;
