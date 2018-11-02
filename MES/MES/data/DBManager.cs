@@ -33,22 +33,56 @@ namespace MES.data
             password = "ear70.doling";
             database = "si3_2018_group_23_db";
 
-            connString = String.Format("Server={0};Port={1};"
-                + "User Id={2};Password={3};Database={4};",
-                server, port, userId, password, database);
+            connString = "Server=" + server + "; Port=" + port + "; User Id=" + userId + "; Password=" + password + "; Database=" + database;
 
             batchesTable = "batches";
         }
 
-        public bool CreateBatchesTable()
+        public void SendSqlCommand(String statement)
         {
             try
             {
-                Console.WriteLine("1");
                 NpgsqlConnection conn = new NpgsqlConnection(connString);
-                Console.WriteLine("2");
                 conn.Open();
-                Console.WriteLine("3");
+                NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+                command.ExecuteNonQuery();
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                
+            }
+        }
+
+        public void GetSqlCommand(String statement)
+        {
+            try
+            {
+                NpgsqlConnection conn = new NpgsqlConnection(connString);
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+                NpgsqlDataReader dRead = command.ExecuteReader();
+
+                while (dRead.Read())
+                {
+                    for (int i = 0; i < dRead.FieldCount; i++)
+                        Console.Write("{0} \t \n", dRead[i].ToString());
+                }
+                dRead.Close();
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+        }
+
+        public bool CreateBatchesTable()
+        {
 
                 string sql = "CREATE TABLE " + batchesTable
                 + " (batchid FLOAT PRIMARY KEY,"
@@ -59,68 +93,43 @@ namespace MES.data
                 + "humidity FLOAT,"
                 + "vibration FLOAT,"
                 + "timestampx CHAR(19));";
-                Console.WriteLine("4");
 
-                NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-                Console.WriteLine("5");
-
-                conn.Close();
+            SendSqlCommand(sql);
                 return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return false;
-            }
         }
+            
+             
+    
 
         public bool DeleteBatchesTable()
         {
-            try
-            {
-                NpgsqlConnection conn = new NpgsqlConnection(connString);
-                conn.Open();
-
+            
                 string sql = "DELETE TABLE " + batchesTable;
 
-                NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-
-                conn.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return false;
-            }
+            SendSqlCommand(sql);
+            
+            return true;
+            
         }
 
         public bool InsertIntoBatchesTable(IBatch batch)
         {
-            try
-            {
-                NpgsqlConnection conn = new NpgsqlConnection(connString);
-                conn.Open();
 
-                string sql = "INSERT INTO " + batchesTable + " VALUES("
-                    + batch.GetBatchId() + ", "
-                    + batch.GetBeerId() + ", "
-                    + batch.GetAcceptableProducts() + ", "
-                    + batch.GetDefectProducts() + ", "
-                    + batch.GetTemperature() + ", "
-                    + batch.GetHumidity() + ", "
-                    + batch.GetVibration() + ", '"
-                    + batch.GetTimestamp() + "');";
+            string sql = "INSERT INTO " + batchesTable + " VALUES("
+                + batch.GetBatchId() + ", "
+                + batch.GetBeerId() + ", "
+                + batch.GetAcceptableProducts() + ", "
+                + batch.GetDefectProducts() + ", "
+                + batch.GetTemperature() + ", "
+                + batch.GetHumidity() + ", "
+                + batch.GetVibration() + ", '"
+                + batch.GetTimestamp() + "');";
 
-                NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
+            //String sql = "INSERT INTO batches VALUES ( 5, 9, 90, 10, 7, 9, 2, '02/11/2018 09:53:35');";
 
+
+            SendSqlCommand(sql);
                 return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return false;
-            }
         }
 
         public DataTable GetAllBatches()
