@@ -183,7 +183,7 @@ namespace MES.data
 
         public IDictionary<float, IBatch> GetBatches(int amount)
         {
-            string sql = "SELECT * FROM " + batchesTable + "LIMIT " + amount;
+            string sql = "SELECT * FROM " + batchesTable + " LIMIT " + amount;
 
             return GetSqlCommand(sql);
         }
