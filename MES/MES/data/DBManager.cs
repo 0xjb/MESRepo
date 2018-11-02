@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using MES.acq;
+using MES.Data;
 using Npgsql;
 
 namespace MES.data
@@ -56,7 +57,7 @@ namespace MES.data
             }
         }
 
-        public void GetSqlCommand(String statement)
+        public IDictionary<float, IBatch> GetSqlCommand(String statement)
         {
             try
             {
@@ -65,20 +66,37 @@ namespace MES.data
                 NpgsqlCommand command = new NpgsqlCommand(statement, conn);
                 NpgsqlDataReader dRead = command.ExecuteReader();
 
+                IDictionary<float, IBatch> batches = new Dictionary<float, IBatch>();
                 while (dRead.Read())
                 {
-                    for (int i = 0; i < dRead.FieldCount; i++)
-                        Console.Write("{0} \t \n", dRead[i].ToString());
+                    //for (int i = 0; i < dRead.FieldCount; i++)
+                    //Console.Write("{0} \t \n", dRead[i].ToString());
+                    //Console.WriteLine(dRead.GetDouble(0));
+                    double batchId = dRead.GetDouble(0);
+                    double beerId = dRead.GetDouble(1);
+                    int acceptableProducts = dRead.GetInt32(2);
+                    int defectProducts = dRead.GetInt32(3);
+                    double temperature = dRead.GetDouble(4);
+                    double humidity = dRead.GetDouble(5);
+                    double vibration = dRead.GetDouble(6);
+                    string timestamp = dRead.GetString(7);
+
+                    IBatch batch = new Batch((float)batchId, (float)beerId,
+                        acceptableProducts, defectProducts, (float)temperature, 
+                        (float)humidity, (float)vibration, timestamp);
+                    batches.Add((float)batchId, batch);
                 }
                 dRead.Close();
 
                 conn.Close();
+                return batches;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-
+                return null;
             }
+            
         }
 
         public bool CreateBatchesTable()
@@ -132,7 +150,7 @@ namespace MES.data
                 return true;
         }
 
-        public void GetAllBatches()
+        public IDictionary<float, IBatch> GetAllBatches()
         {
             //try
             //{
@@ -140,7 +158,7 @@ namespace MES.data
                 //conn.Open();
 
                 string sql = "SELECT * FROM " + batchesTable + ";";
-                GetSqlCommand(sql);
+                return GetSqlCommand(sql);
                 //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
                 //DataSet ds = new DataSet();

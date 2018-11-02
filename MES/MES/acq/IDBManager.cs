@@ -15,7 +15,7 @@ namespace MES.acq
 
         bool InsertIntoBatchesTable(IBatch batch);
 
-        void GetAllBatches();
+        IDictionary<float, IBatch> GetAllBatches();
 
         void GetBatch(float batchId);
 
