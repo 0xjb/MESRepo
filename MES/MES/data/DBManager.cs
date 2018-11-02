@@ -39,6 +39,9 @@ namespace MES.data
             batchesTable = "batches";
         }
 
+        /*
+         * Connects to the database and sends a SQL query(that does not return anything EX. INSERT statement).
+         */
         private bool SendSqlCommand(String statement)
         {
             try
@@ -58,6 +61,10 @@ namespace MES.data
             }
         }
 
+        /*
+         * Connects to the database and sends a SQL query(that does return something EX. SELECT statement).
+         * Returns the result as a Dictionary containing Batches.
+         */
         private IDictionary<float, IBatch> GetSqlCommand(String statement)
         {
             try
@@ -70,9 +77,6 @@ namespace MES.data
                 IDictionary<float, IBatch> batches = new Dictionary<float, IBatch>();
                 while (dRead.Read())
                 {
-                    //for (int i = 0; i < dRead.FieldCount; i++)
-                    //Console.Write("{0} \t \n", dRead[i].ToString());
-                    //Console.WriteLine(dRead.GetDouble(0));
                     double batchId = dRead.GetDouble(0);
                     double beerId = dRead.GetDouble(1);
                     int acceptableProducts = dRead.GetInt32(2);
@@ -133,40 +137,17 @@ namespace MES.data
                 + batch.GetVibration() + ", '"
                 + batch.GetTimestamp() + "');";
 
-            //String sql = "INSERT INTO batches VALUES ( 5, 9, 90, 10, 7, 9, 2, '02/11/2018 09:53:35');";
 
             return SendSqlCommand(sql);
         }
 
         public IDictionary<float, IBatch> GetAllBatches()
         {
-            //try
-            //{
-            //NpgsqlConnection conn = new NpgsqlConnection(connString);
-            //conn.Open();
 
             string sql = "SELECT * FROM " + batchesTable + ";";
 
             return GetSqlCommand(sql);
 
-            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-
-            //DataSet ds = new DataSet();
-            //DataTable dt = new DataTable();
-            //da.Fill(ds);
-            //dt = ds.Tables[0];
-
-            // connect grid to DataTable
-            // dataGridView.DataSource = dt;
-
-            //conn.Close();
-            //return dt;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //    return null;
-            //}
         }
 
         public IDictionary<float, IBatch> GetBatches(string month, string year)
@@ -197,10 +178,6 @@ namespace MES.data
 
         public IBatch GetBatch(float batchId)
         {
-            //try
-            //{
-            //    NpgsqlConnection conn = new NpgsqlConnection(connString);
-            //    conn.Open();
 
             string sql = "SELECT * FROM " + batchesTable
                 + " WHERE batchid = " + batchId;
@@ -217,20 +194,6 @@ namespace MES.data
                 return null;
             }
 
-            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-
-            //DataSet ds = new DataSet();
-            //DataTable dt = new DataTable();
-            //da.Fill(ds);
-            //dt = ds.Tables[0];
-
-            //return dt;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //    return null;
-            //}
         }
     }
 }
