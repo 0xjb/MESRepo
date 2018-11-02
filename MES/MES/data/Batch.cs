@@ -81,15 +81,5 @@ namespace MES.Data
         {
             return timeStamp;
         }
-
-        public string GetMonthString()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetYearString()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

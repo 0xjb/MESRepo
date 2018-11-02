@@ -9,20 +9,44 @@ namespace MES.acq
 {
     interface IDBManager
     {
+        /*
+         * Creates a table of batches in the db
+        */
         bool CreateBatchesTable();
 
+        /*
+         * Deletes the table of batches from the db
+        */
         bool DeleteBatchesTable();
 
+        /*
+         * Insert a batch into the db
+        */
         bool InsertIntoBatchesTable(IBatch batch);
 
+        /*
+         * Return all batches from the db
+        */
         IDictionary<float, IBatch> GetAllBatches();
 
+        /*
+         * Return all batches from a specific month and year from the db
+        */
         IDictionary<float, IBatch> GetBatches(string month, string year);
 
+        /*
+         * Return the newest batches from the db
+        */
         IDictionary<float, IBatch> GetBatches(int amount);
 
+        /*
+         * Deletes all batches from the db
+        */
         bool DeleteAllBatches();
 
+        /*
+         * Return a batch with a specific batch id from the db
+        */
         IBatch GetBatch(float batchId);
     }
 }
