@@ -38,6 +38,12 @@ namespace MES
             //Console.WriteLine(dbManager.GetBatch(7).ToString());
             //DataTable table = dbManager.GetBatch((float)1.2);
             //Console.WriteLine(table.Rows.Contains((float)1.2));
+
+            IDictionary<float, IBatch> batchlist = dbManager.GetAllBatches("10", "2018");
+            foreach (KeyValuePair<float, IBatch> element in batchlist)
+            {
+                Console.WriteLine(element.ToString());
+            }
         }
 
     }
