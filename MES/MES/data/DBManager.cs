@@ -132,59 +132,60 @@ namespace MES.data
                 return true;
         }
 
-        public DataTable GetAllBatches()
+        public void GetAllBatches()
         {
-            try
-            {
-                NpgsqlConnection conn = new NpgsqlConnection(connString);
-                conn.Open();
+            //try
+            //{
+                //NpgsqlConnection conn = new NpgsqlConnection(connString);
+                //conn.Open();
 
-                string sql = "SELECT * FROM " + batchesTable;
+                string sql = "SELECT * FROM " + batchesTable + ";";
+                GetSqlCommand(sql);
+                //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
-                NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
-
-                DataSet ds = new DataSet();
-                DataTable dt = new DataTable();
-                da.Fill(ds);
-                dt = ds.Tables[0];
+                //DataSet ds = new DataSet();
+                //DataTable dt = new DataTable();
+                //da.Fill(ds);
+                //dt = ds.Tables[0];
 
                 // connect grid to DataTable
                 // dataGridView.DataSource = dt;
 
-                conn.Close();
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return null;
-            }
+                //conn.Close();
+                //return dt;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //    return null;
+            //}
         }
 
-        public DataTable GetBatch(float batchId)
+        public void GetBatch(float batchId)
         {
-            try
-            {
-                NpgsqlConnection conn = new NpgsqlConnection(connString);
-                conn.Open();
+            //try
+            //{
+            //    NpgsqlConnection conn = new NpgsqlConnection(connString);
+            //    conn.Open();
 
                 string sql = "SELECT * FROM " + batchesTable
                     + " WHERE batchid = " + batchId;
 
-                NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
+            GetSqlCommand(sql);
+                //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, conn);
 
-                DataSet ds = new DataSet();
-                DataTable dt = new DataTable();
-                da.Fill(ds);
-                dt = ds.Tables[0];
+                //DataSet ds = new DataSet();
+                //DataTable dt = new DataTable();
+                //da.Fill(ds);
+                //dt = ds.Tables[0];
 
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return null;
-            }
+                //return dt;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //    return null;
+            //}
         }
     }
 }

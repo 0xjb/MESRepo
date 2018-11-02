@@ -25,11 +25,13 @@ namespace MES
             //// bool del = dbManager.DeleteBatchesTable();
             //Console.WriteLine(cre);
 
-            IBatch batch = new Batch(7, 3, 90, 10,
-                20, 10, 15, "02/11/2018 09:53:35");
-            bool inserted = dbManager.InsertIntoBatchesTable(batch);
-            Console.WriteLine(inserted);
+            //IBatch batch = new Batch(7, 3, 90, 10,
+            //    20, 10, 15, "02/11/2018 09:53:35");
+            //bool inserted = dbManager.InsertIntoBatchesTable(batch);
+            //Console.WriteLine(inserted);
 
+            //dbManager.GetAllBatches();
+            dbManager.GetBatch(7);
             //DataTable table = dbManager.GetBatch((float)1.2);
             //Console.WriteLine(table.Rows.Contains((float)1.2));
         }
