@@ -169,7 +169,7 @@ namespace MES.data
             //}
         }
 
-        public IDictionary<float, IBatch> GetAllBatches(string month, string year)
+        public IDictionary<float, IBatch> GetBatches(string month, string year)
         {
             if (month.Length == 2 && year.Length == 4)
             {
@@ -179,6 +179,13 @@ namespace MES.data
                 return GetSqlCommand(sql);
             }
             else return null;
+        }
+
+        public IDictionary<float, IBatch> GetBatches(int amount)
+        {
+            string sql = "SELECT * FROM " + batchesTable + "LIMIT " + amount;
+
+            return GetSqlCommand(sql);
         }
 
         public bool DeleteAllBatches()

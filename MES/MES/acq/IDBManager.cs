@@ -17,7 +17,9 @@ namespace MES.acq
 
         IDictionary<float, IBatch> GetAllBatches();
 
-        IDictionary<float, IBatch> GetAllBatches(string month, string year);
+        IDictionary<float, IBatch> GetBatches(string month, string year);
+
+        IDictionary<float, IBatch> GetBatches(int amount);
 
         bool DeleteAllBatches();
 
