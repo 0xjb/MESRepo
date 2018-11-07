@@ -35,27 +35,31 @@ namespace MES
             Formatter = value => value.ToString("N");
             DataContext = this;
         }
+
         public SeriesCollection SeriesCollection { get; set; }
         public string[] Labels { get; set; }
         public Func<double, string> Formatter { get; set; }
-
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
         private void btnAbort_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
 

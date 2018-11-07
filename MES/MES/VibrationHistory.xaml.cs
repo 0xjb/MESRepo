@@ -15,8 +15,8 @@ namespace MES
         {
             InitializeComponent();
             SeriesCollection = new SeriesCollection
-
-    {new LineSeries
+            {
+                new LineSeries
                 {
                     Title = "Vibration",
                     Values= new ChartValues<double> { }
@@ -73,7 +73,6 @@ namespace MES
             _value = generateRandomNumber();
             SeriesCollection[0].Values.Add(Value);
             indexOfArray++;
-
         }
     }
 }
