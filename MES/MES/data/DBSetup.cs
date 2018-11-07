@@ -21,6 +21,8 @@ namespace MES
 
         public void Setup()
         {
+            //dbManager.CreateBatchesTable();
+
             //bool cre = dbManager.CreateBatchesTable();
             //// bool del = dbManager.DeleteBatchesTable();
             //Console.WriteLine(cre);
@@ -35,6 +37,7 @@ namespace MES
             //{
             //    Console.WriteLine(element.ToString());
             //}
+
             //Console.WriteLine(dbManager.GetBatch(7).ToString());
             //DataTable table = dbManager.GetBatch((float)1.2);
             //Console.WriteLine(table.Rows.Contains((float)1.2));
@@ -45,11 +48,11 @@ namespace MES
             //    Console.WriteLine(element.ToString());
             //}
 
-            IDictionary<float, IBatch> batchlist = dbManager.GetBatches(2);
-            foreach (KeyValuePair<float, IBatch> element in batchlist)
-            {
-                Console.WriteLine(element.ToString());
-            }
+            //IDictionary<float, IBatch> batchlist = dbManager.GetBatches(2);
+            //foreach (KeyValuePair<float, IBatch> element in batchlist)
+            //{
+            //    Console.WriteLine(element.ToString());
+            //}
         }
 
     }
