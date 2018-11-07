@@ -79,7 +79,7 @@ namespace MES {
 
 
             //Save the new workbook. We haven't specified the filename so use the Save as method.
-            ep.SaveAs(new FileInfo(@"C:\Users\J\Documents\a\BatchReport.xlsx"));
+            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory +"BatchReport.xlsx"));
         }
         /// <summary>
         /// Inserts array of data into two columns
