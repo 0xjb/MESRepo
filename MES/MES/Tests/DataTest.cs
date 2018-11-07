@@ -39,7 +39,7 @@ namespace MES.Tests
             Assert.IsTrue(inserted3, "Inserted fourth");
 
             // Testing GetAllBatches
-            IDictionary<float, Acquintance.IBatch> allBatches = dbManager.GetAllBatches();
+            IDictionary<float, IBatch> allBatches = dbManager.GetAllBatches();
 
             IBatch loadedBatch0 = null;
             allBatches.TryGetValue(-1, out loadedBatch0);
@@ -58,7 +58,7 @@ namespace MES.Tests
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             // Testing GetBatches
-            IDictionary<float, Acquintance.IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
+            IDictionary<float, IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
 
             IBatch loadedBatch4 = null;
             batchesByMonth.TryGetValue(-1, out loadedBatch4);
@@ -68,7 +68,7 @@ namespace MES.Tests
             batchesByMonth.TryGetValue(-2, out loadedBatch5);
             Assert.IsNotNull(loadedBatch0, "Succes");
 
-            IDictionary<float, Acquintance.IBatch> batchesByLimit = dbManager.GetBatches(3);
+            IDictionary<float, IBatch> batchesByLimit = dbManager.GetBatches(3);
 
             IBatch loadedBatch6 = null;
             batchesByLimit.TryGetValue(-1, out loadedBatch6);
