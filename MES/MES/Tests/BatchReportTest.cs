@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using OfficeOpenXml;
 
-
-namespace MES {
+namespace MES.Tests
+{
     [TestFixture]
-    class BatchReportTest {
+    class BatchReportTest
+    {
         private readonly BatchReportGenerator brg = new BatchReportGenerator();
         private readonly Random rand = new Random();
         [Test]
-        public void CheckFileCreation() {
+        public void CheckFileCreation()
+        {
             int[] stringArray = { 2, 5, 7, 9, 3, 5, 4, 12 };
             ValueOverProdTime[] temperatureData = GenerateTestData();
             ValueOverProdTime[] humidityData = GenerateTestData();
@@ -37,9 +39,11 @@ namespace MES {
 
 
         }
-        private ValueOverProdTime[] GenerateTestData() {
+        private ValueOverProdTime[] GenerateTestData()
+        {
             ValueOverProdTime[] brrt = new ValueOverProdTime[100];
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100; i++)
+            {
                 ValueOverProdTime temp = new ValueOverProdTime();
                 temp.Value = rand.Next(100);
                 temp.Time = DateTime.Today.AddDays(rand.Next(1000));

@@ -107,7 +107,7 @@
       <DependentUpon>BatchReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="BatchReportGenerator.cs" />
-    <Compile Include="BatchReportTest.cs" />
+    <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="HumidityHistory.xaml.cs">
       <DependentUpon>HumidityHistory.xaml</DependentUpon>
     </Compile>
