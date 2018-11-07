@@ -37,6 +37,7 @@ namespace MES
             //{
             //    Console.WriteLine(element.ToString());
             //}
+
             //Console.WriteLine(dbManager.GetBatch(7).ToString());
             //DataTable table = dbManager.GetBatch((float)1.2);
             //Console.WriteLine(table.Rows.Contains((float)1.2));
