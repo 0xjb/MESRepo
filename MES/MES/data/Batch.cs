@@ -9,7 +9,6 @@ namespace MES.Data
 {
     class Batch : IBatch
     {
-
         private readonly float batchId;
         private readonly float beerId;
         private readonly int acceptableProducts;
