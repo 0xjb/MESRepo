@@ -13,5 +13,17 @@ namespace MES.acq
             float vibration, string timeStamp);
 
         bool SaveBatch(IBatch batch);
+
+        IDictionary<float, IBatch> GetAllBatches();
+
+        IDictionary<float, IBatch> GetBatches(string month, string year);
+
+        IDictionary<float, IBatch> GetBatches(int amount);
+
+        IBatch GetBatch(float batchId);
+
+        bool DeleteAllBatches();
+
+        bool DeleteBatch(float batchId);
     }
 }
