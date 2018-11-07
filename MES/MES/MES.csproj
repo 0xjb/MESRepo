@@ -111,7 +111,6 @@
     </Compile>
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="data\DBManager.cs" />
-    <Compile Include="data\DBSetup.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

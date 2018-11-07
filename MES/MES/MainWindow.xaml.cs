@@ -11,9 +11,6 @@ namespace MES
         public MainWindow()
         {
             InitializeComponent();
-            Console.WriteLine("Meow");
-            DBSetup dbSetup = new DBSetup();
-            dbSetup.Setup();
         }
     }
 }

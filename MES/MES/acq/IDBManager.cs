@@ -10,16 +10,6 @@ namespace MES.acq
     interface IDBManager
     {
         /*
-         * Creates a table of batches in the db
-        */
-        bool CreateBatchesTable();
-
-        /*
-         * Deletes the table of batches from the db
-        */
-        bool DeleteBatchesTable();
-
-        /*
          * Insert a batch into the db
         */
         bool InsertIntoBatchesTable(IBatch batch);

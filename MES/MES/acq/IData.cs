@@ -8,12 +8,10 @@ namespace MES.acq
 {
     interface IData
     {
-
         bool SaveBatch(float batchId, float beerId, int acceptableProducts,
             int defectProducts, float temperature, float humidity,
             float vibration, string timeStamp);
 
         bool SaveBatch(IBatch batch);
-
     }
 }
