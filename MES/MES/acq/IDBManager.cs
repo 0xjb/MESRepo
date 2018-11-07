@@ -40,13 +40,18 @@ namespace MES.acq
         IDictionary<float, IBatch> GetBatches(int amount);
 
         /*
+         * Return a batch with a specific batch id from the db
+        */
+        IBatch GetBatch(float batchId);
+
+        /*
          * Deletes all batches from the db
         */
         bool DeleteAllBatches();
 
         /*
-         * Return a batch with a specific batch id from the db
+         * Delete a specific batch from the db
         */
-        IBatch GetBatch(float batchId);
+        bool DeleteBatch(float batchId);
     }
 }

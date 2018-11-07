@@ -169,13 +169,6 @@ namespace MES.data
             return GetSqlCommand(sql);
         }
 
-        public bool DeleteAllBatches()
-        {
-            string sql = "DELETE * FROM " + batchesTable;
-
-            return SendSqlCommand(sql);
-        }
-
         public IBatch GetBatch(float batchId)
         {
 
@@ -193,7 +186,20 @@ namespace MES.data
             {
                 return null;
             }
+        }
 
+        public bool DeleteAllBatches()
+        {
+            string sql = "DELETE * FROM " + batchesTable;
+
+            return SendSqlCommand(sql);
+        }
+
+        public bool DeleteBatch(float batchId)
+        {
+            string sql = "DELETE * FROM " + batchesTable + " WHERE batchid = " + batchId;
+
+            return SendSqlCommand(sql);
         }
     }
 }
