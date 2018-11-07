@@ -59,58 +59,52 @@ namespace MES.Data
             IDictionary<float, acq.IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
 
             IBatch loadedBatch4 = null;
-            allBatches.TryGetValue(-1, out loadedBatch4);
+            batchesByMonth.TryGetValue(-1, out loadedBatch4);
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             IBatch loadedBatch5 = null;
-            allBatches.TryGetValue(-2, out loadedBatch5);
+            batchesByMonth.TryGetValue(-2, out loadedBatch5);
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             IDictionary<float, acq.IBatch> batchesByLimit = dbManager.GetBatches(3);
 
             IBatch loadedBatch6 = null;
-            allBatches.TryGetValue(-1, out loadedBatch6);
+            batchesByLimit.TryGetValue(-1, out loadedBatch6);
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             IBatch loadedBatch7 = null;
-            allBatches.TryGetValue(-2, out loadedBatch7);
+            batchesByLimit.TryGetValue(-2, out loadedBatch7);
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             IBatch loadedBatch8 = null;
-            allBatches.TryGetValue(-3, out loadedBatch8);
+            batchesByLimit.TryGetValue(-3, out loadedBatch8);
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             // Testing GetBatch
 
-            acq.IBatch batch = dbManager.GetBatch(-1);
-            IBatch loadedBatch9 = null;
-            allBatches.TryGetValue(-1, out loadedBatch9);
-            Assert.IsNotNull(batch, "Succes");
+            IBatch loadedBatch9 = dbManager.GetBatch(-1);
+            Assert.IsNotNull(loadedBatch9, "Succes");
 
             // Testing DeleteBatch
 
             bool deleted0 = dbManager.DeleteBatch(-1);
             Assert.IsTrue(deleted0, "Deleted");
-            IBatch loadedBatch10 = null;
-            allBatches.TryGetValue(-1, out loadedBatch10);
+            IBatch loadedBatch10 = dbManager.GetBatch(-1);
             Assert.IsNull(loadedBatch10, "Succes");
 
             bool deleted1 = dbManager.DeleteBatch(-2);
             Assert.IsTrue(deleted1, "Deleted");
-            IBatch loadedBatch11 = null;
-            allBatches.TryGetValue(-1, out loadedBatch11);
+            IBatch loadedBatch11 = dbManager.GetBatch(-1);
             Assert.IsNull(loadedBatch11, "Succes");
 
             bool deleted2 = dbManager.DeleteBatch(-3);
             Assert.IsTrue(deleted2, "Deleted");
-            IBatch loadedBatch12 = null;
-            allBatches.TryGetValue(-1, out loadedBatch12);
+            IBatch loadedBatch12 = dbManager.GetBatch(-1);
             Assert.IsNull(loadedBatch12, "Succes");
 
             bool deleted3 = dbManager.DeleteBatch(-4);
             Assert.IsTrue(deleted3, "Deleted");
-            IBatch loadedBatch13 = null;
-            allBatches.TryGetValue(-1, out loadedBatch13);
+            IBatch loadedBatch13 = dbManager.GetBatch(-1);
             Assert.IsNull(loadedBatch13, "Succes");
         }
         [Test]
