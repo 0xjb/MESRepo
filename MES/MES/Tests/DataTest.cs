@@ -1,4 +1,5 @@
-﻿using MES.acq;
+﻿using MES.Acquintance;
+using MES.Data;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MES.Data
+namespace MES.Tests
 {
     [TestFixture]
     class DataTest
@@ -38,7 +39,7 @@ namespace MES.Data
             Assert.IsTrue(inserted3, "Inserted fourth");
 
             // Testing GetAllBatches
-            IDictionary<float, acq.IBatch> allBatches = dbManager.GetAllBatches();
+            IDictionary<float, Acquintance.IBatch> allBatches = dbManager.GetAllBatches();
 
             IBatch loadedBatch0 = null;
             allBatches.TryGetValue(-1, out loadedBatch0);
@@ -57,7 +58,7 @@ namespace MES.Data
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             // Testing GetBatches
-            IDictionary<float, acq.IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
+            IDictionary<float, Acquintance.IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
 
             IBatch loadedBatch4 = null;
             batchesByMonth.TryGetValue(-1, out loadedBatch4);
@@ -67,7 +68,7 @@ namespace MES.Data
             batchesByMonth.TryGetValue(-2, out loadedBatch5);
             Assert.IsNotNull(loadedBatch0, "Succes");
 
-            IDictionary<float, acq.IBatch> batchesByLimit = dbManager.GetBatches(3);
+            IDictionary<float, Acquintance.IBatch> batchesByLimit = dbManager.GetBatches(3);
 
             IBatch loadedBatch6 = null;
             batchesByLimit.TryGetValue(-1, out loadedBatch6);

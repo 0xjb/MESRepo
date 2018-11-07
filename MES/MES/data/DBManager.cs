@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using MES.acq;
+using MES.Acquintance;
 using MES.Data;
 using Npgsql;
 

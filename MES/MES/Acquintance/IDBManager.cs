@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MES.acq
+namespace MES.Acquintance
 {
     interface IDBManager
     {
