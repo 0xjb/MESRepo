@@ -81,12 +81,10 @@ namespace MES.Data
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             // Testing GetBatch
-
             IBatch loadedBatch9 = dbManager.GetBatch(-1);
             Assert.IsNotNull(loadedBatch9, "Succes");
 
             // Testing DeleteBatch
-
             bool deleted0 = dbManager.DeleteBatch(-1);
             Assert.IsTrue(deleted0, "Deleted");
             IBatch loadedBatch10 = dbManager.GetBatch(-1);
@@ -106,21 +104,6 @@ namespace MES.Data
             Assert.IsTrue(deleted3, "Deleted");
             IBatch loadedBatch13 = dbManager.GetBatch(-1);
             Assert.IsNull(loadedBatch13, "Succes");
-        }
-        [Test]
-        public void TestDeleteBatches()
-        {
-            bool deleted0 = dbManager.DeleteBatch(-1);
-            Assert.IsTrue(deleted0, "Deleted");
-
-            bool deleted1 = dbManager.DeleteBatch(-2);
-            Assert.IsTrue(deleted1, "Deleted");
-
-            bool deleted2 = dbManager.DeleteBatch(-3);
-            Assert.IsTrue(deleted2, "Deleted");
-
-            bool deleted3 = dbManager.DeleteBatch(-4);
-            Assert.IsTrue(deleted3, "Deleted");
         }
     }
 }
