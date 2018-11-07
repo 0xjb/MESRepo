@@ -39,9 +39,11 @@ namespace MES.data
             batchesTable = "batches";
         }
 
-        /*
-         * Connects to the database and sends an SQL query (that does not return anything EX. INSERT statement).
-         */
+        /// <summary>
+        /// Connects to the database and sends an SQL query (that does not return anything EX. INSERT statement).
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
         private bool SendSqlCommand(String statement)
         {
             try
@@ -61,10 +63,12 @@ namespace MES.data
             }
         }
 
-        /*
-         * Connects to the database and sends an SQL query (that does return something EX. SELECT statement).
-         * Returns the result as a Dictionary containing IBatch objects.
-         */
+        /// <summary>
+        /// Connects to the database and sends an SQL query (that does return something EX. SELECT statement).
+        /// Returns the result as a IDictionary containing IBatch objects.
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
         private IDictionary<float, IBatch> GetSqlCommand(String statement)
         {
             try
