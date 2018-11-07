@@ -197,7 +197,7 @@ namespace MES.data
 
         public bool DeleteBatch(float batchId)
         {
-            string sql = "DELETE * FROM " + batchesTable + " WHERE batchid = " + batchId;
+            string sql = "DELETE FROM " + batchesTable + " WHERE batchid = " + batchId;
 
             return SendSqlCommand(sql);
         }
