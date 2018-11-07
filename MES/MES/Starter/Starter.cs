@@ -5,6 +5,7 @@ namespace MES.Starter
 {
     class Starter : Application
     {
+        /*
         [STAThread]
         public static void Main(string[] args)
         {
@@ -13,5 +14,6 @@ namespace MES.Starter
             application.Run(mainWindow);
 
         }
+        */
     }
 }
