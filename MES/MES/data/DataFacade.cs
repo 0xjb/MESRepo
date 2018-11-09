@@ -10,7 +10,7 @@ using MES.Acquintance;
 
 namespace MES.Data
 {
-    class DataFacade : IData
+    public class DataFacade : IData
     {
         IDBManager dbManager;
 

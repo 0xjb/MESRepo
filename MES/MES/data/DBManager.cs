@@ -11,7 +11,7 @@ using Npgsql;
 
 namespace MES.data
 {
-    class DBManager : IDBManager
+    public class DBManager : IDBManager
     {
 
         // database info

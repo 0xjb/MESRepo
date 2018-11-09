@@ -121,18 +121,18 @@
     </Compile>
     <Compile Include="BatchReportGenerator.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
-    <Compile Include="DataFacade.cs" />
+    <Compile Include="Data\DataFacade.cs" />
     <Compile Include="HumidityHistory.xaml.cs">
       <DependentUpon>HumidityHistory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IData.cs" />
-    <Compile Include="ILogic.cs" />
-    <Compile Include="IPresentation.cs" />
+    <Compile Include="Acquintance\IData.cs" />
+    <Compile Include="Acquintance\ILogic.cs" />
+    <Compile Include="Acquintance\IPresentation.cs" />
     <Compile Include="LogicFacade.cs" />
     <Compile Include="OpcClient.cs" />
     <Compile Include="OpcTests.cs" />
     <Compile Include="PresentationFacade.cs" />
-    <Compile Include="Starter.cs" />
+    <Compile Include="Starter\Starter.cs" />
     <Compile Include="TemperatureHistory.xaml.cs">
       <DependentUpon>TemperatureHistory.xaml</DependentUpon>
     </Compile>
@@ -160,10 +160,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="Acquintance\IData.cs" />
     <Compile Include="Data\Batch.cs" />
     <Compile Include="Tests\DataTest.cs" />
-    <Compile Include="Starter\Starter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -171,21 +169,14 @@
     <Compile Include="Alarms.xaml.cs">
       <DependentUpon>Alarms.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Acquintance\ILogic.cs" />
-    <Compile Include="Acquintance\IPresentation.cs" />
     <Compile Include="Acquintance\IBatch.cs" />
     <Compile Include="Acquintance\IDBManager.cs" />
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="BatchSetup.xaml.cs">
       <DependentUpon>BatchSetup.xaml</DependentUpon>
     </Compile>
     <Compile Include="History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\DataFacade.cs" />
     <Compile Include="data\DBManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MES.Acquintance
 {
-    interface IBatch
+    public interface IBatch
     {
         float GetBatchId();
 

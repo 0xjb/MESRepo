@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MES.Data
 {
-    class Batch : IBatch
+    public class Batch : IBatch
     {
         private readonly float batchId;
         private readonly float beerId;

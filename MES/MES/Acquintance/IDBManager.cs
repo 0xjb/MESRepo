@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MES.Acquintance
 {
-    interface IDBManager
+    public interface IDBManager
     {
         /// <summary>
         /// Inserts a batch into the db

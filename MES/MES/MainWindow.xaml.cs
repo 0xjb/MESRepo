@@ -113,7 +113,7 @@ namespace MES
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            thread.Abort();
+            //thread.Abort();
             opc.StopMachine();
         }
 
