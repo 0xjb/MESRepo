@@ -110,20 +110,24 @@ namespace MES
         {
             opc.StartMachine(1, 2, 2000, 600);
         }
+
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             thread.Abort();
             opc.StopMachine();
         }
+
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             opc.ResetMachine();
         }
+
         private void btnAbort_Click(object sender, RoutedEventArgs e)
         {
             opc.AbortMachine();
 
         }
+
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             opc.ClearMachine();
