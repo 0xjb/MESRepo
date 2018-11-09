@@ -84,10 +84,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Include="BatchReport.xaml.cs">
       <DependentUpon>BatchReport.xaml</DependentUpon>
     </Compile>
@@ -135,10 +131,6 @@
     </Page>
     <Compile Include="Alarms.xaml.cs">
       <DependentUpon>Alarms.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="BatchSetup.xaml.cs">
       <DependentUpon>BatchSetup.xaml</DependentUpon>
