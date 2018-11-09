@@ -116,10 +116,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acquintance\IBatchValueSet.cs" />
     <Compile Include="BatchReport.xaml.cs">
       <DependentUpon>BatchReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="BatchReportGenerator.cs" />
+    <Compile Include="Data\BatchValueSet.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="HumidityHistory.xaml.cs">

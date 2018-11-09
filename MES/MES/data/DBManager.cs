@@ -13,7 +13,6 @@ namespace MES.data
 {
     public class DBManager : IDBManager
     {
-
         // database info
         private string server;
         private string port;
@@ -25,6 +24,7 @@ namespace MES.data
 
         // database table names
         private string batchesTable;
+        private string batchValuesTable;
 
         public DBManager()
         {
@@ -37,6 +37,7 @@ namespace MES.data
             connString = "Server=" + server + "; Port=" + port + "; User Id=" + userId + "; Password=" + password + "; Database=" + database;
 
             batchesTable = "batches";
+            batchValuesTable = "batchvalues";
         }
 
         /// <summary>
@@ -85,18 +86,19 @@ namespace MES.data
                     double beerId = dRead.GetDouble(1);
                     int acceptableProducts = dRead.GetInt32(2);
                     int defectProducts = dRead.GetInt32(3);
-                    double temperature = dRead.GetDouble(4);
-                    double humidity = dRead.GetDouble(5);
-                    double vibration = dRead.GetDouble(6);
-                    string timestamp = dRead.GetString(7);
+                    string timestampStart = dRead.GetString(4);
+                    string timestampEnd = dRead.GetString(5);
 
                     IBatch batch = new Batch((float)batchId, (float)beerId,
-                        acceptableProducts, defectProducts, (float)temperature,
-                        (float)humidity, (float)vibration, timestamp);
+                        acceptableProducts, defectProducts,
+                        timestampStart, timestampEnd);
+
+                    batch.SetBatchValueSet(GetBatchValues(conn, (float)batchId));
+
                     batches.Add((float)batchId, batch);
                 }
-                dRead.Close();
 
+                dRead.Close();
                 conn.Close();
                 return batches;
             }
@@ -107,17 +109,38 @@ namespace MES.data
             }
         }
 
+        private IList<IBatchValueSet> GetBatchValues(NpgsqlConnection conn, float batchId)
+        {
+            string statement = "SELECT * FROM " + batchValuesTable
+                + " WHERE belongingto = " + batchId;
+
+            NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+            NpgsqlDataReader dRead = command.ExecuteReader();
+
+            IList<IBatchValueSet> values = new List<IBatchValueSet>();
+            while (dRead.Read())
+            {
+                double temperature = dRead.GetDouble(0);
+                double humidity = dRead.GetDouble(1);
+                double vibration = dRead.GetDouble(2);
+                string timestamp = dRead.GetString(3);
+
+                values.Add(new BatchValueSet((float)temperature,
+                    (float)humidity, (float)vibration, timestamp));
+            }
+
+            return values;
+        }
+
         public bool InsertIntoBatchesTable(IBatch batch)
         {
             string sql = "INSERT INTO " + batchesTable + " VALUES("
                 + batch.GetBatchId() + ", "
                 + batch.GetBeerId() + ", "
                 + batch.GetAcceptableProducts() + ", "
-                + batch.GetDefectProducts() + ", "
-                + batch.GetTemperature() + ", "
-                + batch.GetHumidity() + ", "
-                + batch.GetVibration() + ", '"
-                + batch.GetTimestamp() + "');";
+                + batch.GetDefectProducts() + ", '"
+                + batch.GetTimestampStart() + "', '"
+                + batch.GetTimestampEnd() + "');";
 
             return SendSqlCommand(sql);
         }

@@ -16,12 +16,19 @@ namespace MES.Acquintance
 
         int GetDefectProducts();
 
-        float GetTemperature();
+        string GetTimestampStart();
 
-        float GetHumidity();
+        string GetTimestampEnd();
 
-        float GetVibration();
+        IList<IBatchValueSet> GetBatchValues();
 
-        string GetTimestamp();
+        void AddProducts(int amount, bool acceptable);
+
+        void SetTimestampEnd(string timestamp);
+
+        bool AddBatchValues(float temperature, float humidity,
+            float vibration, string timestamp);
+
+        void SetBatchValueSet(IList<IBatchValueSet> values);
     }
 }
