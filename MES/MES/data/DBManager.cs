@@ -157,7 +157,7 @@ namespace MES.data
             if (month.Length == 2 && year.Length == 4)
             {
                 string sql = "SELECT * FROM " + batchesTable
-                    + " WHERE timestampx LIKE '___" + month + "/" + year + "%'";
+                    + " WHERE timestampEnd LIKE '___" + month + "/" + year + "%'";
 
                 return GetSqlCommand(sql);
             }
