@@ -185,7 +185,7 @@ namespace MES.data
             return SendSqlCommand(sql);
         }
 
-        bool InsertBatchValueSet(float temperature, float humidity,
+        public bool InsertBatchValueSet(float temperature, float humidity,
             float vibration, string timestamp, float batchId)
         {
             string sql = "INSERT INTO " + batchValuesTable + " VALUES("
