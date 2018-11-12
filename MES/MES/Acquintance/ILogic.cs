@@ -10,5 +10,6 @@ namespace MES.Acquintance
     public interface ILogic 
     {
         void InjectData(IData dataLayer);
+        void CreateBatch(float batchId, float amount, float machineSpeed, float productType);
     }
 }

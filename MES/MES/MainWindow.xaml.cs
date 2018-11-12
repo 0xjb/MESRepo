@@ -163,7 +163,7 @@ namespace MES
 
         private void btnBatchSetup_Click(object sender, RoutedEventArgs e)
         {
-            BatchSetup batchSetup = new BatchSetup();
+            BatchSetup batchSetup = new BatchSetup(opc);
             this.Hide();
             batchSetup.Show();
         }

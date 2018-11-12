@@ -7,8 +7,10 @@ namespace MES
     /// </summary>
     public partial class BatchSetup : Window
     {
-        public BatchSetup()
+        OpcClient c; 
+        public BatchSetup(OpcClient c)
         {
+            this.c = c;
             InitializeComponent();
         }
 
@@ -17,6 +19,22 @@ namespace MES
             MainWindow mainWindow = new MainWindow();
             this.Close();
             mainWindow.Show();
+        }
+
+        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            float batchId = float.Parse(BatchIdTB.Text);
+            float productType = float.Parse(ProductTypeTB.Text);
+
+            float amount = float.Parse(AmountTB.Text);
+            float machineSpeed = float.Parse(MachineSpeedTB.Text);
+            c.StartMachine(batchId, productType, amount, machineSpeed);
+
         }
     }
 }
