@@ -19,22 +19,34 @@ namespace MES.Tests
         {
             // Testing InsertBatch
             IBatch batch0 = new Batch(-1, 3, 90, 10,
-                20, 10, 15, "02/11/2018 09:20:35");
+                "02/11/2018 09:18:35", "02/11/2018 09:20:35");
+            batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:18:35");
+            batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:19:35");
+            batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:20:35");
             bool inserted0 = dbManager.InsertIntoBatchesTable(batch0);
             Assert.IsTrue(inserted0, "Inserted first");
 
             IBatch batch1 = new Batch(-2, 3, 90, 10,
-               20, 10, 15, "02/11/2018 10:20:35");
+               "02/11/2018 10:18:35", "02/11/2018 10:20:35");
+            batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:18:35");
+            batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:19:35");
+            batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:20:35");
             bool inserted1 = dbManager.InsertIntoBatchesTable(batch1);
             Assert.IsTrue(inserted1, "Inserted second");
 
             IBatch batch2 = new Batch(-3, 3, 90, 10,
-                20, 10, 15, "02/12/2018 11:20:35");
+                "02/12/2018 11:18:35", "02/12/2018 11:20:35");
+            batch2.AddBatchValues(20, 30, 40, "02/12/2018 11:18:35");
+            batch2.AddBatchValues(20, 30, 40, "02/12/2018 11:19:35");
+            batch2.AddBatchValues(20, 30, 40, "02/12/2018 11:20:35");
             bool inserted2 = dbManager.InsertIntoBatchesTable(batch2);
             Assert.IsTrue(inserted2, "Inserted third");
 
             IBatch batch3 = new Batch(-4, 3, 90, 10,
-                20, 10, 15, "02/12/2018 12:20:35");
+                "02/12/2018 12:18:35", "02/12/2018 12:20:35");
+            batch3.AddBatchValues(20, 30, 40, "02/12/2018 12:18:35");
+            batch3.AddBatchValues(20, 30, 40, "02/12/2018 12:19:35");
+            batch3.AddBatchValues(20, 30, 40, "02/12/2018 12:20:35");
             bool inserted3 = dbManager.InsertIntoBatchesTable(batch3);
             Assert.IsTrue(inserted3, "Inserted fourth");
 
@@ -56,6 +68,13 @@ namespace MES.Tests
             IBatch loadedBatch3 = null;
             allBatches.TryGetValue(-4, out loadedBatch3);
             Assert.IsNotNull(loadedBatch0, "Succes");
+
+            bool loadedBatchValuesO = false;
+            if (loadedBatch0.GetBatchValues().Count == 3)
+            {
+                loadedBatchValuesO = true;
+            }
+            Assert.IsTrue(loadedBatchValuesO, "Succes");
 
             // Testing GetBatches
             IDictionary<float, IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
@@ -106,6 +125,40 @@ namespace MES.Tests
             Assert.IsTrue(deleted3, "Deleted");
             IBatch loadedBatch13 = dbManager.GetBatch(-1);
             Assert.IsNull(loadedBatch13, "Succes");
+        }
+
+        [Test]
+        public void DBSetup()
+        {
+            string[] statements = new string[2];
+
+            string sql0 = "CREATE TABLE batches ("
+                + "batchid FLOAT PRIMARY KEY, "
+                + "beerid FLOAT, "
+                + "acceptableproducts INT, "
+                + "defectproducts INT, "
+                + "timestampStart CHAR(19), "
+                + "timestampEnd CHAR(19));";
+
+            string sql1 = "CREATE TABLE batchvalues ("
+                + "temperature FLOAT, "
+                + "humidity FLOAT, "
+                + "vibration FLOAT, "
+                + "timestampx CHAR(19), "
+                + "belongingto FLOAT, "
+                + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
+                + "PRIMARY KEY(timestampx, belongingto));";
+
+            bool succes = dbManager.RunQueries(statements);
+            Assert.IsTrue(succes, "Tables created");
+        }
+
+        [Test]
+        public void DBDeleteOld()
+        {
+            string[] statements = { "DELETE TABLE batches" };
+            bool succes = dbManager.RunQueries(statements);
+            Assert.IsTrue(succes, "Tables deleted");
         }
     }
 }

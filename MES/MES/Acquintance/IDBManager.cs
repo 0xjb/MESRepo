@@ -56,5 +56,7 @@ namespace MES.Acquintance
         /// <param name="batchId"></param>
         /// <returns></returns>
         bool DeleteBatch(float batchId);
+
+        bool RunQueries(string[] statements);
     }
 }
