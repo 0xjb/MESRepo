@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
@@ -7,8 +8,22 @@ namespace MES
 {
     public class OpcClient
     {
+        private static ThreadStart ts = new ThreadStart(Subscript);
+        Thread subscribeThread = new Thread(ts);
+
+
+
         bool isProcessRunning = false;
         public Session session;
+
+
+        public OpcClient()
+        {
+            subscribeThread.IsBackground = true;
+            subscribeThread.Start();
+        }
+
+
         public void Connect()
         {
 
@@ -19,6 +34,25 @@ namespace MES
             session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
 
+        }
+
+        public static void Subscript()
+        {
+            Session sessionSubscript = new Session();
+            sessionSubscript.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+
+            NodeId nodeId = new NodeId("::Program:Cube.Command.Parameter[0].Value", 6);
+            MonitoredItem monitoredItem = new DataMonitoredItem(nodeId);
+            Subscription subscription = new Subscription(sessionSubscript);
+            //subscription.MonitoredItems[0] = monitoredItem;
+            subscription.MonitoredItems[0].SamplingInterval = 100;
+
+
+        }
+
+        public void stopThread()
+        {
+            subscribeThread.Abort();
         }
 
         public void Disconnect()

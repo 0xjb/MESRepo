@@ -103,7 +103,6 @@ namespace MES
         {
             //Put your close code here
             opc.StopMachine();
-            //thread.Abort();
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
