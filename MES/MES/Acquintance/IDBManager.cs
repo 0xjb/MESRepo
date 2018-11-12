@@ -17,6 +17,18 @@ namespace MES.Acquintance
         bool InsertIntoBatchesTable(IBatch batch);
 
         /// <summary>
+        /// Inserts a set of batch values into the db
+        /// </summary>
+        /// <param name="temperature"></param>
+        /// <param name="humidity"></param>
+        /// <param name="vibration"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="batchId"></param>
+        /// <returns></returns>
+        bool InsertBatchValueSet(float temperature, float humidity,
+            float vibration, string timestamp, float batchId);
+
+        /// <summary>
         /// Returns all batches from the db
         /// </summary>
         /// <returns></returns>
@@ -57,6 +69,11 @@ namespace MES.Acquintance
         /// <returns></returns>
         bool DeleteBatch(float batchId);
 
+        /// <summary>
+        /// Runs a custom query in the db
+        /// </summary>
+        /// <param name="statements"></param>
+        /// <returns></returns>
         bool RunQueries(string[] statements);
     }
 }

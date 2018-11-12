@@ -41,7 +41,7 @@ namespace MES.data
         }
 
         /// <summary>
-        /// Connects to the database and sends SQL queries (that does not return anything EX. INSERT statement).
+        /// Connects to the database and executes SQL queries (that does not return anything EX. INSERT statement).
         /// </summary>
         /// <param name="statement"></param>
         /// <returns></returns>
@@ -68,6 +68,11 @@ namespace MES.data
             }
         }
 
+        /// <summary>
+        /// Connects to the database and executes an SQL query (that does not return anything EX. INSERT statement).
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
         private bool SendSqlCommand(String statement)
         {
             String[] statements = { statement };
@@ -119,6 +124,12 @@ namespace MES.data
             }
         }
 
+        /// <summary>
+        /// Returns the batch values for a specific batch
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="batchId"></param>
+        /// <returns></returns>
         private IList<IBatchValueSet> GetBatchValues(NpgsqlConnection conn, float batchId)
         {
             string statement = "SELECT * FROM " + batchValuesTable
@@ -170,6 +181,16 @@ namespace MES.data
                 sql[stringsAdded] = sqlString;
                 stringsAdded++;
             }
+
+            return SendSqlCommand(sql);
+        }
+
+        bool InsertBatchValueSet(float temperature, float humidity,
+            float vibration, string timestamp, float batchId)
+        {
+            string sql = "INSERT INTO " + batchValuesTable + " VALUES("
+            + temperature + ", " + humidity + ", " + vibration
+            + ", '" + timestamp + "', " + batchId  + ");";
 
             return SendSqlCommand(sql);
         }

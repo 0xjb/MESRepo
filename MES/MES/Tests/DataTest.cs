@@ -132,7 +132,7 @@ namespace MES.Tests
         {
             string[] statements = new string[2];
 
-            string sql0 = "CREATE TABLE batches ("
+            string sql0 = "CREATE TABLE batches("
                 + "batchid FLOAT PRIMARY KEY, "
                 + "beerid FLOAT, "
                 + "acceptableproducts INT, "
@@ -140,7 +140,7 @@ namespace MES.Tests
                 + "timestampStart CHAR(19), "
                 + "timestampEnd CHAR(19));";
 
-            string sql1 = "CREATE TABLE batchvalues ("
+            string sql1 = "CREATE TABLE batchvalues("
                 + "temperature FLOAT, "
                 + "humidity FLOAT, "
                 + "vibration FLOAT, "
