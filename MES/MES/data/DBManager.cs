@@ -104,16 +104,18 @@ namespace MES.data
                     string timestampStart = dRead.GetString(4);
                     string timestampEnd = dRead.GetString(5);
 
-                    IBatch batch = new Batch((float)batchId, (float)beerId,
+                    batches.Add((float)batchId, new Batch((float)batchId, (float)beerId,
                         acceptableProducts, defectProducts,
-                        timestampStart, timestampEnd);
-
-                    batch.SetBatchValueSet(GetBatchValues(conn, (float)batchId));
-
-                    batches.Add((float)batchId, batch);
+                        timestampStart, timestampEnd));
                 }
 
                 dRead.Close();
+
+                foreach (IBatch batch in batches.Values)
+                {
+                    batch.SetBatchValueSet(GetBatchValues(conn, batch.GetBatchId()));
+                }
+
                 conn.Close();
                 return batches;
             }
@@ -150,6 +152,7 @@ namespace MES.data
                     (float)humidity, (float)vibration, timestamp));
             }
 
+            dRead.Close();
             return values;
         }
 
@@ -171,12 +174,12 @@ namespace MES.data
 
             foreach (IBatchValueSet values in batch.GetBatchValues())
             {
-            string sqlString = "INSERT INTO " + batchValuesTable + "VALUES("
+            string sqlString = "INSERT INTO " + batchValuesTable + " VALUES("
                 + values.GetTemperature() + ", "
                 + values.GetHumidity() + ", "
                 + values.GetVibration() + ", '"
                 + values.GetTimeStamp() + "', "
-                + batch.GetBatchId();
+                + batch.GetBatchId() + ");";
 
                 sql[stringsAdded] = sqlString;
                 stringsAdded++;
