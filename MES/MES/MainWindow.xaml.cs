@@ -15,7 +15,7 @@ namespace MES
     {
         public OpcClient opc = new OpcClient();
         Thread thread;
-        //ChartValues<ObservableValue> Values;
+        
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
         private double levelHops;
@@ -23,17 +23,25 @@ namespace MES
         private double levelWheat;
         private double levelYeast;
 
+        private double machineSpeed;
+        private double temperature;
+        private double humidity;
+        private double vibration;
+        private double batchID;
+        private double amount;
+        private double produced;
+        private double acceptableProducts;
+        private double defectProducts;
+
+        private double status;
+        
+
+
+
         private double _value;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public MainWindow(double value)
-
-        {
-
-            ValueMaintenance = value;
-
-        }
 
         public MainWindow(OpcClient opc) : this()
         {
@@ -64,24 +72,6 @@ namespace MES
             };
 
             SeriesCollection = new SeriesCollection { columnSeries };
-            //{
-            //new
-            //ColumnSeries
-            //{
-            //    Title = "[Ingredients]",
-            //    //Values = new ChartValues<double> { levelBarley, levelHops, levelMalt, levelWheat, levelYeast }
-            //     Values = new ChartValues<ObservableValue> {new ObservableValue(ValueMaintenance)}
-
-            //}
-            //};
-
-
-
-
-            //ThreadStart childref = new ThreadStart(CallToChildThread);
-            //Console.WriteLine("In Main: Creating the Child thread");
-            //thread = new Thread(new ThreadStart(CallToChildThread));
-            //thread.Start();
 
             //put label stuff here
 
@@ -103,7 +93,7 @@ namespace MES
         {
             //Put your close code here
             opc.StopMachine();
-            //thread.Abort();
+            
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -113,7 +103,7 @@ namespace MES
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            //thread.Abort();
+            
             opc.StopMachine();
         }
 
@@ -168,50 +158,6 @@ namespace MES
             batchSetup.Show();
         }
 
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //protected virtual void OnPropertyChanged(string propertyName = null)
-        //{
-        //    var handler = PropertyChanged;
-        //    if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        //}
-
-        //public event Action PointChanged;
-
-        //public double BarleyValue
-        //{
-        //    get { return levelBarley; }
-        //    set
-        //    {
-        //        levelBarley = value;
-        //        //OnPointChanged();
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //protected void OnPointChanged()
-        //{
-        //    if (PointChanged != null) PointChanged.Invoke();
-        //}
-
-        //public double Barley
-        //{
-        //    get { return levelBarley; }
-        //    set
-        //    {
-        //        levelBarley = value;
-        //        // Call OnPropertyChanged whenever the property is updated
-        //        OnPropertyChanged("LevelBarley");
-        //    }
-        //}
-
-        // Create the OnPropertyChanged method to raise the event
-        //protected void OnPropertyChanged(string name)
-        //{
-        //    PropertyChangedEventHandler handler = PropertyChanged;
-        //    if (handler != null) {
-        //        handler(this, new PropertyChangedEventArgs(name));
-        //    }
-        //}
         public double Value
 
         {
@@ -236,34 +182,145 @@ namespace MES
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName = null)
+        public double MachineSpeed
 
         {
-            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get { return machineSpeed; }
+
+            set
+
+            {
+                machineSpeed = value;
+                OnPropertyChanged("MachineSpeed");
+            }
         }
 
-        public void CallToChildThread()
+        public double Temperature
+
         {
-            //while (true) {
-            //    for (int i = 0; i < 60; i++) {
-            //        levelBarley++;
-            //        levelHops++;
-            //        levelMalt++;
-            //        levelWheat++;
-            //        levelYeast++;
-            //        Console.WriteLine("****" + levelYeast + " *" + levelHops + " *" + levelMalt + " *" + levelWheat + " *" + levelBarley);
-            //    }
-            //    for (int i = 0; i < 60; i++) {
-            //        levelBarley--;
-            //        levelHops--;
-            //        levelMalt--;
-            //        levelWheat--;
-            //        levelYeast--;
-            //    }
-            //}
+            get { return temperature; }
 
+            set
 
+            {
+                temperature = value;
+                OnPropertyChanged("Temperature");
+            }
         }
+
+        public double Humidity
+
+        {
+            get { return humidity; }
+
+            set
+
+            {
+                humidity = value;
+                OnPropertyChanged("Humidity");
+            }
+        }
+
+        public double Vibration
+
+        {
+            get { return vibration; }
+
+            set
+
+            {
+                vibration = value;
+                OnPropertyChanged("Vibration");
+            }
+        }
+
+        public double BatchID
+
+        {
+            get { return batchID; }
+
+            set
+
+            {
+                batchID = value;
+                OnPropertyChanged("BatchID");
+            }
+        }
+
+        public double Amount
+
+        {
+            get { return amount; }
+
+            set
+
+            {
+                amount = value;
+                OnPropertyChanged("Amount");
+            }
+        }
+
+        public double Produced
+
+        {
+            get { return produced; }
+
+            set
+
+            {
+                produced = value;
+                OnPropertyChanged("Produced");
+            }
+        }
+
+        public double AcceptableProducts
+
+        {
+            get { return acceptableProducts; }
+
+            set
+
+            {
+                acceptableProducts = value;
+                OnPropertyChanged("AcceptableProducts");
+            }
+        }
+
+        public double DefectProducts
+
+        {
+            get { return defectProducts; }
+
+            set
+
+            {
+                defectProducts = value;
+                OnPropertyChanged("DefectProducts");
+            }
+        }
+
+        public double Status
+
+        {
+            get { return status; }
+
+            set
+
+            {
+                status = value;
+                OnPropertyChanged("Status");
+            }
+        }
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
@@ -271,12 +328,6 @@ namespace MES
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
             ValueMaintenance = randomNumber.Next(1, 100);
-            //levelBarley = number;
-            //Console.WriteLine("***" + levelBarley);
-            //SeriesCollection[0].Values.Add(new ObservableValue(Value));
-            //SeriesCollection[0].Values.Add(new ObservableValue(BarleyValue));
-            //Values.Add(new ObservableValue(BarleyValue));
-            //Console.WriteLine("*************" + BarleyValue);
         }
 
 
@@ -287,6 +338,17 @@ namespace MES
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
             Value = randomNumber.Next(1, 100);
+            //Values for testing purposes.
+            MachineSpeed = Value;
+            Temperature = Value;
+            Humidity = Value;
+            Vibration = Value;
+            BatchID = Value;
+            Amount = Value;
+            Produced = Value;
+            AcceptableProducts = Value;
+            DefectProducts = Value;
+            Status = Value;
 
 
             ValuesIngredients.RemoveAt(4);
@@ -307,20 +369,13 @@ namespace MES
 
             ValuesIngredients.Add(new ObservableValue(Value));
 
-            //var r = new Random();
-
-            //var c = SeriesCollection[0].Values.Count;
-
-            //var val = new ChartValues<ObservableValue>();
-
-            //for (int i = 0; i < c; i++) {
-            //    val.Add(new ObservableValue(r.Next(2, 20)));
-            //}
-            //SeriesCollection.Add(new ColumnSeries {
-            //    Title = "[Ingredients]",
-            //    Values = val,
-            //    DataLabels = true
-            //});
         }
+
+        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
+
+       
     }
 }
