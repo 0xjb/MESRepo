@@ -35,7 +35,8 @@ namespace MES.Acquintance
         IDictionary<float, IBatch> GetAllBatches();
 
         /// <summary>
-        /// Returns all batches from a specific month and year from the db
+        /// Returns all batches from a specific month and year from the db.
+        /// The year needs to have a length of 4 characters and the month needs to have a length of 1 or 2 characters.
         /// </summary>
         /// <param name="month"></param>
         /// <param name="year"></param>

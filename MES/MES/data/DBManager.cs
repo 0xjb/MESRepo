@@ -207,6 +207,10 @@ namespace MES.data
 
         public IDictionary<float, IBatch> GetBatches(string month, string year)
         {
+            if (month.Length == 1)
+            {
+                month = " " + month;
+            }
             if (month.Length == 2 && year.Length == 4)
             {
                 string sql = "SELECT * FROM " + batchesTable
