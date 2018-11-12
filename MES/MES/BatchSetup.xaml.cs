@@ -30,7 +30,6 @@ namespace MES
         {
             float batchId = float.Parse(BatchIdTB.Text);
             float productType = float.Parse(ProductTypeTB.Text);
-
             float amount = float.Parse(AmountTB.Text);
             float machineSpeed = float.Parse(MachineSpeedTB.Text);
             c.StartMachine(batchId, productType, amount, machineSpeed);

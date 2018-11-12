@@ -50,7 +50,7 @@
         <Label Content="BatchID" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top"/>
         <Label Content="Amount&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="0,13,0,0" Grid.Row="5" VerticalAlignment="Top" Width="89" Grid.RowSpan="2"/>
         <Label Content="Machine Speed&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="0,24,0,0" Grid.Row="6" VerticalAlignment="Top" Width="94" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-        <Button Content="Create Batch" Grid.Column="7" HorizontalAlignment="Left" Margin="3,12,0,0" Grid.Row="10" VerticalAlignment="Top" Width="75" Click="Button_Click" RenderTransformOrigin="1.173,3.925"/>
+        <Button Content="Create Batch" Grid.Column="7" HorizontalAlignment="Left" Margin="3,10,0,0" Grid.Row="9" VerticalAlignment="Top" Width="145" Click="Button_Click" RenderTransformOrigin="1.173,3.925" Height="63" Grid.RowSpan="2" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
 
 
 
