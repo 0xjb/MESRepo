@@ -156,7 +156,7 @@ namespace MES.Tests
         [Test]
         public void DBDeleteOld()
         {
-            string[] statements = { "DELETE TABLE batches" };
+            string[] statements = { "DROP TABLE batches" };
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Tables deleted");
         }
