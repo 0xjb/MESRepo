@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MES
+namespace MES.Presentation
 {
     /// <summary>
     /// Interaction logic for History.xaml

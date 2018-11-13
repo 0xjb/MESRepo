@@ -4,7 +4,7 @@ using UnifiedAutomation.UaClient;
 //using System.Threading;
 //using System.Threading;
 //using System.Threading;
-namespace MES
+namespace MES.Logic
 {
     [TestFixture]
     public class OpcTests

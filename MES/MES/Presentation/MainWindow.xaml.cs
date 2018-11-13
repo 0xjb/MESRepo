@@ -1,21 +1,23 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using MES.Acquintance;
 using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows;
 
-namespace MES
+namespace MES.Presentation
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged// IObservableChartPoint//,INotifyPropertyChanged
+    public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
-        public OpcClient opc = new OpcClient();
-        Thread thread;
-        
+        private ILogic iLogic;
+
+
+
+
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
         private double levelHops;
@@ -23,6 +25,7 @@ namespace MES
         private double levelWheat;
         private double levelYeast;
 
+        //
         private double machineSpeed;
         private double temperature;
         private double humidity;
@@ -33,24 +36,18 @@ namespace MES
         private double acceptableProducts;
         private double defectProducts;
 
+        //
         private double status;
-        
-
-
-
         private double _value;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-        public MainWindow(OpcClient opc) : this()
-        {
-            this.opc = opc;
-        }
         public MainWindow()
         {
+            iLogic.getOPC().Connect();
+
             //Connects to OPC server
-            opc.Connect();
+            //opc.Connect();
+            iLogic.getOPC().Connect();
 
             InitializeComponent();
 
@@ -92,40 +89,46 @@ namespace MES
         void MainWindow_Closed(object sender, EventArgs e)
         {
             //Put your close code here
-            opc.StopMachine();
-            
+            //opc.StopMachine();
+            iLogic.getOPC().StopMachine();
         }
+
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            opc.StartMachine(1, 2, 2000, 600);
+            //opc.StartMachine(1, 2, 2000, 600);
+            iLogic.getOPC().StartMachine(1, 2, 200, 600);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            
-            opc.StopMachine();
+            //opc.StopMachine();
+            iLogic.getOPC().StopMachine();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
-            opc.ResetMachine();
+            //opc.ResetMachine();
+            iLogic.getOPC().ResetMachine();
         }
 
         private void btnAbort_Click(object sender, RoutedEventArgs e)
         {
-            opc.AbortMachine();
+            //opc.AbortMachine();
+            iLogic.getOPC().AbortMachine();
 
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            opc.ClearMachine();
+            //opc.ClearMachine();
+            iLogic.getOPC().ClearMachine();
+
         }
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
         {
-            Alarms alarms = new Alarms(this.opc);
+            Alarms alarms = new Alarms();
             this.Hide();
             alarms.Show();
         }
@@ -315,12 +318,11 @@ namespace MES
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-        
+
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
@@ -329,7 +331,6 @@ namespace MES
             number = randomNumber.Next(19, 26);
             ValueMaintenance = randomNumber.Next(1, 100);
         }
-
 
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -345,7 +346,9 @@ namespace MES
             Vibration = Value;
             BatchID = Value;
             Amount = Value;
-            Produced = Value;
+            //Produced = Value;
+            //Produced = opc.ReadCurrentProdProcessed();
+            Produced = iLogic.getOPC().ReadCurrentProdProcessed();
             AcceptableProducts = Value;
             DefectProducts = Value;
             Status = Value;
@@ -368,14 +371,18 @@ namespace MES
             ValuesIngredients.RemoveAt(0);
 
             ValuesIngredients.Add(new ObservableValue(Value));
-
         }
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-
         }
 
-       
+
+
     }
+
+
+
+
+
 }

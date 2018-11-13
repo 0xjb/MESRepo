@@ -3,22 +3,23 @@ using LiveCharts.Wpf;
 using System;
 using System.Windows;
 
-namespace MES
+namespace MES.Presentation
 {
     /// <summary>
-    /// Interaction logic for HumidityHistory.xaml
+    /// Interaction logic for TemperatureHistory.xaml
     /// </summary>
-    public partial class HumidityHistory : Window, IObservableChartPoint
+    public partial class TemperatureHistory : Window, IObservableChartPoint
     {
         int indexOfArray = 0;
-        public HumidityHistory()
+
+        public TemperatureHistory()
         {
             InitializeComponent();
             SeriesCollection = new SeriesCollection
 
         {new LineSeries
                 {
-                    Title = "Humidity",
+                    Title = "Temperature",
                     Values= new ChartValues<double> { }
                 }
             };
@@ -27,6 +28,7 @@ namespace MES
             YFormatter = value => value;
             DataContext = this;
         }
+
         private double _value;
 
         public event Action PointChanged;
@@ -40,6 +42,8 @@ namespace MES
                 OnPointChanged();
             }
         }
+
+
         protected void OnPointChanged()
         {
             if (PointChanged != null) PointChanged.Invoke();
@@ -50,6 +54,7 @@ namespace MES
         public string[] Labels { get; set; }
 
         public Func<double, double> YFormatter { get; set; }
+
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -73,7 +78,7 @@ namespace MES
             _value = generateRandomNumber();
             SeriesCollection[0].Values.Add(Value);
             indexOfArray++;
-
         }
+
     }
 }

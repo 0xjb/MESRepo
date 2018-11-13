@@ -3,22 +3,22 @@ using LiveCharts.Wpf;
 using System;
 using System.Windows;
 
-namespace MES
+namespace MES.Presentation
 {
     /// <summary>
-    /// Interaction logic for VibrationHistory.xaml
+    /// Interaction logic for HumidityHistory.xaml
     /// </summary>
-    public partial class VibrationHistory : Window, IObservableChartPoint
+    public partial class HumidityHistory : Window, IObservableChartPoint
     {
         int indexOfArray = 0;
-        public VibrationHistory()
+        public HumidityHistory()
         {
             InitializeComponent();
             SeriesCollection = new SeriesCollection
-            {
-                new LineSeries
+
+        {new LineSeries
                 {
-                    Title = "Vibration",
+                    Title = "Humidity",
                     Values= new ChartValues<double> { }
                 }
             };
@@ -73,6 +73,7 @@ namespace MES
             _value = generateRandomNumber();
             SeriesCollection[0].Values.Add(Value);
             indexOfArray++;
+
         }
     }
 }

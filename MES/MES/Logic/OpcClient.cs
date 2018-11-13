@@ -4,12 +4,12 @@ using System.Threading;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
-namespace MES
+namespace MES.Logic
 {
     public class OpcClient
     {
-        private static ThreadStart ts = new ThreadStart(Subscript);
-        Thread subscribeThread = new Thread(ts);
+
+
 
 
 
@@ -19,8 +19,13 @@ namespace MES
 
         public OpcClient()
         {
-            subscribeThread.IsBackground = true;
-            subscribeThread.Start();
+            SubscribeThread subscribeThread = new SubscribeThread();
+
+            Thread thread = new Thread(new ThreadStart(subscribeThread.Subscript));
+            thread.IsBackground = true;
+            thread.Start();
+
+
         }
 
 
@@ -36,23 +41,10 @@ namespace MES
 
         }
 
-        public static void Subscript()
-        {
-            Session sessionSubscript = new Session();
-            sessionSubscript.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
-
-            NodeId nodeId = new NodeId("::Program:Cube.Command.Parameter[0].Value", 6);
-            MonitoredItem monitoredItem = new DataMonitoredItem(nodeId);
-            Subscription subscription = new Subscription(sessionSubscript);
-            //subscription.MonitoredItems[0] = monitoredItem;
-            subscription.MonitoredItems[0].SamplingInterval = 100;
-
-
-        }
 
         public void stopThread()
         {
-            subscribeThread.Abort();
+            //subscribeThread.Abort();
         }
 
         public void Disconnect()
@@ -305,6 +297,19 @@ namespace MES
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (float)dv.Value;
+        }
+
+        public Int32 ReadCurrentProdProcessed()
+        {
+            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
+            nodesToRead.Add(new ReadValueId() {
+                NodeId = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6),
+                AttributeId = Attributes.Value
+            });
+
+            List<DataValue> results = session.Read(nodesToRead);
+            DataValue dv = results[0];
+            return (int)dv.Value;
         }
     }
 }

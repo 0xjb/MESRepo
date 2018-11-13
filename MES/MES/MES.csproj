@@ -77,6 +77,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel.Activities" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -116,94 +117,95 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BatchReport.xaml.cs">
+    <Compile Include="Logic\SubscribeThread.cs" />
+    <Compile Include="Presentation\BatchReport.xaml.cs">
       <DependentUpon>BatchReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="BatchReportGenerator.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
-    <Compile Include="HumidityHistory.xaml.cs">
+    <Compile Include="Presentation\HumidityHistory.xaml.cs">
       <DependentUpon>HumidityHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Acquintance\IData.cs" />
     <Compile Include="Acquintance\ILogic.cs" />
     <Compile Include="Acquintance\IPresentation.cs" />
-    <Compile Include="LogicFacade.cs" />
-    <Compile Include="OpcClient.cs" />
-    <Compile Include="OpcTests.cs" />
-    <Compile Include="PresentationFacade.cs" />
+    <Compile Include="Logic\LogicFacade.cs" />
+    <Compile Include="Logic\OpcClient.cs" />
+    <Compile Include="Logic\OpcTests.cs" />
+    <Compile Include="Presentation\PresentationFacade.cs" />
     <Compile Include="Starter\Starter.cs" />
-    <Compile Include="TemperatureHistory.xaml.cs">
+    <Compile Include="Presentation\TemperatureHistory.xaml.cs">
       <DependentUpon>TemperatureHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueOverProdTime.cs" />
-    <Compile Include="VibrationHistory.xaml.cs">
+    <Compile Include="Presentation\VibrationHistory.xaml.cs">
       <DependentUpon>VibrationHistory.xaml</DependentUpon>
     </Compile>
-    <Page Include="Alarms.xaml">
+    <Page Include="Presentation\Alarms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BatchReport.xaml">
+    <Page Include="Presentation\BatchReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BatchSetup.xaml">
+    <Page Include="Presentation\BatchSetup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="History.xaml">
+    <Page Include="Presentation\History.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HumidityHistory.xaml">
+    <Page Include="Presentation\HumidityHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Data\Batch.cs" />
     <Compile Include="Tests\DataTest.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="Presentation\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Alarms.xaml.cs">
+    <Compile Include="Presentation\Alarms.xaml.cs">
       <DependentUpon>Alarms.xaml</DependentUpon>
     </Compile>
     <Compile Include="Acquintance\IBatch.cs" />
     <Compile Include="Acquintance\IDBManager.cs" />
-    <Compile Include="BatchSetup.xaml.cs">
+    <Compile Include="Presentation\BatchSetup.xaml.cs">
       <DependentUpon>BatchSetup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="History.xaml.cs">
+    <Compile Include="Presentation\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
     <Compile Include="data\DBManager.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Presentation\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OEE.xaml">
+    <Page Include="Presentation\OEE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Optimization.xaml">
+    <Page Include="Presentation\Optimization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TemperatureHistory.xaml">
+    <Page Include="Presentation\TemperatureHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VibrationHistory.xaml">
+    <Page Include="Presentation\VibrationHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OEE.xaml.cs">
+    <Compile Include="Presentation\OEE.xaml.cs">
       <DependentUpon>OEE.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Optimization.xaml.cs">
+    <Compile Include="Presentation\Optimization.xaml.cs">
       <DependentUpon>Optimization.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

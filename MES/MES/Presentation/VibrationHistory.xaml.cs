@@ -3,23 +3,22 @@ using LiveCharts.Wpf;
 using System;
 using System.Windows;
 
-namespace MES
+namespace MES.Presentation
 {
     /// <summary>
-    /// Interaction logic for TemperatureHistory.xaml
+    /// Interaction logic for VibrationHistory.xaml
     /// </summary>
-    public partial class TemperatureHistory : Window, IObservableChartPoint
+    public partial class VibrationHistory : Window, IObservableChartPoint
     {
         int indexOfArray = 0;
-
-        public TemperatureHistory()
+        public VibrationHistory()
         {
             InitializeComponent();
             SeriesCollection = new SeriesCollection
-
-        {new LineSeries
+            {
+                new LineSeries
                 {
-                    Title = "Temperature",
+                    Title = "Vibration",
                     Values= new ChartValues<double> { }
                 }
             };
@@ -28,7 +27,6 @@ namespace MES
             YFormatter = value => value;
             DataContext = this;
         }
-
         private double _value;
 
         public event Action PointChanged;
@@ -42,8 +40,6 @@ namespace MES
                 OnPointChanged();
             }
         }
-
-
         protected void OnPointChanged()
         {
             if (PointChanged != null) PointChanged.Invoke();
@@ -54,7 +50,6 @@ namespace MES
         public string[] Labels { get; set; }
 
         public Func<double, double> YFormatter { get; set; }
-
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -79,6 +74,5 @@ namespace MES
             SeriesCollection[0].Values.Add(Value);
             indexOfArray++;
         }
-
     }
 }

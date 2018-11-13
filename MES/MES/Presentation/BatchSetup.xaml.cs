@@ -1,13 +1,13 @@
 ﻿using System.Windows;
 
-namespace MES
+namespace MES.Presentation
 {
     /// <summary>
-    /// Interaction logic for BatchReport.xaml
+    /// Interaction logic for BatchSetup.xaml
     /// </summary>
-    public partial class BatchReport : Window
+    public partial class BatchSetup : Window
     {
-        public BatchReport()
+        public BatchSetup()
         {
             InitializeComponent();
         }

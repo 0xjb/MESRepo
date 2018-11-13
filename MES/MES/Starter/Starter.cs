@@ -1,9 +1,4 @@
-﻿//using Acquaintance.IData;
-//using Acquaintance.IPresentation;
-//using Acquaintance.ILogic;
-//using Data.DataFacade;
-//using MES.Logic.LogicFacade;
-//using PresentationFacade;
+﻿
 using MES.Acquintance;
 using MES.Data;
 using MES.Logic;
@@ -26,7 +21,6 @@ namespace MES.Starter
             IPresentation presentation = new PresentationFacade();
             logic.InjectData(data);
             presentation.InjectLogic(logic);
-
 
             MainWindow mainWindow = new MainWindow();
             Application application = new Application();
