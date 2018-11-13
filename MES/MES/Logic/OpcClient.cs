@@ -66,7 +66,6 @@ namespace MES.Logic
                 List<MonitoredItem> listOfMonitoredItems = new List<MonitoredItem>();
                 listOfMonitoredItems.Add(monitoredItem);
 
-                monitoredItem.
 
                 Console.WriteLine("From Subscribe**************************");
                 Console.WriteLine("Connection Status from thread = " + session.ConnectionStatus);
