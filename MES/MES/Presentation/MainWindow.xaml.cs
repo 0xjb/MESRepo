@@ -16,8 +16,6 @@ namespace MES.Presentation
         private ILogic iLogic;
 
 
-
-
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
         private double levelHops;
@@ -43,7 +41,6 @@ namespace MES.Presentation
 
         public MainWindow()
         {
-            iLogic.getOPC().Connect();
 
             //Connects to OPC server
             //opc.Connect();
