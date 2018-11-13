@@ -4,7 +4,7 @@ namespace MES.Presentation
 {
     class PresentationFacade : IPresentation
     {
-        private ILogic iLogic;
+        public static ILogic iLogic;
 
         public void InjectLogic(ILogic logicFacade)
         {
@@ -12,7 +12,7 @@ namespace MES.Presentation
         }
 
 
-        public ILogic GetLogic()
+        public static ILogic GetLogic()
         {
             return iLogic;
         }

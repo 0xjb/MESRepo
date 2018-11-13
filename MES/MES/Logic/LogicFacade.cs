@@ -5,7 +5,15 @@ namespace MES.Logic
 
     public class LogicFacade : ILogic
     {
-        OpcClient opc = new OpcClient();
+        private OpcClient opc;
+        //private SubscribeThread subscribeThread;
+        public LogicFacade()
+        {
+            this.opc = new OpcClient();
+            //this.subscribeThread = new SubscribeThread();
+        }
+
+
 
         private IData data;
         public void InjectData(IData dataLayer)
@@ -13,9 +21,16 @@ namespace MES.Logic
             data = dataLayer;
         }
 
-        public OpcClient getOPC()
+        public OpcClient GetOPC()
         {
             return opc;
         }
+
+
+
+        //SubscribeThread ILogic.GetSubscribeThread()
+        //{
+        //    return subscribeThread;
+        //}
     }
 }

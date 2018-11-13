@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using MES.Acquintance;
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 
 namespace MES.Presentation
@@ -14,7 +15,7 @@ namespace MES.Presentation
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
         private ILogic iLogic;
-
+        private Thread thread3;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
@@ -41,10 +42,19 @@ namespace MES.Presentation
 
         public MainWindow()
         {
+            //Get logiclayer
+            iLogic = PresentationFacade.GetLogic();
+
+
+            //SubscribeThread subscribeThread = new SubscribeThread();
+
+            //Thread thread = new Thread(new ThreadStart(iLogic.GetSubscribeThread().Subscript));
+            //thread.IsBackground = true;
+            //thread.Start();
 
             //Connects to OPC server
             //opc.Connect();
-            iLogic.getOPC().Connect();
+            iLogic.GetOPC().Connect();
 
             InitializeComponent();
 
@@ -72,6 +82,11 @@ namespace MES.Presentation
             Labels = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
             Formatter = value => value.ToString("N");
             DataContext = this;
+
+            thread3 = new Thread(ThreadReadProcessedProducts);
+            thread3.IsBackground = true;
+            thread3.Start();
+
         }
 
         public ChartValues<ObservableValue> ValuesIngredients { get; set; }
@@ -83,44 +98,51 @@ namespace MES.Presentation
 
         public Func<double, string> Formatter { get; set; }
 
+        public void ThreadReadProcessedProducts()
+        {
+            while (true) {
+                Produced = iLogic.GetOPC().processedProducts;
+                Thread.Sleep(500);
+            }
+
+        }
+
         void MainWindow_Closed(object sender, EventArgs e)
         {
             //Put your close code here
             //opc.StopMachine();
-            iLogic.getOPC().StopMachine();
+            iLogic.GetOPC().StopMachine();
         }
 
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //opc.StartMachine(1, 2, 2000, 600);
-            iLogic.getOPC().StartMachine(1, 2, 200, 600);
+            iLogic.GetOPC().StartMachine(1, 2, 200, 600);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             //opc.StopMachine();
-            iLogic.getOPC().StopMachine();
+            iLogic.GetOPC().StopMachine();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             //opc.ResetMachine();
-            iLogic.getOPC().ResetMachine();
+            iLogic.GetOPC().ResetMachine();
         }
 
         private void btnAbort_Click(object sender, RoutedEventArgs e)
         {
             //opc.AbortMachine();
-            iLogic.getOPC().AbortMachine();
-
+            iLogic.GetOPC().AbortMachine();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             //opc.ClearMachine();
-            iLogic.getOPC().ClearMachine();
-
+            iLogic.GetOPC().ClearMachine();
         }
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
@@ -345,7 +367,8 @@ namespace MES.Presentation
             Amount = Value;
             //Produced = Value;
             //Produced = opc.ReadCurrentProdProcessed();
-            Produced = iLogic.getOPC().ReadCurrentProdProcessed();
+            //Produced = iLogic.GetSubscribeThread().ReadCurrentProductsProcessed();
+            //Produced = iLogic.GetOPC().processedProducts;
             AcceptableProducts = Value;
             DefectProducts = Value;
             Status = Value;
@@ -370,16 +393,10 @@ namespace MES.Presentation
             ValuesIngredients.Add(new ObservableValue(Value));
         }
 
+
+        ///TODO SKAL FJERNES
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
         }
-
-
-
     }
-
-
-
-
-
 }
