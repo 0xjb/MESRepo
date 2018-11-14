@@ -126,10 +126,10 @@
     <Compile Include="Acquintance\IData.cs" />
     <Compile Include="Acquintance\ILogic.cs" />
     <Compile Include="Acquintance\IPresentation.cs" />
-    <Compile Include="LogicFacade.cs" />
+    <Compile Include="Logic\LogicFacade.cs" />
     <Compile Include="OpcClient.cs" />
     <Compile Include="OpcTests.cs" />
-    <Compile Include="PresentationFacade.cs" />
+    <Compile Include="Presentation\PresentationFacade.cs" />
     <Compile Include="Starter\Starter.cs" />
     <Compile Include="TemperatureHistory.xaml.cs">
       <DependentUpon>TemperatureHistory.xaml</DependentUpon>
