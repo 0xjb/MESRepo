@@ -14,8 +14,7 @@ namespace MES.Acquintance
         /// <param name="batch"></param>
         /// <returns></returns>
         bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, float temperature, float humidity,
-            float vibration, string timeStamp);
+            int defectProducts, string timeStampStart, string timeStampEnd);
 
         /// <summary>
         /// Saves a batch in the db
@@ -23,6 +22,18 @@ namespace MES.Acquintance
         /// <param name="batch"></param>
         /// <returns></returns>
         bool SaveBatch(IBatch batch);
+
+        /// <summary>
+        /// Inserts a set of batch values into the db
+        /// </summary>
+        /// <param name="temperature"></param>
+        /// <param name="humidity"></param>
+        /// <param name="vibration"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="batchId"></param>
+        /// <returns></returns>
+        bool InsertBatchValueSet(float temperature, float humidity,
+            float vibration, string timestamp, float batchId);
 
         /// <summary>
         /// Returns all batches from the db
@@ -64,5 +75,19 @@ namespace MES.Acquintance
         /// <param name="batchId"></param>
         /// <returns></returns>
         bool DeleteBatch(float batchId);
+
+        /// <summary>
+        /// Run custom queries in the db
+        /// </summary>
+        /// <param name="statements"></param>
+        /// <returns></returns>
+        bool RunQueries(string[] statements);
+
+        /// <summary>
+        /// Runs a custom query in the db
+        /// </summary>
+        /// <param name="statements"></param>
+        /// <returns></returns>
+        bool RunQuery(string statement);
     }
 }

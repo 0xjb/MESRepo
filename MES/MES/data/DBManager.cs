@@ -13,7 +13,6 @@ namespace MES.data
 {
     public class DBManager : IDBManager
     {
-
         // database info
         private string server;
         private string port;
@@ -25,6 +24,7 @@ namespace MES.data
 
         // database table names
         private string batchesTable;
+        private string batchValuesTable;
 
         public DBManager()
         {
@@ -37,21 +37,26 @@ namespace MES.data
             connString = "Server=" + server + "; Port=" + port + "; User Id=" + userId + "; Password=" + password + "; Database=" + database;
 
             batchesTable = "batches";
+            batchValuesTable = "batchvalues";
         }
 
         /// <summary>
-        /// Connects to the database and sends an SQL query (that does not return anything EX. INSERT statement).
+        /// Connects to the database and executes SQL queries (that does not return anything EX. INSERT statement).
         /// </summary>
         /// <param name="statement"></param>
         /// <returns></returns>
-        private bool SendSqlCommand(String statement)
+        private bool SendSqlCommand(String[] statements)
         {
             try
             {
                 NpgsqlConnection conn = new NpgsqlConnection(connString);
                 conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(statement, conn);
-                command.ExecuteNonQuery();
+
+                foreach (String statement in statements)
+                {
+                    NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+                    command.ExecuteNonQuery();
+                }
 
                 conn.Close();
                 return true;
@@ -61,6 +66,17 @@ namespace MES.data
                 MessageBox.Show(ex.ToString());
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Connects to the database and executes an SQL query (that does not return anything EX. INSERT statement).
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
+        private bool SendSqlCommand(String statement)
+        {
+            String[] statements = { statement };
+            return SendSqlCommand(statements);
         }
 
         /// <summary>
@@ -85,17 +101,20 @@ namespace MES.data
                     double beerId = dRead.GetDouble(1);
                     int acceptableProducts = dRead.GetInt32(2);
                     int defectProducts = dRead.GetInt32(3);
-                    double temperature = dRead.GetDouble(4);
-                    double humidity = dRead.GetDouble(5);
-                    double vibration = dRead.GetDouble(6);
-                    string timestamp = dRead.GetString(7);
+                    string timestampStart = dRead.GetString(4);
+                    string timestampEnd = dRead.GetString(5);
 
-                    IBatch batch = new Batch((float)batchId, (float)beerId,
-                        acceptableProducts, defectProducts, (float)temperature,
-                        (float)humidity, (float)vibration, timestamp);
-                    batches.Add((float)batchId, batch);
+                    batches.Add((float)batchId, new Batch((float)batchId, (float)beerId,
+                        acceptableProducts, defectProducts,
+                        timestampStart, timestampEnd));
                 }
+
                 dRead.Close();
+
+                foreach (IBatch batch in batches.Values)
+                {
+                    batch.SetBatchValueSet(GetBatchValues(conn, batch.GetBatchId()));
+                }
 
                 conn.Close();
                 return batches;
@@ -107,17 +126,74 @@ namespace MES.data
             }
         }
 
+        /// <summary>
+        /// Returns the batch values for a specific batch
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="batchId"></param>
+        /// <returns></returns>
+        private IList<IBatchValueSet> GetBatchValues(NpgsqlConnection conn, float batchId)
+        {
+            string statement = "SELECT * FROM " + batchValuesTable
+                + " WHERE belongingto = " + batchId;
+
+            NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+            NpgsqlDataReader dRead = command.ExecuteReader();
+
+            IList<IBatchValueSet> values = new List<IBatchValueSet>();
+            while (dRead.Read())
+            {
+                double temperature = dRead.GetDouble(0);
+                double humidity = dRead.GetDouble(1);
+                double vibration = dRead.GetDouble(2);
+                string timestamp = dRead.GetString(3);
+
+                values.Add(new BatchValueSet((float)temperature,
+                    (float)humidity, (float)vibration, timestamp));
+            }
+
+            dRead.Close();
+            return values;
+        }
+
         public bool InsertIntoBatchesTable(IBatch batch)
         {
-            string sql = "INSERT INTO " + batchesTable + " VALUES("
+            string[] sql = new string[batch.GetBatchValues().Count() + 1];
+            uint stringsAdded = 0;
+
+            string sql0 = "INSERT INTO " + batchesTable + " VALUES("
                 + batch.GetBatchId() + ", "
                 + batch.GetBeerId() + ", "
                 + batch.GetAcceptableProducts() + ", "
-                + batch.GetDefectProducts() + ", "
-                + batch.GetTemperature() + ", "
-                + batch.GetHumidity() + ", "
-                + batch.GetVibration() + ", '"
-                + batch.GetTimestamp() + "');";
+                + batch.GetDefectProducts() + ", '"
+                + batch.GetTimestampStart() + "', '"
+                + batch.GetTimestampEnd() + "');";
+
+            sql[0] = sql0;
+            stringsAdded++;
+
+            foreach (IBatchValueSet values in batch.GetBatchValues())
+            {
+            string sqlString = "INSERT INTO " + batchValuesTable + " VALUES("
+                + values.GetTemperature() + ", "
+                + values.GetHumidity() + ", "
+                + values.GetVibration() + ", '"
+                + values.GetTimeStamp() + "', "
+                + batch.GetBatchId() + ");";
+
+                sql[stringsAdded] = sqlString;
+                stringsAdded++;
+            }
+
+            return SendSqlCommand(sql);
+        }
+
+        public bool InsertBatchValueSet(float temperature, float humidity,
+            float vibration, string timestamp, float batchId)
+        {
+            string sql = "INSERT INTO " + batchValuesTable + " VALUES("
+            + temperature + ", " + humidity + ", " + vibration
+            + ", '" + timestamp + "', " + batchId  + ");";
 
             return SendSqlCommand(sql);
         }
@@ -131,10 +207,14 @@ namespace MES.data
 
         public IDictionary<float, IBatch> GetBatches(string month, string year)
         {
+            if (month.Length == 1)
+            {
+                month = " " + month;
+            }
             if (month.Length == 2 && year.Length == 4)
             {
                 string sql = "SELECT * FROM " + batchesTable
-                    + " WHERE timestampx LIKE '___" + month + "/" + year + "%'";
+                    + " WHERE timestampEnd LIKE '___" + month + "/" + year + "%'";
 
                 return GetSqlCommand(sql);
             }
@@ -178,6 +258,11 @@ namespace MES.data
             string sql = "DELETE FROM " + batchesTable + " WHERE batchid = " + batchId;
 
             return SendSqlCommand(sql);
+        }
+
+        public bool RunQueries(string[] statements)
+        {
+            return SendSqlCommand(statements);
         }
     }
 }

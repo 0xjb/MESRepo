@@ -112,10 +112,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acquintance\IBatchValueSet.cs" />
     <Compile Include="BatchReport.xaml.cs">
       <DependentUpon>BatchReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="BatchReportGenerator.cs" />
+    <Compile Include="Data\BatchValueSet.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="HumidityHistory.xaml.cs">
@@ -124,10 +126,10 @@
     <Compile Include="Acquintance\IData.cs" />
     <Compile Include="Acquintance\ILogic.cs" />
     <Compile Include="Acquintance\IPresentation.cs" />
-    <Compile Include="LogicFacade.cs" />
+    <Compile Include="Logic\LogicFacade.cs" />
     <Compile Include="OpcClient.cs" />
     <Compile Include="Tests\OpcTests.cs" />
-    <Compile Include="PresentationFacade.cs" />
+    <Compile Include="Presentation\PresentationFacade.cs" />
     <Compile Include="Starter\Starter.cs" />
     <Compile Include="TemperatureHistory.xaml.cs">
       <DependentUpon>TemperatureHistory.xaml</DependentUpon>
