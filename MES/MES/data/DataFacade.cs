@@ -39,6 +39,11 @@ namespace MES.Data
                 vibration, timestamp, batchId);
         }
 
+        public bool UpdateBatch(IBatch batch)
+        {
+            return dbManager.UpdateBatch(batch);
+        }
+
         public IDictionary<float, IBatch> GetAllBatches()
         {
             return dbManager.GetAllBatches();
