@@ -12,7 +12,7 @@ namespace MES.Data
 {
     public class DataFacade : IData
     {
-        IDBManager dbManager;
+        private IDBManager dbManager;
 
         public DataFacade()
         {
