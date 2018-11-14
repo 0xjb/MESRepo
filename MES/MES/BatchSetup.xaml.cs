@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 
 namespace MES
 {
@@ -7,7 +8,7 @@ namespace MES
     /// </summary>
     public partial class BatchSetup : Window
     {
-        OpcClient c; 
+        OpcClient c;
         public BatchSetup(OpcClient c)
         {
             this.c = c;
@@ -28,12 +29,20 @@ namespace MES
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            float batchId = float.Parse(BatchIdTB.Text);
-            float productType = float.Parse(ProductTypeTB.Text);
-            float amount = float.Parse(AmountTB.Text);
-            float machineSpeed = float.Parse(MachineSpeedTB.Text);
-            c.StartMachine(batchId, productType, amount, machineSpeed);
-
+            try
+            {
+                float batchId = float.Parse(BatchIdTB.Text);
+                float productType = float.Parse(ProductTypeTB.Text);
+                float amount = float.Parse(AmountTB.Text);
+                float machineSpeed = float.Parse(MachineSpeedTB.Text);
+                c.StartMachine(batchId, productType, amount, machineSpeed);
+                testlabel.Content = "you don gut";
+            }
+            catch (System.FormatException)
+            {
+                testlabel.Content = "you must insert correct values into the boxes";
+            }
         }
     }
 }
+
