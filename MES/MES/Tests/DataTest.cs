@@ -17,7 +17,7 @@ namespace MES.Tests
         [Test]
         public void TestDBManager()
         {
-            // Testing InsertBatch
+            // Testing InsertBatch & InsertBatchValueSet
             IBatch batch0 = new Batch(-1, 3, 90, 10,
                 "02/11/2018 09:18:35", "02/11/2018 09:20:35");
             batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:18:35");
@@ -50,13 +50,21 @@ namespace MES.Tests
             bool inserted3 = dbManager.InsertIntoBatchesTable(batch3);
             Assert.IsTrue(inserted3, "Inserted fourth");
 
+            // Testing UpdateBatch
+
+            batch3.AddProducts(15, true);
+            batch3.AddProducts(5, false);
+            batch3.SetTimestampEnd("02/11/2018 09:20:40");
+            bool updateSucces = dbManager.UpdateBatch(batch3);
+            Assert.IsTrue(updateSucces, "Succes");
+
             // Testing GetAllBatches
             IDictionary<float, IBatch> allBatches = dbManager.GetAllBatches();
 
             IBatch loadedBatch0 = null;
             allBatches.TryGetValue(-1, out loadedBatch0);
             Assert.IsNotNull(loadedBatch0, "Succes");
-
+            
             IBatch loadedBatch1 = null;
             allBatches.TryGetValue(-2, out loadedBatch1);
             Assert.IsNotNull(loadedBatch1, "Succes");
@@ -69,12 +77,18 @@ namespace MES.Tests
             allBatches.TryGetValue(-4, out loadedBatch3);
             Assert.IsNotNull(loadedBatch3, "Succes");
 
+            // Testing if batch values was loaded
+
             bool loadedBatchValuesO = false;
             if (loadedBatch0.GetBatchValues().Count == 3)
             {
                 loadedBatchValuesO = true;
             }
             Assert.IsTrue(loadedBatchValuesO, "Succes");
+
+            // Testing if the batch was updated correctly
+
+            Assert.IsTrue(loadedBatch3.GetAcceptableProducts() == 105, "Succes");
 
             // Testing GetBatches
             IDictionary<float, IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");

@@ -29,6 +29,13 @@ namespace MES.Acquintance
             float vibration, string timestamp, float batchId);
 
         /// <summary>
+        /// Updates a batch in the db
+        /// </summary>
+        /// <param name="batch"></param>
+        /// <returns></returns>
+        bool UpdateBatch(IBatch batch);
+
+        /// <summary>
         /// Returns all batches from the db
         /// </summary>
         /// <returns></returns>

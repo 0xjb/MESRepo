@@ -198,6 +198,17 @@ namespace MES.data
             return SendSqlCommand(sql);
         }
 
+        public bool UpdateBatch(IBatch batch)
+        {
+            string sql = "UPDATE " + batchesTable
+                + " SET acceptableproducts = " + batch.GetAcceptableProducts()
+                + ", defectproducts = " + batch.GetDefectProducts()
+                + ", timestampend = '" + batch.GetTimestampEnd()
+                + "' WHERE batchid = " + batch.GetBatchId();
+
+            return SendSqlCommand(sql);
+        }
+
         public IDictionary<float, IBatch> GetAllBatches()
         {
             string sql = "SELECT * FROM " + batchesTable + ";";
