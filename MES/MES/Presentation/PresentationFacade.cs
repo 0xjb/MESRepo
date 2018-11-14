@@ -9,10 +9,10 @@ namespace MES.Presentation
 {
     class PresentationFacade : IPresentation
     {
-        private ILogic il;
+        private ILogic logic;
         public void InjectLogic(ILogic logicFacade)
         {
-            this.il = logicFacade;
+            this.logic = logicFacade;
         }
     }
 }
