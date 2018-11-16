@@ -7,10 +7,11 @@ using System.Windows;
 namespace MES.Presentation
 {
     /// <summary>
-    /// Interaction logic for HumidityHistory.xaml
+    /// Interaction logic for HumidityHi//TODO Størrelse af array i constructor Humidity Historystory.xaml
     /// </summary>
     public partial class HumidityHistory : Window, IObservableChartPoint
     {
+        //TODO Størrelse af array i constructor Humidity History
         private IPresentation presentationFacade;
         int indexOfArray = 0;
         public HumidityHistory(IPresentation pf)

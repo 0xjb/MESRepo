@@ -11,10 +11,12 @@ namespace MES.Presentation
     /// </summary>
     public partial class VibrationHistory : Window, IObservableChartPoint
     {
+        //TODO Størrelse af array i constructor Vibration History
         private IPresentation presentationFacade;
         int indexOfArray = 0;
         public VibrationHistory(IPresentation pf)
         {
+
             this.presentationFacade = pf;
             InitializeComponent();
             SeriesCollection = new SeriesCollection
