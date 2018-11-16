@@ -18,62 +18,6 @@ namespace MES.Logic
         public OpcClient()
         {
             Connect();
-            //SubscribeThread subscribeThread = new SubscribeThread();
-            //Thread thread1 = new Thread(new ThreadStart(subscribeThread.Subscript));
-            //thread1.IsBackground = true;
-            //thread1.Start();
-
-
-            //Session sessionSubscript = new Session();
-            //sessionSubscript.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
-            //Subscription subscription = new Subscription(sessionSubscript);
-
-            //NodeId nodeId = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
-            //MonitoredItem monitoredItem = new DataMonitoredItem(nodeId);
-            //List<MonitoredItem> listOfMonitoredItems = new List<MonitoredItem>();
-            //listOfMonitoredItems.Add(monitoredItem);
-
-            //subscription.CreateMonitoredItems(listOfMonitoredItems);
-
-
-            //subscription.PublishingEnabled = true;
-            //subscription.PublishingInterval = 500;
-
-            thread2 = new Thread(ThreadReadProducts);
-            thread2.IsBackground = true;
-            thread2.Start();
-        }
-
-
-        public void ThreadReadProducts()
-        {
-            //Connect();
-            while (true) {
-                //Connect();
-                //Session sessionSubscript = new Session();
-                //sessionSubscript.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
-                //Subscription subscription = new Subscription(sessionSubscript);
-
-                Subscription subscription = new Subscription(session);
-
-                NodeId nodeId = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
-                MonitoredItem monitoredItem = new EventMonitoredItem(nodeId);
-                subscription.PublishingEnabled = true;
-
-                subscription.PublishingInterval = 500;
-                subscription.Create();
-
-                List<MonitoredItem> listOfMonitoredItems = new List<MonitoredItem>();
-                listOfMonitoredItems.Add(monitoredItem);
-
-
-                Console.WriteLine("From Subscribe**************************");
-                Console.WriteLine("Connection Status from thread = " + session.ConnectionStatus);
-
-                Thread.Sleep(500);
-                processedProducts = ReadCurrentProductsProcessed();
-                //Disconnect();
-            }
         }
 
 

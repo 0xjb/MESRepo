@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MES.Acquintance
+﻿namespace MES.Acquintance
 {
     public interface IPresentation
     {
         void InjectLogic(ILogic logicFacade);
+        ILogic GetLogic();
     }
 }
-

@@ -16,6 +16,7 @@ namespace MES.Presentation
     {
         private ILogic iLogic;
         private Thread thread3;
+        private IPresentation presentationFacade;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
@@ -40,20 +41,12 @@ namespace MES.Presentation
         private double _value;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public MainWindow()
+        public MainWindow(IPresentation pf)
         {
+            this.presentationFacade = pf;
             //Get logiclayer
-            iLogic = PresentationFacade.GetLogic();
-
-
-            //SubscribeThread subscribeThread = new SubscribeThread();
-
-            //Thread thread = new Thread(new ThreadStart(iLogic.GetSubscribeThread().Subscript));
-            //thread.IsBackground = true;
-            //thread.Start();
-
+            iLogic = presentationFacade.GetLogic();
             //Connects to OPC server
-            //opc.Connect();
             iLogic.GetOPC().Connect();
 
             InitializeComponent();
@@ -147,35 +140,35 @@ namespace MES.Presentation
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
         {
-            Alarms alarms = new Alarms();
+            Alarms alarms = new Alarms(presentationFacade);
             this.Hide();
             alarms.Show();
         }
 
         private void btnOEE_Click(object sender, RoutedEventArgs e)
         {
-            OEE oEE = new OEE();
+            OEE oEE = new OEE(presentationFacade);
             this.Hide();
             oEE.Show();
         }
 
         private void btnOptimization_Click(object sender, RoutedEventArgs e)
         {
-            Optimization optimization = new Optimization();
+            Optimization optimization = new Optimization(presentationFacade);
             this.Hide();
             optimization.Show();
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History();
+            History history = new History(presentationFacade);
             this.Hide();
             history.Show();
         }
 
         private void btnBatchSetup_Click(object sender, RoutedEventArgs e)
         {
-            BatchSetup batchSetup = new BatchSetup();
+            BatchSetup batchSetup = new BatchSetup(presentationFacade);
             this.Hide();
             batchSetup.Show();
         }
@@ -281,6 +274,8 @@ namespace MES.Presentation
                 OnPropertyChanged("Amount");
             }
         }
+
+
 
         public double Produced
 

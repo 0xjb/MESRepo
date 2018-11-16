@@ -1,5 +1,6 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
+using MES.Acquintance;
 using System;
 using System.Windows;
 
@@ -10,10 +11,12 @@ namespace MES.Presentation
     /// </summary>
     public partial class TemperatureHistory : Window, IObservableChartPoint
     {
+        private IPresentation presentationFacade;
         int indexOfArray = 0;
 
-        public TemperatureHistory()
+        public TemperatureHistory(IPresentation pf)
         {
+            this.presentationFacade = pf;
             InitializeComponent();
             SeriesCollection = new SeriesCollection
 
@@ -58,7 +61,7 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History();
+            History history = new History(presentationFacade);
             this.Close();
             history.Show();
         }

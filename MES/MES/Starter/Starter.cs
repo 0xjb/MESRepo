@@ -22,7 +22,7 @@ namespace MES.Starter
             logic.InjectData(data);
             presentation.InjectLogic(logic);
 
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(presentation);
             Application application = new Application();
             application.Run(mainWindow);
 
