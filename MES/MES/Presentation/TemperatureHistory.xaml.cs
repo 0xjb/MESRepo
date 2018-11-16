@@ -11,6 +11,7 @@ namespace MES.Presentation
     /// </summary>
     public partial class TemperatureHistory : Window, IObservableChartPoint
     {
+        //TODO Størrelse af array i constructor Temperature History
         private IPresentation presentationFacade;
         int indexOfArray = 0;
 
