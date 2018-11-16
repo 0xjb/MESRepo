@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
@@ -9,11 +8,9 @@ namespace MES.Logic
     public class OpcClient
     {
         bool isProcessRunning = false;
-        private bool isMachineStarted = false;
         public double processedProducts;
         public Session session;
 
-        private Thread thread2;
 
         public OpcClient()
         {
@@ -113,8 +110,6 @@ namespace MES.Logic
 
         public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed)
         {
-            isMachineStarted = true;
-
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
