@@ -95,19 +95,6 @@ namespace MES.Logic
                         break;
                 }
 
-
-                ////Console.WriteLine("***" + s.MonitoredItems[0].NodeId.Identifier.ToString());
-                //if (s.MonitoredItems[0].NodeId.Identifier.ToString().Equals("::Program:Cube.Status.StateCurrent")) {
-                //    StateCurrent = double.Parse(e.DataChanges[0].Value.ToString());
-                //}
-
-                //if (s.MonitoredItems[0].NodeId.Identifier.ToString().Equals("::Program:Cube.Admin.ProdProcessedCount")) {
-                //    ProcessedProducts = double.Parse(e.DataChanges[0].Value.ToString());
-                //}
-
-                //if (s.MonitoredItems[0].NodeId.Identifier.ToString().Equals("::Program:Cube.Admin.ProdDefectiveCount")) {
-                //    defectProducts = double.Parse(e.DataChanges[0].Value.ToString());
-                //}
             }
         }
 
