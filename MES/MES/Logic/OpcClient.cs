@@ -5,40 +5,59 @@ using System.Threading;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
-namespace MES.Logic {
-    public class OpcClient : INotifyPropertyChanged {
+namespace MES.Logic
+{
+    public class OpcClient : INotifyPropertyChanged
+    {
         private bool isProcessRunning = false;
         private bool isMachineStarted = false;
         private double processedProducts;
+        private double defectProducts;
+        private double stateCurrent;
+        private double tempCurrent;
         public Session session;
 
+        //TODO Skal fjernes
         private Thread thread2;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public OpcClient() {
+        public OpcClient()
+        {
             Connect();
             // testing purposes
             CreateSubscription();
         }
 
 
-        public void Connect() {
+        public void Connect()
+        {
             session = new Session();
 
             //Connect to server with no security
             session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
         }
 
-        public void CreateSubscription() {
+        public void CreateSubscription()
+        {
             Subscription s = new Subscription(session);
             // node to monitor
             NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
+            NodeId stateNode = new NodeId("::Program:Cube.Status.StateCurrent", 6);
+            NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
+            NodeId tempNode = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6);
             // list of monitored items
             List<MonitoredItem> monitoredItems = new List<MonitoredItem>();
             // convert nodeid to datamonitoreditem
             MonitoredItem miAmountNode = new DataMonitoredItem(amountNode);
+            MonitoredItem miStateNode = new DataMonitoredItem(stateNode);
+            MonitoredItem miDefectNode = new DataMonitoredItem(defectNode);
+            MonitoredItem miTempNode = new DataMonitoredItem(tempNode);
             monitoredItems.Add(miAmountNode);
+            monitoredItems.Add(miStateNode);
+            monitoredItems.Add(miDefectNode);
+            monitoredItems.Add(miTempNode);
+
             // init subscription with parameters
             s = new Subscription(session);
             s.PublishingInterval = 100;
@@ -51,18 +70,54 @@ namespace MES.Logic {
             s.CreateMonitoredItems(monitoredItems);
             // create the actual subscription
             s.Create(new RequestSettings() { OperationTimeout = 10000 });
-
-
-        }
-        private void OnDataChanged(Subscription s, DataChangedEventArgs e) {
-            ProcessedProducts = double.Parse(e.DataChanges[0].Value.ToString());
         }
 
-        public void Disconnect() {
+        private void OnDataChanged(Subscription s, DataChangedEventArgs e)
+        {
+            foreach (DataChange dc in e.DataChanges) {
+                switch (dc.MonitoredItem.NodeId.Identifier.ToString()) {
+                    case "::Program:Cube.Status.StateCurrent":
+                        StateCurrent = double.Parse(dc.Value.ToString());
+                        break;
+                    // products processed
+                    case "::Program:Cube.Admin.ProdProcessedCount":
+                        ProcessedProducts = double.Parse(dc.Value.ToString());
+                        break;
+                    //  temperature
+                    case "::Program:Cube.Status.Parameter[3]":
+                        TempCurrent = double.Parse(dc.Value.ToString());
+                        break;
+                    // defect products processed
+                    case "::Program:Cube.Admin.ProdDefectiveCount":
+                        ProcessedProducts = double.Parse(dc.Value.ToString());
+                        break;
+                    default:
+                        break;
+                }
+
+
+                ////Console.WriteLine("***" + s.MonitoredItems[0].NodeId.Identifier.ToString());
+                //if (s.MonitoredItems[0].NodeId.Identifier.ToString().Equals("::Program:Cube.Status.StateCurrent")) {
+                //    StateCurrent = double.Parse(e.DataChanges[0].Value.ToString());
+                //}
+
+                //if (s.MonitoredItems[0].NodeId.Identifier.ToString().Equals("::Program:Cube.Admin.ProdProcessedCount")) {
+                //    ProcessedProducts = double.Parse(e.DataChanges[0].Value.ToString());
+                //}
+
+                //if (s.MonitoredItems[0].NodeId.Identifier.ToString().Equals("::Program:Cube.Admin.ProdDefectiveCount")) {
+                //    defectProducts = double.Parse(e.DataChanges[0].Value.ToString());
+                //}
+            }
+        }
+
+        public void Disconnect()
+        {
             session.Disconnect();
         }
 
-        public void ResetMachine() {
+        public void ResetMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -80,7 +135,8 @@ namespace MES.Logic {
             }
         }
 
-        public void StopMachine() {
+        public void StopMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -98,7 +154,8 @@ namespace MES.Logic {
             }
         }
 
-        public void AbortMachine() {
+        public void AbortMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -116,7 +173,8 @@ namespace MES.Logic {
             }
         }
 
-        public void ClearMachine() {
+        public void ClearMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -134,7 +192,8 @@ namespace MES.Logic {
             }
         }
 
-        public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed) {
+        public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed)
+        {
             isMachineStarted = true;
 
             if (!isProcessRunning) {
@@ -172,7 +231,8 @@ namespace MES.Logic {
             }
         }
 
-        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val) {
+        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val)
+        {
             return new WriteValue() {
                 NodeId = new NodeId(nodeId, namespaceIndex),
                 AttributeId = attributeId,
@@ -180,17 +240,24 @@ namespace MES.Logic {
             };
         }
 
-        private DataValue CreateDataValue(float f) {
+        private DataValue CreateDataValue(float f)
+        {
             return new DataValue() {
                 Value = f
             };
         }
-
-        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e) {
+        public void Write(WriteValueCollection nodesToWrite)
+        {
+            session.Write(nodesToWrite);
+        }
+        //TODO skal fjernes herfra og ned (read metoder)
+        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e)
+        {
             Console.WriteLine("succ");
         }
 
-        public Int32 ReadStateCurrent() {
+        public Int32 ReadStateCurrent()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.StateCurrent", 6),
@@ -202,11 +269,10 @@ namespace MES.Logic {
             return (int)dv.Value;
         }
 
-        public void Write(WriteValueCollection nodesToWrite) {
-            session.Write(nodesToWrite);
-        }
 
-        public int readDataTypes() {
+
+        public int readDataTypes()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Command.Parameter[0].Value", 6),
@@ -219,7 +285,8 @@ namespace MES.Logic {
             return (int)result[0].Value;
         }
 
-        public float ReadCurrentMachineSpeed() {
+        public float ReadCurrentMachineSpeed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.CurMachSpeed", 6),
@@ -231,7 +298,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public float ReadMachineSpeed() {
+        public float ReadMachineSpeed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.MachSpeed", 6),
@@ -243,7 +311,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentBatchId() {
+        public float ReadCurrentBatchId()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6),
@@ -255,7 +324,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public float ReadProductAmountInBatch() {
+        public float ReadProductAmountInBatch()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[1].Value", 6),
@@ -267,7 +337,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentHumidity() {
+        public float ReadCurrentHumidity()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6),
@@ -279,7 +350,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentTemperature() {
+        public float ReadCurrentTemperature()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6),
@@ -291,7 +363,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentVibration() {
+        public float ReadCurrentVibration()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6),
@@ -303,7 +376,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public Int32 ReadCurrentProductsProcessed() {
+        public Int32 ReadCurrentProductsProcessed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6),
@@ -314,17 +388,66 @@ namespace MES.Logic {
             DataValue dv = results[0];
             return (int)dv.Value;
         }
-        protected void OnPropertyChanged(string name) {
+
+        public Int32 ReadDefectProducts()
+        {
+            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
+            nodesToRead.Add(new ReadValueId() {
+                NodeId = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6),
+                AttributeId = Attributes.Value
+            });
+
+            List<DataValue> results = session.Read(nodesToRead);
+            DataValue dv = results[0];
+            return (int)dv.Value;
+        }
+
+
+        protected void OnPropertyChanged(string name)
+        {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-        public double ProcessedProducts {
+
+        public double ProcessedProducts
+        {
             get { return processedProducts; }
-            set {
+            set
+            {
                 processedProducts = value;
                 OnPropertyChanged("ProcessedProducts");
+            }
+        }
+
+        public double DefectProducts
+        {
+            get { return defectProducts; }
+            set
+            {
+                defectProducts = value;
+                OnPropertyChanged("DefectProducts");
+            }
+        }
+
+        public double StateCurrent
+        {
+            get { return stateCurrent; }
+            set
+            {
+                stateCurrent = value;
+                OnPropertyChanged("StateCurrent");
+            }
+        }
+
+        public double TempCurrent
+        {
+            get { return tempCurrent; }
+            set
+            {
+                tempCurrent = value;
+                OnPropertyChanged("TempCurrent");
             }
         }
     }

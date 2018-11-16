@@ -113,7 +113,7 @@
 
 
         </Viewbox>
-        <TextBox Name="txtTemp" Text="{Binding Path=Temperature}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" IsReadOnly="True" TextChanged="TextBox_TextChanged"/>
+        <TextBox Name="txtTemp" Text="{Binding Path=PresentationFacade.ILogic.OPC.TempCurrent}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" IsReadOnly="True" TextChanged="TextBox_TextChanged"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" Text="Temperature" VerticalAlignment="Center"/>
         <TextBox Name="txtHumid" Text="{Binding Path=Humidity}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" Text="Humidity" VerticalAlignment="Center"/>
@@ -129,11 +129,11 @@
         <TextBlock Grid.Column="5" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" Text="Produced" VerticalAlignment="Center"/>
         <TextBox Name="txtAcceptedProducts" Text="{Binding Path=AcceptableProducts}" Grid.Column="6" Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True"/>
         <TextBlock Grid.Column="5" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" Text="Acceptable products" VerticalAlignment="Center"/>
-        <TextBox Name="txtDefectProducts" Text="{Binding Path=DefectProducts}" Grid.Column="6" Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" IsReadOnly="True"/>
+        <TextBox Name="txtDefectProducts" Text="{Binding Path=PresentationFacade.ILogic.OPC.DefectProducts}" Grid.Column="6" Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" IsReadOnly="True"/>
         <TextBlock Grid.Column="5" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" Text="Defect products" VerticalAlignment="Center"/>
 
         <TextBlock Grid.Column="7" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="11" TextWrapping="Wrap" Text="Status" VerticalAlignment="Center"/>
-        <TextBox Name="txtStatus" Text="{Binding Path=Status}" Grid.Column="8" Margin="5,5,5,5" Grid.Row="11" TextWrapping="Wrap" IsReadOnly="True"/>
+        <TextBox Name="txtStatus" Text="{Binding Path=PresentationFacade.ILogic.OPC.StateCurrent}" Grid.Column="8" Margin="5,5,5,5" Grid.Row="11" TextWrapping="Wrap" IsReadOnly="True"/>
 
     </Grid>
 </Window>

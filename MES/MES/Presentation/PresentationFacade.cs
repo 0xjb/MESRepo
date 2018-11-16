@@ -5,7 +5,8 @@ namespace MES.Presentation
     public class PresentationFacade : IPresentation
     {
         private ILogic iLogic;
-        public ILogic ILogic {
+        public ILogic ILogic
+        {
             get { return iLogic; }
             set { iLogic = value; }
         }
