@@ -63,7 +63,7 @@ namespace MES.Presentation
             history.Show();
         }
 
-        //Skal fjernes bare til Test
+        //TODO Skal fjernes bare til Test
         int generateRandomNumber()
         {
             int number = 0;

@@ -35,10 +35,5 @@ namespace MES.Logic
         }
 
 
-
-        //SubscribeThread ILogic.GetSubscribeThread()
-        //{
-        //    return subscribeThread;
-        //}
     }
 }
