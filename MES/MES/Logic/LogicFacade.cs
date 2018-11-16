@@ -11,16 +11,24 @@ namespace MES.Logic
         {
             this.opc = new OpcClient();
             //this.subscribeThread = new SubscribeThread();
+            
         }
 
 
 
         private IData data;
+
+        public OpcClient OPC {
+            get { return opc; }
+            set { opc = value; }
+
+        }
+
         public void InjectData(IData dataLayer)
         {
             data = dataLayer;
         }
-
+        // TODO deprecate
         public OpcClient GetOPC()
         {
             return opc;

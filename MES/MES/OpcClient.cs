@@ -1,68 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
-namespace MES.Logic {
-    public class OpcClient : INotifyPropertyChanged {
-        private bool isProcessRunning = false;
-        private bool isMachineStarted = false;
-        private double processedProducts;
+namespace MES
+{
+    public class OpcClient
+    {
+        bool isProcessRunning = false;
         public Session session;
-
-        private Thread thread2;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public OpcClient() {
-            Connect();
-            // testing purposes
-            CreateSubscription();
-        }
+        public void Connect()
+        {
 
 
-        public void Connect() {
             session = new Session();
 
             //Connect to server with no security
             session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
-        }
-
-        public void CreateSubscription() {
-            Subscription s = new Subscription(session);
-            // node to monitor
-            NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
-            // list of monitored items
-            List<MonitoredItem> monitoredItems = new List<MonitoredItem>();
-            // convert nodeid to datamonitoreditem
-            MonitoredItem miAmountNode = new DataMonitoredItem(amountNode);
-            monitoredItems.Add(miAmountNode);
-            // init subscription with parameters
-            s = new Subscription(session);
-            s.PublishingInterval = 100;
-            s.MaxKeepAliveTime = 1000;
-            s.Lifetime = 1000000;
-            s.MaxNotificationsPerPublish = 1;
-            s.Priority = (byte)0;
-            s.DataChanged += OnDataChanged;
-            s.PublishingEnabled = true;
-            s.CreateMonitoredItems(monitoredItems);
-            // create the actual subscription
-            s.Create(new RequestSettings() { OperationTimeout = 10000 });
 
 
         }
-        private void OnDataChanged(Subscription s, DataChangedEventArgs e) {
-            ProcessedProducts = double.Parse(e.DataChanges[0].Value.ToString());
-        }
 
-        public void Disconnect() {
+        public void Disconnect()
+        {
+
+
             session.Disconnect();
-        }
 
-        public void ResetMachine() {
+
+        }
+        public void ResetMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -73,14 +41,14 @@ namespace MES.Logic {
                 changeRequest.Value = true;
 
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, reset));
-                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
-                    changeRequest));
+                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value, changeRequest));
                 Write(nodesToWrite);
                 isProcessRunning = false;
             }
         }
 
-        public void StopMachine() {
+        public void StopMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -91,14 +59,14 @@ namespace MES.Logic {
                 changeRequest.Value = true;
 
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, stop));
-                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
-                    changeRequest));
+                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value, changeRequest));
                 Write(nodesToWrite);
                 isProcessRunning = false;
             }
         }
 
-        public void AbortMachine() {
+        public void AbortMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -109,14 +77,14 @@ namespace MES.Logic {
                 changeRequest.Value = true;
 
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, abort));
-                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
-                    changeRequest));
+                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value, changeRequest));
                 Write(nodesToWrite);
                 isProcessRunning = false;
             }
         }
 
-        public void ClearMachine() {
+        public void ClearMachine()
+        {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
@@ -127,15 +95,14 @@ namespace MES.Logic {
                 changeRequest.Value = true;
 
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, clear));
-                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
-                    changeRequest));
+                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value, changeRequest));
                 Write(nodesToWrite);
                 isProcessRunning = false;
             }
         }
 
-        public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed) {
-            isMachineStarted = true;
+        public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed)
+        {
 
             if (!isProcessRunning) {
                 isProcessRunning = true;
@@ -163,34 +130,34 @@ namespace MES.Logic {
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.MachSpeed", 6,
                     Attributes.Value, CreateDataValue(machineSpeed)));
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, start));
-                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
-                    changeRequest));
+                nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value, changeRequest));
 
 
                 Write(nodesToWrite);
                 isProcessRunning = false;
             }
-        }
 
-        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val) {
+        }
+        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val)
+        {
             return new WriteValue() {
                 NodeId = new NodeId(nodeId, namespaceIndex),
                 AttributeId = attributeId,
                 Value = val
             };
         }
-
-        private DataValue CreateDataValue(float f) {
+        private DataValue CreateDataValue(float f)
+        {
             return new DataValue() {
                 Value = f
             };
         }
-
-        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e) {
+        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e)
+        {
             Console.WriteLine("succ");
         }
-
-        public Int32 ReadStateCurrent() {
+        public Int32 ReadStateCurrent()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.StateCurrent", 6),
@@ -201,12 +168,12 @@ namespace MES.Logic {
             DataValue dv = results[0];
             return (int)dv.Value;
         }
-
-        public void Write(WriteValueCollection nodesToWrite) {
+        public void Write(WriteValueCollection nodesToWrite)
+        {
             session.Write(nodesToWrite);
         }
-
-        public int readDataTypes() {
+        public int readDataTypes()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Command.Parameter[0].Value", 6),
@@ -217,9 +184,11 @@ namespace MES.Logic {
             result = session.Read(nodesToRead, 0, TimestampsToReturn.Neither, null);
             //return TypeUtils.GetBuiltInType((NodeId)result[0].Value);
             return (int)result[0].Value;
+
         }
 
-        public float ReadCurrentMachineSpeed() {
+        public float ReadCurrentMachineSpeed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.CurMachSpeed", 6),
@@ -230,8 +199,8 @@ namespace MES.Logic {
             DataValue dv = results[0];
             return (float)dv.Value;
         }
-
-        public float ReadMachineSpeed() {
+        public float ReadMachineSpeed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.MachSpeed", 6),
@@ -243,7 +212,8 @@ namespace MES.Logic {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentBatchId() {
+        public float ReadCurrentBatchId()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6),
@@ -254,8 +224,8 @@ namespace MES.Logic {
             DataValue dv = results[0];
             return (float)dv.Value;
         }
-
-        public float ReadProductAmountInBatch() {
+        public float ReadProductAmountInBatch()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[1].Value", 6),
@@ -266,8 +236,8 @@ namespace MES.Logic {
             DataValue dv = results[0];
             return (float)dv.Value;
         }
-
-        public float ReadCurrentHumidity() {
+        public float ReadCurrentHumidity()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6),
@@ -278,8 +248,8 @@ namespace MES.Logic {
             DataValue dv = results[0];
             return (float)dv.Value;
         }
-
-        public float ReadCurrentTemperature() {
+        public float ReadCurrentTemperature()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6),
@@ -290,8 +260,8 @@ namespace MES.Logic {
             DataValue dv = results[0];
             return (float)dv.Value;
         }
-
-        public float ReadCurrentVibration() {
+        public float ReadCurrentVibration()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6),
@@ -301,31 +271,6 @@ namespace MES.Logic {
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (float)dv.Value;
-        }
-
-        public Int32 ReadCurrentProductsProcessed() {
-            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
-                NodeId = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6),
-                AttributeId = Attributes.Value
-            });
-
-            List<DataValue> results = session.Read(nodesToRead);
-            DataValue dv = results[0];
-            return (int)dv.Value;
-        }
-        protected void OnPropertyChanged(string name) {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
-        }
-        public double ProcessedProducts {
-            get { return processedProducts; }
-            set {
-                processedProducts = value;
-                OnPropertyChanged("ProcessedProducts");
-            }
         }
     }
 }

@@ -76,9 +76,9 @@ namespace MES.Presentation
             Formatter = value => value.ToString("N");
             DataContext = this;
 
-            thread3 = new Thread(ThreadReadProcessedProducts);
-            thread3.IsBackground = true;
-            thread3.Start();
+            //thread3 = new Thread(ThreadReadProcessedProducts);
+            //thread3.IsBackground = true;
+            //thread3.Start();
 
         }
 
@@ -91,14 +91,14 @@ namespace MES.Presentation
 
         public Func<double, string> Formatter { get; set; }
 
-        public void ThreadReadProcessedProducts()
-        {
-            while (true) {
-                Produced = iLogic.GetOPC().processedProducts;
-                Thread.Sleep(500);
-            }
+        //public void ThreadReadProcessedProducts()
+        //{
+        //    while (true) {
+        //        Produced = iLogic.GetOPC().processedProducts;
+        //        Thread.Sleep(500);
+        //    }
 
-        }
+        //}
 
         void MainWindow_Closed(object sender, EventArgs e)
         {
@@ -387,11 +387,15 @@ namespace MES.Presentation
 
             ValuesIngredients.Add(new ObservableValue(Value));
         }
-
+        
 
         ///TODO SKAL FJERNES
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
+        }
+        public IPresentation PresentationFacade {
+            get { return presentationFacade; }
+            set { presentationFacade = value; }
         }
     }
 }

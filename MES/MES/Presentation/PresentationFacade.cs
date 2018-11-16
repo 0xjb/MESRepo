@@ -2,16 +2,20 @@
 
 namespace MES.Presentation
 {
-    class PresentationFacade : IPresentation
+    public class PresentationFacade : IPresentation
     {
-        public ILogic iLogic;
+        private ILogic iLogic;
+        public ILogic ILogic {
+            get { return iLogic; }
+            set { iLogic = value; }
+        }
 
         public void InjectLogic(ILogic logicFacade)
         {
-            iLogic = logicFacade;
+            ILogic = logicFacade;
         }
 
-
+        // TODO deprecate
         public ILogic GetLogic()
         {
             return iLogic;
