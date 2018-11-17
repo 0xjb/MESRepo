@@ -118,11 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\BatchReportGenerator.cs" />
-    <Compile Include="Logic\SubscribeThread.cs" />
+    <Compile Include="Logic\Simulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />
     <Compile Include="Presentation\BatchReport.xaml.cs">
       <DependentUpon>BatchReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="Presentation\HumidityHistory.xaml.cs">

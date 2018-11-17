@@ -15,7 +15,6 @@ namespace MES.Presentation
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
         private ILogic iLogic;
-        private Thread thread3;
         private IPresentation presentationFacade;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
@@ -34,6 +33,7 @@ namespace MES.Presentation
         private double amount;
         private double produced;
         private double acceptableProducts;
+
         private double defectProducts;
 
         //
@@ -46,8 +46,17 @@ namespace MES.Presentation
             this.presentationFacade = pf;
             //Get logiclayer
             iLogic = presentationFacade.GetLogic();
+            //
+            this.levelBarley = iLogic.GetSimulation.LevelBarley;
+            this.levelHops = iLogic.GetSimulation.LevelHops;
+            this.levelMalt = iLogic.GetSimulation.LevelMalt;
+            this.levelWheat = iLogic.GetSimulation.LevelWheat;
+            this.levelYeast = iLogic.GetSimulation.LevelYeast;
+
             //Connects to OPC server
             iLogic.GetOPC().Connect();
+
+            iLogic.GetSimulation.PropertyChanged += checkForChangesIngredientsLevel;
 
             InitializeComponent();
 
@@ -56,30 +65,41 @@ namespace MES.Presentation
 
             ValuesIngredients = new ChartValues<ObservableValue>
             {
-                new ObservableValue(levelBarley),
-                new ObservableValue(levelHops),
-                new ObservableValue(levelMalt),
-                new ObservableValue(levelWheat),
-                new ObservableValue(levelYeast)
+                new ObservableValue(LevelBarley),
+                new ObservableValue(LevelHops),
+                new ObservableValue(LevelMalt),
+                new ObservableValue(LevelWheat),
+                new ObservableValue(LevelYeast)
             };
-            var columnSeries = new ColumnSeries {
+            var columnSeries = new ColumnSeries
+            {
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
             };
 
-            SeriesCollection = new SeriesCollection { columnSeries };
+            SeriesCollection = new SeriesCollection {columnSeries};
 
             //put label stuff here
 
-            Labels = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
+            Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
             Formatter = value => value.ToString("N");
             DataContext = this;
+        }
 
-            //thread3 = new Thread(ThreadReadProcessedProducts);
-            //thread3.IsBackground = true;
-            //thread3.Start();
+        private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
+        {
+            levelBarley = iLogic.GetSimulation.LevelBarley;
+            levelHops = iLogic.GetSimulation.LevelHops;
+            levelMalt = iLogic.GetSimulation.LevelMalt;
+            levelWheat = iLogic.GetSimulation.LevelWheat;
+            levelYeast = iLogic.GetSimulation.LevelYeast;
 
+            ValuesIngredients[0].Value = LevelBarley;
+            ValuesIngredients[1].Value = LevelHops;
+            ValuesIngredients[2].Value = LevelMalt;
+            ValuesIngredients[3].Value = LevelWheat;
+            ValuesIngredients[4].Value = LevelWheat;
         }
 
         public ChartValues<ObservableValue> ValuesIngredients { get; set; }
@@ -91,19 +111,10 @@ namespace MES.Presentation
 
         public Func<double, string> Formatter { get; set; }
 
-        //public void ThreadReadProcessedProducts()
-        //{
-        //    while (true) {
-        //        Produced = iLogic.GetOPC().processedProducts;
-        //        Thread.Sleep(500);
-        //    }
-
-        //}
 
         void MainWindow_Closed(object sender, EventArgs e)
         {
             //Put your close code here
-            //opc.StopMachine();
             iLogic.GetOPC().StopMachine();
         }
 
@@ -173,18 +184,71 @@ namespace MES.Presentation
             batchSetup.Show();
         }
 
-        public double Value
+        public double LevelBarley
 
         {
-            get { return _value; }
+            get { return levelBarley; }
 
             set
 
             {
-                _value = value;
+                levelBarley = value;
                 OnPropertyChanged("SeriesCollection");
             }
         }
+
+        public double LevelHops
+
+        {
+            get { return levelHops; }
+
+            set
+
+            {
+                levelHops = value;
+                OnPropertyChanged("SeriesCollection");
+            }
+        }
+
+        public double LevelMalt
+
+        {
+            get { return levelMalt; }
+
+            set
+
+            {
+                levelMalt = value;
+                OnPropertyChanged("SeriesCollection");
+            }
+        }
+
+        public double LevelWheat
+
+        {
+            get { return levelWheat; }
+
+            set
+
+            {
+                levelWheat = value;
+                OnPropertyChanged("SeriesCollection");
+            }
+        }
+
+        public double LevelYeast
+
+        {
+            get { return levelYeast; }
+
+            set
+
+            {
+                levelYeast = value;
+                OnPropertyChanged("SeriesCollection");
+            }
+        }
+
 
         public double ValueMaintenance
 
@@ -276,7 +340,6 @@ namespace MES.Presentation
         }
 
 
-
         public double Produced
 
         {
@@ -332,7 +395,8 @@ namespace MES.Presentation
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
+            if (handler != null)
+            {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
@@ -352,48 +416,17 @@ namespace MES.Presentation
             int number = 0;
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
-            Value = randomNumber.Next(1, 100);
-            //Values for testing purposes.
-            MachineSpeed = Value;
-            Temperature = Value;
-            Humidity = Value;
-            Vibration = Value;
-            BatchID = Value;
-            Amount = Value;
-            //Produced = Value;
-            //Produced = opc.ReadCurrentProdProcessed();
-            //Produced = iLogic.GetSubscribeThread().ReadCurrentProductsProcessed();
-            //Produced = iLogic.GetOPC().processedProducts;
-            AcceptableProducts = Value;
-            DefectProducts = Value;
-            Status = Value;
-
-
-            ValuesIngredients.RemoveAt(4);
-
-            ValuesIngredients.Add(new ObservableValue(Value));
-
-            ValuesIngredients.RemoveAt(3);
-
-            ValuesIngredients.Add(new ObservableValue(Value));
-            ValuesIngredients.RemoveAt(2);
-
-            ValuesIngredients.Add(new ObservableValue(Value));
-            ValuesIngredients.RemoveAt(1);
-
-            ValuesIngredients.Add(new ObservableValue(Value));
-
-            ValuesIngredients.RemoveAt(0);
-
-            ValuesIngredients.Add(new ObservableValue(Value));
+            ValueMaintenance = randomNumber.Next(1, 100);
         }
-        
+
 
         ///TODO SKAL FJERNES
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
         }
-        public IPresentation PresentationFacade {
+
+        public IPresentation PresentationFacade
+        {
             get { return presentationFacade; }
             set { presentationFacade = value; }
         }

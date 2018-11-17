@@ -21,15 +21,17 @@ namespace MES.Logic
         private Thread thread2;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChangedProcessedProducts;
 
         public OpcClient()
         {
+            
             Connect();
             // testing purposes
             CreateSubscription();
         }
 
-
+         
         public void Connect()
         {
             session = new Session();
@@ -395,6 +397,7 @@ namespace MES.Logic
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));
+                
             }
         }
 
