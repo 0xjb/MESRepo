@@ -115,9 +115,9 @@
         </Viewbox>
         <TextBox Name="txtTemp" Text="{Binding Path=PresentationFacade.ILogic.OPC.TempCurrent}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" IsReadOnly="True" TextChanged="TextBox_TextChanged"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" Text="Temperature" VerticalAlignment="Center"/>
-        <TextBox Name="txtHumid" Text="{Binding Path=Humidity}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True"/>
+        <TextBox Name="txtHumid" Text="{Binding Path=PresentationFacade.ILogic.OPC.HumidityCurrent}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" Text="Humidity" VerticalAlignment="Center"/>
-        <TextBox Name="txtVibra" Text="{Binding Path=Vibration}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" IsReadOnly="True"/>
+        <TextBox Name="txtVibra" Text="{Binding Path=PresentationFacade.ILogiv.OPC.VibrationCurrent}" Grid.Column="2" Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" IsReadOnly="True"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" Text="Vibration" VerticalAlignment="Center"/>
         <TextBox Name="txtBatchID" Text="{Binding Path=BatchID}" Grid.Column="4" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" IsReadOnly="True"/>
         <TextBlock Grid.Column="3" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" Text="Batch ID" VerticalAlignment="Center"/>

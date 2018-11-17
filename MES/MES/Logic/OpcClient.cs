@@ -15,6 +15,8 @@ namespace MES.Logic
         private double defectProducts;
         private double stateCurrent;
         private double tempCurrent;
+        private double humidityCurrent;
+        private double vibrationCurrent;
         public Session session;
 
         //TODO Skal fjernes
@@ -48,6 +50,8 @@ namespace MES.Logic
             NodeId stateNode = new NodeId("::Program:Cube.Status.StateCurrent", 6);
             NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
             NodeId tempNode = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6);
+            NodeId humidityNode = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6);
+            NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
             // list of monitored items
             List<MonitoredItem> monitoredItems = new List<MonitoredItem>();
             // convert nodeid to datamonitoreditem
@@ -55,10 +59,14 @@ namespace MES.Logic
             MonitoredItem miStateNode = new DataMonitoredItem(stateNode);
             MonitoredItem miDefectNode = new DataMonitoredItem(defectNode);
             MonitoredItem miTempNode = new DataMonitoredItem(tempNode);
+            MonitoredItem miHumidityNode = new DataMonitoredItem(humidityNode);
+            MonitoredItem miVibrationNode = new DataMonitoredItem(vibrationNode);
             monitoredItems.Add(miAmountNode);
             monitoredItems.Add(miStateNode);
             monitoredItems.Add(miDefectNode);
             monitoredItems.Add(miTempNode);
+            monitoredItems.Add(miHumidityNode);
+            monitoredItems.Add(miVibrationNode);
 
             // init subscription with parameters
             s = new Subscription(session);
@@ -91,7 +99,13 @@ namespace MES.Logic
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
-                        ProcessedProducts = double.Parse(dc.Value.ToString());
+                        DefectProducts = double.Parse(dc.Value.ToString());
+                        break;
+                    case "::Program:Cube.Status.Parameter[2].Value":
+                        HumidityCurrent = double.Parse(dc.Value.ToString());
+                        break;
+                    case "::Program:Cube.Status.Parameter[4].Value":
+                        VibrationCurrent = double.Parse(dc.Value.ToString());
                         break;
                     default:
                         break;
@@ -438,6 +452,22 @@ namespace MES.Logic
             {
                 tempCurrent = value;
                 OnPropertyChanged("TempCurrent");
+            }
+        }
+        public double HumidityCurrent
+        {
+            get { return humidityCurrent; }
+            set
+            {
+                humidityCurrent = value;
+                OnPropertyChanged("HumidityCurrent");
+            }
+        }
+        public double VibrationCurrent {
+            get { return vibrationCurrent; }
+            set {
+                vibrationCurrent = value;
+                OnPropertyChanged("VibrationCurrent");
             }
         }
     }
