@@ -80,12 +80,11 @@ namespace MES.Presentation
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
-                
             };
             //Place valuelabel inside the column
             columnSeries.LabelsPosition = (BarLabelPosition) 3;
             SeriesCollection = new SeriesCollection {columnSeries};
-            
+
             //put label stuff here
             Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
             Formatter = value => value.ToString("N");
@@ -446,11 +445,6 @@ namespace MES.Presentation
             ValueMaintenance = randomNumber.Next(1, 100);
         }
 
-
-        ///TODO SKAL FJERNES
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-        }
 
         public IPresentation PresentationFacade
         {
