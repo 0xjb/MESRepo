@@ -2,15 +2,20 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Timers;
 using MES.Annotations;
 using UnifiedAutomation.UaClient;
+using System;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace MES.Logic
 {
-    public class Simulation : INotifyPropertyChanged
+    public class TestSimulation : INotifyPropertyChanged
 
     {
         private OpcClient opc;
+        private System.Timers.Timer timerTemp;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
@@ -19,9 +24,17 @@ namespace MES.Logic
         private double levelWheat;
         private double levelYeast;
 
-        public Simulation(OpcClient opcClient)
+        public TestSimulation(OpcClient opcClient)
         {
+            timerTemp = new Timer();
+            timerTemp.Interval = 5000;
+            timerTemp.AutoReset = true;
+            timerTemp.Enabled = true;
+            timerTemp.Elapsed += OnTimedEvent;
+
             this.opc = opcClient;
+            opc.TempCurrent = 35;
+
             levelBarley = 100;
             levelHops = 100;
             levelMalt = 100;
@@ -85,21 +98,17 @@ namespace MES.Logic
             }
         }
 
-      
-
         private void CheckForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            LevelBarley -= 0.43;
-            LevelHops -= 0.15;
-            LevelMalt -= 0.22;
-            LevelWheat -= 0.23;
-            LevelYeast -= 0.33;
-
-            Console.WriteLine("Barley sim " + LevelBarley);
-            Console.WriteLine("Hops sim " + LevelHops);
-            Console.WriteLine("Malt sim " + LevelMalt);
-            Console.WriteLine("Wheat sim " + LevelWheat);
-            Console.WriteLine("Yeast sim " + LevelYeast);
+            if (opc.StateCurrent == 6)
+            {
+                LevelBarley -= 0.43;
+                LevelHops -= 0.15;
+                LevelMalt -= 0.22;
+                LevelWheat -= 0.23;
+                LevelYeast -= 0.33;
+            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -110,6 +119,25 @@ namespace MES.Logic
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-    
+        bool b = false;
+
+        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            Random random = new Random();
+            
+            double number = random.NextDouble();
+            number = Math.Round(number, 2);
+
+            if (b == false)
+            {
+                opc.TempCurrent += (1 -number);
+                b = true;
+            }
+            else
+            {
+                opc.TempCurrent -= (1 - number);
+                b = false;
+            }
+        }
     }
 }

@@ -23,8 +23,6 @@ namespace MES.Logic
         private Thread thread2;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        //public event PropertyChangedEventHandler PropertyChangedProcessedProducts;
-
         public OpcClient()
         {
             
@@ -110,7 +108,6 @@ namespace MES.Logic
                     default:
                         break;
                 }
-
             }
         }
 

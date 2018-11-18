@@ -46,17 +46,21 @@ namespace MES.Presentation
             this.presentationFacade = pf;
             //Get logiclayer
             iLogic = presentationFacade.GetLogic();
+
             //
-            this.levelBarley = iLogic.GetSimulation.LevelBarley;
-            this.levelHops = iLogic.GetSimulation.LevelHops;
-            this.levelMalt = iLogic.GetSimulation.LevelMalt;
-            this.levelWheat = iLogic.GetSimulation.LevelWheat;
-            this.levelYeast = iLogic.GetSimulation.LevelYeast;
+            CheckIfSimulationIsOn();
+
+            //this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
+            //this.levelHops = iLogic.GetTestSimulation.LevelHops;
+            //this.levelMalt = iLogic.GetTestSimulation.LevelMalt;
+            //this.levelWheat = iLogic.GetTestSimulation.LevelWheat;
+            //this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
+
+            //iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
+
 
             //Connects to OPC server
             iLogic.GetOPC().Connect();
-
-            iLogic.GetSimulation.PropertyChanged += checkForChangesIngredientsLevel;
 
             InitializeComponent();
 
@@ -89,17 +93,32 @@ namespace MES.Presentation
 
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            levelBarley = iLogic.GetSimulation.LevelBarley;
-            levelHops = iLogic.GetSimulation.LevelHops;
-            levelMalt = iLogic.GetSimulation.LevelMalt;
-            levelWheat = iLogic.GetSimulation.LevelWheat;
-            levelYeast = iLogic.GetSimulation.LevelYeast;
+            levelBarley = iLogic.GetTestSimulation.LevelBarley;
+            levelHops = iLogic.GetTestSimulation.LevelHops;
+            levelMalt = iLogic.GetTestSimulation.LevelMalt;
+            levelWheat = iLogic.GetTestSimulation.LevelWheat;
+            levelYeast = iLogic.GetTestSimulation.LevelYeast;
 
             ValuesIngredients[0].Value = LevelBarley;
             ValuesIngredients[1].Value = LevelHops;
             ValuesIngredients[2].Value = LevelMalt;
             ValuesIngredients[3].Value = LevelWheat;
             ValuesIngredients[4].Value = LevelWheat;
+        }
+
+
+        private void CheckIfSimulationIsOn()
+        {
+            if (presentationFacade.ILogic.IsSimulationOn)
+            {
+                this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
+                this.levelHops = iLogic.GetTestSimulation.LevelHops;
+                this.levelMalt = iLogic.GetTestSimulation.LevelMalt;
+                this.levelWheat = iLogic.GetTestSimulation.LevelWheat;
+                this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
+
+                iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
+            }
         }
 
         public ChartValues<ObservableValue> ValuesIngredients { get; set; }
@@ -182,6 +201,13 @@ namespace MES.Presentation
             BatchSetup batchSetup = new BatchSetup(presentationFacade);
             this.Hide();
             batchSetup.Show();
+        }
+
+        private void btnMachineSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Simulation simulation = new Simulation(presentationFacade, presentationFacade.ILogic.IsSimulationOn);
+            this.Hide();
+            simulation.Show();
         }
 
         public double LevelBarley
