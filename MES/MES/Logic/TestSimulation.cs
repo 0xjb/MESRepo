@@ -125,17 +125,17 @@ namespace MES.Logic
         {
             Random random = new Random();
             
-            double number = random.NextDouble();
+            double number = random.NextDouble()/8;
             number = Math.Round(number, 2);
 
             if (b == false)
             {
-                opc.TempCurrent += (1 -number);
+                opc.TempCurrent += number;
                 b = true;
             }
             else
             {
-                opc.TempCurrent -= (1 - number);
+                opc.TempCurrent -=  number;
                 b = false;
             }
         }

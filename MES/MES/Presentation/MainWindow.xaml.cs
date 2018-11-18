@@ -436,16 +436,6 @@ namespace MES.Presentation
             ValueMaintenance = randomNumber.Next(1, 100);
         }
 
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            int number = 0;
-            Random randomNumber = new Random();
-            number = randomNumber.Next(19, 26);
-            ValueMaintenance = randomNumber.Next(1, 100);
-        }
-
-
         public IPresentation PresentationFacade
         {
             get { return presentationFacade; }
