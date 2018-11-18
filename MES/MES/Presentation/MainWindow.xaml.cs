@@ -80,12 +80,13 @@ namespace MES.Presentation
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
+                
             };
-
+            //Place valuelabel inside the column
+            columnSeries.LabelsPosition = (BarLabelPosition) 3;
             SeriesCollection = new SeriesCollection {columnSeries};
-
+            
             //put label stuff here
-
             Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
             Formatter = value => value.ToString("N");
             DataContext = this;

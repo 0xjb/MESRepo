@@ -51,15 +51,15 @@
 
         <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5" VerticalAlignment="Top"
                  HorizontalAlignment="Left">
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" MinHeight="350" Width="800" Height="350"
-                                MaxWidth="800">
+            <lvc:CartesianChart Series="{Binding SeriesCollection}"  MinHeight="350" Width="800" Height="350"
+                                MaxWidth="800" >
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="[Ingredients]" FontSize="20" Labels="{Binding Labels}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="100" FontSize="20" FontStyle="Normal"
-                              LabelFormatter="{Binding Formatter}"
+                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="100" FontSize="20" FontStyle="Normal" 
+                              LabelFormatter="{Binding Formatter}" 
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
