@@ -12,7 +12,7 @@ namespace MES.Data
 {
     public class DataFacade : IData
     {
-        IDBManager dbManager;
+        private IDBManager dbManager;
 
         public DataFacade()
         {
@@ -20,18 +20,28 @@ namespace MES.Data
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, float temperature, float humidity,
-            float vibration, string timeStamp)
+            int defectProducts, string timestampStart, string timestampEnd)
         {
             return dbManager.InsertIntoBatchesTable(
                 new Batch(batchId, beerId, acceptableProducts,
-                defectProducts, temperature, humidity,
-                vibration, timeStamp));
+                defectProducts, timestampStart, timestampEnd));
         }
 
         public bool SaveBatch(IBatch batch)
         {
             return dbManager.InsertIntoBatchesTable(batch);
+        }
+
+        public bool InsertBatchValueSet(float temperature, float humidity,
+            float vibration, string timestamp, float batchId)
+        {
+            return dbManager.InsertBatchValueSet(temperature, humidity,
+                vibration, timestamp, batchId);
+        }
+
+        public bool UpdateBatch(IBatch batch)
+        {
+            return dbManager.UpdateBatch(batch);
         }
 
         public IDictionary<float, IBatch> GetAllBatches()
@@ -62,6 +72,17 @@ namespace MES.Data
         public bool DeleteBatch(float batchId)
         {
             return dbManager.DeleteBatch(batchId);
+        }
+
+        public bool RunQueries(string[] statements)
+        {
+            return dbManager.RunQueries(statements);
+        }
+
+        public bool RunQuery(string statement)
+        {
+            string[] s = { statement };
+            return dbManager.RunQueries(s);
         }
     }
 }

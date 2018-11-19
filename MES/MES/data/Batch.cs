@@ -11,25 +11,22 @@ namespace MES.Data
     {
         private readonly float batchId;
         private readonly float beerId;
-        private readonly int acceptableProducts;
-        private readonly int defectProducts;
-        private readonly float temperature;
-        private readonly float humidity;
-        private readonly float vibration;
-        private readonly string timeStamp;
+        private int acceptableProducts;
+        private int defectProducts;
+        private readonly string timestampStart;
+        private string timestampEnd;
+        private IList<IBatchValueSet> batchValues;
 
         public Batch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, float temperature, float humidity,
-            float vibration, string timeStamp)
+            int defectProducts, string timestampStart, string timestampEnd)
         {
             this.batchId = batchId;
             this.beerId = beerId;
             this.acceptableProducts = acceptableProducts;
             this.defectProducts = defectProducts;
-            this.temperature = temperature;
-            this.humidity = humidity;
-            this.vibration = vibration;
-            this.timeStamp = timeStamp;
+            this.timestampStart = timestampStart;
+            this.timestampEnd = timestampEnd;
+            this.batchValues = new List<IBatchValueSet>();
         }
 
         override
@@ -37,8 +34,7 @@ namespace MES.Data
         {
             return batchId + ", " + beerId + ", "
             + acceptableProducts + ", " + defectProducts + ", "
-            + temperature + ", " + humidity + ", "
-            + vibration + ", " + timeStamp;
+            + timestampStart + ", " + timestampEnd;
         }
 
         public float GetBatchId()
@@ -61,24 +57,62 @@ namespace MES.Data
             return defectProducts;
         }
 
-        public float GetTemperature()
+        public string GetTimestampStart()
         {
-            return temperature;
+            return timestampStart;
         }
 
-        public float GetHumidity()
+        public string GetTimestampEnd()
         {
-            return humidity;
+            return timestampEnd;
         }
 
-        public float GetVibration()
+        public IList<IBatchValueSet> GetBatchValues()
         {
-            return vibration;
+            return batchValues;
         }
 
-        public string GetTimestamp()
+        public void AddProducts(int amount, bool acceptable)
         {
-            return timeStamp;
+            if (acceptable)
+            {
+                this.acceptableProducts = this.acceptableProducts + amount;
+            }
+            else
+            {
+                this.defectProducts = this.defectProducts + amount;
+            }
+        }
+
+        public void SetTimestampEnd(string timestamp)
+        {
+            this.timestampEnd = timestamp;
+        }
+
+        public bool AddBatchValues(float temperature, float humidity,
+            float vibration, string timestamp)
+        {
+            bool timestampExists = false;
+            foreach (IBatchValueSet valueSet in batchValues)
+            {
+                if (valueSet.GetTimeStamp() == timestamp)
+                {
+                    timestampExists = true;
+                    break;
+                }
+            }
+            if (!timestampExists)
+            {
+                batchValues.Add(new BatchValueSet(temperature,
+                    humidity, vibration, timestamp));
+                return true;
+            }
+            else return false;
+        }
+
+        public void SetBatchValueSet(IList<IBatchValueSet> values)
+        {
+            this.batchValues = values;
         }
     }
 }
