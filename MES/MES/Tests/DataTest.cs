@@ -18,6 +18,7 @@ namespace MES.Tests
         public void TestDBManager()
         {
             // Testing GetAllRecipes
+
             IDictionary<float, IRecipe> recipes = dbManager.GetAllRecipes();
             Assert.IsNotNull(recipes, "Succes");
 
@@ -26,6 +27,7 @@ namespace MES.Tests
             Assert.IsNotNull(recipe, "Succes");
 
             // Testing InsertBatch & InsertBatchValueSet
+
             IBatch batch0 = new Batch(-1, 3, 90, 10,
                 "02/11/2018 09:18:35", "02/11/2018 09:20:35");
             batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:18:35");
@@ -67,6 +69,7 @@ namespace MES.Tests
             Assert.IsTrue(updateSucces, "Succes");
 
             // Testing GetAllBatches
+
             IDictionary<float, IBatch> allBatches = dbManager.GetAllBatches();
 
             IBatch loadedBatch0 = null;
@@ -99,6 +102,7 @@ namespace MES.Tests
             Assert.IsTrue(loadedBatch3.GetAcceptableProducts() == 105, "Succes");
 
             // Testing GetBatches
+
             IDictionary<float, IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
 
             IBatch loadedBatch4 = null;
@@ -124,10 +128,12 @@ namespace MES.Tests
             Assert.IsNotNull(loadedBatch0, "Succes");
 
             // Testing GetBatch
+
             IBatch loadedBatch9 = dbManager.GetBatch(-1);
             Assert.IsNotNull(loadedBatch9, "Succes");
 
             // Testing DeleteBatch
+
             bool deleted0 = dbManager.DeleteBatch(-1);
             Assert.IsTrue(deleted0, "Deleted");
             IBatch loadedBatch10 = dbManager.GetBatch(-1);
@@ -148,6 +154,7 @@ namespace MES.Tests
             IBatch loadedBatch13 = dbManager.GetBatch(-4);
             Assert.IsNull(loadedBatch13, "Succes");
         }
+
         /*
         [Test]
         public void CreateRecipes()
@@ -164,7 +171,6 @@ namespace MES.Tests
             bool succes = dbManager.AddRecipes(recipes);
             Assert.IsTrue(succes, "Succes");
         }
-
         
         [Test]
         public void DeleteBatches()
@@ -235,5 +241,6 @@ namespace MES.Tests
             Assert.IsTrue(succes, "Tables deleted");
         }
         */
+
     }
 }
