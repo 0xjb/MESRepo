@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
 using System.Threading;
 using UnifiedAutomation.UaClient;
-using MES.Logic;
-
+//using System.Threading;
+//using System.Threading;
+//using System.Threading;
 namespace MES.Tests
 {
     [TestFixture]
@@ -10,131 +11,89 @@ namespace MES.Tests
     {
         private readonly OpcClient opc = new OpcClient();
         [Test]
-        public void TestConnection()
+        public void TestOpcClient()
         {
+            // Test the if the client is connected to the server.
             opc.Connect();
+
+            // sleep for x amount of miliseconds because there is 
+            // several machine statues before reaching endstatus.
+            Thread.Sleep(200);
             Assert.AreEqual(opc.session.ConnectionStatus, ServerConnectionStatus.Connected);
-        }
-        [Test]
-        public void TestReset()
-        {
-            opc.Connect();
-            opc.ResetMachine();
-            Thread.Sleep(500);
-            Assert.AreEqual(opc.ReadStateCurrent(), 4);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestStart()
-        {
-            opc.Connect();
-            opc.StartMachine(003, 1, 200, 1);
-            Thread.Sleep(700);
-            Assert.AreEqual(opc.ReadStateCurrent(), 6);
-            Thread.Sleep(1000);
-        }
 
-        [Test]
-        public void TestStop()
-        {
-
-            opc.Connect();
-            opc.StopMachine();
-            Thread.Sleep(1000);
-            Assert.AreEqual(opc.ReadStateCurrent(), 2);
-            Thread.Sleep(1000);
-        }
-
-        [Test]
-        public void TestAbort()
-        {
-
-            opc.Connect();
+            // Test to reboot the system by aborting any current state.
             opc.AbortMachine();
-            Thread.Sleep(1000);
+
+            // sleep for x amount of miliseconds because there is 
+            // several machine statues before reaching endstatus.
+            Thread.Sleep(200);
             Assert.AreEqual(opc.ReadStateCurrent(), 9);
-            Thread.Sleep(1000);
-        }
 
-        [Test]
-        public void TestClear()
-        {
-
-            opc.Connect();
+            // Test to clear the abort status to be able to start the program again.
             opc.ClearMachine();
-            Thread.Sleep(1000);
+
+            // sleep for x amount of miliseconds because there is 
+            // several machine statues before reaching endstatus.
+            Thread.Sleep(200);
             Assert.AreEqual(opc.ReadStateCurrent(), 2);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestCurrentMachineSpeed()
-        {
 
-            opc.Connect();
-            opc.ReadCurrentMachineSpeed();
-            Thread.Sleep(1000);
-            Assert.AreEqual(opc.ReadCurrentMachineSpeed(), 1);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestMachineSpeed()
-        {
+            // Test if the machine has the reset status after reset
+            opc.ResetMachine();
 
-            opc.Connect();
+            // sleep for x amount of miliseconds because there is 
+            // several machine statues before reaching endstatus.
+            Thread.Sleep(200);
+            Assert.AreEqual(opc.ReadStateCurrent(), 4);
+
+            // Test to see if the machine has been started correctly.
+            opc.StartMachine(003, 1, 200, 1);
+
+            // sleep for x amount of miliseconds because there is 
+            // several machine statues before reaching endstatus.
+            Thread.Sleep(200);
+            Assert.AreEqual(opc.ReadStateCurrent(), 6);
+
+            // Test to see if the machine speed of the test system is equal 
+            // to current machine speed in primary products per minute.
+            // Result will depend on product type.
             opc.ReadMachineSpeed();
-            Thread.Sleep(1000);
             Assert.AreEqual(opc.ReadMachineSpeed(), 1);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestReadBatchId()
-        {
 
-            opc.Connect();
+            // Test to see if the current machine speed of the test system 
+            // is equal to a normalized machine speed requested by the client.
+            opc.ReadCurrentMachineSpeed();
+            Assert.AreEqual(opc.ReadCurrentMachineSpeed(), 1);
+
+            // Test to see if the current batch ID of the test system 
+            // is equal to the batch ID requested by the client.
             opc.ReadCurrentBatchId();
-            Thread.Sleep(1000);
             Assert.AreEqual(opc.ReadCurrentBatchId(), 3);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestProductAmountInBatch()
-        {
 
-            opc.Connect();
+            // Test to see if the product amount in the batch of the 
+            // test system is equal to the batch ID requested by the client.
             opc.ReadProductAmountInBatch();
-            Thread.Sleep(1000);
             Assert.AreEqual(opc.ReadProductAmountInBatch(), 200);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestCurrentHumidity()
-        {
 
-            opc.Connect();
+            // Test to see if the humidity of the test system is equal 0
+            // as the simulator does not produce humidity
             opc.ReadCurrentHumidity();
-            Thread.Sleep(1000);
             Assert.AreEqual(opc.ReadCurrentHumidity(), 0);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestCurrentTemperature()
-        {
 
-            opc.Connect();
+            // Test to see if the temperature of the test system is equal 0
+            // as the simulator does not produce temperature.
             opc.ReadCurrentTemperature();
-            Thread.Sleep(1000);
             Assert.AreEqual(opc.ReadCurrentTemperature(), 0);
-            Thread.Sleep(1000);
-        }
-        [Test]
-        public void TestCurrentVibration()
-        {
 
-            opc.Connect();
+            // Test to see if the Temperature of the test system is equal 0
+            // as the simulator does not produce humidity
             opc.ReadCurrentVibration();
-            Thread.Sleep(1000);
             Assert.AreEqual(opc.ReadCurrentVibration(), 0);
-            Thread.Sleep(1000);
+
+            // Test to see if the machine has been stopped correctly.
+            opc.StopMachine();
+            Thread.Sleep(200);
+            Assert.AreEqual(opc.ReadStateCurrent(), 2);
+
         }
     }
 

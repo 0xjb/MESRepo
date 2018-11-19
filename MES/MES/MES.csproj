@@ -96,27 +96,25 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UnifiedAutomation.UaBase, Version=2.0.0.0, Culture=neutral, PublicKeyToken=90c158e6f23d82c1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\UnifiedAutomation\UaSdkNetBundleEval\bin\UnifiedAutomation.UaBase.dll</HintPath>
+    <Reference Include="UnifiedAutomation.UaBase">
+      <HintPath>SDK\UnifiedAutomation.UaBase.dll</HintPath>
     </Reference>
-    <Reference Include="UnifiedAutomation.UaClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=90c158e6f23d82c1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\UnifiedAutomation\UaSdkNetBundleEval\bin\UnifiedAutomation.UaClient.dll</HintPath>
+    <Reference Include="UnifiedAutomation.UaClient">
+      <HintPath>SDK\UnifiedAutomation.UaClient.dll</HintPath>
     </Reference>
-    <Reference Include="UnifiedAutomation.UaClientControls, Version=2.0.0.0, Culture=neutral, PublicKeyToken=90c158e6f23d82c1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\UnifiedAutomation\UaSdkNetBundleEval\bin\UnifiedAutomation.UaClientControls.dll</HintPath>
+    <Reference Include="UnifiedAutomation.UaClientControls">
+      <HintPath>SDK\UnifiedAutomation.UaClientControls.dll</HintPath>
     </Reference>
-    <Reference Include="UnifiedAutomation.UaServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=90c158e6f23d82c1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\UnifiedAutomation\UaSdkNetBundleEval\bin\UnifiedAutomation.UaServer.dll</HintPath>
+    <Reference Include="UnifiedAutomation.UaServer">
+      <HintPath>SDK\UnifiedAutomation.UaServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acquintance\IBatchValueSet.cs" />
+    <Compile Include="BatchReport.xaml.cs">
     <Compile Include="Logic\BatchReportGenerator.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />
@@ -127,6 +125,8 @@
       <DependentUpon>Simulation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="BatchReportGenerator.cs" />
+    <Compile Include="Data\BatchValueSet.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="Presentation\HumidityHistory.xaml.cs">

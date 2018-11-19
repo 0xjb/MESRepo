@@ -13,5 +13,6 @@ namespace MES.Acquintance
 
         bool IsSimulationOn { get; set; }
         OpcClient GetOPC();
+        void CreateBatch(float batchId, float amount, float machineSpeed, float productType);
     }
 }

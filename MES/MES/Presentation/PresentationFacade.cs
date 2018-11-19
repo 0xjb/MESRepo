@@ -1,27 +1,18 @@
-﻿using MES.Acquintance;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MES.Acquintance;
 
 namespace MES.Presentation
 {
-    public class PresentationFacade : IPresentation
+    class PresentationFacade : IPresentation
     {
-        private ILogic iLogic;
-        public ILogic ILogic
-        {
-            get { return iLogic; }
-            set { iLogic = value; }
-        }
-
+        private ILogic logic;
         public void InjectLogic(ILogic logicFacade)
         {
-            ILogic = logicFacade;
+            this.logic = logicFacade;
         }
-
-        // TODO deprecate
-        public ILogic GetLogic()
-        {
-            return iLogic;
-        }
-
-
     }
 }
