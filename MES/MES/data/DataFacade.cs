@@ -85,5 +85,10 @@ namespace MES.Data
         {
             return dbManager.GetAllRecipes();
         }
+
+        public bool AddRecipes(IRecipe[] recipes)
+        {
+            return dbManager.AddRecipes(recipes);
+        }
     }
 }

@@ -327,6 +327,26 @@ namespace MES.data
 
             return GetRecipeSqlCommand(sql);
         }
+
+        public bool AddRecipes(IRecipe[] recipes)
+        {
+            string[] statements = new string[recipes.Length];
+
+            for (int i = 0; i < recipes.Length; i++)
+            {
+                statements[i] = "INSERT INTO " + recipesTable + " VALUES("
+                    + recipes[i].BeerId + ", "
+                    + recipes[i].MaxSpeed + ", "
+                    + recipes[i].Name + ", "
+                    + recipes[i].Barley + ", "
+                    + recipes[i].Hops + ", "
+                    + recipes[i].Malt + ", "
+                    + recipes[i].Wheat + ", "
+                    + recipes[i].Yeast + ");";
+            }
+
+            return SendSqlCommand(statements);
+        }
     }
 }
 

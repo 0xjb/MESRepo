@@ -18,8 +18,12 @@ namespace MES.Tests
         public void TestDBManager()
         {
             // Testing GetAllRecipes
-            IDictionary<float, IRecipe> recipes;
-            dbManager.GetAllRecipes();
+            IDictionary<float, IRecipe> recipes = dbManager.GetAllRecipes();
+            Assert.IsNotNull(recipes, "Succes");
+
+            IRecipe recipe;
+            recipes.TryGetValue(0, out recipe);
+            Assert.IsNotNull(recipe, "Succes");
 
             // Testing InsertBatch & InsertBatchValueSet
             IBatch batch0 = new Batch(-1, 3, 90, 10,
@@ -149,8 +153,16 @@ namespace MES.Tests
         public void CreateRecipes()
         {
             IRecipe[] recipes = new Recipe[6];
-            
-           // recipes[0] = 
+
+            recipes[0] = new Recipe(0, 600, "Pilsner", 1, 3, 7, 0, 2);
+            recipes[1] = new Recipe(1, 300, "Wheat", 3, 0, 2, 12, 3);
+            recipes[2] = new Recipe(2, 150, "IPA", 4, 2, 1, 7, 4);
+            recipes[3] = new Recipe(3, 200, "Stout", 2, 1, 2, 2, 1);
+            recipes[4] = new Recipe(4, 100, "Ale", 7, 7, 0, 2, 2);
+            recipes[5] = new Recipe(5, 125, "Alcohol Free", 0, 3, 4, 2, 0);
+
+            bool succes = dbManager.RunQueries(null);
+            Assert.IsTrue(succes, "Succes");
         }
 
         

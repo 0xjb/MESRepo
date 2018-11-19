@@ -90,5 +90,12 @@ namespace MES.Acquintance
         /// </summary>
         /// <returns></returns>
         IDictionary<float, IRecipe> GetAllRecipes();
+
+        /// <summary>
+        /// Adds recipes to the db
+        /// </summary>
+        /// <param name="recipes"></param>
+        /// <returns></returns>
+        bool AddRecipes(IRecipe[] recipes);
     }
 }
