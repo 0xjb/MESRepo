@@ -348,7 +348,7 @@ namespace MES.Presentation
 
             {
                 batchID = value;
-                OnPropertyChanged("BatchID");
+                OnPropertyChanged("Batch_ID");
             }
         }
 
