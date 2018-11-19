@@ -30,19 +30,20 @@ namespace MES.Presentation
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                float batchId = float.Parse(BatchIdTB.Text);
-                float productType = float.Parse(ProductTypeTB.Text);
-                float amount = float.Parse(AmountTB.Text);
-                float machineSpeed = float.Parse(MachineSpeedTB.Text);
-                c.StartMachine(batchId, productType, amount, machineSpeed);
-                testlabel.Content = "you don gut";
-            }
-            catch (System.FormatException)
-            {
-                testlabel.Content = "you must insert correct values into the boxes";
-            }
+            //    try
+            //    {
+            //        float batchId = float.Parse(BatchIdTB.Text);
+            //        float productType = float.Parse(ProductTypeTB.Text);
+            //        float amount = float.Parse(AmountTB.Text);
+            //        float machineSpeed = float.Parse(MachineSpeedTB.Text);
+            //        c.StartMachine(batchId, productType, amount, machineSpeed);
+            //        testlabel.Content = "you don gut";
+            //    }
+            //    catch (System.FormatException)
+            //    {
+            //        testlabel.Content = "you must insert correct values into the boxes";
+            //    }
+            //}
         }
     }
 }

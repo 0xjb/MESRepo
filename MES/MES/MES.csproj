@@ -114,18 +114,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acquintance\IBatchValueSet.cs" />
-    <Compile Include="BatchReport.xaml.cs">
     <Compile Include="Logic\BatchReportGenerator.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />
     <Compile Include="Presentation\BatchReport.xaml.cs">
-      <DependentUpon>BatchReport.xaml</DependentUpon>
+      <DependentUpon>Presentation\BatchReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Simulation.xaml.cs">
       <DependentUpon>Simulation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="BatchReportGenerator.cs" />
     <Compile Include="Data\BatchValueSet.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
@@ -137,7 +135,6 @@
     <Compile Include="Acquintance\IPresentation.cs" />
     <Compile Include="Logic\LogicFacade.cs" />
     <Compile Include="Logic\OpcClient.cs" />
-    <Compile Include="Logic\OpcTests.cs" />
     <Compile Include="Presentation\PresentationFacade.cs" />
     <Compile Include="Starter\Starter.cs" />
     <Compile Include="Presentation\TemperatureHistory.xaml.cs">
@@ -146,6 +143,7 @@
     <Compile Include="Presentation\VibrationHistory.xaml.cs">
       <DependentUpon>VibrationHistory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\OpcTests.cs" />
     <Page Include="Presentation\Alarms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

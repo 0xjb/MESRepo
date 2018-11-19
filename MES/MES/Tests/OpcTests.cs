@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Threading;
 using UnifiedAutomation.UaClient;
+using MES.Logic;
 //using System.Threading;
 //using System.Threading;
 //using System.Threading;
