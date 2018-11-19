@@ -25,6 +25,7 @@ namespace MES.data
         // database table names
         private string batchesTable;
         private string batchValuesTable;
+        private string recipesTable;
 
         public DBManager()
         {
@@ -38,6 +39,7 @@ namespace MES.data
 
             batchesTable = "batches";
             batchValuesTable = "batchvalues";
+            recipesTable = "recipes";
         }
 
         /// <summary>
@@ -154,6 +156,49 @@ namespace MES.data
 
             dRead.Close();
             return values;
+        }
+
+        /// <summary>
+        /// Connects to the database and sends an SQL query (that does return something EX. SELECT statement).
+        /// Returns the result as a IDictionary containing IRecipe objects.
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
+        private IDictionary<float, IRecipe> GetRecipeSqlCommand(String statement)
+        {
+            try
+            {
+                NpgsqlConnection conn = new NpgsqlConnection(connString);
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+                NpgsqlDataReader dRead = command.ExecuteReader();
+
+                IDictionary<float, IRecipe> recipes = new Dictionary<float, IRecipe>();
+                while (dRead.Read())
+                {
+                    double beerId = dRead.GetDouble(0);
+                    double maxSpeed = dRead.GetDouble(1);
+                    string name = dRead.GetString(2);
+                    double barley = dRead.GetDouble(3);
+                    double hops = dRead.GetDouble(4);
+                    double malt = dRead.GetDouble(5);
+                    double wheat = dRead.GetDouble(6);
+                    double yeast = dRead.GetDouble(7);
+
+                    recipes.Add((float)beerId, new Recipe((float)beerId,
+                        (float)maxSpeed, name, (float)barley, (float)hops,
+                        (float)malt, (float)wheat, (float)yeast));
+                }
+
+                dRead.Close();
+                conn.Close();
+                return recipes;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return null;
+            }
         }
 
         public bool InsertIntoBatchesTable(IBatch batch)
@@ -274,6 +319,13 @@ namespace MES.data
         public bool RunQueries(string[] statements)
         {
             return SendSqlCommand(statements);
+        }
+
+        public IDictionary<float, IRecipe> GetAllRecipes()
+        {
+            string sql = "SELECT * FROM " + recipesTable;
+
+            return GetRecipeSqlCommand(sql);
         }
     }
 }

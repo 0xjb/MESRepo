@@ -1,5 +1,6 @@
 ﻿using MES.Acquintance;
 using MES.data;
+using System.Collections;
 using System.Collections.Generic;
 
 
@@ -78,6 +79,11 @@ namespace MES.Data
         {
             string[] s = { statement };
             return dbManager.RunQueries(s);
+        }
+
+        public IDictionary<float, IRecipe> GetAllRecipes()
+        {
+            return dbManager.GetAllRecipes();
         }
     }
 }

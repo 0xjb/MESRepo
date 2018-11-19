@@ -17,6 +17,10 @@ namespace MES.Tests
         [Test]
         public void TestDBManager()
         {
+            // Testing GetAllRecipes
+            IDictionary<float, IRecipe> recipes;
+            dbManager.GetAllRecipes();
+
             // Testing InsertBatch & InsertBatchValueSet
             IBatch batch0 = new Batch(-1, 3, 90, 10,
                 "02/11/2018 09:18:35", "02/11/2018 09:20:35");
@@ -141,7 +145,15 @@ namespace MES.Tests
             Assert.IsNull(loadedBatch13, "Succes");
         }
 
-        /*
+        [Test]
+        public void CreateRecipes()
+        {
+            IRecipe[] recipes = new Recipe[6];
+            
+           // recipes[0] = 
+        }
+
+        
         [Test]
         public void DeleteBatches()
         {
@@ -165,15 +177,16 @@ namespace MES.Tests
             IBatch loadedBatch13 = dbManager.GetBatch(-4);
             Assert.IsNull(loadedBatch13, "Succes");
         }
-        */
+        
         [Test]
         public void DBSetup()
         {
             string[] statements = new string[3];
 
             statements[0] = "CREATE TABLE recipes("
-                + "beerid FLOAT PRIMARY KEY,  "
+                + "beerid FLOAT PRIMARY KEY, "
                 + "maxspeed FLOAT, "
+                + "name VARCHAR(20), "
                 + "barley FLOAT, "
                 + "hops FLOAT, "
                 + "malt FLOAT, "
@@ -198,8 +211,6 @@ namespace MES.Tests
                 + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
                 + "PRIMARY KEY(timestampx, belongingto));";
 
-
-
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Tables created");
         }
@@ -211,6 +222,6 @@ namespace MES.Tests
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Tables deleted");
         }
-
+        
     }
 }

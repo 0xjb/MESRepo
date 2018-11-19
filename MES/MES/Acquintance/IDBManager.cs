@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -83,5 +84,11 @@ namespace MES.Acquintance
         /// <param name="statements"></param>
         /// <returns></returns>
         bool RunQueries(string[] statements);
+
+        /// <summary>
+        /// Returns all recipes from the db
+        /// </summary>
+        /// <returns></returns>
+        IDictionary<float, IRecipe> GetAllRecipes();
     }
 }
