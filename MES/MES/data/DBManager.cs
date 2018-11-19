@@ -336,8 +336,8 @@ namespace MES.data
             {
                 statements[i] = "INSERT INTO " + recipesTable + " VALUES("
                     + recipes[i].BeerId + ", "
-                    + recipes[i].MaxSpeed + ", "
-                    + recipes[i].Name + ", "
+                    + recipes[i].MaxSpeed + ", '"
+                    + recipes[i].Name + "', "
                     + recipes[i].Barley + ", "
                     + recipes[i].Hops + ", "
                     + recipes[i].Malt + ", "

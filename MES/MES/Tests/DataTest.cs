@@ -148,7 +148,7 @@ namespace MES.Tests
             IBatch loadedBatch13 = dbManager.GetBatch(-4);
             Assert.IsNull(loadedBatch13, "Succes");
         }
-
+        /*
         [Test]
         public void CreateRecipes()
         {
@@ -161,7 +161,7 @@ namespace MES.Tests
             recipes[4] = new Recipe(4, 100, "Ale", 7, 7, 0, 2, 2);
             recipes[5] = new Recipe(5, 125, "Alcohol Free", 0, 3, 4, 2, 0);
 
-            bool succes = dbManager.RunQueries(null);
+            bool succes = dbManager.AddRecipes(recipes);
             Assert.IsTrue(succes, "Succes");
         }
 
@@ -234,6 +234,6 @@ namespace MES.Tests
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Tables deleted");
         }
-        
+        */
     }
 }
