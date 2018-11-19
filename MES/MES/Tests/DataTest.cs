@@ -64,7 +64,7 @@ namespace MES.Tests
             IBatch loadedBatch0 = null;
             allBatches.TryGetValue(-1, out loadedBatch0);
             Assert.IsNotNull(loadedBatch0, "Succes");
-            
+
             IBatch loadedBatch1 = null;
             allBatches.TryGetValue(-2, out loadedBatch1);
             Assert.IsNotNull(loadedBatch1, "Succes");
@@ -165,21 +165,31 @@ namespace MES.Tests
             IBatch loadedBatch13 = dbManager.GetBatch(-4);
             Assert.IsNull(loadedBatch13, "Succes");
         }
-
+        */
         [Test]
         public void DBSetup()
         {
-            string[] statements = new string[2];
+            string[] statements = new string[3];
 
-            statements[0] = "CREATE TABLE batches("
+            statements[0] = "CREATE TABLE recipes("
+                + "beerid FLOAT PRIMARY KEY,  "
+                + "maxspeed FLOAT, "
+                + "barley FLOAT, "
+                + "hops FLOAT, "
+                + "malt FLOAT, "
+                + "wheat FLOAT, "
+                + "yeast FLOAT);";
+
+            statements[1] = "CREATE TABLE batches("
                 + "batchid FLOAT PRIMARY KEY, "
                 + "beerid FLOAT, "
                 + "acceptableproducts INT, "
                 + "defectproducts INT, "
                 + "timestampStart CHAR(19), "
-                + "timestampEnd CHAR(19));";
+                + "timestampEnd CHAR(19),"
+                + "FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE);";
 
-            statements[1] = "CREATE TABLE batchvalues("
+            statements[2] = "CREATE TABLE batchvalues("
                 + "temperature FLOAT, "
                 + "humidity FLOAT, "
                 + "vibration FLOAT, "
@@ -188,6 +198,8 @@ namespace MES.Tests
                 + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
                 + "PRIMARY KEY(timestampx, belongingto));";
 
+
+
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Tables created");
         }
@@ -195,10 +207,10 @@ namespace MES.Tests
         [Test]
         public void DBDelete()
         {
-            string[] statements = { "DROP TABLE batchvalues", "DROP TABLE batches" };
+            string[] statements = { "DROP TABLE batchvalues", "DROP TABLE batches", "DROP TABLE recipes" };
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Tables deleted");
         }
-        */
+
     }
 }
