@@ -8,6 +8,6 @@
         }
         
         void InjectLogic(ILogic logicFacade);
-        ILogic GetLogic();
+        
     }
 }

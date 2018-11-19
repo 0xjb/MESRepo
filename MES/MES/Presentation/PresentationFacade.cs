@@ -17,10 +17,6 @@ namespace MES.Presentation
             set { iLogic = value; }
         }
 
-        public ILogic GetLogic()
-        {
-            return iLogic;
-        }
 
         public void InjectLogic(ILogic logicFacade)
         {

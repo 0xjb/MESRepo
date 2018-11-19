@@ -33,12 +33,6 @@ namespace MES.Logic
             data = dataLayer;
         }
 
-        // TODO deprecate
-        public OpcClient GetOPC()
-        {
-            return opc;
-        }
-
         public bool IsSimulationOn {
             get => isSimulationON;
             set => isSimulationON = value;

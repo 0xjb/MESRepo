@@ -45,7 +45,7 @@ namespace MES.Presentation
         {
             this.presentationFacade = pf;
             //Get logiclayer
-            iLogic = presentationFacade.GetLogic();
+            iLogic = presentationFacade.ILogic;
 
             //
             CheckIfSimulationIsOn();
@@ -60,7 +60,7 @@ namespace MES.Presentation
 
 
             //Connects to OPC server
-            iLogic.GetOPC().Connect();
+            iLogic.OPC.Connect();
 
             InitializeComponent();
 
@@ -134,38 +134,38 @@ namespace MES.Presentation
         void MainWindow_Closed(object sender, EventArgs e)
         {
             //Put your close code here
-            iLogic.GetOPC().StopMachine();
+            iLogic.OPC.StopMachine();
         }
 
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //opc.StartMachine(1, 2, 2000, 600);
-            iLogic.GetOPC().StartMachine(1, 2, 200, 600);
+            iLogic.OPC.StartMachine(1, 2, 200, 600);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             //opc.StopMachine();
-            iLogic.GetOPC().StopMachine();
+            iLogic.OPC.StopMachine();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             //opc.ResetMachine();
-            iLogic.GetOPC().ResetMachine();
+            iLogic.OPC.ResetMachine();
         }
 
         private void btnAbort_Click(object sender, RoutedEventArgs e)
         {
             //opc.AbortMachine();
-            iLogic.GetOPC().AbortMachine();
+            iLogic.OPC.AbortMachine();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             //opc.ClearMachine();
-            iLogic.GetOPC().ClearMachine();
+            iLogic.OPC.ClearMachine();
         }
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
