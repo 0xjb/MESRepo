@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Threading;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
+using UnifiedAutomation.UaClient.Controls;
 
 namespace MES.Logic
 {
@@ -35,9 +37,24 @@ namespace MES.Logic
         public void Connect()
         {
             session = new Session();
-
             //Connect to server with no security
-            session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+            //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+
+            //br - automation.sandbox.sdu.dk på TCP port 4840(OPC discovery).
+            //session.Connect("br-automation.sandbox.sdu.dk:4840", SecuritySelection.None);
+
+            //10.112.254.165
+
+            //ApplicationLicenseManager.AddProcessLicenses(System.Reflection.Assembly.GetExecutingAssembly(), "License.lic");
+            //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+
+            session.AllowInsecureCredentials = false;
+            session.UseDnsNameAndPortFromDiscoveryUrl = true;
+            //session.EndpointDescription.EndpointUrl = "opc.tcp://br-automation:4840";
+            //session.EndpointDescription.EndpointUrl = "opc.tcp://10.112.254.165:4840";
+            session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+
+
         }
 
         public void CreateSubscription()
