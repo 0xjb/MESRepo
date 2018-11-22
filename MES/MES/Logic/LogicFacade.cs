@@ -6,7 +6,6 @@ namespace MES.Logic
     public class LogicFacade : ILogic
     {
         private OpcClient opc;
-
         private TestSimulation _testSimulation;
         private bool isSimulationON;
 
@@ -15,7 +14,8 @@ namespace MES.Logic
             this.opc = new OpcClient();
         }
 
-        public TestSimulation GetTestSimulation {
+        public TestSimulation GetTestSimulation
+        {
             get => _testSimulation;
             set => _testSimulation = value;
         }
@@ -32,17 +32,17 @@ namespace MES.Logic
             data = dataLayer;
         }
 
-        public bool IsSimulationOn {
+        public bool IsSimulationOn
+        {
             get => isSimulationON;
             set => isSimulationON = value;
         }
 
         public void CreateSimulation()
         {
-            if (isSimulationON)
-            {
+            if (isSimulationON) {
                 Console.WriteLine("Simulation ON");
-                this._testSimulation = new TestSimulation(opc);
+                this._testSimulation = new TestSimulation(opc,this);
             }
         }
 

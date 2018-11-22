@@ -17,7 +17,6 @@ namespace MES.Presentation
         
         private ILogic iLogic;
         private IPresentation presentationFacade;
-        //private Alarms alarms;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
@@ -45,8 +44,6 @@ namespace MES.Presentation
 
         public MainWindow(IPresentation pf)
         {
-
-            Console.WriteLine("\n\n\n HELLO FROM MAIN WINDOW\n\n\n");
             this.presentationFacade = pf;
             //Get logiclayer
             iLogic = presentationFacade.ILogic;
@@ -88,7 +85,7 @@ namespace MES.Presentation
 
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            levelBarley = iLogic.GetTestSimulation.LevelBarley;
+            LevelBarley = iLogic.GetTestSimulation.LevelBarley;
             levelHops = iLogic.GetTestSimulation.LevelHops;
             levelMalt = iLogic.GetTestSimulation.LevelMalt;
             levelWheat = iLogic.GetTestSimulation.LevelWheat;
@@ -104,8 +101,7 @@ namespace MES.Presentation
 
         private void CheckIfSimulationIsOn()
         {
-            if (presentationFacade.ILogic.IsSimulationOn)
-            {
+            if (presentationFacade.ILogic.IsSimulationOn) {
                 this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
                 this.levelHops = iLogic.GetTestSimulation.LevelHops;
                 this.levelMalt = iLogic.GetTestSimulation.LevelMalt;
@@ -114,6 +110,7 @@ namespace MES.Presentation
 
                 iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
             }
+
         }
 
         public ChartValues<ObservableValue> ValuesIngredients { get; set; }

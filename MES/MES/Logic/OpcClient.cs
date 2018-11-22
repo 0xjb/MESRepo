@@ -30,7 +30,6 @@ namespace MES.Logic
 
         public OpcClient()
         {
-            Console.WriteLine("\n\n\n HELLO FROM OPC CLIENT\n\n\n");
             this.errorHandler = new ErrorHandler();
             Connect();
             CreateSubscription();

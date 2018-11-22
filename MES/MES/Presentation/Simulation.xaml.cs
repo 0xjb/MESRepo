@@ -22,9 +22,9 @@ namespace MES.Presentation
     {
         private IPresentation presentationFacade;
         private MainWindow mw;
+
         public Simulation(IPresentation pf, bool isSimulationOn, MainWindow mainWindow)
         {
-
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
@@ -32,8 +32,6 @@ namespace MES.Presentation
             {
                 checkBockSimulation.IsChecked = true;
             }
-
-           
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -56,7 +54,6 @@ namespace MES.Presentation
                 checkBockSimulation.IsChecked = false;
                 txtBlock.Text = "Machine is running...Can't turn on simulation....";
             }
-         
         }
 
         private void CheckBockSimulation_OnUnchecked(object sender, RoutedEventArgs e)
