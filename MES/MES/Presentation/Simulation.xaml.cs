@@ -25,12 +25,18 @@ namespace MES.Presentation
 
         public Simulation(IPresentation pf, bool isSimulationOn, MainWindow mainWindow)
         {
+
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
             if (isSimulationOn)
             {
                 checkBockSimulation.IsChecked = true;
+            }
+
+            if (presentationFacade.ILogic.OPC.StateCurrent != 2)
+            {
+                checkBockSimulation.IsEnabled = false;
             }
         }
 
@@ -39,27 +45,36 @@ namespace MES.Presentation
             MainWindow mainWindow = new MainWindow(presentationFacade);
             this.Close();
             mainWindow.Show();
+            //mw.Show();
+
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (presentationFacade.ILogic.OPC.StateCurrent != 6)
+            if (presentationFacade.ILogic.OPC.StateCurrent == 2)
             {
                 presentationFacade.ILogic.IsSimulationOn = true;
                 presentationFacade.ILogic.CreateSimulation();
                 Console.WriteLine(" is checked");
             }
-            else
-            {
-                checkBockSimulation.IsChecked = false;
-                txtBlock.Text = "Machine is running...Can't turn on simulation....";
-            }
+            //else
+            //{
+            //checkBockSimulation.IsEnabled = false;
+            //txtBlock.Text = "Machine is running...Can't turn  off simulation....";
+            //}
         }
 
-        private void CheckBockSimulation_OnUnchecked(object sender, RoutedEventArgs e)
+        private void CheckBox_OnUnchecked(object sender, RoutedEventArgs e)
         {
-            presentationFacade.ILogic.IsSimulationOn = false;
-            Console.WriteLine(" is unchecked");
+            if (presentationFacade.ILogic.OPC.StateCurrent == 2)
+            {
+                presentationFacade.ILogic.IsSimulationOn = false;
+                Console.WriteLine(" is unchecked");
+            }
+            //else {
+            //checkBockSimulation.IsEnabled = false;
+            //txtBlock.Text = "Machine is running...Can't turn on  simulation....";
+            //}
         }
     }
 }

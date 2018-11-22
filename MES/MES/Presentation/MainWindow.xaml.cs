@@ -14,7 +14,6 @@ namespace MES.Presentation
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
-        
         private ILogic iLogic;
         private IPresentation presentationFacade;
 
@@ -47,16 +46,20 @@ namespace MES.Presentation
             this.presentationFacade = pf;
             //Get logiclayer
             iLogic = presentationFacade.ILogic;
-           
+
             //
             CheckIfSimulationIsOn();
 
-            //Connects to OPC server
-            iLogic.OPC.Connect();
+
+            if (!presentationFacade.ILogic.IsSimulationOn)
+            {
+                iLogic.OPC.Connect();
+            }
+                //Connects to OPC server
+                //iLogic.OPC.Connect();
 
             InitializeComponent();
-            //alarms = new Alarms(presentationFacade, this);
-            //Do stuff when closing window
+            ////Do stuff when closing window
             this.Closed += new EventHandler(MainWindow_Closed);
 
             ValuesIngredients = new ChartValues<ObservableValue>
@@ -67,41 +70,54 @@ namespace MES.Presentation
                 new ObservableValue(LevelWheat),
                 new ObservableValue(LevelYeast)
             };
-            var columnSeries = new ColumnSeries
-            {
+            var columnSeries = new ColumnSeries {
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
             };
             //Place valuelabel inside the column
-            columnSeries.LabelsPosition = (BarLabelPosition) 3;
-            SeriesCollection = new SeriesCollection {columnSeries};
+            columnSeries.LabelsPosition = (BarLabelPosition)3;
+            SeriesCollection = new SeriesCollection { columnSeries };
 
             //put label stuff here
-            Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
+            Labels = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
             Formatter = value => value.ToString("N");
             DataContext = this;
         }
 
+  
+
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            LevelBarley = iLogic.GetTestSimulation.LevelBarley;
-            levelHops = iLogic.GetTestSimulation.LevelHops;
-            levelMalt = iLogic.GetTestSimulation.LevelMalt;
-            levelWheat = iLogic.GetTestSimulation.LevelWheat;
-            levelYeast = iLogic.GetTestSimulation.LevelYeast;
+            try {
+                ValuesIngredients[0].Value = LevelBarley;
+                ValuesIngredients[1].Value = LevelHops;
+                ValuesIngredients[2].Value = LevelMalt;
+                ValuesIngredients[3].Value = LevelWheat;
+                ValuesIngredients[4].Value = LevelWheat;
+            }
+            catch (System.NullReferenceException exception) {
+                Console.WriteLine(exception);
+                //throw;
+            }
+            //ValuesIngredients[0].Value = LevelBarley;
+            //ValuesIngredients[1].Value = LevelHops;
+            //ValuesIngredients[2].Value = LevelMalt;
+            //ValuesIngredients[3].Value = LevelWheat;
+            //ValuesIngredients[4].Value = LevelWheat;
 
-            ValuesIngredients[0].Value = LevelBarley;
-            ValuesIngredients[1].Value = LevelHops;
-            ValuesIngredients[2].Value = LevelMalt;
-            ValuesIngredients[3].Value = LevelWheat;
-            ValuesIngredients[4].Value = LevelWheat;
+            LevelBarley = iLogic.GetTestSimulation.LevelBarley;
+            LevelHops = iLogic.GetTestSimulation.LevelHops;
+            LevelMalt = iLogic.GetTestSimulation.LevelMalt;
+            LevelWheat = iLogic.GetTestSimulation.LevelWheat;
+            LevelYeast = iLogic.GetTestSimulation.LevelYeast;
         }
 
 
         private void CheckIfSimulationIsOn()
         {
-            if (presentationFacade.ILogic.IsSimulationOn) {
+            if (presentationFacade.ILogic.IsSimulationOn)
+            {
                 this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
                 this.levelHops = iLogic.GetTestSimulation.LevelHops;
                 this.levelMalt = iLogic.GetTestSimulation.LevelMalt;
@@ -110,7 +126,6 @@ namespace MES.Presentation
 
                 iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
             }
-
         }
 
         public ChartValues<ObservableValue> ValuesIngredients { get; set; }
