@@ -21,10 +21,12 @@ namespace MES.Presentation
     public partial class Simulation : Window
     {
         private IPresentation presentationFacade;
-        public Simulation(IPresentation pf, bool isSimulationOn)
+        private MainWindow mw;
+        public Simulation(IPresentation pf, bool isSimulationOn, MainWindow mainWindow)
         {
 
             this.presentationFacade = pf;
+            this.mw = mainWindow;
             InitializeComponent();
             if (isSimulationOn)
             {

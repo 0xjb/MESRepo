@@ -14,8 +14,10 @@ namespace MES.Presentation
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
+        
         private ILogic iLogic;
         private IPresentation presentationFacade;
+        //private Alarms alarms;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
@@ -43,27 +45,20 @@ namespace MES.Presentation
 
         public MainWindow(IPresentation pf)
         {
+
+            Console.WriteLine("\n\n\n HELLO FROM MAIN WINDOW\n\n\n");
             this.presentationFacade = pf;
             //Get logiclayer
             iLogic = presentationFacade.ILogic;
-
+           
             //
             CheckIfSimulationIsOn();
-
-            //this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
-            //this.levelHops = iLogic.GetTestSimulation.LevelHops;
-            //this.levelMalt = iLogic.GetTestSimulation.LevelMalt;
-            //this.levelWheat = iLogic.GetTestSimulation.LevelWheat;
-            //this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
-
-            //iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
-
 
             //Connects to OPC server
             iLogic.OPC.Connect();
 
             InitializeComponent();
-
+            //alarms = new Alarms(presentationFacade, this);
             //Do stuff when closing window
             this.Closed += new EventHandler(MainWindow_Closed);
 
@@ -134,7 +129,7 @@ namespace MES.Presentation
         void MainWindow_Closed(object sender, EventArgs e)
         {
             //Put your close code here
-            iLogic.OPC.StopMachine();
+            //iLogic.OPC.StopMachine();
         }
 
 
@@ -170,42 +165,42 @@ namespace MES.Presentation
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
         {
-            Alarms alarms = new Alarms(presentationFacade);
+            Alarms alarms = new Alarms(presentationFacade, this);
             this.Hide();
             alarms.Show();
         }
 
         private void btnOEE_Click(object sender, RoutedEventArgs e)
         {
-            OEE oEE = new OEE(presentationFacade);
+            OEE oEE = new OEE(presentationFacade, this);
             this.Hide();
             oEE.Show();
         }
 
         private void btnOptimization_Click(object sender, RoutedEventArgs e)
         {
-            Optimization optimization = new Optimization(presentationFacade);
+            Optimization optimization = new Optimization(presentationFacade, this);
             this.Hide();
             optimization.Show();
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade);
+            History history = new History(presentationFacade, this);
             this.Hide();
             history.Show();
         }
 
         private void btnBatchSetup_Click(object sender, RoutedEventArgs e)
         {
-            BatchSetup batchSetup = new BatchSetup(presentationFacade);
+            BatchSetup batchSetup = new BatchSetup(presentationFacade, this);
             this.Hide();
             batchSetup.Show();
         }
 
         private void btnMachineSettings_Click(object sender, RoutedEventArgs e)
         {
-            Simulation simulation = new Simulation(presentationFacade, presentationFacade.ILogic.IsSimulationOn);
+            Simulation simulation = new Simulation(presentationFacade, presentationFacade.ILogic.IsSimulationOn, this);
             this.Hide();
             simulation.Show();
         }

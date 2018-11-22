@@ -10,17 +10,19 @@ namespace MES.Presentation
     public partial class BatchSetup : Window
     {
         private IPresentation presentationFacade;
-        public BatchSetup(IPresentation pf)
+        private MainWindow mw;
+        public BatchSetup(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
+            this.mw = mainWindow;
             InitializeComponent();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(presentationFacade);
+            //MainWindow mainWindow = new MainWindow(presentationFacade);
             this.Close();
-            mainWindow.Show();
+            mw.Show();
         }
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

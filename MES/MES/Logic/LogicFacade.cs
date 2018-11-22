@@ -13,7 +13,6 @@ namespace MES.Logic
         public LogicFacade()
         {
             this.opc = new OpcClient();
-            //this._testSimulation = new TestSimulation(opc);
         }
 
         public TestSimulation GetTestSimulation {

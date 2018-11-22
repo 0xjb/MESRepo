@@ -9,9 +9,11 @@ namespace MES.Presentation
     public partial class Optimization : Window
     {
         private IPresentation presentationFacade;
-        public Optimization(IPresentation pf)
+        private MainWindow mw;
+        public Optimization(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
+            this.mw = mainWindow;
             InitializeComponent();
         }
 
@@ -19,7 +21,8 @@ namespace MES.Presentation
         {
             MainWindow mainWindow = new MainWindow(presentationFacade);
             this.Close();
-            mainWindow.Show();
+            //mainWindow.Show();
+            mw.Show();
         }
     }
 }

@@ -44,8 +44,8 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Button x:Name="btnBack"  Content="Back" Grid.Column="1"  Margin="5,5,5,5" Grid.Row="11" Click="btnBack_Click" />
-        <Viewbox Grid.ColumnSpan="8" Grid.Column="1"   Margin="5,5,5,5" Grid.Row="1" Grid.RowSpan="10" Stretch="UniformToFill">
-            <ListView x:Name="listViewAlarms" ItemsSource="{Binding}" Height="350" Width="800"  ScrollViewer.CanContentScroll="false" >
+        <Viewbox Grid.ColumnSpan="8" Grid.Column="1"   Margin="5,5,5,5" Grid.Row="1" Grid.RowSpan="10" Stretch="Uniform">
+            <ListView x:Name="listViewAlarms" ItemsSource="{Binding}" Height="350" Width="600"  ScrollViewer.CanContentScroll="false" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Alarm number" Width="120" DisplayMemberBinding="{Binding AlarmNumber}" />
@@ -56,7 +56,7 @@
                 </ListView.View>
             </ListView>
         </Viewbox>
-        <Button Grid.ColumnSpan="1" Content="addAlarm" Grid.Column="3"  Margin="5,5,5,5" Grid.Row="11" Width="75"  Click="Button_Click"/>
+        <Button Grid.ColumnSpan="1" Content="addAlarm" Grid.Column="3"  Margin="5,5,5,5" Grid.Row="11" Width="75"  />
         <Button Grid.ColumnSpan="1" Content="Clear" Grid.Column="8"  Margin="5,5,5,5" Grid.Row="11"  />
 
 

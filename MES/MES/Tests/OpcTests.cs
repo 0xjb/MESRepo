@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
 using System.Threading;
+using MES.Acquintance;
 using UnifiedAutomation.UaClient;
 using MES.Logic;
-//using System.Threading;
-//using System.Threading;
-//using System.Threading;
 namespace MES.Tests
 {
     [TestFixture]
