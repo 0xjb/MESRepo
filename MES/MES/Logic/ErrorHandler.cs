@@ -48,6 +48,9 @@ namespace MES.Logic
                 {
                     alarmNumber++;
                     _alarms.Add(new AlarmObject() { AlarmNumber = alarmNumber, BatchID = batchID, Timestamp = _date, StopReason = stopReasons[index] });
+                    Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
+                                      stopReasons[index]);
+                    Console.WriteLine(" number of alarms: " + _alarms.Count);
                 }
                 
             }
@@ -56,9 +59,7 @@ namespace MES.Logic
                 Console.WriteLine(e);
             }
 
-            Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
-                              stopReasons[index]);
-            Console.WriteLine(" number of alarms: " + _alarms.Count);
+            
         }
 
         public ObservableCollection<AlarmObject> Alarms
