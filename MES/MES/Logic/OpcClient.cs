@@ -15,6 +15,7 @@ namespace MES.Logic
         private bool isProcessRunning = false;
         private double processedProducts;
         private double defectProducts;
+        private double acceptableProducts;
         private double stateCurrent;
         private double tempCurrent;
         private double humidityCurrent;
@@ -59,7 +60,10 @@ namespace MES.Logic
 
             //TODO SKAL denne fjernes??
             batchId = ReadCurrentBatchId();
+
             maintenanceTrigger = ReadMaintenanceTrigger();
+
+            Console.WriteLine();
         }
 
         public void CreateSubscription()
@@ -540,6 +544,7 @@ namespace MES.Logic
             get { return processedProducts; }
             set {
                 processedProducts = value;
+                AcceptableProducts = processedProducts - defectProducts;
                 OnPropertyChanged("ProcessedProducts");
             }
         }
@@ -550,6 +555,15 @@ namespace MES.Logic
                 defectProducts = value;
                 OnPropertyChanged("DefectProducts");
             }
+        }
+
+        public double AcceptableProducts {
+            get { return acceptableProducts; }
+            set {
+                acceptableProducts = value;
+                OnPropertyChanged("AcceptableProducts");
+            }
+
         }
 
         public double StateCurrent {
