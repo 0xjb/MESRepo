@@ -21,6 +21,18 @@ namespace MES.Logic
         private double vibrationCurrent;
         private double stopReasonId;
         private double batchId;
+        private double barley;
+
+        private double hops;
+        private double malt;
+        private double wheat;
+        private double yeast;
+
+
+
+
+
+
         private ErrorHandler errorHandler;
 
 
@@ -41,11 +53,11 @@ namespace MES.Logic
 
 
             //Connect to server with no security (simulator)
-            session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+            //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
             session.UseDnsNameAndPortFromDiscoveryUrl = true;
             //Connect to server with no security (machine)
-            //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+            session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
 
 
             //TODO SKAL denne fjernes??
@@ -64,6 +76,13 @@ namespace MES.Logic
             NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
             NodeId stopReasonNode = new NodeId("::Program:Cube.Admin.StopReason.ID", 6);
             NodeId bacthIdNode = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6);
+
+            NodeId barleyNode = new NodeId("::Program:Inventory.Barley", 6);
+            NodeId hopsNode = new NodeId("::Program:Inventory.Hops", 6);
+            NodeId maltNode = new NodeId("::Program:Inventory.Malt", 6);
+            NodeId wheatNode = new NodeId("::Program:Inventory.Wheat", 6);
+            NodeId yeastNode = new NodeId("::Program:Inventory.Yeast", 6);
+
             // list of monitored items
             List<MonitoredItem> monitoredItems = new List<MonitoredItem>();
             // convert nodeid to datamonitoreditem
@@ -75,6 +94,13 @@ namespace MES.Logic
             MonitoredItem miVibrationNode = new DataMonitoredItem(vibrationNode);
             MonitoredItem miStopReasonNode = new DataMonitoredItem(stopReasonNode);
             MonitoredItem miBatchIdNode = new DataMonitoredItem(bacthIdNode);
+
+            MonitoredItem miBarleyNode = new DataMonitoredItem(barleyNode);
+            MonitoredItem miHopsNode = new DataMonitoredItem(hopsNode);
+            MonitoredItem miMaltNode = new DataMonitoredItem(maltNode);
+            MonitoredItem miWheatNode = new DataMonitoredItem(wheatNode);
+            MonitoredItem miYeastNode = new DataMonitoredItem(yeastNode);
+
             monitoredItems.Add(miAmountNode);
             monitoredItems.Add(miStateNode);
             monitoredItems.Add(miDefectNode);
@@ -83,6 +109,12 @@ namespace MES.Logic
             monitoredItems.Add(miVibrationNode);
             monitoredItems.Add(miStopReasonNode);
             monitoredItems.Add(miBatchIdNode);
+
+            monitoredItems.Add(miBarleyNode);
+            monitoredItems.Add(miHopsNode);
+            monitoredItems.Add(miMaltNode);
+            monitoredItems.Add(miWheatNode);
+            monitoredItems.Add(miYeastNode);
 
             // init subscription with parameters
             s = new Subscription(session);
@@ -135,7 +167,26 @@ namespace MES.Logic
                     //batch id 
                     case "::Program:Cube.Status.Parameter[0].Value":
                         StopReasonId = double.Parse(dc.Value.ToString());
-                        
+                        break;
+                    //barley
+                    case "::Program:Inventory.Barley":
+                        Barley = double.Parse(dc.Value.ToString());
+                        break;
+                    //hops
+                    case "::Program:Inventory.Hops":
+                        Hops = double.Parse(dc.Value.ToString());
+                        break;
+                    //malt
+                    case "::Program:Inventory.Malt":
+                        Malt = double.Parse(dc.Value.ToString());
+                        break;
+                    //wheat
+                    case "::Program:Inventory.Wheat":
+                        Wheat = double.Parse(dc.Value.ToString());
+                        break;
+                    //yeast
+                    case "::Program:Inventory.Yeast":
+                        Yeast = double.Parse(dc.Value.ToString());
                         break;
                     default:
                         break;
@@ -545,6 +596,45 @@ namespace MES.Logic
         {
             get => errorHandler;
             set => errorHandler = value;
+        }
+
+        public double Barley {
+            get { return barley; }
+            set {
+                barley = value;
+                OnPropertyChanged("Barley");
+            }
+        }
+
+        public double Hops {
+            get { return hops; }
+            set {
+                hops = value;
+                OnPropertyChanged("Hops");
+            }
+        }
+
+        public double Malt {
+            get { return malt; }
+            set {
+                malt = value;
+                OnPropertyChanged("Malt");
+            }
+        }
+
+        public double Wheat {
+            get { return wheat; }
+            set {
+                wheat = value;
+                OnPropertyChanged("Wheat");
+            }
+        }
+        public double Yeast {
+            get { return yeast; }
+            set {
+                yeast = value;
+                OnPropertyChanged("Yeast");
+            }
         }
     }
 }
