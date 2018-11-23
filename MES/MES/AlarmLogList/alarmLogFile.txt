@@ -1,6 +1,6 @@
-1;         0;              11-23-2018 21:00:06  ;    Manual abort;                      
-2;         0;              11-23-2018 21:00:13  ;    Manual stop;                       
-3;         0;              11-23-2018 21:00:15  ;    Manual abort;                      
-4;         0;              11-23-2018 21:00:17  ;    Manual stop;                       
-5;         0;              11-23-2018 21:00:18  ;    Manual abort;                      
-6;         0;              11-23-2018 21:00:28  ;    Manual abort;                      
+Alarm Number:   Batch Id:            Time and Date:                           Stop Reason:                            
+1               0                    11-23-2018 23:04:50                      Manual stop                             
+2               0                    11-23-2018 23:05:12                      Manual stop                             
+3               0                    11-23-2018 23:05:14                      Manual abort                            
+4               0                    11-23-2018 23:05:14                      Manual stop                             
+5               0                    11-23-2018 23:05:15                      Manual abort                            

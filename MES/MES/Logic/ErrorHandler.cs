@@ -32,7 +32,17 @@ namespace MES.Logic
         {
             _alarms = new ObservableCollection<AlarmObject>();
             alarmsToFile = new string[4];
-            stringBuilder = new StringBuilder();
+            if (!IsFileIsEmpty())
+            {
+                stringBuilder = new StringBuilder();
+                stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", "Alarm Number:", "Batch Id:","Time and Date:","Stop Reason:");
+                stringBuilder.AppendLine();
+            }
+            else
+            {
+                stringBuilder = new StringBuilder();
+            }
+            
             ReadFile();
 
             BindingOperations.EnableCollectionSynchronization(_alarms, _lock);
@@ -63,23 +73,23 @@ namespace MES.Logic
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
                                       stopReasons[index]);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
-                    //alarmsToFile[0] = alarmNumber.ToString();
-                    alarmsToFile[0] = alarmNumber + ";";
-                    //alarmsToFile[1] = batchID.ToString();
-                    alarmsToFile[1] = batchID + ";";
-                    //alarmsToFile[2] = _date;
-                    alarmsToFile[2] = _date + ";";
-                    //alarmsToFile[3] = stopReasons[index];
-                    alarmsToFile[3] = stopReasons[index] + ";";
+                    alarmsToFile[0] = alarmNumber.ToString();
+                    //alarmsToFile[0] = alarmNumber + ";";
+                    alarmsToFile[1] = batchID.ToString();
+                    //alarmsToFile[1] = batchID + ";";
+                    alarmsToFile[2] = _date;
+                    //alarmsToFile[2] = _date + ";";
+                    alarmsToFile[3] = stopReasons[index];
+                    //alarmsToFile[3] = stopReasons[index] + ";";
 
-                    stringBuilder.AppendFormat("{0,-10} {1,-15} {2,-25} {3,-35}", alarmsToFile[0], alarmsToFile[1],
+                    stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", alarmsToFile[0], alarmsToFile[1],
                         alarmsToFile[2], alarmsToFile[3]);
                     stringBuilder.AppendLine();
 
                     string result = stringBuilder.ToString();
-                    Console.WriteLine(stringBuilder);
+                    //Console.WriteLine(stringBuilder);
                     System.IO.File.AppendAllText(
-                        @"C: \Users\frede\source\repos\MESRepo\MES\MES\AlarmLogList\alarmLogFile.txt", result);
+                    @"C: \Users\frede\source\repos\MESRepo\MES\MES\AlarmLogList\alarmLogFile.txt", result);
                     stringBuilder.Clear();
                 }
             }
@@ -101,8 +111,13 @@ namespace MES.Logic
                     string fileLine = sr.ReadLine();
                     i++;
 
-                    stringTokens = fileLine.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    stringTokens = fileLine.Split(new char[] {' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    //Console.WriteLine(stringTokens.Length);
 
+                    //foreach (string word in stringTokens)
+                    //{
+                    //    Console.WriteLine(word);
+                    //}
                     if (stringTokens.Length == 6)
                     {
                         _alarms.Add(
@@ -115,6 +130,32 @@ namespace MES.Logic
                     }
                 }
             }
+        }
+
+        private bool IsFileIsEmpty()
+        {
+            using (var sr =
+                new StreamReader(@"C: \Users\frede\source\repos\MESRepo\MES\MES\AlarmLogList\alarmLogFile.txt")) {
+                string[] stringTokens;
+                if (sr.Peek() <= 0)
+                {
+                    Console.WriteLine("\n\n File is empty******************");
+                    return false;
+                }
+
+                return true;
+
+                //while (!sr.EndOfStream) {
+                //    string fileLine = sr.ReadLine();
+
+
+                //    stringTokens = fileLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+
+
+                //}
+            }
+
         }
 
         public ObservableCollection<AlarmObject> Alarms
