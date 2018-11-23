@@ -58,7 +58,7 @@
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="100" FontSize="20" FontStyle="Normal" 
+                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="60000" FontSize="20" FontStyle="Normal" 
                               LabelFormatter="{Binding Formatter}" 
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisY>
