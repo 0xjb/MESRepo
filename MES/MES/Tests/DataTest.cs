@@ -155,7 +155,7 @@ namespace MES.Tests
             Assert.IsNull(loadedBatch13, "Succes");
         }
 
-        
+        /*
         [Test]
         public void CreateRecipes()
         {
@@ -185,7 +185,7 @@ namespace MES.Tests
             recipes[4] = new Recipe(4, 100, "Ale", 4, 6, 2, 2, 8);
             recipes[5] = new Recipe(5, 125, "Alcohol Free", 1, 1, 4, 5, 0);
 
-            for (int i = 0; 0 < recipes.Length; i++)
+            for (int i = 0; i < recipes.Length; i++)
             {
                 statements[i] = "UPDATE recipes SET barley = " + recipes[i].Barley
                     + ", hops = " + recipes[i].Hops
@@ -198,7 +198,7 @@ namespace MES.Tests
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Succes");
         }
-        /*
+        
         [Test]
         public void DeleteBatches()
         {
