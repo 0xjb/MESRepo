@@ -69,7 +69,7 @@
 
         <Viewbox Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Right"
                  Margin="0,5,5,5">
-            <lvc:AngularGauge Value="{Binding ValueMaintenance}" FromValue="0" ToValue="100 "
+            <lvc:AngularGauge Value="{Binding PresentationFacade.ILogic.OPC.MaintenanceCounter}" FromValue="0" ToValue="100"
                               LabelsStep="50" TicksStep="25" Wedge="300"
                               TicksForeground="White" Foreground="White"
                               FontWeight="Bold" FontSize="10"

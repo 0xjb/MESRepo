@@ -34,13 +34,13 @@ namespace MES.Logic
 
         public void AddAlarm(int batchID, double stopReason)
         {
-            int index = (int) stopReason - 9;
+            int index = (int)stopReason - 9;
             if (index < 0)
             {
                 index = 0;
             }
 
-           
+
             string _date = DateTime.Now.ToString("MM/dd/yyyy") + " " + DateTime.Now.ToString("HH:mm:ss tt ");
             try
             {
@@ -52,18 +52,17 @@ namespace MES.Logic
                                       stopReasons[index]);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
                 }
-                
+
             }
             catch (NotSupportedException e)
             {
                 Console.WriteLine(e);
             }
 
-            
+
         }
 
-        public ObservableCollection<AlarmObject> Alarms
-        {
+        public ObservableCollection<AlarmObject> Alarms {
             get => _alarms;
             set => _alarms = value;
         }
