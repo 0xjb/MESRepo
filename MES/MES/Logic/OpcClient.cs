@@ -114,7 +114,7 @@ namespace MES.Logic
                         ProcessedProducts = double.Parse(dc.Value.ToString());
                         break;
                     //  temperature
-                    case "::Program:Cube.Status.Parameter[3]":
+                    case "::Program:Cube.Status.Parameter[3].Value":
                         TempCurrent = double.Parse(dc.Value.ToString());
                         break;
                     // defect products processed
