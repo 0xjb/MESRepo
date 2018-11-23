@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acquintance\IBatchValueSet.cs" />
+    <Compile Include="Logic\Batch.cs" />
     <Compile Include="Logic\BatchReportGenerator.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />

@@ -48,7 +48,7 @@ namespace MES.Presentation
             iLogic = presentationFacade.ILogic;
 
             //
-            CheckIfSimulationIsOn();
+            //CheckIfSimulationIsOn();
 
             //this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
             //this.levelHops = iLogic.GetTestSimulation.LevelHops;
