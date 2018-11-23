@@ -22,6 +22,7 @@ namespace MES.Logic
         private double stopReasonId;
         private double batchId;
         private ErrorHandler errorHandler;
+     
 
 
         public Session session;
@@ -31,6 +32,7 @@ namespace MES.Logic
         public OpcClient()
         {
             this.errorHandler = new ErrorHandler();
+          
             Connect();
             CreateSubscription();
         }
@@ -129,13 +131,15 @@ namespace MES.Logic
                         break;
                     //stop reason id
                     case "::Program:Cube.Admin.StopReason.ID":
-                        BatchId = double.Parse(dc.Value.ToString());
+                        //BatchId = double.Parse(dc.Value.ToString());
+                        StopReasonId = double.Parse(dc.Value.ToString());
                         errorHandler.AddAlarm((int)BatchId, StopReasonId);
                         break;
                     //batch id 
                     case "::Program:Cube.Status.Parameter[0].Value":
-                        StopReasonId = double.Parse(dc.Value.ToString());
-                        
+                        //StopReasonId = double.Parse(dc.Value.ToString());
+                        BatchId = double.Parse(dc.Value.ToString());
+
                         break;
                     default:
                         break;

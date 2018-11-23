@@ -20,11 +20,17 @@ namespace MES.Logic
 
         private int alarmNumber = 0;
 
+        //private string filePathAndName = @"Data\AlarmLogFiles\alarmLogFile.txt";
+        //TODO Skal være i data
+        private string filePathAndName = @"Logic\AlarmLogFiles\alarmLogFile.txt";
+        private string[] alarmsToFile;
+        
         private static object _lock = new object();
 
         public ErrorHandler()
         {
             _alarms = new ObservableCollection<AlarmObject>();
+            alarmsToFile = new string[4];
 
             BindingOperations.EnableCollectionSynchronization(_alarms, _lock);
         }
@@ -51,8 +57,16 @@ namespace MES.Logic
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
                                       stopReasons[index]);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
+                    alarmsToFile[0] = alarmNumber.ToString();
+                    alarmsToFile[1] = batchID.ToString();
+                    alarmsToFile[2] = _date;
+                    alarmsToFile[3] = stopReasons[index];
+                    System.IO.File.WriteAllLines(AppDomain.CurrentDomain.BaseDirectory + "AlarmLogList", alarmsToFile);
+
+
+
                 }
-                
+
             }
             catch (NotSupportedException e)
             {
