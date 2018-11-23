@@ -5,64 +5,62 @@ using MES.Logic;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MES.Presentation
-{
+namespace MES.Presentation {
     /// <summary>
     /// Interaction logic for BatchSetup.xaml
     /// </summary>
-    public partial class BatchSetup : Window
-    {
+    public partial class BatchSetup : Window {
         private IPresentation presentationFacade;
-        private ObservableCollection<Batch> batchQueue = new ObservableCollection<Batch>();
-        public BatchSetup(IPresentation pf)
-        {
-            this.presentationFacade = pf;
-            genTestData();
+        MainWindow window;
+        public BatchSetup(IPresentation pf, MainWindow w) {
+            window = w;
+            PresentationFacade = pf;
             InitializeComponent();
-            batchQueueGrid.ItemsSource = batchQueue;
+            batchQueueGrid.ItemsSource = presentationFacade.ILogic.Batches.Batches;
+            DataContext = this;
+        }
+        public IPresentation PresentationFacade {
+            get { return presentationFacade; }
+            set { presentationFacade = value; }
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow(presentationFacade);
+        private void btnBack_Click(object sender, RoutedEventArgs e) {
             this.Close();
-            mainWindow.Show();
+            window.Show();
         }
 
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            try {
+                float batchId = float.Parse(BatchIdTB.Text);
+                float productType = float.Parse(ProductTypeTB.Text);
+                float amount = float.Parse(AmountTB.Text);
+                presentationFacade.ILogic.CreateBatch(batchId, amount, productType);
+                testlabel.Content = "Batch added to the list";
+            } catch (System.FormatException) {
+                testlabel.Content = "you must insert correct values into the boxes";
+            }
 
         }
-        private void genTestData() {
-            Batch a = new Batch("Batch 1", "Pilsner");
-            Batch b = new Batch("Batch 2", "Classic");
-            Batch c = new Batch("Batch 3", "meow");
-            batchQueue.Add(a);
-            batchQueue.Add(b);
-            batchQueue.Add(c);
+
+        private void Button_Click_1(object sender, RoutedEventArgs e) {
+            presentationFacade.ILogic.StartProduction();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //    try
-            //    {
-            //        float batchId = float.Parse(BatchIdTB.Text);
-            //        float productType = float.Parse(ProductTypeTB.Text);
-            //        float amount = float.Parse(AmountTB.Text);
-            //        float machineSpeed = float.Parse(MachineSpeedTB.Text);
-            //        c.StartMachine(batchId, productType, amount, machineSpeed);
-            //        testlabel.Content = "you don gut";
-            //    }
-            //    catch (System.FormatException)
-            //    {
-            //        testlabel.Content = "you must insert correct values into the boxes";
-            //    }
-            //}
-            Batch b = new Batch("battch", "hnnn");
-            batchQueue.Add(b);
-            batchQueue[0].BatchID = "69";
+        private void Button1_Click(object sender, RoutedEventArgs e) {
+            if(batchQueueGrid.SelectedItem != null) {
+                presentationFacade.ILogic.Batches.MoveUp(batchQueueGrid.SelectedItem as Batch);
+            }
+
+        }
+
+        private void Button2_Click(object sender, RoutedEventArgs e) {
+            if (batchQueueGrid.SelectedItem != null) {
+                presentationFacade.ILogic.Batches.MoveDown(batchQueueGrid.SelectedItem as Batch);
+            }
 
         }
     }
 }
+
 

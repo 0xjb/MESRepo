@@ -42,7 +42,7 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Button x:Name="btnBack"  Content="Back" Grid.Column="1"  Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
-        <TextBox x:Name="BatchIdTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Margin="10,3,0,0"/>
+        <TextBox x:Name="BatchIdTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,3,0,0"/>
         <TextBox x:Name="ProductTypeTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,12,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="MachineSpeedTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,24,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="-0.354,0.565" Grid.RowSpan="2"/>
         <TextBox x:Name="AmountTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,18,0,0" RenderTransformOrigin="0.833,1.022"/>
@@ -52,7 +52,18 @@
         <Label Content="Machine Speed&#xD;&#xA;" Grid.Column="1" HorizontalAlignment="Left" Margin="0,24,0,0" Grid.Row="6" VerticalAlignment="Top" Width="94" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
         <Button Content="Create Batch" Grid.Column="7" HorizontalAlignment="Left" Margin="3,10,0,0" Grid.Row="9" VerticalAlignment="Top" Width="145" Click="Button_Click" RenderTransformOrigin="1.173,3.925" Height="63" Grid.RowSpan="2" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
         <Label x:Name="testlabel" Content="" Grid.Column="5" HorizontalAlignment="Left" Margin="10,0.2,0,0" Grid.Row="6" VerticalAlignment="Top" Height="31" Width="168" Grid.ColumnSpan="2"/>
-        <DataGrid x:Name="batchQueueGrid" Grid.ColumnSpan="4" Grid.Column="4" HorizontalAlignment="Left" Height="169" Margin="68,0,0,0" Grid.Row="3" Grid.RowSpan="5" VerticalAlignment="Top" Width="287"/>
+        <DataGrid x:Name="batchQueueGrid" Grid.ColumnSpan="4" Grid.Column="4" HorizontalAlignment="Left" Height="169" Grid.Row="3" Grid.RowSpan="3" VerticalAlignment="Top" Width="287"/>
+        <Label x:Name="label" Content="Queued Batches" Grid.Column="4" HorizontalAlignment="Left" Margin="73,10,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="105"/>
+        <TextBox x:Name="batchIDTB" Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.BatchID}" Grid.Column="3" HorizontalAlignment="Left" Height="21" Margin="71,10,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2"/>
+        <Label x:Name="label1" Content="Current Batch" Grid.Column="3" HorizontalAlignment="Left" Margin="40,19,0,0" Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="23" Width="89"/>
+        <TextBox x:Name="productTypeTB" Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.BeerType}" Grid.ColumnSpan="2" Grid.Column="3" HorizontalAlignment="Left" Height="23" Margin="71,34,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" Width="49" Grid.RowSpan="2"/>
+        <TextBox x:Name="amountTB" Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.DesiredAmount}" Grid.Column="3" HorizontalAlignment="Left" Height="23" Margin="71,18,0,0" Grid.Row="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2"/>
+        <Label x:Name="label1_Copy" Content="Batch ID:" Grid.Column="2" HorizontalAlignment="Left" Margin="56,8,0,0" Grid.Row="9" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="23" Width="89"/>
+        <Label x:Name="label1_Copy1" Content="Product Type:" Grid.Column="2" HorizontalAlignment="Left" Margin="56,31,0,0" Grid.Row="9" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="23" Width="89" Grid.RowSpan="2"/>
+        <Label x:Name="label1_Copy2" Content="Amount:" Grid.Column="2" HorizontalAlignment="Left" Margin="56,15,0,0" Grid.Row="10" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="23" Width="89"/>
+        <Button x:Name="button" Grid.ColumnSpan="2" Content="Button" Grid.Column="5" HorizontalAlignment="Left" Margin="55,10,0,0" Grid.Row="8" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Button x:Name="button1" Grid.ColumnSpan="2" Content="Move Up" Grid.Column="7" HorizontalAlignment="Left" Margin="52,11,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Click="Button1_Click"/>
+        <Button x:Name="button2" Content="Move Down" Grid.Column="7" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" Margin="52,0,0,0" Click="Button2_Click"/>
 
 
 

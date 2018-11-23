@@ -198,7 +198,7 @@ namespace MES.Presentation
 
         private void btnBatchSetup_Click(object sender, RoutedEventArgs e)
         {
-            BatchSetup batchSetup = new BatchSetup(presentationFacade);
+            BatchSetup batchSetup = new BatchSetup(presentationFacade, this);
             this.Hide();
             batchSetup.Show();
         }
