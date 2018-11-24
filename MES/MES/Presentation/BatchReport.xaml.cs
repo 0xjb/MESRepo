@@ -9,6 +9,7 @@ namespace MES.Presentation
     public partial class BatchReport : Window
     {
         private IPresentation presentationFacade;
+
         public BatchReport(IPresentation pf)
         {
             this.presentationFacade = pf;

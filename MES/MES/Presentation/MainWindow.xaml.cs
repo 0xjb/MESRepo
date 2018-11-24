@@ -55,8 +55,8 @@ namespace MES.Presentation
             {
                 iLogic.OPC.Connect();
             }
-                //Connects to OPC server
-                //iLogic.OPC.Connect();
+            //Connects to OPC server
+            //iLogic.OPC.Connect();
 
             InitializeComponent();
             ////Do stuff when closing window
@@ -70,33 +70,35 @@ namespace MES.Presentation
                 new ObservableValue(LevelWheat),
                 new ObservableValue(LevelYeast)
             };
-            var columnSeries = new ColumnSeries {
+            var columnSeries = new ColumnSeries
+            {
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
             };
             //Place valuelabel inside the column
-            columnSeries.LabelsPosition = (BarLabelPosition)3;
-            SeriesCollection = new SeriesCollection { columnSeries };
+            columnSeries.LabelsPosition = (BarLabelPosition) 3;
+            SeriesCollection = new SeriesCollection {columnSeries};
 
             //put label stuff here
-            Labels = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
+            Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
             Formatter = value => value.ToString("N");
             DataContext = this;
         }
 
-  
 
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            try {
+            try
+            {
                 ValuesIngredients[0].Value = LevelBarley;
                 ValuesIngredients[1].Value = LevelHops;
                 ValuesIngredients[2].Value = LevelMalt;
                 ValuesIngredients[3].Value = LevelWheat;
                 ValuesIngredients[4].Value = LevelWheat;
             }
-            catch (System.NullReferenceException exception) {
+            catch (System.NullReferenceException exception)
+            {
                 Console.WriteLine(exception);
                 //throw;
             }

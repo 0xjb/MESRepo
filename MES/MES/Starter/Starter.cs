@@ -1,5 +1,4 @@
-﻿
-using MES.Acquintance;
+﻿using MES.Acquintance;
 using MES.Data;
 using MES.Logic;
 using MES.Presentation;
@@ -7,12 +6,10 @@ using System;
 using System.Windows;
 
 
-
 namespace MES.Starter
 {
     class Starter : Application
     {
-
         [STAThread]
         public static void Main(string[] args)
         {
@@ -25,14 +22,6 @@ namespace MES.Starter
             MainWindow mainWindow = new MainWindow(presentation);
             Application application = new Application();
             application.Run(mainWindow);
-
-
-
-
-
         }
-
-
-
     }
 }

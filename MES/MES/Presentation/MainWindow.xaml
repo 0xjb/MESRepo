@@ -51,15 +51,15 @@
 
         <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5" VerticalAlignment="Top"
                  HorizontalAlignment="Left">
-            <lvc:CartesianChart Series="{Binding SeriesCollection}"  MinHeight="350" Width="800" Height="350"
-                                MaxWidth="800" >
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" MinHeight="350" Width="800" Height="350"
+                                MaxWidth="800">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="[Ingredients]" FontSize="20" Labels="{Binding Labels}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="100" FontSize="20" FontStyle="Normal" 
-                              LabelFormatter="{Binding Formatter}" 
+                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="100" FontSize="20" FontStyle="Normal"
+                              LabelFormatter="{Binding Formatter}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
@@ -139,9 +139,10 @@
             <Button x:Name="button" Content="TestMaintenance" Click="button_Click" Height="40" Width="85" />
         </Viewbox>
         <Viewbox Grid.ColumnSpan="1" Grid.Column="5" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="6"
-                 VerticalAlignment="Top" Stretch="None"/>
-        <TextBox x:Name="txtTemp" Margin="5,5,5,5" Grid.Row="7" Grid.Column="2" Text="{Binding PresentationFacade.ILogic.OPC.TempCurrent}" IsReadOnly="True"
-                  TextWrapping="Wrap" />
+                 VerticalAlignment="Top" Stretch="None" />
+        <TextBox x:Name="txtTemp" Margin="5,5,5,5" Grid.Row="7" Grid.Column="2"
+                 Text="{Binding PresentationFacade.ILogic.OPC.TempCurrent}" IsReadOnly="True"
+                 TextWrapping="Wrap" />
         <Viewbox Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" VerticalAlignment="Center"
                  Stretch="Uniform">
             <TextBlock TextWrapping="Wrap" Text="Temperature" Height="40" Width="70" />
@@ -200,9 +201,10 @@
 
             <TextBlock TextWrapping="Wrap" Text="Status" Height="40" Width="70" />
         </Viewbox>
-        <TextBox x:Name="txtStatus" Grid.Column="8" Grid.Row="11" Text="{Binding PresentationFacade.ILogic.OPC.StateCurrent}" TextWrapping="Wrap"
-                 IsReadOnly="True" Margin="5,5,5,5"  />
-        <Viewbox Grid.Column="8" Margin="0,5,0,5" Grid.Row="9"  Stretch="Uniform">
+        <TextBox x:Name="txtStatus" Grid.Column="8" Grid.Row="11"
+                 Text="{Binding PresentationFacade.ILogic.OPC.StateCurrent}" TextWrapping="Wrap"
+                 IsReadOnly="True" Margin="5,5,5,5" />
+        <Viewbox Grid.Column="8" Margin="0,5,0,5" Grid.Row="9" Stretch="Uniform">
             <Button x:Name="btnMachineSettings" Content=" Machine&#xa; Settings" Click="btnMachineSettings_Click"
                     Height="40" Width="85" />
 

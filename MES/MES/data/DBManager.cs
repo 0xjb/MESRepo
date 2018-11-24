@@ -35,7 +35,8 @@ namespace MES.data
             password = "ear70.doling";
             database = "si3_2018_group_23_db";
 
-            connString = "Server=" + server + "; Port=" + port + "; User Id=" + userId + "; Password=" + password + "; Database=" + database;
+            connString = "Server=" + server + "; Port=" + port + "; User Id=" + userId + "; Password=" + password +
+                         "; Database=" + database;
 
             batchesTable = "batches";
             batchValuesTable = "batchvalues";
@@ -77,7 +78,7 @@ namespace MES.data
         /// <returns></returns>
         private bool SendSqlCommand(String statement)
         {
-            String[] statements = { statement };
+            String[] statements = {statement};
             return SendSqlCommand(statements);
         }
 
@@ -106,7 +107,7 @@ namespace MES.data
                     string timestampStart = dRead.GetString(4);
                     string timestampEnd = dRead.GetString(5);
 
-                    batches.Add((float)batchId, new Batch((float)batchId, (float)beerId,
+                    batches.Add((float) batchId, new Batch((float) batchId, (float) beerId,
                         acceptableProducts, defectProducts,
                         timestampStart, timestampEnd));
                 }
@@ -137,7 +138,7 @@ namespace MES.data
         private IList<IBatchValueSet> GetBatchValues(NpgsqlConnection conn, float batchId)
         {
             string statement = "SELECT * FROM " + batchValuesTable
-                + " WHERE belongingto = " + batchId;
+                                                + " WHERE belongingto = " + batchId;
 
             NpgsqlCommand command = new NpgsqlCommand(statement, conn);
             NpgsqlDataReader dRead = command.ExecuteReader();
@@ -150,8 +151,8 @@ namespace MES.data
                 double vibration = dRead.GetDouble(2);
                 string timestamp = dRead.GetString(3);
 
-                values.Add(new BatchValueSet((float)temperature,
-                    (float)humidity, (float)vibration, timestamp));
+                values.Add(new BatchValueSet((float) temperature,
+                    (float) humidity, (float) vibration, timestamp));
             }
 
             dRead.Close();
@@ -185,9 +186,9 @@ namespace MES.data
                     double wheat = dRead.GetDouble(6);
                     double yeast = dRead.GetDouble(7);
 
-                    recipes.Add((float)beerId, new Recipe((float)beerId,
-                        (float)maxSpeed, name, (float)barley, (float)hops,
-                        (float)malt, (float)wheat, (float)yeast));
+                    recipes.Add((float) beerId, new Recipe((float) beerId,
+                        (float) maxSpeed, name, (float) barley, (float) hops,
+                        (float) malt, (float) wheat, (float) yeast));
                 }
 
                 dRead.Close();
@@ -207,24 +208,24 @@ namespace MES.data
             uint stringsAdded = 0;
 
             string sql0 = "INSERT INTO " + batchesTable + " VALUES("
-                + batch.GetBatchId() + ", "
-                + batch.GetBeerId() + ", "
-                + batch.GetAcceptableProducts() + ", "
-                + batch.GetDefectProducts() + ", '"
-                + batch.GetTimestampStart() + "', '"
-                + batch.GetTimestampEnd() + "');";
+                          + batch.GetBatchId() + ", "
+                          + batch.GetBeerId() + ", "
+                          + batch.GetAcceptableProducts() + ", "
+                          + batch.GetDefectProducts() + ", '"
+                          + batch.GetTimestampStart() + "', '"
+                          + batch.GetTimestampEnd() + "');";
 
             sql[0] = sql0;
             stringsAdded++;
 
             foreach (IBatchValueSet values in batch.GetBatchValues())
             {
-            string sqlString = "INSERT INTO " + batchValuesTable + " VALUES("
-                + values.GetTemperature() + ", "
-                + values.GetHumidity() + ", "
-                + values.GetVibration() + ", '"
-                + values.GetTimeStamp() + "', "
-                + batch.GetBatchId() + ");";
+                string sqlString = "INSERT INTO " + batchValuesTable + " VALUES("
+                                   + values.GetTemperature() + ", "
+                                   + values.GetHumidity() + ", "
+                                   + values.GetVibration() + ", '"
+                                   + values.GetTimeStamp() + "', "
+                                   + batch.GetBatchId() + ");";
 
                 sql[stringsAdded] = sqlString;
                 stringsAdded++;
@@ -237,8 +238,8 @@ namespace MES.data
             float vibration, string timestamp, float batchId)
         {
             string sql = "INSERT INTO " + batchValuesTable + " VALUES("
-            + temperature + ", " + humidity + ", " + vibration
-            + ", '" + timestamp + "', " + batchId  + ");";
+                         + temperature + ", " + humidity + ", " + vibration
+                         + ", '" + timestamp + "', " + batchId + ");";
 
             return SendSqlCommand(sql);
         }
@@ -246,10 +247,10 @@ namespace MES.data
         public bool UpdateBatch(IBatch batch)
         {
             string sql = "UPDATE " + batchesTable
-                + " SET acceptableproducts = " + batch.GetAcceptableProducts()
-                + ", defectproducts = " + batch.GetDefectProducts()
-                + ", timestampend = '" + batch.GetTimestampEnd()
-                + "' WHERE batchid = " + batch.GetBatchId();
+                                   + " SET acceptableproducts = " + batch.GetAcceptableProducts()
+                                   + ", defectproducts = " + batch.GetDefectProducts()
+                                   + ", timestampend = '" + batch.GetTimestampEnd()
+                                   + "' WHERE batchid = " + batch.GetBatchId();
 
             return SendSqlCommand(sql);
         }
@@ -267,10 +268,11 @@ namespace MES.data
             {
                 month = " " + month;
             }
+
             if (month.Length == 2 && year.Length == 4)
             {
                 string sql = "SELECT * FROM " + batchesTable
-                    + " WHERE timestampEnd LIKE '___" + month + "/" + year + "%'";
+                                              + " WHERE timestampEnd LIKE '___" + month + "/" + year + "%'";
 
                 return GetSqlCommand(sql);
             }
@@ -287,7 +289,7 @@ namespace MES.data
         public IBatch GetBatch(float batchId)
         {
             string sql = "SELECT * FROM " + batchesTable
-                + " WHERE batchid = " + batchId;
+                                          + " WHERE batchid = " + batchId;
 
             IDictionary<float, IBatch> batch = GetSqlCommand(sql);
 
@@ -335,18 +337,17 @@ namespace MES.data
             for (int i = 0; i < recipes.Length; i++)
             {
                 statements[i] = "INSERT INTO " + recipesTable + " VALUES("
-                    + recipes[i].BeerId + ", "
-                    + recipes[i].MaxSpeed + ", '"
-                    + recipes[i].Name + "', "
-                    + recipes[i].Barley + ", "
-                    + recipes[i].Hops + ", "
-                    + recipes[i].Malt + ", "
-                    + recipes[i].Wheat + ", "
-                    + recipes[i].Yeast + ");";
+                                + recipes[i].BeerId + ", "
+                                + recipes[i].MaxSpeed + ", '"
+                                + recipes[i].Name + "', "
+                                + recipes[i].Barley + ", "
+                                + recipes[i].Hops + ", "
+                                + recipes[i].Malt + ", "
+                                + recipes[i].Wheat + ", "
+                                + recipes[i].Yeast + ");";
             }
 
             return SendSqlCommand(statements);
         }
     }
 }
-

@@ -20,7 +20,7 @@ namespace MES.Data
         {
             return dbManager.InsertIntoBatchesTable(
                 new Batch(batchId, beerId, acceptableProducts,
-                defectProducts, timestampStart, timestampEnd));
+                    defectProducts, timestampStart, timestampEnd));
         }
 
         public bool SaveBatch(IBatch batch)
@@ -77,7 +77,7 @@ namespace MES.Data
 
         public bool RunQuery(string statement)
         {
-            string[] s = { statement };
+            string[] s = {statement};
             return dbManager.RunQueries(s);
         }
 

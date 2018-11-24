@@ -4,13 +4,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using MES.Annotations;
 using MES.Presentation;
-using UnifiedAutomation.UaClient;
+
 
 namespace MES.Logic
 {
@@ -28,6 +29,7 @@ namespace MES.Logic
 
         private static object _lock = new object();
 
+
         public ErrorHandler()
         {
             _alarms = new ObservableCollection<AlarmObject>();
@@ -35,14 +37,15 @@ namespace MES.Logic
             if (!IsFileIsEmpty())
             {
                 stringBuilder = new StringBuilder();
-                stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", "Alarm Number:", "Batch Id:","Time and Date:","Stop Reason:");
+                stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", "Alarm Number:", "Batch Id:",
+                    "Time and Date:", "Stop Reason:");
                 stringBuilder.AppendLine();
             }
             else
             {
                 stringBuilder = new StringBuilder();
             }
-            
+
             ReadFile();
 
             BindingOperations.EnableCollectionSynchronization(_alarms, _lock);
@@ -65,7 +68,7 @@ namespace MES.Logic
             {
                 if (index > 0)
                 {
-                    alarmNumber =_alarms.Count +1;
+                    alarmNumber = _alarms.Count + 1;
                     _alarms.Add(new AlarmObject()
                     {
                         AlarmNumber = alarmNumber, BatchID = batchID, Timestamp = _date, StopReason = stopReasons[index]
@@ -74,22 +77,25 @@ namespace MES.Logic
                                       stopReasons[index]);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
                     alarmsToFile[0] = alarmNumber.ToString();
-                    //alarmsToFile[0] = alarmNumber + ";";
                     alarmsToFile[1] = batchID.ToString();
-                    //alarmsToFile[1] = batchID + ";";
                     alarmsToFile[2] = _date;
-                    //alarmsToFile[2] = _date + ";";
                     alarmsToFile[3] = stopReasons[index];
-                    //alarmsToFile[3] = stopReasons[index] + ";";
 
                     stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", alarmsToFile[0], alarmsToFile[1],
                         alarmsToFile[2], alarmsToFile[3]);
                     stringBuilder.AppendLine();
 
                     string result = stringBuilder.ToString();
-                    //Console.WriteLine(stringBuilder);
-                    System.IO.File.AppendAllText(
-                    @"C: \Users\frede\source\repos\MESRepo\MES\MES\AlarmLogList\alarmLogFile.txt", result);
+
+
+                    string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+                    path = Directory.GetParent(path).FullName;
+                    path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
+                    path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
+
+                    System.IO.File.AppendAllText(path, result);
+
+
                     stringBuilder.Clear();
                 }
             }
@@ -101,8 +107,13 @@ namespace MES.Logic
 
         private void ReadFile()
         {
+            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
+            path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
+
             using (var sr =
-                new StreamReader(@"C: \Users\frede\source\repos\MESRepo\MES\MES\AlarmLogList\alarmLogFile.txt"))
+                new StreamReader(path))
             {
                 string[] stringTokens;
                 int i = 0;
@@ -111,17 +122,13 @@ namespace MES.Logic
                     string fileLine = sr.ReadLine();
                     i++;
 
-                    stringTokens = fileLine.Split(new char[] {' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    //Console.WriteLine(stringTokens.Length);
+                    stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
-                    //foreach (string word in stringTokens)
-                    //{
-                    //    Console.WriteLine(word);
-                    //}
                     if (stringTokens.Length == 6)
                     {
                         _alarms.Add(
-                            new AlarmObject() {
+                            new AlarmObject()
+                            {
                                 AlarmNumber = Int32.Parse(stringTokens[0]),
                                 BatchID = Int32.Parse(stringTokens[1]),
                                 Timestamp = stringTokens[2] + " " + stringTokens[3],
@@ -134,28 +141,22 @@ namespace MES.Logic
 
         private bool IsFileIsEmpty()
         {
+            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
+            path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
+
             using (var sr =
-                new StreamReader(@"C: \Users\frede\source\repos\MESRepo\MES\MES\AlarmLogList\alarmLogFile.txt")) {
+                new StreamReader(path))
+            {
                 string[] stringTokens;
                 if (sr.Peek() <= 0)
                 {
-                    Console.WriteLine("\n\n File is empty******************");
                     return false;
                 }
 
                 return true;
-
-                //while (!sr.EndOfStream) {
-                //    string fileLine = sr.ReadLine();
-
-
-                //    stringTokens = fileLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-
-
-                //}
             }
-
         }
 
         public ObservableCollection<AlarmObject> Alarms

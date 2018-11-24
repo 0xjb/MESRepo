@@ -18,10 +18,8 @@ namespace MES.Presentation
         private MainWindow mw;
 
 
-        public Alarms(IPresentation pf,MainWindow mainWindow)
+        public Alarms(IPresentation pf, MainWindow mainWindow)
         {
-
-
             this.presentationFacade = pf;
 
             this.mw = mainWindow;
@@ -30,12 +28,10 @@ namespace MES.Presentation
 
             listViewAlarms.ItemsSource = presentationFacade.ILogic.OPC.ErrorHandler.Alarms;
             this.DataContext = this;
-
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-
             //MainWindow mainWindow = new MainWindow(presentationFacade);
 
             this.Close();
@@ -43,6 +39,9 @@ namespace MES.Presentation
             mw.Show();
         }
 
- 
+        private void listViewAlarms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //if(listViewAlarms.Ge)
+        }
     }
 }

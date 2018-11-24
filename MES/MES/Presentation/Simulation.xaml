@@ -10,13 +10,13 @@
 
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0"/>
-                <GradientStop Color="#FFAEC3F0" Offset="0.204"/>
-                <GradientStop Color="#FF152941"/>
+                <GradientStop Color="Black" Offset="0" />
+                <GradientStop Color="#FFAEC3F0" Offset="0.204" />
+                <GradientStop Color="#FF152941" />
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25"  />
+            <ColumnDefinition Width="25" />
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
@@ -25,10 +25,10 @@
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition Width="25"  />
+            <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="25" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -40,13 +40,14 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <Button x:Name="btnBack"  Content="Back" Grid.Column="1"  Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
-        <CheckBox Name="checkBockSimulation"  Content="TestSimulation On/off" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Margin="15,0,15,0" Grid.Row="4" VerticalAlignment="Center" Unchecked="CheckBox_OnUnchecked" Checked="CheckBox_Checked"/>
-        <TextBlock Name="txtBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="15,0,15,0" Grid.Row="5" Grid.RowSpan="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-
-
+        <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
+        <CheckBox Name="checkBockSimulation" Content="TestSimulation On/off" Grid.ColumnSpan="2" Grid.Column="2"
+                  HorizontalAlignment="Left" Margin="15,0,15,0" Grid.Row="4" VerticalAlignment="Center"
+                  Unchecked="CheckBox_OnUnchecked" Checked="CheckBox_Checked" />
+        <TextBlock Name="txtBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="15,0,15,0" Grid.Row="5"
+                   Grid.RowSpan="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" />
 
 
     </Grid>

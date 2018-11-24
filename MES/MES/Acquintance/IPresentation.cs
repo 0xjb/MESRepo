@@ -2,12 +2,8 @@
 {
     public interface IPresentation
     {
-        ILogic ILogic {
-            get;
-            set;
-        }
-        
+        ILogic ILogic { get; set; }
+
         void InjectLogic(ILogic logicFacade);
-        
     }
 }

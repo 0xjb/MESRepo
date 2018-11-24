@@ -8,24 +8,21 @@ namespace MES
 {
     class ValueOverProdTime
     {
-        private  DateTime time;
+        private DateTime time;
 
         public DateTime Time
         {
-            get { return  time; }
-            set {  time = value; }
+            get { return time; }
+            set { time = value; }
         }
 
 
         private int value;
 
-        public int Value 
+        public int Value
         {
             get { return value; }
             set { this.value = value; }
         }
-
-
-
     }
 }

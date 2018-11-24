@@ -5,19 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MES"
         mc:Ignorable="d"
-        Title="Alarms"  WindowStartupLocation="CenterScreen">
+        Title="Alarms" WindowStartupLocation="CenterScreen">
 
     <Grid>
 
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0"/>
-                <GradientStop Color="#FFAEC3F0" Offset="0.204"/>
-                <GradientStop Color="#FF152941"/>
+                <GradientStop Color="Black" Offset="0" />
+                <GradientStop Color="#FFAEC3F0" Offset="0.204" />
+                <GradientStop Color="#FF152941" />
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25"  />
+            <ColumnDefinition Width="25" />
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
@@ -26,10 +26,10 @@
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition Width="25"  />
+            <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="25" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -41,11 +41,14 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <Button x:Name="btnBack"  Content="Back" Grid.Column="1"  Margin="5,5,5,5" Grid.Row="11" Click="btnBack_Click" />
-        <Viewbox Grid.ColumnSpan="8" Grid.Column="1"   Margin="5,5,5,5" Grid.Row="1" Grid.RowSpan="10" Stretch="Uniform">
-            <ListView x:Name="listViewAlarms" ItemsSource="{Binding}" Height="350" Width="600"  ScrollViewer.CanContentScroll="false" >
+        <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="5,5,5,5" Grid.Row="11" Click="btnBack_Click" />
+        <Viewbox Grid.ColumnSpan="8" Grid.Column="1" Margin="5,5,5,5" Grid.Row="1" Grid.RowSpan="10" Stretch="Uniform">
+
+
+            <ListView x:Name="listViewAlarms" ItemsSource="{Binding}" Height="350" Width="600"
+                      ScrollViewer.CanContentScroll="false" SelectionChanged="listViewAlarms_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Alarm number" Width="120" DisplayMemberBinding="{Binding AlarmNumber}" />
@@ -58,8 +61,6 @@
         </Viewbox>
 
 
-
-
-
     </Grid>
+
 </Window>

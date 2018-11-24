@@ -15,9 +15,9 @@ namespace MES.Presentation
         private IPresentation presentationFacade;
         private MainWindow mw;
         int indexOfArray = 0;
+
         public VibrationHistory(IPresentation pf, MainWindow mainWindow)
         {
-
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace MES.Presentation
                 new LineSeries
                 {
                     Title = "Vibration",
-                    Values= new ChartValues<double> { }
+                    Values = new ChartValues<double> { }
                 }
             };
 
@@ -34,6 +34,7 @@ namespace MES.Presentation
             YFormatter = value => value;
             DataContext = this;
         }
+
         private double _value;
 
         public event Action PointChanged;
@@ -47,6 +48,7 @@ namespace MES.Presentation
                 OnPointChanged();
             }
         }
+
         protected void OnPointChanged()
         {
             if (PointChanged != null) PointChanged.Invoke();
@@ -60,7 +62,7 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade,mw);
+            History history = new History(presentationFacade, mw);
             this.Close();
             history.Show();
         }

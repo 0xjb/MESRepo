@@ -23,10 +23,11 @@ namespace MES.Presentation
             InitializeComponent();
             SeriesCollection = new SeriesCollection
 
-        {new LineSeries
+            {
+                new LineSeries
                 {
                     Title = "Temperature",
-                    Values= new ChartValues<double> { }
+                    Values = new ChartValues<double> { }
                 }
             };
 
@@ -64,7 +65,7 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade,mw);
+            History history = new History(presentationFacade, mw);
             this.Close();
             history.Show();
         }
@@ -85,6 +86,5 @@ namespace MES.Presentation
             SeriesCollection[0].Values.Add(Value);
             indexOfArray++;
         }
-
     }
 }

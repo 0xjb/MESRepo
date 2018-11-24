@@ -7,9 +7,12 @@ using OfficeOpenXml;
 using System.IO;
 using OfficeOpenXml.Drawing.Chart;
 
-namespace MES {
-    class BatchReportGenerator {
+namespace MES
+{
+    class BatchReportGenerator
+    {
         private ExcelPackage ep = new ExcelPackage();
+
         /// <summary>
         /// Generates and fills an excel file with given data.
         /// </summary>
@@ -22,14 +25,16 @@ namespace MES {
         /// <param name="hData"></param> Humidity over production time.
         public void GenerateFile(string batchID, string productType, string aProduct, string dProduct,
             int[] timeUsed,
-            ValueOverProdTime[] tData, ValueOverProdTime[] hData) {
-
+            ValueOverProdTime[] tData, ValueOverProdTime[] hData)
+        {
             //A workbook must have at least on cell, so lets add one... 
             var ws = ep.Workbook.Worksheets.Add("Batch Report");
             var temp = ep.Workbook.Worksheets.Add("Temperature");
             var humid = ep.Workbook.Worksheets.Add("Humidity");
             //To set values in the spreadsheet use the Cells indexer.
+
             #region Cell values
+
             ws.Cells["A1"].Value = "Batch_ID:";
             ws.Cells["A1"].Style.Font.Bold = true;
             ws.Cells["B1"].Value = batchID;
@@ -67,10 +72,11 @@ namespace MES {
             ws.Cells["A16"].Value = "HumidityProductionTime:";
             ws.Cells["A16"].Style.Font.Bold = true;
             ws.Cells[ws.Dimension.Address].AutoFitColumns();
-            #endregion 
+
+            #endregion
+
             CreateGraph(ws, 6, 7, 300, 500, "B6:B14", "A6:A14", "Time spent Diagram",
                 eChartType.ColumnStacked);
-
 
 
             // Insert temperature and humidity data
@@ -79,29 +85,33 @@ namespace MES {
 
 
             //Save the new workbook. We haven't specified the filename so use the Save as method.
-            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory +"BatchReport.xlsx"));
+            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx"));
         }
+
         /// <summary>
         /// Inserts array of data into two columns
         /// </summary>
         /// <param name="data"></param> Array filled with either temperature or humidity data.
         /// <param name="ew"></param> Worksheet to write in.
         /// <param name="title"></param> Title of graph.
-        private void WriteData(ValueOverProdTime[] data, ExcelWorksheet ew, string title) {
+        private void WriteData(ValueOverProdTime[] data, ExcelWorksheet ew, string title)
+        {
             ew.Cells["A1"].Value = "Temp:";
             ew.Cells["A1"].Style.Font.Bold = true;
 
             ew.Cells["B1"].Value = "Time:";
             ew.Cells["B1"].Style.Font.Bold = true;
 
-            for (int i = 0; i < data.Length; i++) {
-
+            for (int i = 0; i < data.Length; i++)
+            {
                 ew.Cells["A" + (i + 2)].Value = i;
                 ew.Cells["B" + (i + 2)].Value = data[i].Value;
             }
+
             //Add the XY graph
             CreateGraph(ew, 2, 3, 300, 1000, "B2:B101", "A2:A101", title, eChartType.XYScatterLines);
         }
+
         /// <summary>
         /// Creates a specificed graph type in a given worksheet
         /// </summary>
@@ -115,7 +125,8 @@ namespace MES {
         /// <param name="title"></param> Title of the graph.
         /// <param name="chartType"></param> Graph type.
         private void CreateGraph(ExcelWorksheet ew, int row, int col, int height, int width,
-            string valueSeries, string nameSeries, string title, eChartType chartType) {
+            string valueSeries, string nameSeries, string title, eChartType chartType)
+        {
             //Add the XY graph
             var xyGraph = ew.Drawings.AddChart("chart", chartType);
             xyGraph.ShowHiddenData = true;
@@ -128,9 +139,5 @@ namespace MES {
             // remove the legend
             xyGraph.Legend.Remove();
         }
-
-
-
-
     }
 }

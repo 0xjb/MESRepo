@@ -8,9 +8,9 @@ namespace MES.Presentation
     /// </summary>
     public partial class History : Window
     {
-
         private IPresentation presentationFacade;
         private MainWindow mw;
+
         public History(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
@@ -28,37 +28,30 @@ namespace MES.Presentation
 
         private void btnShowTemperatureHistory_Click(object sender, RoutedEventArgs e)
         {
-            TemperatureHistory temperatureHistory = new TemperatureHistory(presentationFacade,mw);
+            TemperatureHistory temperatureHistory = new TemperatureHistory(presentationFacade, mw);
             this.Close();
             temperatureHistory.Show();
         }
+
         private void btnShowHumidityHistory_Click(object sender, RoutedEventArgs e)
         {
             HumidityHistory humidityHistory = new HumidityHistory(presentationFacade, mw);
             this.Close();
             humidityHistory.Show();
-
-
         }
+
         private void btnShowVibrationHistory_Click(object sender, RoutedEventArgs e)
         {
-            VibrationHistory vibrationHistory = new VibrationHistory(presentationFacade,mw);
+            VibrationHistory vibrationHistory = new VibrationHistory(presentationFacade, mw);
             this.Close();
             vibrationHistory.Show();
-
         }
+
         private void btnShowBatchReport_Click(object sender, RoutedEventArgs e)
         {
             BatchReport batchReport = new BatchReport(presentationFacade);
             this.Close();
             batchReport.Show();
-
         }
-
-
-
-
-
-
     }
 }

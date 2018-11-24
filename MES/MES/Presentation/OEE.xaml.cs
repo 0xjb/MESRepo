@@ -10,12 +10,12 @@ namespace MES.Presentation
     {
         private IPresentation presentationFacade;
         private MainWindow mw;
+
         public OEE(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
-
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

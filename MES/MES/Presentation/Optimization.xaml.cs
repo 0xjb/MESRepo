@@ -10,6 +10,7 @@ namespace MES.Presentation
     {
         private IPresentation presentationFacade;
         private MainWindow mw;
+
         public Optimization(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;

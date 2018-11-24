@@ -3,12 +3,14 @@ using System.Threading;
 using MES.Acquintance;
 using UnifiedAutomation.UaClient;
 using MES.Logic;
+
 namespace MES.Tests
 {
     [TestFixture]
     public class OpcTests
     {
         private readonly OpcClient opc = new OpcClient();
+
         [Test]
         public void TestOpcClient()
         {
@@ -92,8 +94,6 @@ namespace MES.Tests
             opc.StopMachine();
             Thread.Sleep(200);
             Assert.AreEqual(opc.ReadStateCurrent(), 2);
-
         }
     }
-
 }

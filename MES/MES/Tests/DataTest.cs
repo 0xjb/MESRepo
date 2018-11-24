@@ -37,7 +37,7 @@ namespace MES.Tests
             Assert.IsTrue(inserted0, "Inserted first");
 
             IBatch batch1 = new Batch(-2, 3, 90, 10,
-               "02/11/2018 10:18:35", "02/11/2018 10:20:35");
+                "02/11/2018 10:18:35", "02/11/2018 10:20:35");
             batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:18:35");
             batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:19:35");
             batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:20:35");
@@ -95,6 +95,7 @@ namespace MES.Tests
             {
                 loadedBatchValuesO = true;
             }
+
             Assert.IsTrue(loadedBatchValuesO, "Succes");
 
             // Testing if the batch was updated correctly
@@ -241,6 +242,5 @@ namespace MES.Tests
             Assert.IsTrue(succes, "Tables deleted");
         }
         */
-
     }
 }

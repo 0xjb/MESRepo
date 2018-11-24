@@ -15,6 +15,7 @@ namespace MES.Presentation
         private IPresentation presentationFacade;
         private MainWindow mw;
         int indexOfArray = 0;
+
         public HumidityHistory(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
@@ -22,10 +23,11 @@ namespace MES.Presentation
             InitializeComponent();
             SeriesCollection = new SeriesCollection
 
-        {new LineSeries
+            {
+                new LineSeries
                 {
                     Title = "Humidity",
-                    Values= new ChartValues<double> { }
+                    Values = new ChartValues<double> { }
                 }
             };
 
@@ -33,6 +35,7 @@ namespace MES.Presentation
             YFormatter = value => value;
             DataContext = this;
         }
+
         private double _value;
 
         public event Action PointChanged;
@@ -46,6 +49,7 @@ namespace MES.Presentation
                 OnPointChanged();
             }
         }
+
         protected void OnPointChanged()
         {
             if (PointChanged != null) PointChanged.Invoke();
@@ -79,7 +83,6 @@ namespace MES.Presentation
             _value = generateRandomNumber();
             SeriesCollection[0].Values.Add(Value);
             indexOfArray++;
-
         }
     }
 }

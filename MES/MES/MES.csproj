@@ -259,6 +259,7 @@
   <ItemGroup>
     <Folder Include="AlarmLogList\" />
     <Folder Include="BatchReport\" />
+    <Folder Include="Logic\AlarmLogFileTest\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

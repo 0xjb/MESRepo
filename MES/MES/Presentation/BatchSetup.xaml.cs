@@ -11,6 +11,7 @@ namespace MES.Presentation
     {
         private IPresentation presentationFacade;
         private MainWindow mw;
+
         public BatchSetup(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
@@ -27,7 +28,6 @@ namespace MES.Presentation
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -49,4 +49,3 @@ namespace MES.Presentation
         }
     }
 }
-

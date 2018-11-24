@@ -26,7 +26,6 @@ namespace MES.Logic
 
         public TestSimulation(OpcClient opcClient, ILogic iLogic)
         {
-
             this.iLogic = iLogic;
             timerTemp = new Timer();
             timerTemp.Interval = 5000;
@@ -110,7 +109,6 @@ namespace MES.Logic
                 LevelWheat -= 0.23;
                 LevelYeast -= 0.33;
             }
-            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -125,7 +123,6 @@ namespace MES.Logic
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-
             if (iLogic.IsSimulationOn)
             {
                 Random random = new Random();
@@ -133,11 +130,13 @@ namespace MES.Logic
                 double number = random.NextDouble() / 8;
                 number = Math.Round(number, 2);
 
-                if (b == false) {
+                if (b == false)
+                {
                     opc.TempCurrent += number;
                     b = true;
                 }
-                else {
+                else
+                {
                     opc.TempCurrent -= number;
                     b = false;
                 }
@@ -146,7 +145,6 @@ namespace MES.Logic
             {
                 opc.TempCurrent = 0;
             }
-       
         }
     }
 }

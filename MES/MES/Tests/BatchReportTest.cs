@@ -14,17 +14,19 @@ namespace MES.Tests
     {
         private readonly BatchReportGenerator brg = new BatchReportGenerator();
         private readonly Random rand = new Random();
+
         [Test]
         public void CheckFileCreation()
         {
-            int[] stringArray = { 2, 5, 7, 9, 3, 5, 4, 12 };
+            int[] stringArray = {2, 5, 7, 9, 3, 5, 4, 12};
             ValueOverProdTime[] temperatureData = GenerateTestData();
             ValueOverProdTime[] humidityData = GenerateTestData();
             brg.GenerateFile("10", "10", "10", "10", stringArray, temperatureData, humidityData);
             // booleans for verification
             bool fileExists = File.Exists(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx");
 
-            ExcelPackage ep = new ExcelPackage(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx"));
+            ExcelPackage ep =
+                new ExcelPackage(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx"));
             ExcelWorksheet ws = ep.Workbook.Worksheets[1]; // worksheet containing batch report
             // Check if file has been created
             Assert.IsTrue(fileExists, "File exists.");
@@ -36,9 +38,8 @@ namespace MES.Tests
             // check if correct sum of products has been calculated
             ws.Cells["F3"].Calculate();
             Assert.AreEqual(ws.Cells["F3"].Value, 20);
-
-
         }
+
         private ValueOverProdTime[] GenerateTestData()
         {
             ValueOverProdTime[] brrt = new ValueOverProdTime[100];
@@ -49,8 +50,8 @@ namespace MES.Tests
                 temp.Time = DateTime.Today.AddDays(rand.Next(1000));
                 brrt[i] = temp;
             }
+
             return brrt;
         }
-
     }
 }

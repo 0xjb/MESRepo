@@ -30,11 +30,11 @@ namespace MES.Data
         }
 
         override
-        public string ToString()
+            public string ToString()
         {
             return batchId + ", " + beerId + ", "
-            + acceptableProducts + ", " + defectProducts + ", "
-            + timestampStart + ", " + timestampEnd;
+                   + acceptableProducts + ", " + defectProducts + ", "
+                   + timestampStart + ", " + timestampEnd;
         }
 
         public float GetBatchId()
@@ -101,6 +101,7 @@ namespace MES.Data
                     break;
                 }
             }
+
             if (!timestampExists)
             {
                 batchValues.Add(new BatchValueSet(temperature,

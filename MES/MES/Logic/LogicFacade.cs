@@ -22,7 +22,8 @@ namespace MES.Logic
 
         private IData data;
 
-        public OpcClient OPC {
+        public OpcClient OPC
+        {
             get { return opc; }
             set { opc = value; }
         }
@@ -40,9 +41,10 @@ namespace MES.Logic
 
         public void CreateSimulation()
         {
-            if (isSimulationON) {
+            if (isSimulationON)
+            {
                 Console.WriteLine("Simulation ON");
-                this._testSimulation = new TestSimulation(opc,this);
+                this._testSimulation = new TestSimulation(opc, this);
             }
         }
 
@@ -55,8 +57,8 @@ namespace MES.Logic
             //        float amount = float.Parse(AmountTB.Text);
             //        float machineSpeed = float.Parse(MachineSpeedTB.Text);
             //        c.StartMachine(batchId, productType, amount, machineSpeed);
-                  
-               
+
+
             //}
         }
     }
