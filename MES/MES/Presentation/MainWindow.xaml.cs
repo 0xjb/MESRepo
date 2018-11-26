@@ -181,7 +181,8 @@ namespace MES.Presentation
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //opc.StartMachine(1, 2, 2000, 600);
-            iLogic.OPC.StartMachine(1, 2, 200, 100);
+            //iLogic.OPC.StartMachine(1, 2, 200, 100);
+            PresentationFacade.ILogic.OPC.ErrorHandler.AddAlarm(0, 11);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
