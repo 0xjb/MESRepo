@@ -57,10 +57,10 @@ namespace MES.Presentation
             iLogic.OPC.ErrorHandler.Alarms.CollectionChanged += EventHandling;
             if (!presentationFacade.ILogic.IsSimulationOn)
             {
+                //Connects to OPC server
                 iLogic.OPC.Connect();
             }
-            //Connects to OPC server
-            //iLogic.OPC.Connect();
+
 
             InitializeComponent();
             ////Do stuff when closing window
@@ -104,17 +104,9 @@ namespace MES.Presentation
             catch (System.NullReferenceException exception)
             {
                 Console.WriteLine(exception);
-                //throw;
             }
-            //ValuesIngredients[0].Value = LevelBarley;
-            //ValuesIngredients[1].Value = LevelHops;
-            //ValuesIngredients[2].Value = LevelMalt;
-            //ValuesIngredients[3].Value = LevelWheat;
-            //ValuesIngredients[4].Value = LevelWheat;
 
             LevelBarley = iLogic.OPC.Barley;
-
-            //iLogic.GetTestSimulation.LevelBarley;
             LevelHops = iLogic.OPC.Hops;
             LevelMalt = iLogic.OPC.Malt;
             LevelWheat = iLogic.OPC.Wheat;

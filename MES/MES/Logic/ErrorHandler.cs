@@ -177,12 +177,12 @@ namespace MES.Logic
 
         public class AlarmObject : IAlarmObject
         {
-            public int AlarmNumber { get; internal set; }
-            public string Timestamp { get; internal set; }
+            public int AlarmNumber { get;  set; }
+            public string Timestamp { get;  set; }
 
             public string StopReason { get; set; }
 
-            public int BatchID { get; internal set; }
+            public int BatchID { get;  set; }
         }
     }
 }

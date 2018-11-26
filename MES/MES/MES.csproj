@@ -117,6 +117,7 @@
     <Compile Include="Acquintance\IBatchqueue.cs" />
     <Compile Include="Acquintance\IBatchValueSet.cs" />
     <Compile Include="Acquintance\IRecipe.cs" />
+    <Compile Include="Data\FileManager.cs" />
     <Compile Include="Data\Recipe.cs" />
     <Compile Include="Logic\Batch.cs" />
     <Compile Include="Logic\BatchQueue.cs" />
