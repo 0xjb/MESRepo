@@ -51,9 +51,9 @@ namespace MES.Presentation
             iLogic = presentationFacade.ILogic;
 
             //
-            //CheckIfSimulationIsOn();
+            CheckIfSimulationIsOn();
 
-                OnPropertyChanged("Alarms");
+            OnPropertyChanged("Alarms");
             iLogic.OPC.ErrorHandler.Alarms.CollectionChanged += EventHandling;
             if (!presentationFacade.ILogic.IsSimulationOn)
             {
