@@ -113,6 +113,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acquintance\IAlarmObject.cs" />
     <Compile Include="Acquintance\IBatchqueue.cs" />
     <Compile Include="Acquintance\IBatchValueSet.cs" />
     <Compile Include="Acquintance\IRecipe.cs" />
@@ -125,6 +126,9 @@
     <Compile Include="Logic\ValueOverProdTime.cs" />
     <Compile Include="Presentation\BatchReport.xaml.cs">
       <DependentUpon>Presentation\BatchReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\PopupAlarm.xaml.cs">
+      <DependentUpon>PopupAlarm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Simulation.xaml.cs">
       <DependentUpon>Simulation.xaml</DependentUpon>
@@ -199,6 +203,10 @@
     <Page Include="Presentation\Optimization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\PopupAlarm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Presentation\Simulation.xaml">
       <SubType>Designer</SubType>
