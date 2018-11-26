@@ -23,3 +23,9 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 9               0                    11/26/2018 12:33:36 PM                   Manual stop                             
 10              0                    11/26/2018 12:33:39 PM                   Manual abort                            
 11              0                    11/26/2018 12:33:40 PM                   Manual stop                             
+9               1                    11/26/2018 13:05:27 PM                   Manual stop                             
+9               0                    11/26/2018 13:16:56 PM                   Maintenance                             
+10              0                    11/26/2018 13:17:02 PM                   Maintenance                             
+11              0                    11/26/2018 13:18:09 PM                   Maintenance                             
+12              0                    11/26/2018 13:20:23 PM                   Empty inventory                         
+13              0                    11/26/2018 13:21:24 PM                   Maintenance                             
