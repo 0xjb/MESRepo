@@ -3,10 +3,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Timers;
+using MES.Acquintance;
 using MES.Annotations;
 using UnifiedAutomation.UaClient;
-using System;
-using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace MES.Logic
@@ -16,6 +15,7 @@ namespace MES.Logic
     {
         private OpcClient opc;
         private System.Timers.Timer timerTemp;
+        private ILogic iLogic;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
@@ -24,8 +24,10 @@ namespace MES.Logic
         private double levelWheat;
         private double levelYeast;
 
-        public TestSimulation(OpcClient opcClient)
+        public TestSimulation(OpcClient opcClient, ILogic iLogic)
         {
+
+            this.iLogic = iLogic;
             timerTemp = new Timer();
             timerTemp.Interval = 5000;
             timerTemp.AutoReset = true;
@@ -123,21 +125,28 @@ namespace MES.Logic
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            Random random = new Random();
-            
-            double number = random.NextDouble()/8;
-            number = Math.Round(number, 2);
 
-            if (b == false)
+            if (iLogic.IsSimulationOn)
             {
-                opc.TempCurrent += number;
-                b = true;
+                Random random = new Random();
+
+                double number = random.NextDouble() / 8;
+                number = Math.Round(number, 2);
+
+                if (b == false) {
+                    opc.TempCurrent += number;
+                    b = true;
+                }
+                else {
+                    opc.TempCurrent -= number;
+                    b = false;
+                }
             }
             else
             {
-                opc.TempCurrent -=  number;
-                b = false;
+                opc.TempCurrent = 0;
             }
+       
         }
     }
 }

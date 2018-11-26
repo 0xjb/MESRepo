@@ -9,9 +9,11 @@ namespace MES.Presentation
     public partial class OEE : Window
     {
         private IPresentation presentationFacade;
-        public OEE(IPresentation pf)
+        private MainWindow mw;
+        public OEE(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
+            this.mw = mainWindow;
             InitializeComponent();
 
         }
@@ -20,7 +22,8 @@ namespace MES.Presentation
         {
             MainWindow mainWindow = new MainWindow(presentationFacade);
             this.Close();
-            mainWindow.Show();
+            //mainWindow.Show();
+            mw.Show();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace MES {
             var humid = ep.Workbook.Worksheets.Add("Humidity");
             //To set values in the spreadsheet use the Cells indexer.
             #region Cell values
-            ws.Cells["A1"].Value = "BatchID:";
+            ws.Cells["A1"].Value = "Batch_ID:";
             ws.Cells["A1"].Style.Font.Bold = true;
             ws.Cells["B1"].Value = batchID;
             ws.Cells["A2"].Value = "ProductType:";

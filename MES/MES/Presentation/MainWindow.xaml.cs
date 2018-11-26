@@ -50,21 +50,16 @@ namespace MES.Presentation
             //
             //CheckIfSimulationIsOn();
 
-            //this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
-            //this.levelHops = iLogic.GetTestSimulation.LevelHops;
-            //this.levelMalt = iLogic.GetTestSimulation.LevelMalt;
-            //this.levelWheat = iLogic.GetTestSimulation.LevelWheat;
-            //this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
 
-            //iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
-
-
-            //Connects to OPC server
-            iLogic.OPC.Connect();
+            if (!presentationFacade.ILogic.IsSimulationOn)
+            {
+                iLogic.OPC.Connect();
+            }
+                //Connects to OPC server
+                //iLogic.OPC.Connect();
 
             InitializeComponent();
-
-            //Do stuff when closing window
+            ////Do stuff when closing window
             this.Closed += new EventHandler(MainWindow_Closed);
 
             ValuesIngredients = new ChartValues<ObservableValue>
@@ -75,35 +70,47 @@ namespace MES.Presentation
                 new ObservableValue(LevelWheat),
                 new ObservableValue(LevelYeast)
             };
-            var columnSeries = new ColumnSeries
-            {
+            var columnSeries = new ColumnSeries {
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
             };
             //Place valuelabel inside the column
-            columnSeries.LabelsPosition = (BarLabelPosition) 3;
-            SeriesCollection = new SeriesCollection {columnSeries};
+            columnSeries.LabelsPosition = (BarLabelPosition)3;
+            SeriesCollection = new SeriesCollection { columnSeries };
 
             //put label stuff here
-            Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
+            Labels = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
             Formatter = value => value.ToString("N");
             DataContext = this;
         }
 
+  
+
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            levelBarley = iLogic.GetTestSimulation.LevelBarley;
-            levelHops = iLogic.GetTestSimulation.LevelHops;
-            levelMalt = iLogic.GetTestSimulation.LevelMalt;
-            levelWheat = iLogic.GetTestSimulation.LevelWheat;
-            levelYeast = iLogic.GetTestSimulation.LevelYeast;
+            try {
+                ValuesIngredients[0].Value = LevelBarley;
+                ValuesIngredients[1].Value = LevelHops;
+                ValuesIngredients[2].Value = LevelMalt;
+                ValuesIngredients[3].Value = LevelWheat;
+                ValuesIngredients[4].Value = LevelWheat;
+            }
+            catch (System.NullReferenceException exception) {
+                Console.WriteLine(exception);
+                //throw;
+            }
+            //ValuesIngredients[0].Value = LevelBarley;
+            //ValuesIngredients[1].Value = LevelHops;
+            //ValuesIngredients[2].Value = LevelMalt;
+            //ValuesIngredients[3].Value = LevelWheat;
+            //ValuesIngredients[4].Value = LevelWheat;
 
-            ValuesIngredients[0].Value = LevelBarley;
-            ValuesIngredients[1].Value = LevelHops;
-            ValuesIngredients[2].Value = LevelMalt;
-            ValuesIngredients[3].Value = LevelWheat;
-            ValuesIngredients[4].Value = LevelWheat;
+            LevelBarley = iLogic.GetTestSimulation.LevelBarley;
+            LevelHops = iLogic.GetTestSimulation.LevelHops;
+            LevelMalt = iLogic.GetTestSimulation.LevelMalt;
+            LevelWheat = iLogic.GetTestSimulation.LevelWheat;
+            LevelYeast = iLogic.GetTestSimulation.LevelYeast;
         }
 
 
@@ -134,7 +141,7 @@ namespace MES.Presentation
         void MainWindow_Closed(object sender, EventArgs e)
         {
             //Put your close code here
-            iLogic.OPC.StopMachine();
+            //iLogic.OPC.StopMachine();
         }
 
 
@@ -170,28 +177,28 @@ namespace MES.Presentation
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
         {
-            Alarms alarms = new Alarms(presentationFacade);
+            Alarms alarms = new Alarms(presentationFacade, this);
             this.Hide();
             alarms.Show();
         }
 
         private void btnOEE_Click(object sender, RoutedEventArgs e)
         {
-            OEE oEE = new OEE(presentationFacade);
+            OEE oEE = new OEE(presentationFacade, this);
             this.Hide();
             oEE.Show();
         }
 
         private void btnOptimization_Click(object sender, RoutedEventArgs e)
         {
-            Optimization optimization = new Optimization(presentationFacade);
+            Optimization optimization = new Optimization(presentationFacade, this);
             this.Hide();
             optimization.Show();
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade);
+            History history = new History(presentationFacade, this);
             this.Hide();
             history.Show();
         }
@@ -205,7 +212,7 @@ namespace MES.Presentation
 
         private void btnMachineSettings_Click(object sender, RoutedEventArgs e)
         {
-            Simulation simulation = new Simulation(presentationFacade, presentationFacade.ILogic.IsSimulationOn);
+            Simulation simulation = new Simulation(presentationFacade, presentationFacade.ILogic.IsSimulationOn, this);
             this.Hide();
             simulation.Show();
         }
@@ -348,7 +355,7 @@ namespace MES.Presentation
 
             {
                 batchID = value;
-                OnPropertyChanged("BatchID");
+                OnPropertyChanged("Batch_ID");
             }
         }
 

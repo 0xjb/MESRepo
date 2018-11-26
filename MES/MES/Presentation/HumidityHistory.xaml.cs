@@ -13,10 +13,12 @@ namespace MES.Presentation
     {
         //TODO Størrelse af array i constructor Humidity History
         private IPresentation presentationFacade;
+        private MainWindow mw;
         int indexOfArray = 0;
-        public HumidityHistory(IPresentation pf)
+        public HumidityHistory(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
+            this.mw = mainWindow;
             InitializeComponent();
             SeriesCollection = new SeriesCollection
 
@@ -57,7 +59,7 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade);
+            History history = new History(presentationFacade, mw);
             this.Close();
             history.Show();
         }

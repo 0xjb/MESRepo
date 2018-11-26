@@ -168,7 +168,7 @@ namespace MES.Annotations
   ///
   ///   string _name;
   /// 
-  ///   public string Name {
+  ///   public string Batch_ID {
   ///     get { return _name; }
   ///     set { _name = value; NotifyChanged("LastName"); /* Warning */ }
   ///   }

@@ -10,9 +10,11 @@ namespace MES.Presentation
     {
 
         private IPresentation presentationFacade;
-        public History(IPresentation pf)
+        private MainWindow mw;
+        public History(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
+            this.mw = mainWindow;
             InitializeComponent();
         }
 
@@ -20,18 +22,19 @@ namespace MES.Presentation
         {
             MainWindow mainWindow = new MainWindow(presentationFacade);
             this.Close();
-            mainWindow.Show();
+            //mainWindow.Show();
+            mw.Show();
         }
 
         private void btnShowTemperatureHistory_Click(object sender, RoutedEventArgs e)
         {
-            TemperatureHistory temperatureHistory = new TemperatureHistory(presentationFacade);
+            TemperatureHistory temperatureHistory = new TemperatureHistory(presentationFacade,mw);
             this.Close();
             temperatureHistory.Show();
         }
         private void btnShowHumidityHistory_Click(object sender, RoutedEventArgs e)
         {
-            HumidityHistory humidityHistory = new HumidityHistory(presentationFacade);
+            HumidityHistory humidityHistory = new HumidityHistory(presentationFacade, mw);
             this.Close();
             humidityHistory.Show();
 
@@ -39,7 +42,7 @@ namespace MES.Presentation
         }
         private void btnShowVibrationHistory_Click(object sender, RoutedEventArgs e)
         {
-            VibrationHistory vibrationHistory = new VibrationHistory(presentationFacade);
+            VibrationHistory vibrationHistory = new VibrationHistory(presentationFacade,mw);
             this.Close();
             vibrationHistory.Show();
 

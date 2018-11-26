@@ -113,11 +113,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Acquintance\IBatchQueue.cs" />
     <Compile Include="Acquintance\IBatchValueSet.cs" />
-    <Compile Include="Logic\Batch.cs" />
-    <Compile Include="Logic\BatchQueue.cs" />
+    <Compile Include="Acquintance\IRecipe.cs" />
+    <Compile Include="Data\Recipe.cs" />
     <Compile Include="Logic\BatchReportGenerator.cs" />
+    <Compile Include="Logic\ErrorHandler.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />
     <Compile Include="Presentation\BatchReport.xaml.cs">
