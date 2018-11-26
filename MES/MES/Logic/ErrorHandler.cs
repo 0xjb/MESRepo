@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using MES.Acquintance;
 using MES.Annotations;
 using MES.Presentation;
 
@@ -114,7 +115,6 @@ namespace MES.Logic
 
             if (File.Exists(path))
             {
-
                 using (var sr =
                     new StreamReader(path))
                 {
@@ -152,34 +152,36 @@ namespace MES.Logic
             if (File.Exists(path))
             {
                 using (var sr =
-                    new StreamReader(path)) {
+                    new StreamReader(path))
+                {
                     string[] stringTokens;
-                    if (sr.Peek() <= 0) {
+                    if (sr.Peek() <= 0)
+                    {
                         return false;
                     }
 
                     return true;
                 }
-
             }
 
             return false;
-
-
         }
 
         public ObservableCollection<AlarmObject> Alarms
         {
-            get => _alarms;
-            set => _alarms = value;
+            get { return _alarms; }
+
+            set { _alarms = value; }
         }
 
 
-        public class AlarmObject
+        public class AlarmObject : IAlarmObject
         {
             public int AlarmNumber { get; internal set; }
             public string Timestamp { get; internal set; }
-            public string StopReason { get; internal set; }
+
+            public string StopReason { get; set; }
+
             public int BatchID { get; internal set; }
         }
     }

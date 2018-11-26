@@ -43,5 +43,10 @@ namespace MES.Presentation
         {
             //if(listViewAlarms.Ge)
         }
+
+        private void ShowPopUp()
+        {
+            //listViewAlarms.
+        }
     }
 }

@@ -1,2 +1,9 @@
 Alarm Number:   Batch Id:            Time and Date:                           Stop Reason:                            
 1               0                    11-26-2018 10:32:04                      Manual stop                             
+2               0                    11-26-2018 11:23:13                      Manual stop                             
+3               0                    11-26-2018 11:23:19                      Manual abort                            
+4               0                    11-26-2018 11:23:49                      Manual abort                            
+5               0                    11-26-2018 11:24:15                      Manual stop                             
+6               0                    11-26-2018 11:32:33                      Manual stop                             
+7               0                    11-26-2018 11:32:37                      Manual abort                            
+8               0                    11-26-2018 11:32:45                      Manual stop                             

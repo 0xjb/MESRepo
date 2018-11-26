@@ -3,7 +3,9 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using MES.Acquintance;
 using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Runtime.Remoting.Channels;
 using System.Threading;
 using System.Windows;
 
@@ -12,6 +14,7 @@ namespace MES.Presentation
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
         private ILogic iLogic;
@@ -50,7 +53,8 @@ namespace MES.Presentation
             //
             CheckIfSimulationIsOn();
 
-
+                OnPropertyChanged("Alarms");
+            iLogic.OPC.ErrorHandler.Alarms.CollectionChanged += EventHandling;
             if (!presentationFacade.ILogic.IsSimulationOn)
             {
                 iLogic.OPC.Connect();
@@ -138,7 +142,17 @@ namespace MES.Presentation
         public string[] Labels { get; set; }
 
         public Func<double, string> Formatter { get; set; }
+        //[STAThread]
+        private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            IAlarmObject  s = e.NewItems[0] as IAlarmObject;
+            PopupAlarm pop = new PopupAlarm(s);
+            pop.Show();
+        }
 
+        //Button handling
+
+        #region XAML generated code
 
         void MainWindow_Closed(object sender, EventArgs e)
         {
@@ -218,6 +232,8 @@ namespace MES.Presentation
             this.Hide();
             simulation.Show();
         }
+
+        #endregion
 
         public double LevelBarley
 
