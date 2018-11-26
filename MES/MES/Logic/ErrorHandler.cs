@@ -112,28 +112,32 @@ namespace MES.Logic
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
             path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
 
-            using (var sr =
-                new StreamReader(path))
+            if (File.Exists(path))
             {
-                string[] stringTokens;
-                int i = 0;
-                while (!sr.EndOfStream)
+
+                using (var sr =
+                    new StreamReader(path))
                 {
-                    string fileLine = sr.ReadLine();
-                    i++;
-
-                    stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-
-                    if (stringTokens.Length == 6)
+                    string[] stringTokens;
+                    int i = 0;
+                    while (!sr.EndOfStream)
                     {
-                        _alarms.Add(
-                            new AlarmObject()
-                            {
-                                AlarmNumber = Int32.Parse(stringTokens[0]),
-                                BatchID = Int32.Parse(stringTokens[1]),
-                                Timestamp = stringTokens[2] + " " + stringTokens[3],
-                                StopReason = stringTokens[4] + " " + stringTokens[5]
-                            });
+                        string fileLine = sr.ReadLine();
+                        i++;
+
+                        stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+
+                        if (stringTokens.Length == 6)
+                        {
+                            _alarms.Add(
+                                new AlarmObject()
+                                {
+                                    AlarmNumber = Int32.Parse(stringTokens[0]),
+                                    BatchID = Int32.Parse(stringTokens[1]),
+                                    Timestamp = stringTokens[2] + " " + stringTokens[3],
+                                    StopReason = stringTokens[4] + " " + stringTokens[5]
+                                });
+                        }
                     }
                 }
             }
@@ -145,18 +149,23 @@ namespace MES.Logic
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
             path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
-
-            using (var sr =
-                new StreamReader(path))
+            if (File.Exists(path))
             {
-                string[] stringTokens;
-                if (sr.Peek() <= 0)
-                {
-                    return false;
+                using (var sr =
+                    new StreamReader(path)) {
+                    string[] stringTokens;
+                    if (sr.Peek() <= 0) {
+                        return false;
+                    }
+
+                    return true;
                 }
 
-                return true;
             }
+
+            return false;
+
+
         }
 
         public ObservableCollection<AlarmObject> Alarms

@@ -257,7 +257,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AlarmLogList\" />
     <Folder Include="BatchReport\" />
     <Folder Include="Logic\AlarmLogFileTest\" />
   </ItemGroup>
