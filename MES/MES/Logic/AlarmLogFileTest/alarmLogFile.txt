@@ -27,3 +27,14 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 26              1                    11-24-2018 12:09:55                      Manual stop                             
 27              1                    11-24-2018 12:09:56                      Manual abort                            
 28              1                    11-24-2018 12:10:01                      Manual abort                            
+29              0                    11-25-2018 14:06:48                      Manual abort                            
+30              0                    11-25-2018 14:06:49                      Manual stop                             
+31              0                    11-25-2018 16:25:32                      Manual stop                             
+32              0                    11-26-2018 09:32:21                      Manual abort                            
+33              0                    11-26-2018 09:32:23                      Manual stop                             
+34              0                    11-26-2018 09:32:24                      Manual abort                            
+35              0                    11-26-2018 09:32:24                      Manual stop                             
+36              0                    11-26-2018 09:32:25                      Manual abort                            
+37              0                    11-26-2018 09:32:26                      Manual stop                             
+38              0                    11-26-2018 09:32:26                      Manual abort                            
+39              0                    11-26-2018 09:32:27                      Manual stop                             
