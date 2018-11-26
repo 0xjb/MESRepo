@@ -58,10 +58,15 @@ namespace MES.Logic {
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
            if(e.PropertyName.Equals("StateCurrent")) {
                 if((sender as OpcClient).StateCurrent == 17) {
-                    if(Batches[0] != null) {
+                    //TODO: Fix this
+                    try {
                         CurrentBatch = Batches[0];
                         Batches.RemoveAt(0);
+                    } catch(ArgumentOutOfRangeException ex) {
+                        Console.WriteLine(":)");
                     }
+                        
+                    
 
                 }
             }
