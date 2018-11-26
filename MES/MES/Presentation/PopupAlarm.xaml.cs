@@ -23,17 +23,14 @@ namespace MES.Presentation
     {
 
         private IAlarmObject _alarm;
-        
+
         public PopupAlarm(IAlarmObject alarm)
         {
             _alarm = alarm;
             InitializeComponent();
-
+            AlarmBox.Text = alarm.StopReason;
         }
 
-        private void asdf()
-        {
-            //AlarmBox.Text = alarm.StopReason;
-        }
+
     }
 }

@@ -7,3 +7,19 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 6               0                    11-26-2018 11:32:33                      Manual stop                             
 7               0                    11-26-2018 11:32:37                      Manual abort                            
 8               0                    11-26-2018 11:32:45                      Manual stop                             
+9               0                    11/26/2018 12:19:24 PM                   Manual abort                            
+9               0                    11/26/2018 12:20:20 PM                   Manual stop                             
+9               0                    11/26/2018 12:24:48 PM                   Manual abort                            
+9               0                    11/26/2018 12:25:20 PM                   Manual stop                             
+10              0                    11/26/2018 12:25:24 PM                   Manual abort                            
+9               0                    11/26/2018 12:27:16 PM                   Manual abort                            
+10              0                    11/26/2018 12:27:21 PM                   Manual stop                             
+9               0                    11/26/2018 12:29:43 PM                   Manual stop                             
+10              0                    11/26/2018 12:29:47 PM                   Manual abort                            
+11              0                    11/26/2018 12:29:52 PM                   Manual stop                             
+9               0                    11/26/2018 12:32:44 PM                   Manual stop                             
+10              0                    11/26/2018 12:32:52 PM                   Manual abort                            
+11              0                    11/26/2018 12:32:56 PM                   Manual stop                             
+9               0                    11/26/2018 12:33:36 PM                   Manual stop                             
+10              0                    11/26/2018 12:33:39 PM                   Manual abort                            
+11              0                    11/26/2018 12:33:40 PM                   Manual stop                             

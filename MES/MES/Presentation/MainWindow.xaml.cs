@@ -142,11 +142,17 @@ namespace MES.Presentation
         public string[] Labels { get; set; }
 
         public Func<double, string> Formatter { get; set; }
-        //[STAThread]
+
         private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
         {
             IAlarmObject  s = e.NewItems[0] as IAlarmObject;
-            PopupAlarm pop = new PopupAlarm(s);
+            if(s.StopReason == "Empty inventory" || s.StopReason == "Maintenance") {
+                Dispatcher.BeginInvoke(new Action(delegate { ActivateAlarmWindow(s); }));
+            }
+
+        }
+        private void ActivateAlarmWindow(IAlarmObject alarmObject) {
+            PopupAlarm pop = new PopupAlarm(alarmObject);
             pop.Show();
         }
 
