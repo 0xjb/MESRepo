@@ -48,7 +48,7 @@ namespace MES.Logic
             if (isSimulationON)
             {
                 Console.WriteLine("Simulation ON");
-                this._testSimulation = new TestSimulation(opc);
+                this._testSimulation = new TestSimulation(opc,this);
             }
         }
 
