@@ -58,7 +58,7 @@
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="100" FontSize="20" FontStyle="Normal" 
+                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="60000" FontSize="20" FontStyle="Normal" 
                               LabelFormatter="{Binding Formatter}" 
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisY>
@@ -69,7 +69,7 @@
 
         <Viewbox Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Right"
                  Margin="0,5,5,5">
-            <lvc:AngularGauge Value="{Binding ValueMaintenance}" FromValue="0" ToValue="100 "
+            <lvc:AngularGauge Value="{Binding PresentationFacade.ILogic.OPC.MaintenanceCounter}" FromValue="0" ToValue="100"
                               LabelsStep="50" TicksStep="25" Wedge="300"
                               TicksForeground="White" Foreground="White"
                               FontWeight="Bold" FontSize="10"
@@ -182,7 +182,7 @@
                  Stretch="Uniform">
             <TextBlock TextWrapping="Wrap" Text="Produced" Height="40" Width="70" />
         </Viewbox>
-        <TextBox Name="txtAcceptedProducts" Text="{Binding Path=AcceptableProducts}" Grid.Column="6" Margin="5,5,5,5"
+        <TextBox Name="txtAcceptedProducts" Text="{Binding Path=PresentationFacade.ILogic.OPC.AcceptableProducts}" Grid.Column="6" Margin="5,5,5,5"
                  Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True" />
         <Viewbox Grid.Column="5" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" VerticalAlignment="Center"
                  Stretch="Uniform">

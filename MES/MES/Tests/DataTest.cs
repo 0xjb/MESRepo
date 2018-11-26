@@ -161,14 +161,41 @@ namespace MES.Tests
         {
             IRecipe[] recipes = new Recipe[6];
 
-            recipes[0] = new Recipe(0, 600, "Pilsner", 1, 3, 7, 0, 2);
-            recipes[1] = new Recipe(1, 300, "Wheat", 3, 0, 2, 12, 3);
-            recipes[2] = new Recipe(2, 150, "IPA", 4, 2, 1, 7, 4);
-            recipes[3] = new Recipe(3, 200, "Stout", 2, 1, 2, 2, 1);
-            recipes[4] = new Recipe(4, 100, "Ale", 7, 7, 0, 2, 2);
-            recipes[5] = new Recipe(5, 125, "Alcohol Free", 0, 3, 4, 2, 0);
+            recipes[0] = new Recipe(0, 600, "Pilsner", 4, 2, 1, 1, 4);
+            recipes[1] = new Recipe(1, 300, "Wheat", 1, 4, 1, 6, 3);
+            recipes[2] = new Recipe(2, 150, "IPA", 4, 1, 5, 4, 1);
+            recipes[3] = new Recipe(3, 200, "Stout", 3, 4, 6, 1, 2);
+            recipes[4] = new Recipe(4, 100, "Ale", 4, 6, 2, 2, 8);
+            recipes[5] = new Recipe(5, 125, "Alcohol Free", 1, 1, 4, 5, 0);
 
             bool succes = dbManager.AddRecipes(recipes);
+            Assert.IsTrue(succes, "Succes");
+        }
+
+        [Test]
+        public void UpdateRecipes()
+        {
+            IRecipe[] recipes = new Recipe[6];
+            string[] statements = new string[recipes.Length];
+
+            recipes[0] = new Recipe(0, 600, "Pilsner", 4, 2, 1, 1, 4);
+            recipes[1] = new Recipe(1, 300, "Wheat", 1, 4, 1, 6, 3);
+            recipes[2] = new Recipe(2, 150, "IPA", 4, 1, 5, 4, 1);
+            recipes[3] = new Recipe(3, 200, "Stout", 3, 4, 6, 1, 2);
+            recipes[4] = new Recipe(4, 100, "Ale", 4, 6, 2, 2, 8);
+            recipes[5] = new Recipe(5, 125, "Alcohol Free", 1, 1, 4, 5, 0);
+
+            for (int i = 0; i < recipes.Length; i++)
+            {
+                statements[i] = "UPDATE recipes SET barley = " + recipes[i].Barley
+                    + ", hops = " + recipes[i].Hops
+                    + ", malt = " + recipes[i].Malt
+                    + ", wheat = " + recipes[i].Wheat
+                    + ", yeast = " + recipes[i].Yeast
+                    + " WHERE beerid = " + recipes[i].BeerId;
+            }
+
+            bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Succes");
         }
         

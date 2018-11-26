@@ -106,11 +106,13 @@ namespace MES.Presentation
             //ValuesIngredients[3].Value = LevelWheat;
             //ValuesIngredients[4].Value = LevelWheat;
 
-            LevelBarley = iLogic.GetTestSimulation.LevelBarley;
-            LevelHops = iLogic.GetTestSimulation.LevelHops;
-            LevelMalt = iLogic.GetTestSimulation.LevelMalt;
-            LevelWheat = iLogic.GetTestSimulation.LevelWheat;
-            LevelYeast = iLogic.GetTestSimulation.LevelYeast;
+            LevelBarley = iLogic.OPC.Barley;
+
+            //iLogic.GetTestSimulation.LevelBarley;
+            LevelHops = iLogic.OPC.Hops;
+            LevelMalt = iLogic.OPC.Malt;
+            LevelWheat = iLogic.OPC.Wheat;
+            LevelYeast = iLogic.OPC.Yeast;
         }
 
 
@@ -125,6 +127,15 @@ namespace MES.Presentation
                 this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
 
                 iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
+            } else
+            {
+                this.levelBarley = iLogic.OPC.Barley;
+                this.levelHops = iLogic.OPC.Hops;
+                this.levelMalt = iLogic.OPC.Malt;
+                this.levelWheat = iLogic.OPC.Wheat;
+                this.levelYeast = iLogic.OPC.Yeast;
+
+                iLogic.OPC.PropertyChanged += checkForChangesIngredientsLevel;
             }
         }
 
@@ -148,7 +159,7 @@ namespace MES.Presentation
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //opc.StartMachine(1, 2, 2000, 600);
-            iLogic.OPC.StartMachine(1, 2, 200, 600);
+            iLogic.OPC.StartMachine(1, 2, 200, 100);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)

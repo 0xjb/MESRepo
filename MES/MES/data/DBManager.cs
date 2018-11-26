@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using MES.Acquintance;
+﻿using MES.Acquintance;
 using MES.Data;
 using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 
 namespace MES.data
 {
@@ -219,12 +216,12 @@ namespace MES.data
 
             foreach (IBatchValueSet values in batch.GetBatchValues())
             {
-            string sqlString = "INSERT INTO " + batchValuesTable + " VALUES("
-                + values.GetTemperature() + ", "
-                + values.GetHumidity() + ", "
-                + values.GetVibration() + ", '"
-                + values.GetTimeStamp() + "', "
-                + batch.GetBatchId() + ");";
+                string sqlString = "INSERT INTO " + batchValuesTable + " VALUES("
+                    + values.GetTemperature() + ", "
+                    + values.GetHumidity() + ", "
+                    + values.GetVibration() + ", '"
+                    + values.GetTimeStamp() + "', "
+                    + batch.GetBatchId() + ");";
 
                 sql[stringsAdded] = sqlString;
                 stringsAdded++;
@@ -238,7 +235,7 @@ namespace MES.data
         {
             string sql = "INSERT INTO " + batchValuesTable + " VALUES("
             + temperature + ", " + humidity + ", " + vibration
-            + ", '" + timestamp + "', " + batchId  + ");";
+            + ", '" + timestamp + "', " + batchId + ");";
 
             return SendSqlCommand(sql);
         }
@@ -265,7 +262,7 @@ namespace MES.data
         {
             if (month.Length == 1)
             {
-                month = " " + month;
+                month = "0" + month;
             }
             if (month.Length == 2 && year.Length == 4)
             {
@@ -311,7 +308,7 @@ namespace MES.data
 
         public bool DeleteBatch(float batchId)
         {
-            string sql = "DELETE FROM " + batchesTable + " WHERE batchid = " + batchId;
+            string sql = "DELETE * FROM " + batchesTable + " WHERE batchid = " + batchId;
 
             return SendSqlCommand(sql);
         }
@@ -349,4 +346,3 @@ namespace MES.data
         }
     }
 }
-
