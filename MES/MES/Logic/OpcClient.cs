@@ -15,12 +15,20 @@ namespace MES.Logic
         private bool isProcessRunning = false;
         private double processedProducts;
         private double defectProducts;
+        private double acceptableProducts;
         private double stateCurrent;
         private double tempCurrent;
         private double humidityCurrent;
         private double vibrationCurrent;
         private double stopReasonId;
         private double batchId;
+        private double barley;
+        private double hops;
+        private double malt;
+        private double wheat;
+        private double yeast;
+        private double maintenanceTrigger = 0;
+        private double maintenanceCounter;
         private ErrorHandler errorHandler;
 
 
@@ -31,9 +39,10 @@ namespace MES.Logic
         public OpcClient()
         {
             this.errorHandler = new ErrorHandler();
-
             Connect();
             CreateSubscription();
+
+
         }
 
         public void Connect()
@@ -51,6 +60,10 @@ namespace MES.Logic
 
             //TODO SKAL denne fjernes??
             batchId = ReadCurrentBatchId();
+
+            maintenanceTrigger = ReadMaintenanceTrigger();
+
+            Console.WriteLine();
         }
 
         public void CreateSubscription()
@@ -65,6 +78,15 @@ namespace MES.Logic
             NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
             NodeId stopReasonNode = new NodeId("::Program:Cube.Admin.StopReason.ID", 6);
             NodeId bacthIdNode = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6);
+
+            NodeId barleyNode = new NodeId("::Program:Inventory.Barley", 6);
+            NodeId hopsNode = new NodeId("::Program:Inventory.Hops", 6);
+            NodeId maltNode = new NodeId("::Program:Inventory.Malt", 6);
+            NodeId wheatNode = new NodeId("::Program:Inventory.Wheat", 6);
+            NodeId yeastNode = new NodeId("::Program:Inventory.Yeast", 6);
+            NodeId maintenanceTriggerNode = new NodeId("::Program:Maintenance.Trigger", 6);
+            NodeId maintenanceCounterNode = new NodeId("::Program:Maintenance.Counter", 6);
+
             // list of monitored items
             List<MonitoredItem> monitoredItems = new List<MonitoredItem>();
             // convert nodeid to datamonitoreditem
@@ -76,6 +98,14 @@ namespace MES.Logic
             MonitoredItem miVibrationNode = new DataMonitoredItem(vibrationNode);
             MonitoredItem miStopReasonNode = new DataMonitoredItem(stopReasonNode);
             MonitoredItem miBatchIdNode = new DataMonitoredItem(bacthIdNode);
+            MonitoredItem miBarleyNode = new DataMonitoredItem(barleyNode);
+            MonitoredItem miHopsNode = new DataMonitoredItem(hopsNode);
+            MonitoredItem miMaltNode = new DataMonitoredItem(maltNode);
+            MonitoredItem miWheatNode = new DataMonitoredItem(wheatNode);
+            MonitoredItem miYeastNode = new DataMonitoredItem(yeastNode);
+            MonitoredItem miMaintenanceTriggerNode = new DataMonitoredItem(maintenanceTriggerNode);
+            MonitoredItem miMaintenanceCounterNode = new DataMonitoredItem(maintenanceCounterNode);
+
             monitoredItems.Add(miAmountNode);
             monitoredItems.Add(miStateNode);
             monitoredItems.Add(miDefectNode);
@@ -84,6 +114,13 @@ namespace MES.Logic
             monitoredItems.Add(miVibrationNode);
             monitoredItems.Add(miStopReasonNode);
             monitoredItems.Add(miBatchIdNode);
+            monitoredItems.Add(miBarleyNode);
+            monitoredItems.Add(miHopsNode);
+            monitoredItems.Add(miMaltNode);
+            monitoredItems.Add(miWheatNode);
+            monitoredItems.Add(miYeastNode);
+            monitoredItems.Add(miMaintenanceTriggerNode);
+            monitoredItems.Add(miMaintenanceCounterNode);
 
             // init subscription with parameters
             s = new Subscription(session);
@@ -91,12 +128,12 @@ namespace MES.Logic
             s.MaxKeepAliveTime = 1000;
             s.Lifetime = 1000000;
             s.MaxNotificationsPerPublish = 1;
-            s.Priority = (byte) 0;
+            s.Priority = (byte)0;
             s.DataChanged += OnDataChanged;
             s.PublishingEnabled = true;
             s.CreateMonitoredItems(monitoredItems);
             // create the actual subscription
-            s.Create(new RequestSettings() {OperationTimeout = 10000});
+            s.Create(new RequestSettings() { OperationTimeout = 10000 });
         }
 
         private void OnDataChanged(Subscription s, DataChangedEventArgs e)
@@ -130,15 +167,40 @@ namespace MES.Logic
                         break;
                     //stop reason id
                     case "::Program:Cube.Admin.StopReason.ID":
-                        //BatchId = double.Parse(dc.Value.ToString());
-                        StopReasonId = double.Parse(dc.Value.ToString());
-                        errorHandler.AddAlarm((int) BatchId, StopReasonId);
+                        BatchId = double.Parse(dc.Value.ToString());
+                        errorHandler.AddAlarm((int)BatchId, StopReasonId);
                         break;
                     //batch id 
                     case "::Program:Cube.Status.Parameter[0].Value":
-                        //StopReasonId = double.Parse(dc.Value.ToString());
-                        BatchId = double.Parse(dc.Value.ToString());
-
+                        StopReasonId = double.Parse(dc.Value.ToString());
+                        break;
+                    //barley
+                    case "::Program:Inventory.Barley":
+                        Barley = double.Parse(dc.Value.ToString());
+                        break;
+                    //hops
+                    case "::Program:Inventory.Hops":
+                        Hops = double.Parse(dc.Value.ToString());
+                        break;
+                    //malt
+                    case "::Program:Inventory.Malt":
+                        Malt = double.Parse(dc.Value.ToString());
+                        break;
+                    //wheat
+                    case "::Program:Inventory.Wheat":
+                        Wheat = double.Parse(dc.Value.ToString());
+                        break;
+                    //yeast
+                    case "::Program:Inventory.Yeast":
+                        Yeast = double.Parse(dc.Value.ToString());
+                        break;
+                    //maintenance trigger
+                    case "::Program.Maintenance.Trigger":
+                        MaintenanceTrigger = double.Parse(dc.Value.ToString());
+                        break;
+                    //maintenance counter
+                    case "::Program:Maintenance.Counter":
+                        MaintenanceCounter = double.Parse(dc.Value.ToString());
                         break;
                     default:
                         break;
@@ -309,7 +371,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (int) dv.Value;
+            return (int)dv.Value;
         }
 
 
@@ -325,7 +387,7 @@ namespace MES.Logic
             List<DataValue> result = null;
             result = session.Read(nodesToRead, 0, TimestampsToReturn.Neither, null);
             //return TypeUtils.GetBuiltInType((NodeId)result[0].Value);
-            return (int) result[0].Value;
+            return (int)result[0].Value;
         }
 
         public float ReadCurrentMachineSpeed()
@@ -339,7 +401,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float) dv.Value;
+            return (float)dv.Value;
         }
 
         public float ReadMachineSpeed()
@@ -353,7 +415,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float) dv.Value;
+            return (float)dv.Value;
         }
 
         public float ReadCurrentBatchId()
@@ -367,7 +429,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float) dv.Value;
+            return (float)dv.Value;
         }
 
         public float ReadProductAmountInBatch()
@@ -381,7 +443,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float) dv.Value;
+            return (float)dv.Value;
         }
 
         public float ReadCurrentHumidity()
@@ -395,7 +457,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float) dv.Value;
+            return (float)dv.Value;
         }
 
         public float ReadCurrentTemperature()
@@ -409,7 +471,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float) dv.Value;
+            return (float)dv.Value;
         }
 
         public float ReadCurrentVibration()
@@ -423,7 +485,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float) dv.Value;
+            return (float)dv.Value;
         }
 
         public Int32 ReadCurrentProductsProcessed()
@@ -437,7 +499,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (int) dv.Value;
+            return (int)dv.Value;
         }
 
         public Int32 ReadDefectProducts()
@@ -454,6 +516,20 @@ namespace MES.Logic
             return (int) dv.Value;
         }
 
+        public UInt16 ReadMaintenanceTrigger()
+        {
+            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
+            nodesToRead.Add(new ReadValueId()
+            {
+                NodeId = new NodeId("::Program:Maintenance.Trigger", 6),
+                AttributeId = Attributes.Value
+            });
+
+            List<DataValue> results = session.Read(nodesToRead);
+            DataValue dv = results[0];
+            return (UInt16) dv.Value;
+        }
+
 
         protected void OnPropertyChanged(string name)
         {
@@ -464,90 +540,147 @@ namespace MES.Logic
             }
         }
 
-        public double ProcessedProducts
-        {
+        public double ProcessedProducts {
             get { return processedProducts; }
-            set
-            {
+            set {
                 processedProducts = value;
+                AcceptableProducts = processedProducts - defectProducts;
                 OnPropertyChanged("ProcessedProducts");
             }
         }
 
-        public double DefectProducts
-        {
+        public double DefectProducts {
             get { return defectProducts; }
-            set
-            {
+            set {
                 defectProducts = value;
                 OnPropertyChanged("DefectProducts");
             }
         }
 
-        public double StateCurrent
-        {
+        public double AcceptableProducts {
+            get { return acceptableProducts; }
+            set {
+                acceptableProducts = value;
+                OnPropertyChanged("AcceptableProducts");
+            }
+
+        }
+
+        public double StateCurrent {
             get { return stateCurrent; }
-            set
-            {
+            set {
                 stateCurrent = value;
                 OnPropertyChanged("StateCurrent");
             }
         }
 
-        public double TempCurrent
-        {
+        public double TempCurrent {
             get { return tempCurrent; }
-            set
-            {
+            set {
                 tempCurrent = value;
                 OnPropertyChanged("TempCurrent");
             }
         }
 
-        public double HumidityCurrent
-        {
+        public double HumidityCurrent {
             get { return humidityCurrent; }
-            set
-            {
+            set {
                 humidityCurrent = value;
                 OnPropertyChanged("HumidityCurrent");
             }
         }
 
-        public double VibrationCurrent
-        {
+        public double VibrationCurrent {
             get { return vibrationCurrent; }
-            set
-            {
+            set {
                 vibrationCurrent = value;
                 OnPropertyChanged("VibrationCurrent");
             }
         }
 
-        public double BatchId
-        {
+        public double BatchId {
             get { return batchId; }
-            set
-            {
+            set {
                 stopReasonId = value;
                 OnPropertyChanged("BatchId");
             }
         }
 
-        public double StopReasonId
-        {
+        public double StopReasonId {
             get { return stopReasonId; }
-            set
-            {
+            set {
                 stopReasonId = value;
                 OnPropertyChanged("StopReasonId");
             }
         }
 
-        public ErrorHandler ErrorHandler
-        {
+        public ErrorHandler ErrorHandler {
             get => errorHandler;
             set => errorHandler = value;
+        }
+
+        public double Barley {
+            get { return barley; }
+            set {
+                barley = value;
+                OnPropertyChanged("Barley");
+            }
+        }
+
+        public double Hops {
+            get { return hops; }
+            set {
+                hops = value;
+                OnPropertyChanged("Hops");
+            }
+        }
+
+        public double Malt {
+            get { return malt; }
+            set {
+                malt = value;
+                OnPropertyChanged("Malt");
+            }
+        }
+
+        public double Wheat {
+            get { return wheat; }
+            set {
+                wheat = value;
+                OnPropertyChanged("Wheat");
+            }
+        }
+        public double Yeast {
+            get { return yeast; }
+            set {
+                yeast = value;
+                OnPropertyChanged("Yeast");
+            }
+        }
+
+        public double MaintenanceTrigger {
+            get { return maintenanceTrigger; }
+            set {
+                maintenanceTrigger = value;
+                OnPropertyChanged("MaintenanceTrigger");
+            }
+        }
+
+        public double MaintenanceCounter {
+            get {
+                if (maintenanceTrigger == 0)
+                {
+                    return maintenanceCounter;
+                }
+                else
+                {
+                    return maintenanceCounter / maintenanceTrigger * 100;
+                }
+            }
+            set {
+                maintenanceCounter = value;
+                OnPropertyChanged("MaintenanceCounter");
+            }
         }
     }
 }

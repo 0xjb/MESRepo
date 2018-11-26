@@ -6,6 +6,8 @@ namespace MES.Acquintance
     public interface ILogic
     {
         TestSimulation GetTestSimulation { get; set; }
+        
+        BatchQueue Batches { get; set; }
 
         void CreateSimulation();
 
@@ -15,6 +17,10 @@ namespace MES.Acquintance
 
         bool IsSimulationOn { get; set; }
 
-        void CreateBatch(float batchId, float amount, float machineSpeed, float productType);
+        void CreateBatch(float batchId, float amount, float productType);
+
+        void AddBatch(string batchID, string productType, string amount);
+
+        void StartProduction();
     }
 }
