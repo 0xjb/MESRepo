@@ -4,7 +4,6 @@ using LiveCharts.Wpf;
 using MES.Acquintance;
 using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows;
 
 namespace MES.Presentation
@@ -50,13 +49,11 @@ namespace MES.Presentation
             //
             //CheckIfSimulationIsOn();
 
-
             if (!presentationFacade.ILogic.IsSimulationOn)
             {
+                //Connects to OPC server
                 iLogic.OPC.Connect();
             }
-                //Connects to OPC server
-                //iLogic.OPC.Connect();
 
             InitializeComponent();
             ////Do stuff when closing window
@@ -70,7 +67,8 @@ namespace MES.Presentation
                 new ObservableValue(LevelWheat),
                 new ObservableValue(LevelYeast)
             };
-            var columnSeries = new ColumnSeries {
+            var columnSeries = new ColumnSeries
+            {
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
@@ -85,18 +83,20 @@ namespace MES.Presentation
             DataContext = this;
         }
 
-  
+
 
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            try {
+            try
+            {
                 ValuesIngredients[0].Value = LevelBarley;
                 ValuesIngredients[1].Value = LevelHops;
                 ValuesIngredients[2].Value = LevelMalt;
                 ValuesIngredients[3].Value = LevelWheat;
                 ValuesIngredients[4].Value = LevelWheat;
             }
-            catch (System.NullReferenceException exception) {
+            catch (System.NullReferenceException exception)
+            {
                 Console.WriteLine(exception);
                 //throw;
             }
@@ -127,7 +127,8 @@ namespace MES.Presentation
                 this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
 
                 iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
-            } else
+            }
+            else
             {
                 this.levelBarley = iLogic.OPC.Barley;
                 this.levelHops = iLogic.OPC.Hops;
