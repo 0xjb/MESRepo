@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -112,6 +110,14 @@ namespace MES.Acquintance
         /// <param name="recipes"></param>
         /// <returns></returns>
         bool AddRecipes(IRecipe[] recipes);
+
+        /// <summary>
+        /// Authenticates the user information
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        bool AuthenticateUserInformation(string username, string password);
 
         ObservableCollection<IAlarmObject> ReadFile();
         void WriteToFile(string s);

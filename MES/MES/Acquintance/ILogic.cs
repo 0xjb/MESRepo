@@ -5,8 +5,8 @@ namespace MES.Acquintance
 {
     public interface ILogic
     {
-        TestSimulation GetTestSimulation { get; set; }
-        
+        TestSimulation TestSimulation { get; set; }
+
         BatchQueue Batches { get; set; }
 
         void CreateSimulation();
@@ -24,6 +24,14 @@ namespace MES.Acquintance
         void AddBatch(string batchID, string productType, string amount);
 
         void StartProduction();
+
+        /// <summary>
+        /// Authenticates the user information
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        bool AuthenticateUserInformation(string username, string password);
 
         void CreateErrorHandler();
     }

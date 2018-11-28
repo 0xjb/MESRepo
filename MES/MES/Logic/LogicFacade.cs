@@ -1,5 +1,5 @@
-﻿using System;
-using MES.Acquintance;
+﻿using MES.Acquintance;
+using System;
 
 namespace MES.Logic
 {
@@ -12,18 +12,22 @@ namespace MES.Logic
         private TestSimulation _testSimulation;
         private bool isSimulationON;
 
-        public LogicFacade()
+        public OpcClient OPC
         {
             Console.WriteLine("\n\n CONSTRUCTOR LOGICFACADE \n\n");
             //this.errorHandler = new ErrorHandler(this);
             this.opc = new OpcClient(this);
             Batches = new BatchQueue(OPC);
         }
-        public BatchQueue Batches {
+
+        public BatchQueue Batches
+        {
             get { return batches; }
             set { batches = value; }
         }
-        public TestSimulation GetTestSimulation {
+
+        public TestSimulation TestSimulation
+        {
             get => _testSimulation;
             set => _testSimulation = value;
         }
@@ -52,17 +56,12 @@ namespace MES.Logic
             Console.WriteLine("\n\nHELLO FROM INJECTDATA\n\n");
         }
 
-        public bool IsSimulationOn {
-            get => isSimulationON;
-            set => isSimulationON = value;
-        }
-
         public void CreateSimulation()
         {
             if (isSimulationON)
             {
                 Console.WriteLine("Simulation ON");
-                this._testSimulation = new TestSimulation(opc,this);
+                this._testSimulation = new TestSimulation(opc, this);
             }
         }
 
@@ -73,19 +72,29 @@ namespace MES.Logic
         public void CreateBatch(float batchId, float amount, float productType)
         {
             Batch b = new Batch(batchId, productType, amount);
-            if (Batches.CurrentBatch == null) {
+            if (Batches.CurrentBatch == null)
+            {
                 Batches.CurrentBatch = b;
-            } else {
+            }
+            else
+            {
                 Batches.Batches.Add(new Batch(batchId, productType, amount));
             }
         }
 
-        public void AddBatch(string batchID, string productType, string amount) {
+        public void AddBatch(string batchID, string productType, string amount)
+        {
             Console.WriteLine("yeet");
         }
 
-        public void StartProduction() {
-            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount, 24000);
+        public void StartProduction()
+        {
+            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount, 60);
+        }
+
+        public bool AuthenticateUserInformation(string username, string password)
+        {
+            return data.AuthenticateUserInformation(username, password);
         }
     }
 }

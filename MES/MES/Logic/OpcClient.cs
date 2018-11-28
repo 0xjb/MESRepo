@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
-using System.Threading;
-using MES.Acquintance;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
-using UnifiedAutomation.UaClient.Controls;
 
 namespace MES.Logic
 {
@@ -44,8 +40,6 @@ namespace MES.Logic
             //this.errorHandler = new ErrorHandler();
             Connect();
             CreateSubscription();
-
-
         }
 
         public OpcClient()
@@ -58,14 +52,12 @@ namespace MES.Logic
         {
             session = new Session();
 
-
             //Connect to server with no security (simulator)
             //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
             session.UseDnsNameAndPortFromDiscoveryUrl = true;
             //Connect to server with no security (machine)
             session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
-
 
             //TODO SKAL denne fjernes??
             batchId = ReadCurrentBatchId();
@@ -158,7 +150,7 @@ namespace MES.Logic
                         break;
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
-                        TempCurrent = double.Parse(dc.Value.ToString());
+                        TempCurrent =  double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -166,11 +158,11 @@ namespace MES.Logic
                         break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
-                        HumidityCurrent = double.Parse(dc.Value.ToString());
+                        HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
-                        VibrationCurrent = double.Parse(dc.Value.ToString());
+                        VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
                     //stop reason id
                     case "::Program:Cube.Admin.StopReason.ID":
@@ -522,7 +514,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (int) dv.Value;
+            return (int)dv.Value;
         }
 
         public UInt16 ReadMaintenanceTrigger()
@@ -536,7 +528,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (UInt16) dv.Value;
+            return (UInt16)dv.Value;
         }
 
 
@@ -549,134 +541,167 @@ namespace MES.Logic
             }
         }
 
-        public double ProcessedProducts {
+        public double ProcessedProducts
+        {
             get { return processedProducts; }
-            set {
+            set
+            {
                 processedProducts = value;
                 AcceptableProducts = processedProducts - defectProducts;
                 OnPropertyChanged("ProcessedProducts");
             }
         }
 
-        public double DefectProducts {
+        public double DefectProducts
+        {
             get { return defectProducts; }
-            set {
+            set
+            {
                 defectProducts = value;
                 OnPropertyChanged("DefectProducts");
             }
         }
 
-        public double AcceptableProducts {
+        public double AcceptableProducts
+        {
             get { return acceptableProducts; }
-            set {
+            set
+            {
                 acceptableProducts = value;
                 OnPropertyChanged("AcceptableProducts");
             }
 
         }
 
-        public double StateCurrent {
+        public double StateCurrent
+        {
             get { return stateCurrent; }
-            set {
+            set
+            {
                 stateCurrent = value;
                 OnPropertyChanged("StateCurrent");
             }
         }
 
-        public double TempCurrent {
+        public double TempCurrent
+        {
             get { return tempCurrent; }
-            set {
+            set
+            {
                 tempCurrent = value;
                 OnPropertyChanged("TempCurrent");
             }
         }
 
-        public double HumidityCurrent {
+        public double HumidityCurrent
+        {
             get { return humidityCurrent; }
-            set {
+            set
+            {
                 humidityCurrent = value;
                 OnPropertyChanged("HumidityCurrent");
             }
         }
 
-        public double VibrationCurrent {
+        public double VibrationCurrent
+        {
             get { return vibrationCurrent; }
-            set {
+            set
+            {
                 vibrationCurrent = value;
                 OnPropertyChanged("VibrationCurrent");
             }
         }
 
-        public double BatchId {
+        public double BatchId
+        {
             get { return batchId; }
-            set {
+            set
+            {
                 stopReasonId = value;
                 OnPropertyChanged("BatchId");
             }
         }
 
-        public double StopReasonId {
+        public double StopReasonId
+        {
             get { return stopReasonId; }
-            set {
+            set
+            {
                 stopReasonId = value;
                 OnPropertyChanged("StopReasonId");
             }
         }
 
-        public ErrorHandler ErrorHandler {
+        public ErrorHandler ErrorHandler
+        {
             get => errorHandler;
             set => errorHandler = value;
         }
 
-        public double Barley {
+        public double Barley
+        {
             get { return barley; }
-            set {
+            set
+            {
                 barley = value;
                 OnPropertyChanged("Barley");
             }
         }
 
-        public double Hops {
+        public double Hops
+        {
             get { return hops; }
-            set {
+            set
+            {
                 hops = value;
                 OnPropertyChanged("Hops");
             }
         }
 
-        public double Malt {
+        public double Malt
+        {
             get { return malt; }
-            set {
+            set
+            {
                 malt = value;
                 OnPropertyChanged("Malt");
             }
         }
 
-        public double Wheat {
+        public double Wheat
+        {
             get { return wheat; }
-            set {
+            set
+            {
                 wheat = value;
                 OnPropertyChanged("Wheat");
             }
         }
-        public double Yeast {
+        public double Yeast
+        {
             get { return yeast; }
-            set {
+            set
+            {
                 yeast = value;
                 OnPropertyChanged("Yeast");
             }
         }
 
-        public double MaintenanceTrigger {
+        public double MaintenanceTrigger
+        {
             get { return maintenanceTrigger; }
-            set {
+            set
+            {
                 maintenanceTrigger = value;
                 OnPropertyChanged("MaintenanceTrigger");
             }
         }
 
-        public double MaintenanceCounter {
-            get {
+        public double MaintenanceCounter
+        {
+            get
+            {
                 if (maintenanceTrigger == 0)
                 {
                     return maintenanceCounter;
@@ -686,7 +711,8 @@ namespace MES.Logic
                     return maintenanceCounter / maintenanceTrigger * 100;
                 }
             }
-            set {
+            set
+            {
                 maintenanceCounter = value;
                 OnPropertyChanged("MaintenanceCounter");
             }

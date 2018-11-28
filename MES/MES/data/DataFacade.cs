@@ -1,22 +1,24 @@
 ﻿using System;
 using MES.Acquintance;
 using MES.data;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
 
 namespace MES.Data
 {
     public class DataFacade : IData
     {
         private IDBManager dbManager;
+        private IUserManager userManager;
+        private IUser currentUser;
         private FileManager fileManager;
 
         public DataFacade()
         {
             Console.WriteLine("\n\nCONSTRUCTOR DATAFACADE\n\n");
             dbManager = new DBManager();
+            userManager = new UserManager();
+            currentUser = null;
             fileManager=new FileManager();
         }
 
@@ -104,6 +106,20 @@ namespace MES.Data
         public bool AddRecipes(IRecipe[] recipes)
         {
             return dbManager.AddRecipes(recipes);
+        }
+
+        public bool AuthenticateUserInformation(string username, string password)
+        {
+            IUser user = userManager.AuthenticateUserInformation(username, password);
+            if (user != null)
+            {
+                this.currentUser = user;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

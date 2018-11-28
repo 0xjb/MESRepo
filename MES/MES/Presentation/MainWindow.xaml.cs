@@ -18,7 +18,7 @@ namespace MES.Presentation
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
         private ILogic iLogic;
-        private IPresentation presentationFacade;
+        private IPresentation presentation;
 
         //Level "Barley", "Hops", "Malt", "Wheat", "Yeast" 
         private double levelBarley;
@@ -44,13 +44,22 @@ namespace MES.Presentation
         private double _value;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ChartValues<ObservableValue> ValuesIngredients { get; set; }
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
+
         public MainWindow(IPresentation pf)
         {
-            this.presentationFacade = pf;
-            //Get logiclayer
-            iLogic = presentationFacade.ILogic;
+            this.presentation = pf;
 
-            iLogic.ErrorHandler.Alarms.CollectionChanged += EventHandling;
+            //Get logiclayer
+            iLogic = presentation.ILogic;
+
+            //
+            //CheckIfSimulationIsOn();
+            
+
             if (!presentationFacade.ILogic.IsSimulationOn)
             {
                 //Connects to OPC server
@@ -76,6 +85,7 @@ namespace MES.Presentation
                 Values = ValuesIngredients,
                 DataLabels = true
             };
+
             //Place valuelabel inside the column
             columnSeries.LabelsPosition = (BarLabelPosition) 3;
             SeriesCollection = new SeriesCollection {columnSeries};
@@ -88,9 +98,24 @@ namespace MES.Presentation
             DataContext = this;
         }
 
-
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
+            try {
+                ValuesIngredients[0].Value = LevelBarley;
+                ValuesIngredients[1].Value = LevelHops;
+                ValuesIngredients[2].Value = LevelMalt;
+                ValuesIngredients[3].Value = LevelWheat;
+                ValuesIngredients[4].Value = LevelWheat;
+            }
+            catch (System.NullReferenceException exception) {
+                Console.WriteLine(exception);
+                //throw;
+            }
+            //ValuesIngredients[0].Value = LevelBarley;
+            //ValuesIngredients[1].Value = LevelHops;
+            //ValuesIngredients[2].Value = LevelMalt;
+            //ValuesIngredients[3].Value = LevelWheat;
+            //ValuesIngredients[4].Value = LevelWheat;
 
             LevelBarley = iLogic.OPC.Barley;
             LevelHops = iLogic.OPC.Hops;
@@ -108,15 +133,15 @@ namespace MES.Presentation
 
         private void CheckIfSimulationIsOn()
         {
-            if (presentationFacade.ILogic.IsSimulationOn)
+            if (presentation.ILogic.IsSimulationOn)
             {
-                this.levelBarley = iLogic.GetTestSimulation.LevelBarley;
-                this.levelHops = iLogic.GetTestSimulation.LevelHops;
-                this.levelMalt = iLogic.GetTestSimulation.LevelMalt;
-                this.levelWheat = iLogic.GetTestSimulation.LevelWheat;
-                this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
+                this.levelBarley = iLogic.TestSimulation.LevelBarley;
+                this.levelHops = iLogic.TestSimulation.LevelHops;
+                this.levelMalt = iLogic.TestSimulation.LevelMalt;
+                this.levelWheat = iLogic.TestSimulation.LevelWheat;
+                this.levelYeast = iLogic.TestSimulation.LevelYeast;
 
-                iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
+                iLogic.TestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
             }
             else
             {
@@ -168,8 +193,7 @@ namespace MES.Presentation
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //opc.StartMachine(1, 2, 2000, 600);
-            //iLogic.OPC.StartMachine(1, 2, 200, 100);
-            PresentationFacade.ILogic.OPC.ErrorHandler.AddAlarm(0, 11);
+            iLogic.OPC.StartMachine(1, 2, 200, 100);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
@@ -198,42 +222,42 @@ namespace MES.Presentation
 
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
         {
-            Alarms alarms = new Alarms(presentationFacade, this);
+            Alarms alarms = new Alarms(presentation, this);
             this.Hide();
             alarms.Show();
         }
 
         private void btnOEE_Click(object sender, RoutedEventArgs e)
         {
-            OEE oEE = new OEE(presentationFacade, this);
+            OEE oEE = new OEE(presentation, this);
             this.Hide();
             oEE.Show();
         }
 
         private void btnOptimization_Click(object sender, RoutedEventArgs e)
         {
-            Optimization optimization = new Optimization(presentationFacade, this);
+            Optimization optimization = new Optimization(presentation, this);
             this.Hide();
             optimization.Show();
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade, this);
+            History history = new History(presentation, this);
             this.Hide();
             history.Show();
         }
 
         private void btnBatchSetup_Click(object sender, RoutedEventArgs e)
         {
-            BatchSetup batchSetup = new BatchSetup(presentationFacade, this);
+            BatchSetup batchSetup = new BatchSetup(presentation, this);
             this.Hide();
             batchSetup.Show();
         }
 
         private void btnMachineSettings_Click(object sender, RoutedEventArgs e)
         {
-            Simulation simulation = new Simulation(presentationFacade, presentationFacade.ILogic.IsSimulationOn, this);
+            Simulation simulation = new Simulation(presentation, presentation.ILogic.IsSimulationOn, this);
             this.Hide();
             simulation.Show();
         }
@@ -241,7 +265,6 @@ namespace MES.Presentation
         #endregion
 
         public double LevelBarley
-
         {
             get { return levelBarley; }
 
@@ -254,7 +277,6 @@ namespace MES.Presentation
         }
 
         public double LevelHops
-
         {
             get { return levelHops; }
 
@@ -267,7 +289,6 @@ namespace MES.Presentation
         }
 
         public double LevelMalt
-
         {
             get { return levelMalt; }
 
@@ -280,7 +301,6 @@ namespace MES.Presentation
         }
 
         public double LevelWheat
-
         {
             get { return levelWheat; }
 
@@ -293,7 +313,6 @@ namespace MES.Presentation
         }
 
         public double LevelYeast
-
         {
             get { return levelYeast; }
 
@@ -307,7 +326,6 @@ namespace MES.Presentation
 
 
         public double ValueMaintenance
-
         {
             get { return _value; }
             set
@@ -318,7 +336,6 @@ namespace MES.Presentation
         }
 
         public double MachineSpeed
-
         {
             get { return machineSpeed; }
 
@@ -331,7 +348,6 @@ namespace MES.Presentation
         }
 
         public double Temperature
-
         {
             get { return temperature; }
 
@@ -344,7 +360,6 @@ namespace MES.Presentation
         }
 
         public double Humidity
-
         {
             get { return humidity; }
 
@@ -357,7 +372,6 @@ namespace MES.Presentation
         }
 
         public double Vibration
-
         {
             get { return vibration; }
 
@@ -370,7 +384,6 @@ namespace MES.Presentation
         }
 
         public double BatchID
-
         {
             get { return batchID; }
 
@@ -383,7 +396,6 @@ namespace MES.Presentation
         }
 
         public double Amount
-
         {
             get { return amount; }
 
@@ -397,7 +409,6 @@ namespace MES.Presentation
 
 
         public double Produced
-
         {
             get { return produced; }
 
@@ -410,7 +421,6 @@ namespace MES.Presentation
         }
 
         public double AcceptableProducts
-
         {
             get { return acceptableProducts; }
 
@@ -423,7 +433,6 @@ namespace MES.Presentation
         }
 
         public double DefectProducts
-
         {
             get { return defectProducts; }
 
@@ -436,7 +445,6 @@ namespace MES.Presentation
         }
 
         public double Status
-
         {
             get { return status; }
 
@@ -448,6 +456,12 @@ namespace MES.Presentation
             }
         }
 
+        public IPresentation PresentationFacade
+        {
+            get { return presentation; }
+            set { presentation = value; }
+        }
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -457,19 +471,12 @@ namespace MES.Presentation
             }
         }
 
-
         private void button_Click(object sender, RoutedEventArgs e)
         {
             int number = 0;
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
             ValueMaintenance = randomNumber.Next(1, 100);
-        }
-
-        public IPresentation PresentationFacade
-        {
-            get { return presentationFacade; }
-            set { presentationFacade = value; }
         }
     }
 }

@@ -117,9 +117,13 @@
     <Compile Include="Acquintance\IBatchqueue.cs" />
     <Compile Include="Acquintance\IBatchValueSet.cs" />
     <Compile Include="Acquintance\IRecipe.cs" />
+    <Compile Include="Acquintance\IUser.cs" />
+    <Compile Include="Acquintance\IUserManager.cs" />
     <Compile Include="Data\AlarmObject.cs" />
     <Compile Include="Data\FileManager.cs" />
     <Compile Include="Data\Recipe.cs" />
+    <Compile Include="Data\User.cs" />
+    <Compile Include="Data\UserManager.cs" />
     <Compile Include="Logic\AlarmObject.cs" />
     <Compile Include="Logic\Batch.cs" />
     <Compile Include="Logic\BatchQueue.cs" />
@@ -129,6 +133,9 @@
     <Compile Include="Logic\ValueOverProdTime.cs" />
     <Compile Include="Presentation\BatchReport.xaml.cs">
       <DependentUpon>Presentation\BatchReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\PopupAlarm.xaml.cs">
       <DependentUpon>PopupAlarm.xaml</DependentUpon>
@@ -179,6 +186,10 @@
     </Page>
     <Compile Include="Data\Batch.cs" />
     <Compile Include="Tests\DataTest.cs" />
+    <Page Include="Presentation\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
