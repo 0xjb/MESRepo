@@ -5,6 +5,8 @@ namespace MES.Logic
 {
     public class LogicFacade : ILogic
     {
+        private IData data;
+        private ErrorHandler errorHandler;
         private OpcClient opc;
         private BatchQueue batches;
         private TestSimulation _testSimulation;
@@ -12,9 +14,10 @@ namespace MES.Logic
 
         public LogicFacade()
         {
-            this.opc = new OpcClient();
+            Console.WriteLine("\n\n CONSTRUCTOR LOGICFACADE \n\n");
+            //this.errorHandler = new ErrorHandler(this);
+            this.opc = new OpcClient(this);
             Batches = new BatchQueue(OPC);
-            //this._testSimulation = new TestSimulation(opc);
         }
         public BatchQueue Batches {
             get { return batches; }
@@ -25,23 +28,34 @@ namespace MES.Logic
             set => _testSimulation = value;
         }
 
-        private IData data;
-
         public OpcClient OPC {
             get { return opc; }
             set { opc = value; }
         }
 
+        public IData Data
+        {
+            get => data;
+            set => data = value;
+        }
+
+        public ErrorHandler ErrorHandler
+        {
+            get => errorHandler;
+            set => errorHandler = value;
+        }
+
         public void InjectData(IData dataLayer)
         {
             data = dataLayer;
+            CreateErrorHandler();
+            Console.WriteLine("\n\nHELLO FROM INJECTDATA\n\n");
         }
 
         public bool IsSimulationOn {
             get => isSimulationON;
             set => isSimulationON = value;
         }
-
 
         public void CreateSimulation()
         {
@@ -52,6 +66,10 @@ namespace MES.Logic
             }
         }
 
+        public void CreateErrorHandler()
+        {
+            this.errorHandler = new ErrorHandler(this);
+        }
         public void CreateBatch(float batchId, float amount, float productType)
         {
             Batch b = new Batch(batchId, productType, amount);
@@ -60,7 +78,6 @@ namespace MES.Logic
             } else {
                 Batches.Batches.Add(new Batch(batchId, productType, amount));
             }
-
         }
 
         public void AddBatch(string batchID, string productType, string amount) {

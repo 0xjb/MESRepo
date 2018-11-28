@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MES.Data;
 
 namespace MES.Acquintance
 {
@@ -110,5 +112,9 @@ namespace MES.Acquintance
         /// <param name="recipes"></param>
         /// <returns></returns>
         bool AddRecipes(IRecipe[] recipes);
+
+        ObservableCollection<IAlarmObject> ReadFile();
+        void WriteToFile(string s);
+        
     }
 }

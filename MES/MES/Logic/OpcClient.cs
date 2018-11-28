@@ -30,19 +30,28 @@ namespace MES.Logic
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
         private ErrorHandler errorHandler;
+        private ILogic iLogic;
 
 
         public Session session;
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        public OpcClient()
+        public OpcClient(ILogic il)
         {
-            this.errorHandler = new ErrorHandler();
+            Console.WriteLine("CONSTRUCTOR OPC CLIENT");
+            this.iLogic = il;
+            //this.errorHandler = new ErrorHandler();
             Connect();
             CreateSubscription();
 
 
+        }
+
+        public OpcClient()
+        {
+            Connect();
+            CreateSubscription();
         }
 
         public void Connect()
@@ -62,8 +71,6 @@ namespace MES.Logic
             batchId = ReadCurrentBatchId();
 
             maintenanceTrigger = ReadMaintenanceTrigger();
-
-            Console.WriteLine();
         }
 
         public void CreateSubscription()
@@ -168,7 +175,9 @@ namespace MES.Logic
                     //stop reason id
                     case "::Program:Cube.Admin.StopReason.ID":
                         BatchId = double.Parse(dc.Value.ToString());
-                        errorHandler.AddAlarm((int)BatchId, StopReasonId);
+                        //errorHandler.AddAlarm((int)BatchId, StopReasonId);
+                        Console.WriteLine("\n\nKALDER ERROR HANDLER FRA OPC CLIENT\n\n");
+                        iLogic.ErrorHandler.AddAlarm((int)BatchId, StopReasonId);
                         break;
                     //batch id 
                     case "::Program:Cube.Status.Parameter[0].Value":
