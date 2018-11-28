@@ -9,7 +9,6 @@
     <Grid Margin="0,0,2,1">
         <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="295,140,0,0" VerticalAlignment="Top" Width="75" Click="HandleClickLoginButtonEvent"/>
         <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="125,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="passwordTextBox" HorizontalAlignment="Left" Height="23" Margin="125,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-
+        <PasswordBox Name="passwordBox" HorizontalAlignment="Left" Margin="125,140,0,0" VerticalAlignment="Top" Height="23" Width="120" PasswordChar="*"/>
     </Grid>
 </Window>

@@ -14,12 +14,15 @@ namespace MES.Presentation
         {
             InitializeComponent();
             this.presentation = presentation;
+
+            loginButton.IsDefault = true;
+            usernameTextBox.Focus();
         }
 
         private void HandleClickLoginButtonEvent(object sender, RoutedEventArgs e)
         {
             bool authenticated = presentation.ILogic.AuthenticateUserInformation
-                (usernameTextBox.Text, passwordTextBox.Text);
+                (usernameTextBox.Text, passwordBox.Password);
 
             if (authenticated)
             {
