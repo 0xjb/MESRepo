@@ -11,8 +11,6 @@ namespace MES.Logic {
         private bool isSimulationON;
 
         public LogicFacade() {
-            Console.WriteLine("\n\n CONSTRUCTOR LOGICFACADE \n\n");
-            //this.errorHandler = new ErrorHandler(this);
             this.opc = new OpcClient(this);
             Batches = new BatchQueue(OPC);
         }
@@ -41,12 +39,16 @@ namespace MES.Logic {
             get => errorHandler;
             set => errorHandler = value;
         }
-        public bool IsSimulationOn { get; set; }
+
+        public bool IsSimulationOn
+        {
+            get => isSimulationON;
+            set => isSimulationON = value;
+        }
 
         public void InjectData(IData dataLayer) {
             data = dataLayer;
             CreateErrorHandler();
-            Console.WriteLine("\n\nHELLO FROM INJECTDATA\n\n");
         }
 
         public void CreateSimulation() {

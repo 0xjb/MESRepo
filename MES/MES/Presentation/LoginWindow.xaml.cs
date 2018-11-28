@@ -17,6 +17,8 @@ namespace MES.Presentation
 
             loginButton.IsDefault = true;
             usernameTextBox.Focus();
+     
+            
         }
 
         private void HandleClickLoginButtonEvent(object sender, RoutedEventArgs e)

@@ -4,11 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MES.Presentation"
-        mc:Ignorable="d"
-        Title="LoginWindow" Height="275.411" Width="468.032">
+        mc:Ignorable="d"  WindowStartupLocation="CenterScreen"
+
+        Title="LoginWindow" Height="275.411" Width="468.032"  Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+   
     <Grid Margin="0,0,2,1">
-        <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="295,140,0,0" VerticalAlignment="Top" Width="75" Click="HandleClickLoginButtonEvent"/>
-        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="125,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <PasswordBox Name="passwordBox" HorizontalAlignment="Left" Margin="125,140,0,0" VerticalAlignment="Top" Height="23" Width="120" PasswordChar="*"/>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0" />
+                <GradientStop Color="#FFAEC3F0" Offset="0.204" />
+                <GradientStop Color="#FF152941" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="25" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <Button x:Name="loginButton" Grid.Column="3" Grid.Row="4" Content="Login" Margin="25,5,25,5" Click="HandleClickLoginButtonEvent"/>
+        <TextBox x:Name="usernameTextBox" Grid.Column="2" Grid.Row="2"  Margin="5,5,5,5" TextWrapping="Wrap"  Width="120"/>
+        <PasswordBox Name="passwordBox"  Grid.Column="2" Grid.Row="4"  Margin="5,5,5,5"   Width="120" PasswordChar="*"/>
+        <Label Content="Username:" Grid.Column="2" Margin="5,5,5,5"  Grid.Row="1" />
+        <Label Content="Password:" Grid.Column="2" Margin="5,5,5,5"  Grid.Row="3" />
     </Grid>
 </Window>

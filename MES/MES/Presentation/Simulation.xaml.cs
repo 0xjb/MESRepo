@@ -21,12 +21,10 @@ namespace MES.Presentation
     public partial class Simulation : Window
     {
         private IPresentation presentationFacade;
-        private MainWindow mw;
 
         public Simulation(IPresentation pf, bool isSimulationOn, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
-            this.mw = mainWindow;
             InitializeComponent();
             if (isSimulationOn)
             {
@@ -44,7 +42,6 @@ namespace MES.Presentation
             MainWindow mainWindow = new MainWindow(presentationFacade);
             this.Close();
             mainWindow.Show();
-            //mw.Show();
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -56,11 +53,6 @@ namespace MES.Presentation
                 Console.WriteLine(" is checked");
             }
 
-            //else
-            //{
-            //checkBockSimulation.IsEnabled = false;
-            //txtBlock.Text = "Machine is running...Can't turn  off simulation....";
-            //}
         }
 
         private void CheckBox_OnUnchecked(object sender, RoutedEventArgs e)
@@ -70,11 +62,6 @@ namespace MES.Presentation
                 presentationFacade.ILogic.IsSimulationOn = false;
                 Console.WriteLine(" is unchecked");
             }
-
-            //else {
-            //checkBockSimulation.IsEnabled = false;
-            //txtBlock.Text = "Machine is running...Can't turn on  simulation....";
-            //}
-        }
+      }
     }
 }
