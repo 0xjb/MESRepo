@@ -29,19 +29,3 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 12              0                    11-26-2018 13:13:56                      Manual stop                             
 13              0                    11-26-2018 13:14:59                      Manual stop                             
 14              0                    11-26-2018 13:20:18                      Empty inventory                         
-15              0                    11/28/2018 11:28:18 AM                   Manual stop                             
-16              0                    11/28/2018 12:04:57 PM                   Manual stop                             
-17              0                    11/28/2018 12:06:22 PM                   Manual stop                             
-18              0                    11/28/2018 12:06:43 PM                   Manual stop                             
-19              0                    11/28/2018 12:14:05 PM                   Manual abort                            
-15              1                    11/28/2018 12:22:54 PM                   Manual abort                            
-16              1                    11/28/2018 12:22:56 PM                   Manual stop                             
-15              0                    11/28/2018 12:25:32 PM                   Maintenance                             
-16              0                    11/28/2018 12:25:38 PM                   Maintenance                             
-17              50                   11/28/2018 12:26:28 PM                   Manual abort                            
-18              50                   11/28/2018 12:26:52 PM                   Manual abort                            
-19              0                    11/28/2018 12:26:55 PM                   Maintenance                             
-20              0                    11/28/2018 12:26:59 PM                   Maintenance                             
-19              0                    11/28/2018 12:29:26 PM                   Manual stop                             
-19              0                    11/28/2018 12:48:02 PM                   Maintenance                             
-20              0                    11/28/2018 12:50:34 PM                   Maintenance                             
