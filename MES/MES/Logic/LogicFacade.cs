@@ -13,7 +13,9 @@ namespace MES.Logic
         public LogicFacade()
         {
             this.opc = new OpcClient();
-            Batches = new BatchQueue(OPC);
+            Batches = new BatchQueue(OPC, this);
+            Batch ExistingBatch = new Batch(OPC.BatchId, 0, OPC.ProcessedProducts);
+            Batches.CurrentBatch = ExistingBatch;
             //this._testSimulation = new TestSimulation(opc);
         }
         public BatchQueue Batches {
@@ -68,7 +70,19 @@ namespace MES.Logic
         }
 
         public void StartProduction() {
-            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount, 24000);
+            //OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount,30);
+            OPC.StartMachine(30, 0, 100, 100);
+        }
+        public void SaveBatchData() {
+            Console.WriteLine(OPC.BatchId);
+            if(OPC.TempList.Count > 0) {
+                foreach (var lmao in OPC.TempList) {
+                    Console.WriteLine("Temp: " + lmao.Value + " Time: " + lmao.Time);
+                }
+            } else {
+                Console.WriteLine("Temp: " + OPC.TempCurrent);
+            }
+
         }
     }
 }

@@ -12,6 +12,7 @@ namespace MES.Logic {
     
     public class BatchQueue : IBatchQueue, INotifyPropertyChanged {
         private static object _lock = new object();
+        private LogicFacade _lf;
         private Batch currentBatch;
         public Batch CurrentBatch {
             get { return currentBatch; }
@@ -28,7 +29,8 @@ namespace MES.Logic {
                 OnPropertyChanged("Batches");
             }
         }
-        public BatchQueue(OpcClient c) {
+        public BatchQueue(OpcClient c, LogicFacade lf) {
+            _lf = lf;
            c.PropertyChanged += CheckBatchProdStatus;
             BindingOperations.EnableCollectionSynchronization(Batches, _lock);
         }
@@ -60,10 +62,13 @@ namespace MES.Logic {
                 if((sender as OpcClient).StateCurrent == 17) {
                     //TODO: Fix this
                     try {
+                        _lf.SaveBatchData();
                         CurrentBatch = Batches[0];
                         Batches.RemoveAt(0);
                     } catch(ArgumentOutOfRangeException ex) {
                         Console.WriteLine(":)");
+                    } finally {
+                        
                     }
                         
                     

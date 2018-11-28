@@ -8,31 +8,31 @@ using System.Threading.Tasks;
 
 namespace MES.Logic {
     public class Batch : INotifyPropertyChanged {
-        private float batchID;
-        public float BatchID {
+        private double batchID;
+        public double BatchID {
             get { return batchID; }
             set {
                 batchID = value;
                 OnPropertyChanged("BatchID");
             }
         }
-        private float beerType;
-        public float BeerType {
+        private double beerType;
+        public double BeerType {
             get { return beerType; }
             set {
                 beerType = value;
                 OnPropertyChanged("BeerType");
             }
         }
-        private float desiredAmount;
-        public float DesiredAmount {
+        private double desiredAmount;
+        public double DesiredAmount {
             get { return desiredAmount; }
             set {
                 desiredAmount = value;
                 OnPropertyChanged("DesiredAmount");
             }
         }
-        public Batch(float id, float bt, float amount) {
+        public Batch(double id, double bt, double amount) {
             BatchID = id;
             BeerType = bt;
             DesiredAmount = amount;

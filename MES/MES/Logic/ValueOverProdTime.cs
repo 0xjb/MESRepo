@@ -6,23 +6,14 @@ using System.Threading.Tasks;
 
 namespace MES
 {
-    class ValueOverProdTime
+    public class ValueOverProdTime
     {
-        private DateTime time;
+        public string Time { get; set; }
+        public double Value { get; set; }
 
-        public DateTime Time
-        {
-            get { return time; }
-            set { time = value; }
-        }
-
-
-        private int value;
-
-        public int Value
-        {
-            get { return value; }
-            set { this.value = value; }
+        public ValueOverProdTime(double val) {
+            Value = val;
+            Time = DateTime.Now.ToString();
         }
     }
 }

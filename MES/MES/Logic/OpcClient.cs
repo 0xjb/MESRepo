@@ -29,6 +29,7 @@ namespace MES.Logic
         private double yeast;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
+        private List<ValueOverProdTime> tempList = new List<ValueOverProdTime>();
         private ErrorHandler errorHandler;
 
 
@@ -152,6 +153,7 @@ namespace MES.Logic
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
                         TempCurrent = double.Parse(dc.Value.ToString());
+                        tempList.Add(new ValueOverProdTime(TempCurrent));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -668,12 +670,9 @@ namespace MES.Logic
 
         public double MaintenanceCounter {
             get {
-                if (maintenanceTrigger == 0)
-                {
+                if (maintenanceTrigger == 0) {
                     return maintenanceCounter;
-                }
-                else
-                {
+                } else {
                     return maintenanceCounter / maintenanceTrigger * 100;
                 }
             }
@@ -682,5 +681,9 @@ namespace MES.Logic
                 OnPropertyChanged("MaintenanceCounter");
             }
         }
+            public List<ValueOverProdTime> TempList {
+            get { return tempList; }
+            set { tempList = value; }
+        }
+        }
     }
-}
