@@ -1,10 +1,8 @@
 ﻿using MES.Acquintance;
 using System;
 
-namespace MES.Logic
-{
-    public class LogicFacade : ILogic
-    {
+namespace MES.Logic {
+    public class LogicFacade : ILogic {
         private IData data;
         private ErrorHandler errorHandler;
         private OpcClient opc;
@@ -12,22 +10,19 @@ namespace MES.Logic
         private TestSimulation _testSimulation;
         private bool isSimulationON;
 
-        public OpcClient OPC
-        {
+        public LogicFacade() {
             Console.WriteLine("\n\n CONSTRUCTOR LOGICFACADE \n\n");
             //this.errorHandler = new ErrorHandler(this);
             this.opc = new OpcClient(this);
             Batches = new BatchQueue(OPC);
         }
 
-        public BatchQueue Batches
-        {
+        public BatchQueue Batches {
             get { return batches; }
             set { batches = value; }
         }
 
-        public TestSimulation TestSimulation
-        {
+        public TestSimulation TestSimulation {
             get => _testSimulation;
             set => _testSimulation = value;
         }
@@ -37,64 +32,54 @@ namespace MES.Logic
             set { opc = value; }
         }
 
-        public IData Data
-        {
+        public IData Data {
             get => data;
             set => data = value;
         }
 
-        public ErrorHandler ErrorHandler
-        {
+        public ErrorHandler ErrorHandler {
             get => errorHandler;
             set => errorHandler = value;
         }
+        public bool IsSimulationOn { get; set; }
 
-        public void InjectData(IData dataLayer)
-        {
+        public void InjectData(IData dataLayer) {
             data = dataLayer;
             CreateErrorHandler();
             Console.WriteLine("\n\nHELLO FROM INJECTDATA\n\n");
         }
 
-        public void CreateSimulation()
-        {
-            if (isSimulationON)
-            {
+        public void CreateSimulation() {
+            if (isSimulationON) {
                 Console.WriteLine("Simulation ON");
                 this._testSimulation = new TestSimulation(opc, this);
             }
         }
 
-        public void CreateErrorHandler()
-        {
+        public void CreateErrorHandler() {
             this.errorHandler = new ErrorHandler(this);
         }
-        public void CreateBatch(float batchId, float amount, float productType)
-        {
+        public void CreateBatch(float batchId, float amount, float productType) {
             Batch b = new Batch(batchId, productType, amount);
-            if (Batches.CurrentBatch == null)
-            {
+            if (Batches.CurrentBatch == null) {
                 Batches.CurrentBatch = b;
-            }
-            else
-            {
+            } else {
                 Batches.Batches.Add(new Batch(batchId, productType, amount));
             }
         }
 
-        public void AddBatch(string batchID, string productType, string amount)
-        {
+        public void AddBatch(string batchID, string productType, string amount) {
             Console.WriteLine("yeet");
         }
 
-        public void StartProduction()
-        {
+        public void StartProduction() {
             OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount, 60);
         }
 
-        public bool AuthenticateUserInformation(string username, string password)
-        {
+        public bool AuthenticateUserInformation(string username, string password) {
             return data.AuthenticateUserInformation(username, password);
         }
     }
 }
+
+

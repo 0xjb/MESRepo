@@ -19,9 +19,10 @@ namespace MES.Starter
             logic.InjectData(data);
             presentation.InjectLogic(logic);
 
-            MainWindow mainWindow = new MainWindow(presentation);
+            LoginWindow loginWindow = new LoginWindow(presentation);
+
             Application application = new Application();
-            application.Run(mainWindow);
+            application.Run(loginWindow);
         }
     }
 }
