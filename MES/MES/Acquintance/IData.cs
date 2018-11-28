@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MES.Acquintance
 {
@@ -110,5 +105,13 @@ namespace MES.Acquintance
         /// <param name="recipes"></param>
         /// <returns></returns>
         bool AddRecipes(IRecipe[] recipes);
+
+        /// <summary>
+        /// Authenticates the user information
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        IUser AuthenticateUserInformation(string username, string password);
     }
 }

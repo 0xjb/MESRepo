@@ -1,6 +1,5 @@
 ﻿using MES.Acquintance;
 using MES.data;
-using System.Collections;
 using System.Collections.Generic;
 
 
@@ -9,10 +8,12 @@ namespace MES.Data
     public class DataFacade : IData
     {
         private IDBManager dbManager;
+        private IUserManager userManager;
 
         public DataFacade()
         {
             dbManager = new DBManager();
+            userManager = new UserManager();
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
@@ -89,6 +90,11 @@ namespace MES.Data
         public bool AddRecipes(IRecipe[] recipes)
         {
             return dbManager.AddRecipes(recipes);
+        }
+
+        public IUser AuthenticateUserInformation(string username, string password)
+        {
+            return userManager.AuthenticateUserInformation(username, password);
         }
     }
 }

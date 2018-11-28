@@ -6,13 +6,10 @@ using MES.Presentation;
 using System;
 using System.Windows;
 
-
-
 namespace MES.Starter
 {
     class Starter : Application
     {
-
         [STAThread]
         public static void Main(string[] args)
         {
@@ -22,17 +19,9 @@ namespace MES.Starter
             logic.InjectData(data);
             presentation.InjectLogic(logic);
 
-            MainWindow mainWindow = new MainWindow(presentation);
+            LoginWindow loginWindow = new LoginWindow(presentation);
             Application application = new Application();
-            application.Run(mainWindow);
-
-
-
-
-
+            application.Run(loginWindow);
         }
-
-
-
     }
 }
