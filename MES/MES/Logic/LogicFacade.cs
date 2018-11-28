@@ -80,7 +80,7 @@ namespace MES.Logic
             OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount, 60);
         }
 
-        public IUser AuthenticateUserInformation(string username, string password)
+        public bool AuthenticateUserInformation(string username, string password)
         {
             return data.AuthenticateUserInformation(username, password);
         }

@@ -18,13 +18,13 @@ namespace MES.Presentation
 
         private void HandleClickLoginButtonEvent(object sender, RoutedEventArgs e)
         {
-            IUser user = presentation.ILogic.AuthenticateUserInformation
+            bool authenticated = presentation.ILogic.AuthenticateUserInformation
                 (usernameTextBox.Text, passwordTextBox.Text);
 
-            if (user != null)
+            if (authenticated)
             {
                 MainWindow mainWindow = new MainWindow(presentation);
-                this.Hide();
+                this.Close();
                 mainWindow.Show();
             }
         }

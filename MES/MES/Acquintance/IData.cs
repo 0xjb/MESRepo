@@ -112,6 +112,6 @@ namespace MES.Acquintance
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        IUser AuthenticateUserInformation(string username, string password);
+        bool AuthenticateUserInformation(string username, string password);
     }
 }

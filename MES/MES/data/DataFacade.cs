@@ -2,18 +2,19 @@
 using MES.data;
 using System.Collections.Generic;
 
-
 namespace MES.Data
 {
     public class DataFacade : IData
     {
         private IDBManager dbManager;
         private IUserManager userManager;
+        private IUser currentUser;
 
         public DataFacade()
         {
             dbManager = new DBManager();
             userManager = new UserManager();
+            currentUser = null;
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
@@ -92,9 +93,18 @@ namespace MES.Data
             return dbManager.AddRecipes(recipes);
         }
 
-        public IUser AuthenticateUserInformation(string username, string password)
+        public bool AuthenticateUserInformation(string username, string password)
         {
-            return userManager.AuthenticateUserInformation(username, password);
+            IUser user = userManager.AuthenticateUserInformation(username, password);
+            if (user != null)
+            {
+                this.currentUser = user;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

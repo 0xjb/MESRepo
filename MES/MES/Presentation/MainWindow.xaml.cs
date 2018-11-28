@@ -222,7 +222,6 @@ namespace MES.Presentation
         }
 
         public double LevelBarley
-
         {
             get { return levelBarley; }
 
@@ -235,7 +234,6 @@ namespace MES.Presentation
         }
 
         public double LevelHops
-
         {
             get { return levelHops; }
 
@@ -248,7 +246,6 @@ namespace MES.Presentation
         }
 
         public double LevelMalt
-
         {
             get { return levelMalt; }
 
@@ -261,7 +258,6 @@ namespace MES.Presentation
         }
 
         public double LevelWheat
-
         {
             get { return levelWheat; }
 
@@ -274,7 +270,6 @@ namespace MES.Presentation
         }
 
         public double LevelYeast
-
         {
             get { return levelYeast; }
 
@@ -288,7 +283,6 @@ namespace MES.Presentation
 
 
         public double ValueMaintenance
-
         {
             get { return _value; }
             set
@@ -299,7 +293,6 @@ namespace MES.Presentation
         }
 
         public double MachineSpeed
-
         {
             get { return machineSpeed; }
 
@@ -312,7 +305,6 @@ namespace MES.Presentation
         }
 
         public double Temperature
-
         {
             get { return temperature; }
 
@@ -325,7 +317,6 @@ namespace MES.Presentation
         }
 
         public double Humidity
-
         {
             get { return humidity; }
 
@@ -338,7 +329,6 @@ namespace MES.Presentation
         }
 
         public double Vibration
-
         {
             get { return vibration; }
 
@@ -351,7 +341,6 @@ namespace MES.Presentation
         }
 
         public double BatchID
-
         {
             get { return batchID; }
 
@@ -364,7 +353,6 @@ namespace MES.Presentation
         }
 
         public double Amount
-
         {
             get { return amount; }
 
@@ -378,7 +366,6 @@ namespace MES.Presentation
 
 
         public double Produced
-
         {
             get { return produced; }
 
@@ -391,7 +378,6 @@ namespace MES.Presentation
         }
 
         public double AcceptableProducts
-
         {
             get { return acceptableProducts; }
 
@@ -404,7 +390,6 @@ namespace MES.Presentation
         }
 
         public double DefectProducts
-
         {
             get { return defectProducts; }
 
@@ -417,7 +402,6 @@ namespace MES.Presentation
         }
 
         public double Status
-
         {
             get { return status; }
 
