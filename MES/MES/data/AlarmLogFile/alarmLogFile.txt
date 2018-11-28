@@ -1,0 +1,2 @@
+Alarm Number:   Batch Id:            Time and Date:                           Stop Reason:                            
+1               0                    11-28-2018 13:53:28                      Manual stop                             

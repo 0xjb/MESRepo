@@ -11,7 +11,9 @@ namespace MES.Acquintance
 
         void CreateSimulation();
 
+        IData Data { get; set; }
         OpcClient OPC { get; set; }
+        ErrorHandler ErrorHandler { get; set; }
 
         void InjectData(IData dataLayer);
 
@@ -22,5 +24,7 @@ namespace MES.Acquintance
         void AddBatch(string batchID, string productType, string amount);
 
         void StartProduction();
+
+        void CreateErrorHandler();
     }
 }

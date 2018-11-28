@@ -1,7 +1,9 @@
-﻿using MES.Acquintance;
+﻿using System;
+using MES.Acquintance;
 using MES.data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 
 namespace MES.Data
@@ -9,10 +11,23 @@ namespace MES.Data
     public class DataFacade : IData
     {
         private IDBManager dbManager;
+        private FileManager fileManager;
 
         public DataFacade()
         {
+            Console.WriteLine("\n\nCONSTRUCTOR DATAFACADE\n\n");
             dbManager = new DBManager();
+            fileManager=new FileManager();
+        }
+
+        public ObservableCollection<IAlarmObject> ReadFile()
+        {
+            return fileManager.ReadFile();
+        }
+
+        public void WriteToFile(string s)
+        {
+            fileManager.WriteToFile(s);
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,

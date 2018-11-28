@@ -50,11 +50,7 @@ namespace MES.Presentation
             //Get logiclayer
             iLogic = presentationFacade.ILogic;
 
-            //
-            CheckIfSimulationIsOn();
-
-            OnPropertyChanged("Alarms");
-            iLogic.OPC.ErrorHandler.Alarms.CollectionChanged += EventHandling;
+            iLogic.ErrorHandler.Alarms.CollectionChanged += EventHandling;
             if (!presentationFacade.ILogic.IsSimulationOn)
             {
                 //Connects to OPC server
@@ -87,30 +83,26 @@ namespace MES.Presentation
             //put label stuff here
             Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
             Formatter = value => value.ToString("N");
+
+            CheckIfSimulationIsOn();
             DataContext = this;
         }
 
 
         private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-            try
-            {
-                ValuesIngredients[0].Value = LevelBarley;
-                ValuesIngredients[1].Value = LevelHops;
-                ValuesIngredients[2].Value = LevelMalt;
-                ValuesIngredients[3].Value = LevelWheat;
-                ValuesIngredients[4].Value = LevelWheat;
-            }
-            catch (System.NullReferenceException exception)
-            {
-                Console.WriteLine(exception);
-            }
 
             LevelBarley = iLogic.OPC.Barley;
             LevelHops = iLogic.OPC.Hops;
             LevelMalt = iLogic.OPC.Malt;
             LevelWheat = iLogic.OPC.Wheat;
             LevelYeast = iLogic.OPC.Yeast;
+
+            ValuesIngredients[0].Value = LevelBarley;
+            ValuesIngredients[1].Value = LevelHops;
+            ValuesIngredients[2].Value = LevelMalt;
+            ValuesIngredients[3].Value = LevelWheat;
+            ValuesIngredients[4].Value = LevelWheat;
         }
 
 
@@ -125,7 +117,8 @@ namespace MES.Presentation
                 this.levelYeast = iLogic.GetTestSimulation.LevelYeast;
 
                 iLogic.GetTestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
-            } else
+            }
+            else
             {
                 this.levelBarley = iLogic.OPC.Barley;
                 this.levelHops = iLogic.OPC.Hops;
@@ -148,13 +141,15 @@ namespace MES.Presentation
 
         private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
         {
-            IAlarmObject  s = e.NewItems[0] as IAlarmObject;
-            if(s.StopReason == "Empty inventory" || s.StopReason == "Maintenance") {
+            IAlarmObject s = e.NewItems[0] as IAlarmObject;
+            if (s.StopReason == "Empty inventory" || s.StopReason == "Maintenance")
+            {
                 Dispatcher.BeginInvoke(new Action(delegate { ActivateAlarmWindow(s); }));
             }
-
         }
-        private void ActivateAlarmWindow(IAlarmObject alarmObject) {
+
+        private void ActivateAlarmWindow(IAlarmObject alarmObject)
+        {
             PopupAlarm pop = new PopupAlarm(alarmObject);
             pop.Show();
         }

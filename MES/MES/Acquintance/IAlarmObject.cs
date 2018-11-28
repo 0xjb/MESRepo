@@ -8,6 +8,11 @@ namespace MES.Acquintance
 {
     public interface IAlarmObject
     {
-        string StopReason { get; set; }
+         int AlarmNumber { get; set; }
+         string Timestamp { get; set; }
+
+         string StopReason { get; set; }
+
+         int BatchID { get; set; }
     }
 }

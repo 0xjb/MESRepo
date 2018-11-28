@@ -26,7 +26,8 @@ namespace MES.Presentation
 
             InitializeComponent();
 
-            listViewAlarms.ItemsSource = presentationFacade.ILogic.OPC.ErrorHandler.Alarms;
+            //listViewAlarms.ItemsSource = presentationFacade.ILogic.OPC.ErrorHandler.Alarms;
+            listViewAlarms.ItemsSource = presentationFacade.ILogic.ErrorHandler.Alarms;
             this.DataContext = this;
         }
 

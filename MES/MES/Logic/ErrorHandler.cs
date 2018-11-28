@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using MES.Acquintance;
 using MES.Annotations;
@@ -18,12 +20,10 @@ namespace MES.Logic
 {
     public class ErrorHandler
     {
-        private ObservableCollection<AlarmObject> _alarms;
+        private ObservableCollection<IAlarmObject> _alarms;
+        private ILogic iLogic;
 
         private int alarmNumber;
-
-        //TODO Skal være i data
-        private string filePathAndName = @"Logic\AlarmLogFiles\alarmLogFile.txt";
 
         private StringBuilder stringBuilder;
         private string[] alarmsToFile;
@@ -31,21 +31,13 @@ namespace MES.Logic
         private static object _lock = new object();
 
 
-        public ErrorHandler()
+        public ErrorHandler(ILogic iL)
         {
-            _alarms = new ObservableCollection<AlarmObject>();
             alarmsToFile = new string[4];
-            if (!IsFileIsEmpty())
-            {
-                stringBuilder = new StringBuilder();
-                stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", "Alarm Number:", "Batch Id:",
-                    "Time and Date:", "Stop Reason:");
-                stringBuilder.AppendLine();
-            }
-            else
-            {
-                stringBuilder = new StringBuilder();
-            }
+            Console.WriteLine("\n\nCONTRUCTOR ERRORHANDLER\n\n");
+            this.iLogic = iL;
+            _alarms = new ObservableCollection<IAlarmObject>();
+            stringBuilder = new StringBuilder();
 
             ReadFile();
 
@@ -69,6 +61,7 @@ namespace MES.Logic
             {
                 if (index > 0)
                 {
+                    
                     alarmNumber = _alarms.Count + 1;
                     _alarms.Add(new AlarmObject()
                     {
@@ -88,14 +81,9 @@ namespace MES.Logic
 
                     string result = stringBuilder.ToString();
 
+                    iLogic.Data.WriteToFile(result);
 
-                    string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-                    path = Directory.GetParent(path).FullName;
-                    path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
-                    path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
-
-                    System.IO.File.AppendAllText(path, result);
-
+                    Console.WriteLine("\n\n Alarm " + result + " added\n\n");
 
                     stringBuilder.Clear();
                 }
@@ -108,66 +96,18 @@ namespace MES.Logic
 
         private void ReadFile()
         {
-            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-            path = Directory.GetParent(path).FullName;
-            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
-            path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
 
-            if (File.Exists(path))
-            {
-                using (var sr =
-                    new StreamReader(path))
-                {
-                    string[] stringTokens;
-                    int i = 0;
-                    while (!sr.EndOfStream)
-                    {
-                        string fileLine = sr.ReadLine();
-                        i++;
+            Console.WriteLine("\n\n READ FILE ERRORHANDLER\n\n");
+            //iLogic.Data.ReadFile();
+            //ArrayList list = new ArrayList();
+            //list = iLogic.Data.ReadFile();
+            _alarms = iLogic.Data.ReadFile();
+            //Console.WriteLine("\n\nArrayList count     "+list.Count+"\n\n");
 
-                        stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-
-                        if (stringTokens.Length == 6)
-                        {
-                            _alarms.Add(
-                                new AlarmObject()
-                                {
-                                    AlarmNumber = Int32.Parse(stringTokens[0]),
-                                    BatchID = Int32.Parse(stringTokens[1]),
-                                    Timestamp = stringTokens[2] + " " + stringTokens[3],
-                                    StopReason = stringTokens[4] + " " + stringTokens[5]
-                                });
-                        }
-                    }
-                }
-            }
         }
 
-        private bool IsFileIsEmpty()
-        {
-            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-            path = Directory.GetParent(path).FullName;
-            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
-            path += @"\MES\Logic\AlarmLogFileTest\alarmLogFile.txt";
-            if (File.Exists(path))
-            {
-                using (var sr =
-                    new StreamReader(path))
-                {
-                    string[] stringTokens;
-                    if (sr.Peek() <= 0)
-                    {
-                        return false;
-                    }
 
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public ObservableCollection<AlarmObject> Alarms
+        public ObservableCollection<IAlarmObject> Alarms
         {
             get { return _alarms; }
 
@@ -175,14 +115,6 @@ namespace MES.Logic
         }
 
 
-        public class AlarmObject : IAlarmObject
-        {
-            public int AlarmNumber { get;  set; }
-            public string Timestamp { get;  set; }
 
-            public string StopReason { get; set; }
-
-            public int BatchID { get;  set; }
-        }
     }
 }
