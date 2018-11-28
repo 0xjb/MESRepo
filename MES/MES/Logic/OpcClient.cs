@@ -142,7 +142,7 @@ namespace MES.Logic
                         break;
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
-                        TempCurrent = double.Parse(dc.Value.ToString());
+                        TempCurrent =  double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -150,11 +150,11 @@ namespace MES.Logic
                         break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
-                        HumidityCurrent = double.Parse(dc.Value.ToString());
+                        HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
-                        VibrationCurrent = double.Parse(dc.Value.ToString());
+                        VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
                     //stop reason id
                     case "::Program:Cube.Admin.StopReason.ID":
