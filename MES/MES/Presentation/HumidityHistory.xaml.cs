@@ -21,7 +21,7 @@ namespace MES.Presentation
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
-            SeriesCollection = new SeriesCollection
+            SeriesCollectionHumidity = new SeriesCollection
 
             {
                 new LineSeries
@@ -31,8 +31,8 @@ namespace MES.Presentation
                 }
             };
 
-            Labels = new string[1000];
-            YFormatter = value => value;
+            LabelsHumidity = new string[1000];
+            FormatterHumidity = value => value;
             DataContext = this;
         }
 
@@ -55,11 +55,11 @@ namespace MES.Presentation
             if (PointChanged != null) PointChanged.Invoke();
         }
 
-        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection SeriesCollectionHumidity { get; set; }
 
-        public string[] Labels { get; set; }
+        public string[] LabelsHumidity { get; set; }
 
-        public Func<double, double> YFormatter { get; set; }
+        public Func<double, double> FormatterHumidity { get; set; }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -79,9 +79,9 @@ namespace MES.Presentation
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            Labels[indexOfArray] = DateTime.Now.ToString();
+            LabelsHumidity[indexOfArray] = DateTime.Now.ToString();
             _value = generateRandomNumber();
-            SeriesCollection[0].Values.Add(Value);
+            SeriesCollectionHumidity[0].Values.Add(Value);
             indexOfArray++;
         }
     }

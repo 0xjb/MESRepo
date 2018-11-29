@@ -3,11 +3,14 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using MES.Acquintance;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.Remoting.Channels;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
 
 namespace MES.Presentation
 {
@@ -39,15 +42,40 @@ namespace MES.Presentation
 
         private double defectProducts;
 
+        private int indexOfArrayTemp = 0;
+        private int indexOfArrayHumid = 0;
+        private int indexOfArrayVibra = 0;
+
+        private string statusString;
+        private string[] statusArray =
+        {
+            "Deactivated", "Clearing", "Stopped","Starting", "Idle", "Suspended","Execute", "Stopping" , "Aborting", "Aborted"
+            ,"Holding","Held","none","none","none", "Resetting", "Completing", "Complete", "Deactivating","Activating"
+        };
+
         //
         private double status;
-        private double _value;
+        private double _valueMaintenance;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChartValues<ObservableValue> ValuesIngredients { get; set; }
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
+        public SeriesCollection SeriesCollectionIngredients { get; set; }
+        public SeriesCollection SeriesCollectionTemperature { get; set; }
+        public SeriesCollection SeriesCollectionHumidity { get; set; }
+        public SeriesCollection SeriesCollectionVibration { get; set; }
+        public string[] LabelsTemperature { get; set; }
+        public string[] LabelsHumidity { get; set; }
+        public string[] LabelsIngredients { get; set; }
+        public string[] LabelsVibration { get; set; }
+
+        //public ArrayList LabelsTemperature { get; set; }
+        private List<string> ArrayListLabelsTemperature;
+        private List<string> ArrayListLabelsVibration;
+        private List<string> ArrayListLabelsHumidity;
+        public Func<double, string> FormatterIngredients { get; set; }
+        public Func<double, double> FormatterTemperature { get; set; }
+        public Func<double, double> FormatterHumidity { get; set; }
+        public Func<double, double> FormatterVibration { get; set; }
 
         public MainWindow(IPresentation pf)
         {
@@ -56,18 +84,18 @@ namespace MES.Presentation
             //Get logiclayer
             iLogic = presentation.ILogic;
 
-            //
-            //CheckIngredientsLevel();
-
-
             if (!presentation.ILogic.IsSimulationOn)
             {
                 //Connects to OPC server
                 iLogic.OPC.Connect();
             }
 
-
             InitializeComponent();
+
+       
+
+            DataGridQuedBatches.ItemsSource = presentation.ILogic.Batches.Batches;
+
             ////Do stuff when closing window
             this.Closed += new EventHandler(MainWindow_Closed);
 
@@ -88,20 +116,70 @@ namespace MES.Presentation
 
             //Place valuelabel inside the column
             columnSeries.LabelsPosition = (BarLabelPosition) 3;
-            SeriesCollection = new SeriesCollection {columnSeries};
+
+            SeriesCollectionIngredients = new SeriesCollection {columnSeries};
 
             //put label stuff here
-            Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
-            Formatter = value => value.ToString("N");
+            LabelsIngredients = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
+            FormatterIngredients = value => value.ToString("N");
 
+            SeriesCollectionTemperature = new SeriesCollection
+
+            {
+                new LineSeries
+                {
+                    Title = "Temperature",
+                    Fill = Brushes.Chartreuse, Stroke = Brushes.Coral, PointGeometrySize = 1,
+                    Values = new ChartValues<double> { }
+                }
+            };
+
+            SeriesCollectionHumidity = new SeriesCollection
+
+            {
+                new LineSeries
+                {
+                    Title = "Humidity",
+                    Fill = Brushes.DarkOrange, Stroke = Brushes.DarkOrchid, PointGeometrySize = 1,
+                    Values = new ChartValues<double> { }
+                }
+            };
+
+            SeriesCollectionVibration = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Title = "Vibration",
+                    Fill = Brushes.Yellow, Stroke = Brushes.DarkSlateGray, PointGeometrySize = 1,
+                    Values = new ChartValues<double> { }
+                }
+            };
+
+            LabelsHumidity = new string[50];
+            FormatterHumidity = value => value;
+
+            LabelsTemperature = new string[50];
+            FormatterTemperature = value => value;
+
+            LabelsVibration = new string[50];
+            FormatterVibration = value => value;
+      
+
+            ArrayListLabelsTemperature = new List<string>();
+            ArrayListLabelsHumidity = new List<string>();
+            ArrayListLabelsVibration = new List<string>();
+
+            CheckStatus();
             CheckIngredientsLevel();
+            CheckTemperature();
+            CheckHumidity();
+            CheckVibration();
 
             DataContext = this;
         }
 
-        private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
+        private void CheckForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
         {
-
             ValuesIngredients[0].Value = LevelBarley;
             ValuesIngredients[1].Value = LevelHops;
             ValuesIngredients[2].Value = LevelMalt;
@@ -113,33 +191,104 @@ namespace MES.Presentation
             LevelMalt = iLogic.OPC.Malt;
             LevelWheat = iLogic.OPC.Wheat;
             LevelYeast = iLogic.OPC.Yeast;
-
-        
         }
 
 
         private void CheckIngredientsLevel()
         {
-            //if (presentation.ILogic.IsSimulationOn)
-            //{
-            //    this.levelBarley = iLogic.TestSimulation.LevelBarley;
-            //    this.levelHops = iLogic.TestSimulation.LevelHops;
-            //    this.levelMalt = iLogic.TestSimulation.LevelMalt;
-            //    this.levelWheat = iLogic.TestSimulation.LevelWheat;
-            //    this.levelYeast = iLogic.TestSimulation.LevelYeast;
-
-            //    iLogic.TestSimulation.PropertyChanged += checkForChangesIngredientsLevel;
-            //}
-            //else
-            //{
             this.levelBarley = iLogic.OPC.Barley;
             this.levelHops = iLogic.OPC.Hops;
             this.levelMalt = iLogic.OPC.Malt;
             this.levelWheat = iLogic.OPC.Wheat;
             this.levelYeast = iLogic.OPC.Yeast;
 
-            iLogic.OPC.PropertyChanged += checkForChangesIngredientsLevel;
-            //}
+            iLogic.OPC.PropertyChanged += CheckForChangesIngredientsLevel;
+        }
+
+        private void CheckChangesInTemperature(object sender, PropertyChangedEventArgs e)
+        {
+            Temperature = iLogic.OPC.TempCurrent;
+
+            ArrayListLabelsTemperature.Add(DateTime.Now.ToString());
+
+            if (e.PropertyName.ToString().Equals("TempCurrent"))
+            {
+                if (indexOfArrayTemp >= 49)
+                {
+                    SeriesCollectionTemperature[0].Values.RemoveAt(0);
+                    ArrayListLabelsTemperature.RemoveAt(0);
+                }
+                LabelsTemperature = ArrayListLabelsTemperature.ToArray();
+
+                SeriesCollectionTemperature[0].Values.Add(Temperature);
+                indexOfArrayTemp++;
+            }
+        }
+
+        private void CheckChangesInStatus(object sender, PropertyChangedEventArgs e)
+        {
+            int index = (int)iLogic.OPC.StateCurrent;
+                StatusString = statusArray[index];
+
+        }
+
+        private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
+        {
+
+            ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
+
+            if (e.PropertyName.ToString().Equals("HumidityCurrent")) {
+                if (indexOfArrayHumid >= 49) {
+                    SeriesCollectionHumidity[0].Values.RemoveAt(0);
+                    ArrayListLabelsHumidity.RemoveAt(0);
+                }
+                LabelsHumidity = ArrayListLabelsHumidity.ToArray();
+
+                SeriesCollectionHumidity[0].Values.Add(Humidity);
+                indexOfArrayHumid++;
+        }
+    }
+
+        private void CheckChangesInVibration(object sender, PropertyChangedEventArgs e)
+        {
+            ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
+
+            if (e.PropertyName.ToString().Equals("VibrationCurrent")) {
+                if (indexOfArrayVibra >= 49) {
+                    SeriesCollectionVibration[0].Values.RemoveAt(0);
+                    ArrayListLabelsVibration.RemoveAt(0);
+                }
+                LabelsVibration = ArrayListLabelsVibration.ToArray();
+
+                SeriesCollectionVibration[0].Values.Add(Vibration);
+                indexOfArrayVibra++;
+        }
+    }
+
+
+        private void CheckTemperature()
+        {
+            temperature = iLogic.OPC.TempCurrent;
+            iLogic.OPC.PropertyChanged += CheckChangesInTemperature;
+        }
+
+        private void CheckStatus()
+        {
+            int index = (int)iLogic.OPC.StateCurrent;
+            txtStatus.Text = statusArray[index];
+            iLogic.OPC.PropertyChanged += CheckChangesInStatus;
+        }
+
+        private void CheckHumidity()
+        {
+            humidity = iLogic.OPC.HumidityCurrent;
+            iLogic.OPC.PropertyChanged += CheckChangesInHumidity;
+        }
+
+        private void CheckVibration()
+        {
+            vibration = iLogic.OPC.VibrationCurrent;
+            iLogic.OPC.PropertyChanged += CheckChangesInVibration;
         }
 
         private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
@@ -249,7 +398,7 @@ namespace MES.Presentation
             set
             {
                 levelBarley = value;
-                OnPropertyChanged("SeriesCollection");
+                OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
@@ -260,7 +409,7 @@ namespace MES.Presentation
             set
             {
                 levelHops = value;
-                OnPropertyChanged("SeriesCollection");
+                OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
@@ -271,7 +420,7 @@ namespace MES.Presentation
             set
             {
                 levelMalt = value;
-                OnPropertyChanged("SeriesCollection");
+                OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
@@ -282,7 +431,7 @@ namespace MES.Presentation
             set
             {
                 levelWheat = value;
-                OnPropertyChanged("SeriesCollection");
+                OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
@@ -293,17 +442,17 @@ namespace MES.Presentation
             set
             {
                 levelYeast = value;
-                OnPropertyChanged("SeriesCollection");
+                OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
 
         public double ValueMaintenance
         {
-            get { return _value; }
+            get { return _valueMaintenance; }
             set
             {
-                _value = value;
+                _valueMaintenance = value;
                 OnPropertyChanged("ValueMaintenance");
             }
         }
@@ -352,72 +501,16 @@ namespace MES.Presentation
             }
         }
 
-        public double BatchID
+        public string StatusString
         {
-            get { return batchID; }
-
+            get { return statusString; }
             set
             {
-                batchID = value;
-                OnPropertyChanged("Batch_ID");
+                statusString = value;
+                OnPropertyChanged("StatusString");
             }
         }
 
-        public double Amount
-        {
-            get { return amount; }
-
-            set
-            {
-                amount = value;
-                OnPropertyChanged("Amount");
-            }
-        }
-
-
-        public double Produced
-        {
-            get { return produced; }
-
-            set
-            {
-                produced = value;
-                OnPropertyChanged("Produced");
-            }
-        }
-
-        public double AcceptableProducts
-        {
-            get { return acceptableProducts; }
-
-            set
-            {
-                acceptableProducts = value;
-                OnPropertyChanged("AcceptableProducts");
-            }
-        }
-
-        public double DefectProducts
-        {
-            get { return defectProducts; }
-
-            set
-            {
-                defectProducts = value;
-                OnPropertyChanged("DefectProducts");
-            }
-        }
-
-        public double Status
-        {
-            get { return status; }
-
-            set
-            {
-                status = value;
-                OnPropertyChanged("Status");
-            }
-        }
 
         public IPresentation PresentationFacade
         {
@@ -432,14 +525,6 @@ namespace MES.Presentation
             {
                 handler(this, new PropertyChangedEventArgs(name));
             }
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            int number = 0;
-            Random randomNumber = new Random();
-            number = randomNumber.Next(19, 26);
-            ValueMaintenance = randomNumber.Next(1, 100);
         }
     }
 }

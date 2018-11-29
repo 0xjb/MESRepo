@@ -29,10 +29,16 @@
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
             <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -49,27 +55,63 @@
 
         <!-- Main Grid -->
 
+
         <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5" VerticalAlignment="Top"
                  HorizontalAlignment="Left">
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" MinHeight="350" Width="800" Height="350"
+            <lvc:CartesianChart Series="{Binding SeriesCollectionIngredients}" MinHeight="350" Width="800" Height="350"
                                 MaxWidth="800">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="[Ingredients]" FontSize="20" Labels="{Binding Labels}"
+                    <lvc:Axis Title="[Ingredients]" FontSize="20" Labels="{Binding LabelsIngredients}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="60000" FontSize="20" FontStyle="Normal" 
-                              LabelFormatter="{Binding Formatter}" 
+                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="60000" FontSize="20"
+                              FontStyle="Normal"
+                              LabelFormatter="{Binding FormatterTemperature}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Viewbox>
 
+        <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4">
+            <lvc:CartesianChart Series="{Binding SeriesCollectionTemperature}" LegendLocation="top">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Temperature" LabelFormatter="{Binding FormatterTemperature}" />
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Date" Labels="{Binding LabelsTemperature}" />
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+        </Grid>
+
+        <Grid Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4">
+            <lvc:CartesianChart Series="{Binding SeriesCollectionHumidity}" LegendLocation="top">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Humidity" LabelFormatter="{Binding FormatterHumidity}" />
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Date" Labels="{Binding LabelsHumidity}" />
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+        </Grid>
+
+
+        <Grid Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4">
+            <lvc:CartesianChart Series="{Binding SeriesCollectionVibration}" LegendLocation="Top">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Vibration" LabelFormatter="{Binding FormatterVibration}" />
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Date" Labels="{Binding LabelsVibration}" />
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+        </Grid>
         <!-- Main Content -->
 
-        <Viewbox Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Right"
+        <Viewbox Grid.Column="10" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Right"
                  Margin="0,5,5,5">
-            <lvc:AngularGauge Value="{Binding PresentationFacade.ILogic.OPC.MaintenanceCounter}" FromValue="0" ToValue="100"
+            <lvc:AngularGauge Value="{Binding PresentationFacade.ILogic.OPC.MaintenanceCounter}" FromValue="0"
+                              ToValue="100"
                               LabelsStep="50" TicksStep="25" Wedge="300"
                               TicksForeground="White" Foreground="White"
                               FontWeight="Bold" FontSize="10"
@@ -80,52 +122,52 @@
                 </lvc:AngularGauge.Sections>
             </lvc:AngularGauge>
         </Viewbox>
-        <Viewbox Margin="5,5,5,5" Grid.Row="11" Grid.Column="1" Stretch="Uniform">
+        <Viewbox Margin="5,5,5,5" Grid.Row="14" Grid.Column="1" Stretch="Uniform">
             <Button x:Name="btnStart" Content="Start"
                     Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="40" Width="85"
                     Click="btnStart_Click" />
         </Viewbox>
-        <Viewbox Margin="5,5,5,5" Grid.Row="11" Grid.Column="2" Stretch="Uniform">
+        <Viewbox Margin="5,5,5,5" Grid.Row="14" Grid.Column="2" Stretch="Uniform">
             <Button x:Name="btnStop" Content="Stop"
                     Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
                     Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="40"
                     Width="85" Click="btnStop_Click" />
         </Viewbox>
-        <Viewbox Margin="5,5,5,5" Grid.Row="11" Grid.Column="3" Stretch="Uniform">
+        <Viewbox Margin="5,5,5,5" Grid.Row="14" Grid.Column="3" Stretch="Uniform">
             <Button x:Name="Reset" Content="Reset"
                     Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
                     Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="40" Width="85"
                     Click="btnReset_Click" />
         </Viewbox>
-        <Viewbox Margin="5,5,5,5" Grid.Row="11" Grid.Column="4" Stretch="Uniform">
+        <Viewbox Margin="5,5,5,5" Grid.Row="14" Grid.Column="4" Stretch="Uniform">
             <Button x:Name="btnAbort" Content="Abort" Background="#FFEA4545"
                     Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Height="40"
                     Width="85" Click="btnAbort_Click" />
         </Viewbox>
-        <Viewbox Margin="5,5,5,5" Grid.Row="11" Grid.Column="5" Stretch="Uniform">
+        <Viewbox Margin="5,5,5,5" Grid.Row="14" Grid.Column="5" Stretch="Uniform">
             <Button x:Name="btnClear" Content="Clear"
                     Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
                     Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Height="40" Width="85"
                     Click="btnClear_Click" />
         </Viewbox>
-        <Viewbox Grid.ColumnSpan="1" Grid.Column="7" Grid.Row="0" Stretch="None">
+        <Viewbox Grid.Column="10" Grid.Row="0" Stretch="Uniform">
             <Label x:Name="label" Content="     Maintenance Status     " Margin="0,0,0,0" />
 
         </Viewbox>
-        <Viewbox Grid.Column="8" Margin="5,5,5,5" Grid.Row="4" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="4" Stretch="Uniform">
             <Button x:Name="btnAlarms" Content="Alarms" Click="btnAlarms_Click" Height="40" Width="85" />
         </Viewbox>
-        <Viewbox Grid.Column="8" Margin="5,5,5,5" Grid.Row="5" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="5" Stretch="Uniform">
             <Button x:Name="btnOEE" Content="OEE" Click="btnOEE_Click" Height="40" Width="85" />
         </Viewbox>
-        <Viewbox Grid.Column="8" Margin="5,5,5,5" Grid.Row="6" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="6" Stretch="Uniform">
             <Button x:Name="btnOptimization" Content="Optimization" Click="btnOptimization_Click" Height="40"
                     Width="85" />
         </Viewbox>
-        <Viewbox Grid.Column="8" Margin="5,5,5,5" Grid.Row="7" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="7" Stretch="Uniform">
             <Button x:Name="btnHistory" Content="History" Click="btnHistory_Click" Height="40" Width="85" />
         </Viewbox>
-        <Viewbox Grid.Column="8" Margin="5,5,5,5" Grid.Row="8" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="8" Stretch="Uniform">
             <Button x:Name="btnBatchSetup" Content="Batch Setup" Click="btnBatchSetup_Click" Height="40" Width="85" />
         </Viewbox>
         <Viewbox Grid.Column="2" Margin="0,0,0,5" Grid.Row="8" Stretch="None">
@@ -134,81 +176,147 @@
             </Grid>
         </Viewbox>
         <Viewbox Grid.ColumnSpan="1" Grid.Column="7" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="3"
-                 VerticalAlignment="Top" Stretch="None">
-
-            <Button x:Name="button" Content="TestMaintenance" Click="button_Click" Height="40" Width="85" />
-        </Viewbox>
+                 VerticalAlignment="Top" Stretch="None" />
         <Viewbox Grid.ColumnSpan="1" Grid.Column="5" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="6"
                  VerticalAlignment="Top" Stretch="None" />
-        <TextBox x:Name="txtTemp" Margin="5,5,5,5" Grid.Row="7" Grid.Column="2"
-                 Text="{Binding PresentationFacade.ILogic.OPC.TempCurrent}" IsReadOnly="True"
-                 TextWrapping="Wrap" />
-        <Viewbox Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" VerticalAlignment="Center"
+
+        <Viewbox Grid.Column="1" Grid.Row="13" VerticalAlignment="Center"
                  Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Temperature" Height="40" Width="70" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="txtTemp" Width="35" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center"
+                         Text="{Binding PresentationFacade.ILogic.OPC.TempCurrent}" IsReadOnly="True"
+                         TextWrapping="Wrap" />
+                <TextBlock TextWrapping="Wrap" Text="Temperature" Grid.Column="0" VerticalAlignment="Center" />
+            </Grid>
         </Viewbox>
-        <TextBox Name="txtHumid" Text="{Binding Path=PresentationFacade.ILogic.OPC.HumidityCurrent}" Grid.Column="2"
-                 Margin="5,5,5,5" Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" VerticalAlignment="Center"
+
+        <Viewbox Grid.Column="3" Grid.Row="13" VerticalAlignment="Center"
                  Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Humidity" Height="40" Width="70" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Humidity" VerticalAlignment="Center" />
+                <TextBox Name="txtHumid" Width="35" Text="{Binding Path=PresentationFacade.ILogic.OPC.HumidityCurrent}"
+                         Grid.Column="1"
+                         Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True" />
+            </Grid>
         </Viewbox>
-        <TextBox Name="txtVibra" Text="{Binding Path=PresentationFacade.ILogic.OPC.VibrationCurrent}" Grid.Column="2"
-                 Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="1" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="9" VerticalAlignment="Center"
+
+        <Viewbox Grid.Column="5" Grid.Row="13" VerticalAlignment="Center"
                  Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Vibration" Height="40" Width="70" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Vibration" VerticalAlignment="Center" />
+                <TextBox Name="txtVibra" Width="35"
+                         Text="{Binding Path=PresentationFacade.ILogic.OPC.VibrationCurrent}" Grid.Column="1"
+                         TextWrapping="Wrap" IsReadOnly="True" />
+            </Grid>
         </Viewbox>
-        <TextBox Name="txtBatchID" Text="{Binding Path=BatchID}" Grid.Column="4" Margin="5,5,5,5" Grid.Row="7"
-                 TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="3" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" VerticalAlignment="Center"
+
+        <Viewbox Grid.Column="7" Grid.Row="6" VerticalAlignment="Center"
                  Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Batch ID" Height="40" Width="70" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Batch ID" Grid.Row="0" VerticalAlignment="Center" />
+                <TextBox Name="txtBatchID" Text="{Binding Path=PresentationFacade.ILogic.OPC.BatchID}" Grid.Row="1"
+                         TextWrapping="Wrap" IsReadOnly="True" Width="35" />
+            </Grid>
         </Viewbox>
-        <TextBox Name="txtAmount" Text="{Binding Path=Amount}" Grid.Column="4" Margin="5,5,5,5" Grid.Row="8"
-                 TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="3" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" VerticalAlignment="Center"
-                 Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Amount to produce" Height="40" Width="70" />
+
+        <Viewbox Grid.Column="6" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" VerticalAlignment="Center"
+                 Stretch="Uniform" />
+
+        <Viewbox Grid.Column="6" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="9" VerticalAlignment="Center"
+                 Stretch="Uniform" />
+
+        <Viewbox Grid.Column="9" Grid.Row="13" 
+                 Stretch="Uniform" Margin="5,0,5,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Produced" Grid.Row="0" />
+                <TextBox Name="txtProduced" Text="{Binding Path=PresentationFacade.ILogic.OPC.ProcessedProducts}"
+                         Grid.Row="1" TextWrapping="Wrap" IsReadOnly="True" Margin="5,0,5,0" />
+            </Grid>
         </Viewbox>
-        <TextBox Name="txtSpeed" Text="{Binding Path=MachineSpeed}" Grid.Column="4" Margin="5,5,5,5" Grid.Row="9"
-                 TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="3" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="9" VerticalAlignment="Center"
-                 Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Products per minute" Height="40" Width="70" />
+
+        <Viewbox Grid.Column="10" Grid.Row="13" Stretch="Uniform" Margin="5,0,5,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Acceptable products" Grid.Row="0" />
+                <TextBox Name="txtAcceptedProducts"
+                         Text="{Binding Path=PresentationFacade.ILogic.OPC.AcceptableProducts}"
+                         Grid.Row="1" TextWrapping="Wrap" IsReadOnly="True" Margin="5,0,5,0" />
+            </Grid>
         </Viewbox>
-        <TextBox Name="txtProduced" Text="{Binding Path=PresentationFacade.ILogic.OPC.ProcessedProducts}"
-                 Grid.Column="6" Margin="5,5,5,5" Grid.Row="7" TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="5" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="7" VerticalAlignment="Center"
-                 Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Produced" Height="40" Width="70" />
-        </Viewbox>
-        <TextBox Name="txtAcceptedProducts" Text="{Binding Path=PresentationFacade.ILogic.OPC.AcceptableProducts}" Grid.Column="6" Margin="5,5,5,5"
-                 Grid.Row="8" TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="5" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="8" VerticalAlignment="Center"
-                 Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Acceptable products" Height="40" Width="70" />
-        </Viewbox>
-        <TextBox Name="txtDefectProducts" Text="{Binding Path=PresentationFacade.ILogic.OPC.DefectProducts}"
-                 Grid.Column="6" Margin="5,5,5,5" Grid.Row="9" TextWrapping="Wrap" IsReadOnly="True" />
-        <Viewbox Grid.Column="5" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="9" VerticalAlignment="Center"
-                 Stretch="Uniform">
-            <TextBlock TextWrapping="Wrap" Text="Defect products" Height="40" Width="70" />
+
+        <Viewbox Grid.Column="8"  Grid.Row="13" Stretch="Uniform" Margin="5,0,5,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Defect products" Grid.Row="0"/>
+                <TextBox Name="txtDefectProducts" Text="{Binding Path=PresentationFacade.ILogic.OPC.DefectProducts}"
+                          Margin="5,0,5,0" Grid.Row="1" TextWrapping="Wrap" IsReadOnly="True"/>
+            </Grid>
 
         </Viewbox>
-        <Viewbox Grid.Column="7" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="11" VerticalAlignment="Center"
+        <Viewbox Grid.Column="10" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="14" VerticalAlignment="Center"
                  Stretch="Uniform">
 
             <TextBlock TextWrapping="Wrap" Text="Status" Height="40" Width="70" />
         </Viewbox>
-        <TextBox x:Name="txtStatus" Grid.Column="8" Grid.Row="11"
-                 Text="{Binding PresentationFacade.ILogic.OPC.StateCurrent}" TextWrapping="Wrap"
+        <TextBox x:Name="txtStatus" Grid.Column="11" Grid.Row="14"
+                 Text="{Binding StatusString}" TextWrapping="Wrap"
                  IsReadOnly="True" Margin="5,5,5,5" />
-        <Viewbox Grid.Column="8" Margin="0,5,0,5" Grid.Row="9" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="0,5,0,5" Grid.Row="9" Stretch="Uniform">
             <Button x:Name="btnMachineSettings" Content=" Machine&#xa; Settings" Click="btnMachineSettings_Click"
                     Height="40" Width="85" />
 
         </Viewbox>
+        <DataGrid MinColumnWidth="110" Name="DataGridQuedBatches" Margin="5,5,5,5" Grid.ColumnSpan="3" Grid.Column="7"
+                  Grid.Row="1" Grid.RowSpan="5" />
+        <Viewbox Grid.Column="8" Grid.Row="6" Stretch="Uniform">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Amount to produce" Grid.Row="0" />
+                <TextBox Name="txtAmount" Margin="5,0,5,0"
+                         Text="{Binding Path=PresentationFacade.ILogic.OPC.AmountToProduce}" Grid.Row="1"
+                         TextWrapping="Wrap" IsReadOnly="True" />
 
+            </Grid>
+        </Viewbox>
+        <Viewbox Grid.Column="9" Grid.Row="6" Stretch="Uniform">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Products per minute" Grid.Row="0" />
+                <TextBox Name="txtSpeed" Margin="5,0,5,0" Text="{Binding Path=MachineSpeed}" Grid.Row="1"
+                         TextWrapping="Wrap" IsReadOnly="True" />
+            </Grid>
+        </Viewbox>
     </Grid>
 </Window>

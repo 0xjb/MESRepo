@@ -18,11 +18,12 @@ namespace MES.Starter
             IPresentation presentation = new PresentationFacade();
             logic.InjectData(data);
             presentation.InjectLogic(logic);
-
-            LoginWindow loginWindow = new LoginWindow(presentation);
+            Presentation.MainWindow mainWindow = new MainWindow(presentation);
+            //LoginWindow loginWindow = new LoginWindow(presentation);
 
             Application application = new Application();
-            application.Run(loginWindow);
+            //application.Run(loginWindow);
+            application.Run(mainWindow);
         }
     }
 }

@@ -26,7 +26,6 @@ namespace MES.Logic
         private double yeast;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
-        private ErrorHandler errorHandler;
         private ILogic iLogic;
 
 
@@ -165,18 +164,16 @@ namespace MES.Logic
                     case "::Program:Cube.Status.Parameter[4].Value":
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
-                    //stop reason id
+                    //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
-                        BatchId = double.Parse(dc.Value.ToString());
-                        //errorHandler.AddAlarm((int)BatchId, StopReasonId);
-                        Console.WriteLine("\n\nKALDER ERROR HANDLER FRA OPC CLIENT\n\n");
+                        StopReasonId = double.Parse(dc.Value.ToString());
                         iLogic.ErrorHandler.AddAlarm((int)BatchId, StopReasonId);
                         break;
-                    //batch id 
+                    //batch id  BatchId
                     case "::Program:Cube.Status.Parameter[0].Value":
-                        StopReasonId = double.Parse(dc.Value.ToString());
+                        BatchId = double.Parse(dc.Value.ToString());
                         break;
-                    //barley
+                    //barley 
                     case "::Program:Inventory.Barley":
                         Barley = double.Parse(dc.Value.ToString());
                         break;
@@ -634,11 +631,6 @@ namespace MES.Logic
             }
         }
 
-        public ErrorHandler ErrorHandler
-        {
-            get => errorHandler;
-            set => errorHandler = value;
-        }
 
         public double Barley
         {
@@ -718,5 +710,7 @@ namespace MES.Logic
                 OnPropertyChanged("MaintenanceCounter");
             }
         }
+
+      
     }
 }
