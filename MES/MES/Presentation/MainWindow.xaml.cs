@@ -72,10 +72,7 @@ namespace MES.Presentation
         private List<string> ArrayListLabelsTemperature;
         private List<string> ArrayListLabelsVibration;
         private List<string> ArrayListLabelsHumidity;
-        public Func<double, string> FormatterIngredients { get; set; }
-        public Func<double, double> FormatterTemperature { get; set; }
-        public Func<double, double> FormatterHumidity { get; set; }
-        public Func<double, double> FormatterVibration { get; set; }
+ 
 
         public MainWindow(IPresentation pf)
         {
@@ -121,7 +118,6 @@ namespace MES.Presentation
 
             //put label stuff here
             LabelsIngredients = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
-            FormatterIngredients = value => value.ToString("N");
 
             SeriesCollectionTemperature = new SeriesCollection
 
@@ -156,14 +152,8 @@ namespace MES.Presentation
             };
 
             LabelsHumidity = new string[50];
-            FormatterHumidity = value => value;
-
             LabelsTemperature = new string[50];
-            FormatterTemperature = value => value;
-
             LabelsVibration = new string[50];
-            FormatterVibration = value => value;
-      
 
             ArrayListLabelsTemperature = new List<string>();
             ArrayListLabelsHumidity = new List<string>();
@@ -235,6 +225,8 @@ namespace MES.Presentation
         private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
         {
 
+            Humidity = iLogic.OPC.HumidityCurrent;
+
             ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
 
             if (e.PropertyName.ToString().Equals("HumidityCurrent")) {
@@ -251,6 +243,8 @@ namespace MES.Presentation
 
         private void CheckChangesInVibration(object sender, PropertyChangedEventArgs e)
         {
+            Vibration = iLogic.OPC.VibrationCurrent;
+
             ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
 
             if (e.PropertyName.ToString().Equals("VibrationCurrent")) {

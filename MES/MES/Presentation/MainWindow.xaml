@@ -56,66 +56,72 @@
         <!-- Main Grid -->
 
 
-        <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5" VerticalAlignment="Top"
-                 HorizontalAlignment="Left">
-            <lvc:CartesianChart Series="{Binding SeriesCollectionIngredients}" MinHeight="350" Width="800" Height="350"
-                                MaxWidth="800">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Grid.RowSpan="9" Margin="0,0,15,5"
+             >
+            <lvc:CartesianChart Series="{Binding SeriesCollectionIngredients}"
+                                >
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="[Ingredients]" FontSize="20" Labels="{Binding LabelsIngredients}"
+                    <lvc:Axis Title="[Ingredients]" FontSize="15" Labels="{Binding LabelsIngredients}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="60000" FontSize="20"
-                              FontStyle="Normal"
-                              LabelFormatter="{Binding FormatterTemperature}"
+                    <lvc:Axis Title="[Ingredients level]" MinValue="0" MaxValue="40000" FontSize="15"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
-        </Viewbox>
+        </Grid>
 
-        <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4">
+        <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="9" Grid.RowSpan="4" Margin="5,0,0,5">
             <lvc:CartesianChart Series="{Binding SeriesCollectionTemperature}" LegendLocation="top">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Temperature" LabelFormatter="{Binding FormatterTemperature}" />
+                    <lvc:Axis Title="Temperature" 
+                              Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+                              />
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Date" Labels="{Binding LabelsTemperature}" />
+                    <lvc:Axis Title="Date" Labels="{Binding LabelsTemperature}" 
+                              Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Grid>
 
-        <Grid Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4">
+        <Grid Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="9" Grid.RowSpan="4" Margin="5,0,0,5">
             <lvc:CartesianChart Series="{Binding SeriesCollectionHumidity}" LegendLocation="top">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Humidity" LabelFormatter="{Binding FormatterHumidity}" />
+                    <lvc:Axis Title="Humidity" 
+                              Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
+                    
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Date" Labels="{Binding LabelsHumidity}" />
+                    <lvc:Axis Title="Date" Labels="{Binding LabelsHumidity}"
+                              Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Grid>
 
 
-        <Grid Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4">
+        <Grid Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="9" Grid.RowSpan="4" Margin="5,0,0,5">
             <lvc:CartesianChart Series="{Binding SeriesCollectionVibration}" LegendLocation="Top">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Vibration" LabelFormatter="{Binding FormatterVibration}" />
+                    <lvc:Axis Title="Vibration"
+                              Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Date" Labels="{Binding LabelsVibration}" />
+                    <lvc:Axis Title="Date" Labels="{Binding LabelsVibration}"
+                              Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Grid>
         <!-- Main Content -->
 
-        <Viewbox Grid.Column="10" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Right"
-                 Margin="0,5,5,5">
+        <Viewbox Grid.Column="10" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3"
+                >
             <lvc:AngularGauge Value="{Binding PresentationFacade.ILogic.OPC.MaintenanceCounter}" FromValue="0"
                               ToValue="100"
                               LabelsStep="50" TicksStep="25" Wedge="300"
                               TicksForeground="White" Foreground="White"
-                              FontWeight="Bold" FontSize="10"
-                              SectionsInnerRadius=".5" Height="90" Width="300">
+                              FontWeight="Bold" FontSize="14"
+                              SectionsInnerRadius=".5" Height="175" Width="300">
                 <lvc:AngularGauge.Sections>
                     <lvc:AngularSection FromValue="0" ToValue="90" Fill="#F8A725" />
                     <lvc:AngularSection FromValue="90" ToValue="100" Fill="#FF3939" />
