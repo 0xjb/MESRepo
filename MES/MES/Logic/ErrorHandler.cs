@@ -63,13 +63,19 @@ namespace MES.Logic
                 {
                     
                     alarmNumber = _alarms.Count + 1;
-                    _alarms.Add(new AlarmObject()
-                    {
-                        AlarmNumber = alarmNumber, BatchID = batchID, Timestamp = _date, StopReason = stopReasons[index]
-                    });
+
+                    _alarms.Add(iLogic.Data.CreateNewAlarm(alarmNumber, batchID, _date, stopReasons[index]));
+                    //_alarms.Add(new AlarmObject()
+                    //{
+                    //    AlarmNumber = alarmNumber, BatchID = batchID, Timestamp = _date, StopReason = stopReasons[index]
+                    //});
+
+
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
                                       stopReasons[index]);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
+
+
                     alarmsToFile[0] = alarmNumber.ToString();
                     alarmsToFile[1] = batchID.ToString();
                     alarmsToFile[2] = _date;

@@ -47,10 +47,12 @@ namespace MES.Presentation
         private int indexOfArrayVibra = 0;
 
         private string statusString;
+
         private string[] statusArray =
         {
-            "Deactivated", "Clearing", "Stopped","Starting", "Idle", "Suspended","Execute", "Stopping" , "Aborting", "Aborted"
-            ,"Holding","Held","none","none","none", "Resetting", "Completing", "Complete", "Deactivating","Activating"
+            "Deactivated", "Clearing", "Stopped", "Starting", "Idle", "Suspended", "Execute", "Stopping", "Aborting",
+            "Aborted", "Holding", "Held", "none", "none", "none", "Resetting", "Completing", "Complete", "Deactivating",
+            "Activating"
         };
 
         //
@@ -74,7 +76,6 @@ namespace MES.Presentation
         private List<string> ArrayListLabelsHumidity;
 
 
-
         public MainWindow(IPresentation pf)
         {
             this.presentation = pf;
@@ -88,11 +89,10 @@ namespace MES.Presentation
                 iLogic.OPC.Connect();
             }
 
-           
 
             InitializeComponent();
 
-         
+
             DataGridQuedBatches.ItemsSource = presentation.ILogic.Batches.Batches;
 
             ////Do stuff when closing window
@@ -210,38 +210,41 @@ namespace MES.Presentation
                     SeriesCollectionTemperature[0].Values.RemoveAt(0);
                     ArrayListLabelsTemperature.RemoveAt(0);
                 }
+
                 LabelsTemperature = ArrayListLabelsTemperature.ToArray();
 
                 SeriesCollectionTemperature[0].Values.Add(Temperature);
+
                 indexOfArrayTemp++;
             }
         }
 
         private void CheckChangesInStatus(object sender, PropertyChangedEventArgs e)
         {
-            int index = (int)iLogic.OPC.StateCurrent;
-                StatusString = statusArray[index];
-
+            int index = (int) iLogic.OPC.StateCurrent;
+            StatusString = statusArray[index];
         }
 
         private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
         {
-
             Humidity = iLogic.OPC.HumidityCurrent;
 
             ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
 
-            if (e.PropertyName.ToString().Equals("HumidityCurrent")) {
-                if (indexOfArrayHumid >= 49) {
+            if (e.PropertyName.ToString().Equals("HumidityCurrent"))
+            {
+                if (indexOfArrayHumid >= 49)
+                {
                     SeriesCollectionHumidity[0].Values.RemoveAt(0);
                     ArrayListLabelsHumidity.RemoveAt(0);
                 }
+
                 LabelsHumidity = ArrayListLabelsHumidity.ToArray();
 
                 SeriesCollectionHumidity[0].Values.Add(Humidity);
                 indexOfArrayHumid++;
+            }
         }
-    }
 
         private void CheckChangesInVibration(object sender, PropertyChangedEventArgs e)
         {
@@ -249,25 +252,28 @@ namespace MES.Presentation
 
             //ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
 
-           
 
-            if (e.PropertyName.ToString().Equals("VibrationCurrent")) {
+            if (e.PropertyName.ToString().Equals("VibrationCurrent"))
+            {
                 ArrayListLabelsVibration.Add(DateTime.Now.ToString());
                 if (indexOfArrayVibra >= 49)
                 {
                     SeriesCollectionVibration[0].Values.RemoveAt(0);
                     ArrayListLabelsVibration.RemoveAt(0);
                 }
+
                 LabelsVibration = ArrayListLabelsVibration.ToArray();
+                //LabelsVibration[0] = ArrayListLabelsVibration[0];
 
                 SeriesCollectionVibration[0].Values.Add(Vibration);
 
-                Console.WriteLine("\n\n int index array" + indexOfArrayVibra + "");
-                Console.WriteLine("\n\n " +ArrayListLabelsVibration.Count +"\n \n");
+                Console.WriteLine("\n\n * " + ArrayListLabelsVibration[indexOfArrayVibra] + "\n\n" + " *" +
+                                  ArrayListLabelsVibration.Count);
+
+                Console.WriteLine("\n\n * " + ArrayListLabelsVibration[indexOfArrayVibra] + "\n\n" );
                 indexOfArrayVibra++;
-            
             }
-    }
+        }
 
 
         private void CheckTemperature()
@@ -278,7 +284,7 @@ namespace MES.Presentation
 
         private void CheckStatus()
         {
-            int index = (int)iLogic.OPC.StateCurrent;
+            int index = (int) iLogic.OPC.StateCurrent;
             txtStatus.Text = statusArray[index];
             iLogic.OPC.PropertyChanged += CheckChangesInStatus;
         }

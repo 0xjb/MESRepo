@@ -124,7 +124,6 @@
     <Compile Include="Data\Recipe.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Data\UserManager.cs" />
-    <Compile Include="Logic\AlarmObject.cs" />
     <Compile Include="Logic\Batch.cs" />
     <Compile Include="Logic\BatchQueue.cs" />
     <Compile Include="Logic\BatchReportGenerator.cs" />

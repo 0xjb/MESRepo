@@ -121,5 +121,17 @@ namespace MES.Data
                 return false;
             }
         }
+
+        public IAlarmObject CreateNewAlarm(int alarmNumber, int batchId, string date, string stopReason)
+        {
+            IAlarmObject alarm = new AlarmObject();
+
+            alarm.AlarmNumber = alarmNumber;
+            alarm.BatchID = batchId;
+            alarm.Timestamp = date;
+            alarm.StopReason = stopReason;
+
+            return alarm;
+        }
     }
 }
