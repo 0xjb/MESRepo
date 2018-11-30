@@ -22,15 +22,12 @@ namespace MES.Data
         public FileManager()
         {
             _alarms = new ObservableCollection<IAlarmObject>();
-            Console.WriteLine("\n\n CONSTRUCTOR FILEMANAGER \n\n");
-
             alarmsToFile = new string[4];
             if (!IsFileIsEmpty())
             {
-                Console.WriteLine("************************************************* FILE IS NOT EMPTY");
                 stringBuilder = new StringBuilder();
-                stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", "Alarm Number:", "Batch Id:",
-                    "Time and Date:", "Stop Reason:");
+                stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40} {4,-40}", "Alarm Number:", "Batch Id:",
+                    "Time and Date:", "Stop Reason:", "Stop Reason ID:");
                 stringBuilder.AppendLine();
             }
             else
@@ -42,7 +39,6 @@ namespace MES.Data
         public void WriteToFile(string s)
         {
 
-            Console.WriteLine("\n\n WRITE TO FILE FILEMANAGER \n\n");
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
@@ -51,7 +47,6 @@ namespace MES.Data
             stringBuilder.Append(s);
             string s2 = stringBuilder.ToString();
            
-
 
             System.IO.File.AppendAllText(path, s2);
             stringBuilder.Clear();
@@ -65,8 +60,6 @@ namespace MES.Data
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
             path += @"\MES\Data\AlarmLogFile\alarmLogFile.txt";
 
-            Console.WriteLine("\n\n READ FILE FILEMANAGER\n\n");
-
             if (File.Exists(path))
             {
                 using (var sr =
@@ -78,10 +71,9 @@ namespace MES.Data
                     {
                         string fileLine = sr.ReadLine();
                         i++;
-
                         stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
-                        if (stringTokens.Length == 6)
+                        if (stringTokens.Length == 8)
                         {
                             _alarms.Add(
                                 new AlarmObject()
@@ -89,20 +81,19 @@ namespace MES.Data
                                     AlarmNumber = Int32.Parse(stringTokens[0]),
                                     BatchID = Int32.Parse(stringTokens[1]),
                                     Timestamp = stringTokens[2] + " " + stringTokens[3],
-                                    StopReason = stringTokens[4] + " " + stringTokens[5]
+                                    StopReason = stringTokens[4] + " " + stringTokens[5],
+                                    StopID = Int32.Parse(stringTokens[6] + " " + stringTokens[7])
                                 });
                         }
                     }
                 }
             }
-
             return _alarms;
         }
 
 
         private bool IsFileIsEmpty()
         {
-            Console.WriteLine("\n\nIS FILE EMPTY\n");
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;

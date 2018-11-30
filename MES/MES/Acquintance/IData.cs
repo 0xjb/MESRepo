@@ -122,6 +122,6 @@ namespace MES.Acquintance
         ObservableCollection<IAlarmObject> ReadFile();
         void WriteToFile(string s);
 
-        IAlarmObject CreateNewAlarm(int alarmNumber, int batchId, string date, string stopReason);
+        IAlarmObject CreateNewAlarm(int alarmNumber, int batchId, string date, string stopReason, int stopId);
     }
 }

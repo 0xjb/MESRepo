@@ -24,6 +24,7 @@ namespace MES.Logic
         private ILogic iLogic;
 
         private int alarmNumber;
+        private int stopReasonID;
 
         private StringBuilder stringBuilder;
         private string[] alarmsToFile;
@@ -33,8 +34,7 @@ namespace MES.Logic
 
         public ErrorHandler(ILogic iL)
         {
-            alarmsToFile = new string[4];
-            Console.WriteLine("\n\nCONTRUCTOR ERRORHANDLER\n\n");
+            alarmsToFile = new string[5];
             this.iLogic = iL;
             _alarms = new ObservableCollection<IAlarmObject>();
             stringBuilder = new StringBuilder();
@@ -63,16 +63,13 @@ namespace MES.Logic
                 {
                     
                     alarmNumber = _alarms.Count + 1;
-
-                    _alarms.Add(iLogic.Data.CreateNewAlarm(alarmNumber, batchID, _date, stopReasons[index]));
-                    //_alarms.Add(new AlarmObject()
-                    //{
-                    //    AlarmNumber = alarmNumber, BatchID = batchID, Timestamp = _date, StopReason = stopReasons[index]
-                    //});
+                     stopReasonID = (int)stopReason;
+                    _alarms.Add(iLogic.Data.CreateNewAlarm(alarmNumber, batchID, _date, stopReasons[index], stopReasonID));
+             
 
 
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
-                                      stopReasons[index]);
+                                      stopReasons[index]+" "+stopReason);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
 
 
@@ -80,16 +77,15 @@ namespace MES.Logic
                     alarmsToFile[1] = batchID.ToString();
                     alarmsToFile[2] = _date;
                     alarmsToFile[3] = stopReasons[index];
+                    alarmsToFile[4] = stopReasonID.ToString();
 
-                    stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40}", alarmsToFile[0], alarmsToFile[1],
-                        alarmsToFile[2], alarmsToFile[3]);
+                    stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40} {4,-40}", alarmsToFile[0], alarmsToFile[1],
+                        alarmsToFile[2], alarmsToFile[3],alarmsToFile[4]);
                     stringBuilder.AppendLine();
 
                     string result = stringBuilder.ToString();
 
                     iLogic.Data.WriteToFile(result);
-
-                    Console.WriteLine("\n\n Alarm " + result + " added\n\n");
 
                     stringBuilder.Clear();
                 }
@@ -103,7 +99,6 @@ namespace MES.Logic
         private void ReadFile()
         {
 
-            Console.WriteLine("\n\n READ FILE ERRORHANDLER\n\n");
             //iLogic.Data.ReadFile();
             //ArrayList list = new ArrayList();
             //list = iLogic.Data.ReadFile();

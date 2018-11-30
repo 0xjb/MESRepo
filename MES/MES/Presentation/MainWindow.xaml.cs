@@ -267,10 +267,10 @@ namespace MES.Presentation
 
                 SeriesCollectionVibration[0].Values.Add(Vibration);
 
-                Console.WriteLine("\n\n * " + ArrayListLabelsVibration[indexOfArrayVibra] + "\n\n" + " *" +
-                                  ArrayListLabelsVibration.Count);
+                //Console.WriteLine("\n\n * " + ArrayListLabelsVibration[indexOfArrayVibra] + "\n\n" + " *" +
+                //                  ArrayListLabelsVibration.Count);
 
-                Console.WriteLine("\n\n * " + ArrayListLabelsVibration[indexOfArrayVibra] + "\n\n" );
+                //Console.WriteLine("\n\n * " + ArrayListLabelsVibration[indexOfArrayVibra] + "\n\n" );
                 indexOfArrayVibra++;
             }
         }

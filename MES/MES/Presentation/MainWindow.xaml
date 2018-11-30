@@ -237,6 +237,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock TextWrapping="Wrap" Text="Batch ID" Grid.Row="0" VerticalAlignment="Center" />
                 <TextBox Name="txtBatchID"  Grid.Row="1"
+                         Text="{Binding Path=PresentationFacade.ILogic.OPC.BatchId}"
                          TextWrapping="Wrap" IsReadOnly="True" Width="35" />
             </Grid>
         </Viewbox>

@@ -14,5 +14,7 @@ namespace MES.Acquintance
          string StopReason { get; set; }
 
          int BatchID { get; set; }
+
+        int StopID { get; set; }
     }
 }

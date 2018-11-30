@@ -122,7 +122,7 @@ namespace MES.Data
             }
         }
 
-        public IAlarmObject CreateNewAlarm(int alarmNumber, int batchId, string date, string stopReason)
+        public IAlarmObject CreateNewAlarm(int alarmNumber, int batchId, string date, string stopReason, int stopId)
         {
             IAlarmObject alarm = new AlarmObject();
 
@@ -130,6 +130,7 @@ namespace MES.Data
             alarm.BatchID = batchId;
             alarm.Timestamp = date;
             alarm.StopReason = stopReason;
+            alarm.StopID = stopId;
 
             return alarm;
         }

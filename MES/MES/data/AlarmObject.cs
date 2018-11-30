@@ -13,5 +13,7 @@ namespace MES.Data
         public string Timestamp { get; set; }
         public string StopReason { get; set; }
         public int BatchID { get; set; }
+
+        public int StopID { get; set; }
     }
 }
