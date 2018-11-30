@@ -247,18 +247,23 @@ namespace MES.Presentation
         {
             Vibration = iLogic.OPC.VibrationCurrent;
 
-            ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
+            //ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
+
+           
 
             if (e.PropertyName.ToString().Equals("VibrationCurrent")) {
-                if (indexOfArrayVibra >= 49) {
+                ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
+                if (ArrayListLabelsVibration.Count >= 50) {
+                    //if (indexOfArrayVibra >= 49) {
                     SeriesCollectionVibration[0].Values.RemoveAt(0);
-                    //ArrayListLabelsVibration.RemoveAt(0);
+                    ArrayListLabelsVibration.RemoveAt(0);
                 }
                 LabelsVibration = ArrayListLabelsVibration.ToArray();
 
                 SeriesCollectionVibration[0].Values.Add(Vibration);
+                Console.WriteLine("\n\n int index array" + indexOfArrayVibra + "");
                 indexOfArrayVibra++;
-        }
+            }
     }
 
 

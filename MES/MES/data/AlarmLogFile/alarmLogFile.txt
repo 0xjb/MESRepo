@@ -180,3 +180,7 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 174             2                    11-30-2018 10:10:09                      Manual stop                             
 175             0                    11-30-2018 10:26:58                      Maintenance                             
 176             0                    11-30-2018 10:30:37                      Manual abort                            
+176             1                    11-30-2018 10:52:04                      Manual stop                             
+177             1                    11-30-2018 10:52:07                      Manual abort                            
+178             1                    11-30-2018 10:52:09                      Manual stop                             
+179             1                    11-30-2018 10:52:17                      Manual stop                             
