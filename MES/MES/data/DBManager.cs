@@ -301,14 +301,14 @@ namespace MES.data
 
         public bool DeleteAllBatches()
         {
-            string sql = "DELETE * FROM " + batchesTable;
+            string sql = "DELETE FROM " + batchesTable + " WHERE true";
 
             return SendSqlCommand(sql);
         }
 
         public bool DeleteBatch(float batchId)
         {
-            string sql = "DELETE * FROM " + batchesTable + " WHERE batchid = " + batchId;
+            string sql = "DELETE FROM " + batchesTable + " WHERE batchid = " + batchId;
 
             return SendSqlCommand(sql);
         }

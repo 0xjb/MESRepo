@@ -21,6 +21,7 @@ namespace MES.Data
 
         public IUser AuthenticateUserInformation(string username, string password)
         {
+            //TODO er try/catch nødvendig?
             if (users.ContainsKey(username))
             {
                 IUser user;
