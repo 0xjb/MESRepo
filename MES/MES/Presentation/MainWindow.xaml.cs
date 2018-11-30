@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.Remoting.Channels;
-using System.Threading;
+using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 
@@ -72,7 +72,8 @@ namespace MES.Presentation
         private List<string> ArrayListLabelsTemperature;
         private List<string> ArrayListLabelsVibration;
         private List<string> ArrayListLabelsHumidity;
- 
+
+
 
         public MainWindow(IPresentation pf)
         {
@@ -87,10 +88,11 @@ namespace MES.Presentation
                 iLogic.OPC.Connect();
             }
 
+           
+
             InitializeComponent();
 
-       
-
+         
             DataGridQuedBatches.ItemsSource = presentation.ILogic.Batches.Batches;
 
             ////Do stuff when closing window
@@ -153,7 +155,7 @@ namespace MES.Presentation
 
             LabelsHumidity = new string[50];
             LabelsTemperature = new string[50];
-            LabelsVibration = new string[50];
+            LabelsVibration = new string[100];
 
             ArrayListLabelsTemperature = new List<string>();
             ArrayListLabelsHumidity = new List<string>();
@@ -250,7 +252,7 @@ namespace MES.Presentation
             if (e.PropertyName.ToString().Equals("VibrationCurrent")) {
                 if (indexOfArrayVibra >= 49) {
                     SeriesCollectionVibration[0].Values.RemoveAt(0);
-                    ArrayListLabelsVibration.RemoveAt(0);
+                    //ArrayListLabelsVibration.RemoveAt(0);
                 }
                 LabelsVibration = ArrayListLabelsVibration.ToArray();
 

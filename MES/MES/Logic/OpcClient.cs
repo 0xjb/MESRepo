@@ -53,11 +53,11 @@ namespace MES.Logic
             session = new Session();
 
             //Connect to server with no security (simulator)
-            session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+            //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
             session.UseDnsNameAndPortFromDiscoveryUrl = true;
             //Connect to server with no security (machine)
-            //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+            session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
 
             //TODO SKAL denne fjernes??
             batchId = ReadCurrentBatchId();
