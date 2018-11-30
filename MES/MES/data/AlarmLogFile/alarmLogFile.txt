@@ -184,3 +184,15 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 177             1                    11-30-2018 10:52:07                      Manual abort                            
 178             1                    11-30-2018 10:52:09                      Manual stop                             
 179             1                    11-30-2018 10:52:17                      Manual stop                             
+180             0                    11-30-2018 12:07:17                      Manual stop                             
+181             0                    11-30-2018 12:07:43                      Empty inventory                         
+182             0                    11-30-2018 12:09:01                      Manual stop                             
+183             0                    11-30-2018 12:09:50                      Manual stop                             
+184             0                    11-30-2018 12:11:50                      Manual stop                             
+185             0                    11-30-2018 12:13:41                      Manual stop                             
+186             0                    11-30-2018 12:15:18                      Manual stop                             
+187             0                    11-30-2018 12:16:24                      Manual stop                             
+188             0                    11-30-2018 12:16:49                      Manual stop                             
+189             0                    11-30-2018 12:18:02                      Manual stop                             
+190             0                    11-30-2018 12:19:29                      Manual stop                             
+191             0                    11-30-2018 12:21:04                      Manual stop                             

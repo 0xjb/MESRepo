@@ -21,10 +21,12 @@ namespace MES.Presentation
     public partial class Simulation : Window
     {
         private IPresentation presentationFacade;
+        private MainWindow mw;
 
         public Simulation(IPresentation pf, bool isSimulationOn, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
+            this.mw = mainWindow;
             InitializeComponent();
             if (isSimulationOn)
             {
@@ -39,9 +41,10 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(presentationFacade);
+            //MainWindow mainWindow = new MainWindow(presentationFacade);
             this.Close();
-            mainWindow.Show();
+            //mainWindow.Show();
+            mw.Show();
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)

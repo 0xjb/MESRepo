@@ -252,17 +252,20 @@ namespace MES.Presentation
            
 
             if (e.PropertyName.ToString().Equals("VibrationCurrent")) {
-                ArrayListLabelsHumidity.Add(DateTime.Now.ToString());
-                if (ArrayListLabelsVibration.Count >= 50) {
-                    //if (indexOfArrayVibra >= 49) {
+                ArrayListLabelsVibration.Add(DateTime.Now.ToString());
+                if (indexOfArrayVibra >= 49)
+                {
                     SeriesCollectionVibration[0].Values.RemoveAt(0);
                     ArrayListLabelsVibration.RemoveAt(0);
                 }
                 LabelsVibration = ArrayListLabelsVibration.ToArray();
 
                 SeriesCollectionVibration[0].Values.Add(Vibration);
+
                 Console.WriteLine("\n\n int index array" + indexOfArrayVibra + "");
+                Console.WriteLine("\n\n " +ArrayListLabelsVibration.Count +"\n \n");
                 indexOfArrayVibra++;
+            
             }
     }
 
