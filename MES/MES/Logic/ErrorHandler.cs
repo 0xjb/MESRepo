@@ -71,8 +71,6 @@ namespace MES.Logic
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
                                       stopReasons[index]+" "+stopReason);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
-
-
                     alarmsToFile[0] = alarmNumber.ToString();
                     alarmsToFile[1] = batchID.ToString();
                     alarmsToFile[2] = _date;

@@ -104,6 +104,7 @@ namespace MES.Data
                 using (var sr =
                     new StreamReader(path))
                 {
+                    //Console.WriteLine("\n\n******************************\n\n");
                     if (sr.Peek() <= 0)
                     {
                         return false;
