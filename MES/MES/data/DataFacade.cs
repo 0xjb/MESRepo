@@ -121,5 +121,8 @@ namespace MES.Data
                 return false;
             }
         }
+        public void WriteBatchData(double batchID, double machineSpeed, double defectProducts) {
+
+        }
     }
 }

@@ -23,6 +23,8 @@ namespace MES.Acquintance
 
         void AddBatch(string batchID, string productType, string amount);
 
+        void WriteBatchData();
+
         void StartProduction();
 
         /// <summary>

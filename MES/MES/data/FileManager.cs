@@ -41,7 +41,7 @@ namespace MES.Data
 
         public void WriteToFile(string s)
         {
-            //TODO mangler try/catch?
+            //TODO Review t/c
             Console.WriteLine("\n\n WRITE TO FILE FILEMANAGER \n\n");
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
@@ -52,9 +52,16 @@ namespace MES.Data
             string s2 = stringBuilder.ToString();
            
 
+            try {
+                System.IO.File.AppendAllText(path, s2);
+            } catch(IOException ex) {
+                Console.WriteLine("IOException thrown when attempting to write to the alarm log file.");
+                Console.WriteLine(ex.Message);
+            } finally {
+                stringBuilder.Clear();
+            }
 
-            System.IO.File.AppendAllText(path, s2);
-            stringBuilder.Clear();
+
         }
 
 
@@ -126,5 +133,27 @@ namespace MES.Data
             }
             return false;
         }
+        public void WriteBatchData(double batchID, double machineSpeed, double defectProducts) {
+            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
+            path += @"\MES\Data\AlarmLogFile\batches.txt";
+            string toAppend = string.Format("{0}, {1}, {2}",batchID, machineSpeed, defectProducts);
+            stringBuilder.Append(toAppend);
+            string s2 = stringBuilder.ToString();
+
+
+            try {
+                System.IO.File.AppendAllText(path, s2);
+            } catch (IOException ex) {
+                Console.WriteLine("IOException thrown when attempting to write to the batch file.");
+                Console.WriteLine(ex.Message);
+            } finally {
+                stringBuilder.Clear();
+            }
+
+        }
     }
+
+    
 }
