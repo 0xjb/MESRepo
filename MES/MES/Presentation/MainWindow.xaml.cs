@@ -65,16 +65,12 @@ namespace MES.Presentation
         public SeriesCollection SeriesCollectionTemperature { get; set; }
         public SeriesCollection SeriesCollectionHumidity { get; set; }
         public SeriesCollection SeriesCollectionVibration { get; set; }
-        public string[] LabelsTemperature { get; set; }
-        public string[] LabelsHumidity { get; set; }
         public string[] LabelsIngredients { get; set; }
-        public string[] LabelsVibration { get; set; }
-
 
         private List<string> arrayListLabelsTemperature;
         private List<string> arrayListLabelsVibration;
         private List<string> arrayListLabelsHumidity;
-
+        private System.Timers.Timer timerTrend;
 
         public MainWindow(IPresentation pf)
         {
@@ -89,6 +85,11 @@ namespace MES.Presentation
                 iLogic.OPC.Connect();
             }
 
+            timerTrend = new Timer();
+            timerTrend.Interval = 5000;
+            timerTrend.AutoReset = true;
+            timerTrend.Enabled = true;
+            timerTrend.Elapsed += OnTimedEvent;
 
             InitializeComponent();
 
@@ -127,7 +128,7 @@ namespace MES.Presentation
                 new LineSeries
                 {
                     Title = "Temperature",
-                    Fill = Brushes.Chartreuse, Stroke = Brushes.Coral, PointGeometrySize = 1,
+                    Fill = Brushes.Chartreuse, Stroke = Brushes.Coral, PointGeometrySize = 5,
                     Values = new ChartValues<double> { }
                 }
             };
@@ -138,7 +139,7 @@ namespace MES.Presentation
                 new LineSeries
                 {
                     Title = "Humidity",
-                    Fill = Brushes.DarkOrange, Stroke = Brushes.DarkOrchid, PointGeometrySize = 1,
+                    Fill = Brushes.DarkOrange, Stroke = Brushes.DarkOrchid, PointGeometrySize = 5,
                     Values = new ChartValues<double> { }
                 }
             };
@@ -148,14 +149,11 @@ namespace MES.Presentation
                 new LineSeries
                 {
                     Title = "Vibration",
-                    Fill = Brushes.Yellow, Stroke = Brushes.DarkSlateGray, PointGeometrySize = 1,
+                    Fill = Brushes.Yellow, Stroke = Brushes.DarkSlateGray, PointGeometrySize = 5,
                     Values = new ChartValues<double> { }
                 }
             };
 
-            LabelsHumidity = new string[50];
-            LabelsTemperature = new string[50];
-            LabelsVibration = new string[100];
 
             arrayListLabelsTemperature = new List<string>();
             arrayListLabelsHumidity = new List<string>();
@@ -163,11 +161,50 @@ namespace MES.Presentation
 
             CheckStatus();
             CheckIngredientsLevel();
-            CheckTemperature();
-            CheckHumidity();
-            CheckVibration();
+
+
+            //Er kommenteret ud, da vi gerne selv vil styre, hvornår målinger foretages (på tid)
+            // og ikke vente på en property changes fra OPC
+            //CheckTemperature();
+            //CheckHumidity();
+            //CheckVibration();
 
             DataContext = this;
+        }
+
+        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            Temperature = iLogic.OPC.TempCurrent;
+            Humidity = iLogic.OPC.HumidityCurrent;
+            Vibration = iLogic.OPC.VibrationCurrent;
+     
+
+            if (arrayListLabelsTemperature.Count >= 50)
+            {
+                SeriesCollectionTemperature[0].Values.RemoveAt(0);
+                arrayListLabelsTemperature.RemoveAt(0);
+            }
+
+            SeriesCollectionTemperature[0].Values.Add(Temperature);
+            arrayListLabelsTemperature.Add(DateTime.Now.ToString());
+
+            if (arrayListLabelsHumidity.Count >= 50)
+            {
+                SeriesCollectionHumidity[0].Values.RemoveAt(0);
+                arrayListLabelsHumidity.RemoveAt(0);
+            }
+
+            SeriesCollectionHumidity[0].Values.Add(Humidity);
+            arrayListLabelsHumidity.Add(DateTime.Now.ToString());
+
+            if (arrayListLabelsVibration.Count >= 50)
+            {
+                SeriesCollectionVibration[0].Values.RemoveAt(0);
+                arrayListLabelsVibration.RemoveAt(0);
+            }
+
+            SeriesCollectionVibration[0].Values.Add(Vibration);
+            arrayListLabelsVibration.Add(DateTime.Now.ToString());
         }
 
         private void CheckForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
@@ -197,29 +234,6 @@ namespace MES.Presentation
             iLogic.OPC.PropertyChanged += CheckForChangesIngredientsLevel;
         }
 
-        private void CheckChangesInTemperature(object sender, PropertyChangedEventArgs e)
-        {
-            Temperature = iLogic.OPC.TempCurrent;
-
-            arrayListLabelsTemperature.Add(DateTime.Now.ToString());
-
-            if (e.PropertyName.ToString().Equals("TempCurrent"))
-            {
-                if (indexOfArrayTemp >= 49)
-                {
-                    SeriesCollectionTemperature[0].Values.RemoveAt(0);
-                    arrayListLabelsTemperature.RemoveAt(0);
-                }
-
-                LabelsTemperature = arrayListLabelsTemperature.ToArray();
-
-                Console.WriteLine("\n\n" + LabelsTemperature[0] + "\n\n");
-
-                SeriesCollectionTemperature[0].Values.Add(Temperature);
-
-                indexOfArrayTemp++;
-            }
-        }
 
         private void CheckChangesInStatus(object sender, PropertyChangedEventArgs e)
         {
@@ -227,24 +241,38 @@ namespace MES.Presentation
             StatusString = statusArray[index];
         }
 
+        private void CheckChangesInTemperature(object sender, PropertyChangedEventArgs e)
+        {
+            Temperature = iLogic.OPC.TempCurrent;
+
+            if (e.PropertyName.Equals("TempCurrent"))
+            {
+                if (arrayListLabelsTemperature.Count >= 50)
+                {
+                    SeriesCollectionTemperature[0].Values.RemoveAt(0);
+                    arrayListLabelsTemperature.RemoveAt(0);
+                }
+
+                SeriesCollectionTemperature[0].Values.Add(Temperature);
+                arrayListLabelsTemperature.Add(DateTime.Now.ToString());
+            }
+        }
+
+
         private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
         {
             Humidity = iLogic.OPC.HumidityCurrent;
 
-            arrayListLabelsHumidity.Add(DateTime.Now.ToString());
-
-            if (e.PropertyName.ToString().Equals("HumidityCurrent"))
+            if (e.PropertyName.Equals("HumidityCurrent"))
             {
-                if (indexOfArrayHumid >= 49)
+                if (arrayListLabelsHumidity.Count >= 50)
                 {
                     SeriesCollectionHumidity[0].Values.RemoveAt(0);
                     arrayListLabelsHumidity.RemoveAt(0);
                 }
 
-                LabelsHumidity = arrayListLabelsHumidity.ToArray();
-
                 SeriesCollectionHumidity[0].Values.Add(Humidity);
-                indexOfArrayHumid++;
+                arrayListLabelsHumidity.Add(DateTime.Now.ToString());
             }
         }
 
@@ -252,32 +280,17 @@ namespace MES.Presentation
         {
             Vibration = iLogic.OPC.VibrationCurrent;
 
-            //arrayListLabelsHumidity.Add(DateTime.Now.ToString());
-
-
-            if (e.PropertyName.ToString().Equals("VibrationCurrent"))
+            if (e.PropertyName.Equals("VibrationCurrent"))
             {
-                arrayListLabelsVibration.Add(DateTime.Now.ToString());
-                if (indexOfArrayVibra >= 49)
+                if (arrayListLabelsVibration.Count >= 50)
                 {
                     SeriesCollectionVibration[0].Values.RemoveAt(0);
                     arrayListLabelsVibration.RemoveAt(0);
                 }
 
-                LabelsVibration = arrayListLabelsVibration.ToArray();
-
                 SeriesCollectionVibration[0].Values.Add(Vibration);
-
-
-                indexOfArrayVibra++;
+                arrayListLabelsVibration.Add(DateTime.Now.ToString());
             }
-        }
-
-
-        private void CheckTemperature()
-        {
-            temperature = iLogic.OPC.TempCurrent;
-            iLogic.OPC.PropertyChanged += CheckChangesInTemperature;
         }
 
         private void CheckStatus()
@@ -285,6 +298,12 @@ namespace MES.Presentation
             int index = (int) iLogic.OPC.StateCurrent;
             txtStatus.Text = statusArray[index];
             iLogic.OPC.PropertyChanged += CheckChangesInStatus;
+        }
+
+        private void CheckTemperature()
+        {
+            temperature = iLogic.OPC.TempCurrent;
+            iLogic.OPC.PropertyChanged += CheckChangesInTemperature;
         }
 
         private void CheckHumidity()
@@ -321,37 +340,31 @@ namespace MES.Presentation
         void MainWindow_Closed(object sender, EventArgs e)
         {
             //Put your close code here
-            //iLogic.OPC.StopMachine();
         }
 
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            //opc.StartMachine(1, 2, 2000, 600);
             iLogic.OPC.StartMachine(1, 2, 200, 100);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            //opc.StopMachine();
             iLogic.OPC.StopMachine();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
-            //opc.ResetMachine();
             iLogic.OPC.ResetMachine();
         }
 
         private void btnAbort_Click(object sender, RoutedEventArgs e)
         {
-            //opc.AbortMachine();
             iLogic.OPC.AbortMachine();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            //opc.ClearMachine();
             iLogic.OPC.ClearMachine();
         }
 

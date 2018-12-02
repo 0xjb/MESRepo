@@ -23,8 +23,7 @@ namespace MES.Logic
         {
             this.iLogic = iLogic;
             timerTemp = new Timer();
-            //timerTemp.Interval = 5000;
-            timerTemp.Interval = 500;
+            timerTemp.Interval = 5000;
             timerTemp.AutoReset = true;
             timerTemp.Enabled = true;
             timerTemp.Elapsed += OnTimedEvent;
