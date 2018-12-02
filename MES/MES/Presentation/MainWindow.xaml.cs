@@ -213,7 +213,7 @@ namespace MES.Presentation
             ValuesIngredients[1].Value = LevelHops;
             ValuesIngredients[2].Value = LevelMalt;
             ValuesIngredients[3].Value = LevelWheat;
-            ValuesIngredients[4].Value = LevelWheat;
+            ValuesIngredients[4].Value = LevelYeast;
 
             LevelBarley = iLogic.OPC.Barley;
             LevelHops = iLogic.OPC.Hops;
