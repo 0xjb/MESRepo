@@ -71,6 +71,7 @@ namespace MES.Logic {
         }
 
         public void AddBatch(string batchID, string productType, string amount) {
+            //TODO Fjerne yeet
             Console.WriteLine("yeet");
         }
 

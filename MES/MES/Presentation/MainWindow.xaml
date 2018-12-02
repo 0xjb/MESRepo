@@ -79,7 +79,7 @@
                               />
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Date" Labels="{Binding LabelsTemperature}" 
+                    <lvc:Axis Title="Date" Labels="{Binding ArrayListLabelsTemperature}" 
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
@@ -93,7 +93,7 @@
                     
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Date" Labels="{Binding LabelsHumidity}"
+                    <lvc:Axis Title="Date" Labels="{Binding ArrayListLabelsHumidity}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
@@ -107,7 +107,7 @@
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Date" Labels="{Binding LabelsVibration}"
+                    <lvc:Axis Title="Date" Labels="{Binding ArrayListLabelsVibration}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>

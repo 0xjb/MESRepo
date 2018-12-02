@@ -72,9 +72,9 @@ namespace MES.Data
                         string fileLine = sr.ReadLine();
                         i++;
                         stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-
-                        if (stringTokens.Length == 8)
-                        {
+                        //Console.WriteLine("\n\n"+stringTokens.Length+"\n\n");
+                        if (stringTokens.Length == 7) {
+                            //if (stringTokens.Length == 6) {
                             _alarms.Add(
                                 new AlarmObject()
                                 {
@@ -82,7 +82,7 @@ namespace MES.Data
                                     BatchID = Int32.Parse(stringTokens[1]),
                                     Timestamp = stringTokens[2] + " " + stringTokens[3],
                                     StopReason = stringTokens[4] + " " + stringTokens[5],
-                                    StopID = Int32.Parse(stringTokens[6] + " " + stringTokens[7])
+                                    StopID = Int32.Parse(stringTokens[6] )
                                 });
                         }
                     }
