@@ -256,8 +256,8 @@ namespace MES.data
                     if (table != null)
                     {
                         sql[index] = "INSERT INTO " + table + " VALUES ("
-                            + value.GetValue() + ", "
-                            + value.GetTimeStamp() + ", "
+                            + value.GetValue() + ", '"
+                            + value.GetTimeStamp() + "', "
                             + batchId + ")";
                     }
                     index++;
