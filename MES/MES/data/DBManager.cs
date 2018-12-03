@@ -56,8 +56,11 @@ namespace MES.data
 
                 foreach (String statement in statements)
                 {
-                    NpgsqlCommand command = new NpgsqlCommand(statement, conn);
-                    command.ExecuteNonQuery();
+                    if (statement != null)
+                    {
+                        NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+                        command.ExecuteNonQuery();
+                    }
                 }
 
                 conn.Close();
