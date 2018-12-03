@@ -277,7 +277,7 @@ namespace MES.data
             setOfValues.Add(bHums);
             setOfValues.Add(bVibs);
 
-            string sql0 = "INSERT INTO " + batchesTable + " VALUES("
+            string sql0 = "INSERT INTO " + batchesTable + " VALUES ("
                 + batch.GetBatchId() + ", "
                 + batch.GetBeerId() + ", "
                 + batch.GetAcceptableProducts() + ", "
