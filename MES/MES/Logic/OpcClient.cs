@@ -57,11 +57,11 @@ namespace MES.Logic
             try
             {
                 //Connect to server with no security (simulator)
-                session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+                //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 //Connect to server with no security (machine)
-                //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+                session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
             }
             catch (Exception ex)
             {
@@ -106,6 +106,7 @@ namespace MES.Logic
             MonitoredItem miTempNode = new DataMonitoredItem(tempNode);
             MonitoredItem miHumidityNode = new DataMonitoredItem(humidityNode);
             MonitoredItem miVibrationNode = new DataMonitoredItem(vibrationNode);
+            miVibrationNode.SamplingInterval = 1000;
             MonitoredItem miStopReasonNode = new DataMonitoredItem(stopReasonNode);
             MonitoredItem miBatchIdNode = new DataMonitoredItem(bacthIdNode);
             MonitoredItem miBarleyNode = new DataMonitoredItem(barleyNode);
@@ -134,7 +135,7 @@ namespace MES.Logic
 
             // init subscription with parameters
             s = new Subscription(session);
-            s.PublishingInterval = 100;
+            s.PublishingInterval = 1000;
             s.MaxKeepAliveTime = 1000;
             s.Lifetime = 1000000;
             s.MaxNotificationsPerPublish = 1;

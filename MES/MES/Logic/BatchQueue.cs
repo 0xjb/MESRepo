@@ -9,14 +9,17 @@ using System.ComponentModel;
 using System.Windows.Data;
 
 namespace MES.Logic {
-    
+
     public class BatchQueue : IBatchQueue, INotifyPropertyChanged {
+        private ILogic _logic;
         private static object _lock = new object();
         private Batch currentBatch;
         public Batch CurrentBatch {
             get { return currentBatch; }
-            set { currentBatch = value;
-                OnPropertyChanged("CurrentBatch"); }
+            set {
+                currentBatch = value;
+                OnPropertyChanged("CurrentBatch");
+            }
         }
         private ObservableCollection<Batch> batches = new ObservableCollection<Batch>();
 
@@ -24,12 +27,14 @@ namespace MES.Logic {
 
         public ObservableCollection<Batch> Batches {
             get { return batches; }
-            set { batches = value;
+            set {
+                batches = value;
                 OnPropertyChanged("Batches");
             }
         }
-        public BatchQueue(OpcClient c) {
-           c.PropertyChanged += CheckBatchProdStatus;
+        public BatchQueue(ILogic logic) {
+            _logic = logic;
+            _logic.OPC.PropertyChanged += CheckBatchProdStatus;
             BindingOperations.EnableCollectionSynchronization(Batches, _lock);
         }
         protected void OnPropertyChanged(string name) {
@@ -41,7 +46,7 @@ namespace MES.Logic {
         }
         public void MoveUp(Batch b) {
             int bIndex = Batches.IndexOf(b);
-            if(bIndex != 0) {
+            if (bIndex != 0) {
                 Batch temp = b;
                 Batches[bIndex] = Batches[bIndex - 1];
                 Batches[bIndex - 1] = temp;
@@ -49,24 +54,24 @@ namespace MES.Logic {
         }
         public void MoveDown(Batch b) {
             int bIndex = Batches.IndexOf(b);
-            if (bIndex != Batches.Count-1) {
+            if (bIndex != Batches.Count - 1) {
                 Batch temp = b;
                 Batches[bIndex] = Batches[bIndex + 1];
                 Batches[bIndex + 1] = temp;
             }
         }
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
-           if(e.PropertyName.Equals("StateCurrent")) {
-                if((sender as OpcClient).StateCurrent == 17 && CurrentBatch != null) {
+            if (e.PropertyName.Equals("StateCurrent")) {
+                if ((sender as OpcClient).StateCurrent == 17 && CurrentBatch != null) {
                     //TODO: Fix this
-                    if(Batches != null && Batches[0] != null) {
+                    if (Batches != null && Batches.Count != 0) {
                         CurrentBatch = Batches[0];
                         Batches.RemoveAt(0);
                     }
+                    Console.WriteLine("yeet");
+                    _logic.WriteBatchData();
 
 
-                        
-                    
 
                 }
             }

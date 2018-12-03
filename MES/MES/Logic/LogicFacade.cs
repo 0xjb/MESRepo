@@ -12,7 +12,7 @@ namespace MES.Logic {
 
         public LogicFacade() {
             this.opc = new OpcClient(this);
-            Batches = new BatchQueue(OPC);
+            Batches = new BatchQueue(this);
         }
 
         public BatchQueue Batches {
@@ -80,6 +80,10 @@ namespace MES.Logic {
 
         public bool AuthenticateUserInformation(string username, string password) {
             return data.AuthenticateUserInformation(username, password);
+        }
+
+        public void WriteBatchData() {
+            Data.WriteBatchData(OPC.BatchId, OPC.ReadMachineSpeed(), OPC.DefectProducts, Batches.CurrentBatch.BeerType);
         }
     }
 }

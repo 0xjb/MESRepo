@@ -133,13 +133,13 @@ namespace MES.Data
             }
             return false;
         }
-        public void WriteBatchData(double batchID, double machineSpeed, double defectProducts) {
+        public void WriteBatchData(double batchID, double machineSpeed, double defectProducts, double productType) {
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
             path += @"\MES\Data\AlarmLogFile\batches.txt";
-            string toAppend = string.Format("{0}, {1}, {2}",batchID, machineSpeed, defectProducts);
-            stringBuilder.Append(toAppend);
+            string toAppend = string.Format("{0},{1},{2},{3} ",batchID, machineSpeed, defectProducts, productType);
+            stringBuilder.Append(toAppend + "\n");
             string s2 = stringBuilder.ToString();
 
 

@@ -17,7 +17,7 @@ namespace MES.Data
         {
             Console.WriteLine("\n\nCONSTRUCTOR DATAFACADE\n\n");
             dbManager = new DBManager();
-            userManager = new UserManager();
+            //userManager = new UserManager();
             currentUser = null;
             fileManager=new FileManager();
         }
@@ -121,8 +121,8 @@ namespace MES.Data
                 return false;
             }
         }
-        public void WriteBatchData(double batchID, double machineSpeed, double defectProducts) {
-
+        public void WriteBatchData(double batchID, double machineSpeed, double defectProducts, double productType) {
+            fileManager.WriteBatchData(batchID, machineSpeed, defectProducts, productType);
         }
     }
 }

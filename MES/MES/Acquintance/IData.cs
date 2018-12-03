@@ -119,7 +119,7 @@ namespace MES.Acquintance
         /// <returns></returns>
         bool AuthenticateUserInformation(string username, string password);
 
-        void WriteBatchData(double batchID, double machineSpeed, double defectProducts);
+        void WriteBatchData(double batchID, double machineSpeed, double defectProducts, double productType);
 
         ObservableCollection<IAlarmObject> ReadFile();
         void WriteToFile(string s);
