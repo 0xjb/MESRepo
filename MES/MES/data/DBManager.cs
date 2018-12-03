@@ -273,6 +273,9 @@ namespace MES.data
             IList<IBatchValue> bVibs = batch.GetBatchVibrations();
 
             ISet<IList<IBatchValue>> setOfValues = new HashSet<IList<IBatchValue>>();
+            setOfValues.Add(bTems);
+            setOfValues.Add(bHums);
+            setOfValues.Add(bVibs);
 
             string sql0 = "INSERT INTO " + batchesTable + " VALUES("
                 + batch.GetBeerId() + ", "
@@ -281,7 +284,7 @@ namespace MES.data
                 + batch.GetTimestampStart() + "', '"
                 + batch.GetTimestampEnd() + "');";
 
-            String[] sql = CreateBatchValuesStatements(null, batch.GetBatchId(), 1);
+            String[] sql = CreateBatchValuesStatements(setOfValues, batch.GetBatchId(), 1);
             sql[0] = sql0;
 
             return SendSqlCommand(sql);

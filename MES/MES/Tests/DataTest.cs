@@ -294,14 +294,5 @@ namespace MES.Tests
             Assert.IsNull(loadedBatch3, "Succes");
         }
 
-        [Test]
-        public void OldDBDelete()
-        {
-            string[] statements = { "DROP TABLE batchvalues",
-                "DROP TABLE batches", "DROP TABLE recipes" };
-            bool succes = dbManager.RunQueries(statements);
-            Assert.IsTrue(succes, "Tables deleted");
-        }
-
     }
 }
