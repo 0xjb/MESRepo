@@ -258,7 +258,7 @@ namespace MES.data
                         sql[index] = "INSERT INTO " + table + " VALUES ("
                             + value.GetValue() + ", '"
                             + value.GetTimeStamp() + "', "
-                            + batchId + ")";
+                            + batchId + ");";
                     }
                     index++;
                 }
@@ -278,6 +278,7 @@ namespace MES.data
             setOfValues.Add(bVibs);
 
             string sql0 = "INSERT INTO " + batchesTable + " VALUES("
+                + batch.GetBatchId() + ", "
                 + batch.GetBeerId() + ", "
                 + batch.GetAcceptableProducts() + ", "
                 + batch.GetDefectProducts() + ", '"
@@ -310,7 +311,7 @@ namespace MES.data
 
         public IDictionary<float, IBatch> GetAllBatches()
         {
-            string sql = "SELECT * FROM " + batchesTable + ";";
+            string sql = "SELECT * FROM " + batchesTable;
 
             return GetSqlCommand(sql);
         }
@@ -388,7 +389,7 @@ namespace MES.data
 
             for (int i = 0; i < recipes.Length; i++)
             {
-                statements[i] = "INSERT INTO " + recipesTable + " VALUES("
+                statements[i] = "INSERT INTO " + recipesTable + " VALUES ("
                     + recipes[i].BeerId + ", "
                     + recipes[i].MaxSpeed + ", '"
                     + recipes[i].Name + "', "
