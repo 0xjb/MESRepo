@@ -9,8 +9,7 @@ using System.Runtime.Remoting.Channels;
 using System.Threading;
 using System.Windows;
 
-namespace MES.Presentation
-{
+namespace MES.Presentation {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -49,19 +48,17 @@ namespace MES.Presentation
         public string[] Labels { get; set; }
         public Func<double, string> Formatter { get; set; }
 
-        public MainWindow(IPresentation pf)
-        {
+        public MainWindow(IPresentation pf) {
             this.presentation = pf;
 
             //Get logiclayer
             iLogic = presentation.ILogic;
 
-            //
-            //CheckIngredientsLevel();
+            
+            
+            iLogic.ErrorHandler.Alarms.CollectionChanged += EventHandling;
 
-
-            if (!presentation.ILogic.IsSimulationOn)
-            {
+            if (!presentation.ILogic.IsSimulationOn) {
                 //Connects to OPC server
                 iLogic.OPC.Connect();
             }
@@ -79,19 +76,18 @@ namespace MES.Presentation
                 new ObservableValue(LevelWheat),
                 new ObservableValue(LevelYeast)
             };
-            var columnSeries = new ColumnSeries
-            {
+            var columnSeries = new ColumnSeries {
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
             };
 
             //Place valuelabel inside the column
-            columnSeries.LabelsPosition = (BarLabelPosition) 3;
-            SeriesCollection = new SeriesCollection {columnSeries};
+            columnSeries.LabelsPosition = (BarLabelPosition)3;
+            SeriesCollection = new SeriesCollection { columnSeries };
 
             //put label stuff here
-            Labels = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
+            Labels = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
             Formatter = value => value.ToString("N");
 
             CheckIngredientsLevel();
@@ -99,8 +95,7 @@ namespace MES.Presentation
             DataContext = this;
         }
 
-        private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e)
-        {
+        private void checkForChangesIngredientsLevel(object sender, PropertyChangedEventArgs e) {
 
             ValuesIngredients[0].Value = LevelBarley;
             ValuesIngredients[1].Value = LevelHops;
@@ -114,12 +109,11 @@ namespace MES.Presentation
             LevelWheat = iLogic.OPC.Wheat;
             LevelYeast = iLogic.OPC.Yeast;
 
-        
+
         }
 
 
-        private void CheckIngredientsLevel()
-        {
+        private void CheckIngredientsLevel() {
             //if (presentation.ILogic.IsSimulationOn)
             //{
             //    this.levelBarley = iLogic.TestSimulation.LevelBarley;
@@ -142,17 +136,14 @@ namespace MES.Presentation
             //}
         }
 
-        private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
-        {
+        private void EventHandling(object sender, NotifyCollectionChangedEventArgs e) {
             IAlarmObject s = e.NewItems[0] as IAlarmObject;
-            if (s.StopReason == "Empty inventory" || s.StopReason == "Maintenance")
-            {
+            if (s.StopReason == "Empty inventory" || s.StopReason == "Maintenance") {
                 Dispatcher.BeginInvoke(new Action(delegate { ActivateAlarmWindow(s); }));
             }
         }
 
-        private void ActivateAlarmWindow(IAlarmObject alarmObject)
-        {
+        private void ActivateAlarmWindow(IAlarmObject alarmObject) {
             PopupAlarm pop = new PopupAlarm(alarmObject);
             pop.Show();
         }
@@ -161,80 +152,69 @@ namespace MES.Presentation
 
         #region XAML generated code
 
-        void MainWindow_Closed(object sender, EventArgs e)
-        {
+        void MainWindow_Closed(object sender, EventArgs e) {
             //Put your close code here
             //iLogic.OPC.StopMachine();
         }
 
 
-        private void btnStart_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnStart_Click(object sender, RoutedEventArgs e) {
             //opc.StartMachine(1, 2, 2000, 600);
             iLogic.OPC.StartMachine(1, 2, 200, 100);
+            iLogic.ErrorHandler.AddAlarm(10, 11);
         }
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnStop_Click(object sender, RoutedEventArgs e) {
             //opc.StopMachine();
             iLogic.OPC.StopMachine();
         }
 
-        private void btnReset_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnReset_Click(object sender, RoutedEventArgs e) {
             //opc.ResetMachine();
             iLogic.OPC.ResetMachine();
         }
 
-        private void btnAbort_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnAbort_Click(object sender, RoutedEventArgs e) {
             //opc.AbortMachine();
             iLogic.OPC.AbortMachine();
         }
 
-        private void btnClear_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnClear_Click(object sender, RoutedEventArgs e) {
             //opc.ClearMachine();
             iLogic.OPC.ClearMachine();
         }
 
-        private void btnAlarms_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnAlarms_Click(object sender, RoutedEventArgs e) {
             Alarms alarms = new Alarms(presentation, this);
             this.Hide();
             alarms.Show();
         }
 
-        private void btnOEE_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnOEE_Click(object sender, RoutedEventArgs e) {
             OEE oEE = new OEE(presentation, this);
             this.Hide();
             oEE.Show();
         }
 
-        private void btnOptimization_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnOptimization_Click(object sender, RoutedEventArgs e) {
             Optimization optimization = new Optimization(presentation, this);
             this.Hide();
             optimization.Show();
         }
 
-        private void btnHistory_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnHistory_Click(object sender, RoutedEventArgs e) {
             History history = new History(presentation, this);
             this.Hide();
             history.Show();
         }
 
-        private void btnBatchSetup_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnBatchSetup_Click(object sender, RoutedEventArgs e) {
             BatchSetup batchSetup = new BatchSetup(presentation, this);
             this.Hide();
             batchSetup.Show();
         }
 
-        private void btnMachineSettings_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnMachineSettings_Click(object sender, RoutedEventArgs e) {
             Simulation simulation = new Simulation(presentation, presentation.ILogic.IsSimulationOn, this);
             this.Hide();
             simulation.Show();
@@ -242,200 +222,164 @@ namespace MES.Presentation
 
         #endregion
 
-        public double LevelBarley
-        {
+        public double LevelBarley {
             get { return levelBarley; }
 
-            set
-            {
+            set {
                 levelBarley = value;
                 OnPropertyChanged("SeriesCollection");
             }
         }
 
-        public double LevelHops
-        {
+        public double LevelHops {
             get { return levelHops; }
 
-            set
-            {
+            set {
                 levelHops = value;
                 OnPropertyChanged("SeriesCollection");
             }
         }
 
-        public double LevelMalt
-        {
+        public double LevelMalt {
             get { return levelMalt; }
 
-            set
-            {
+            set {
                 levelMalt = value;
                 OnPropertyChanged("SeriesCollection");
             }
         }
 
-        public double LevelWheat
-        {
+        public double LevelWheat {
             get { return levelWheat; }
 
-            set
-            {
+            set {
                 levelWheat = value;
                 OnPropertyChanged("SeriesCollection");
             }
         }
 
-        public double LevelYeast
-        {
+        public double LevelYeast {
             get { return levelYeast; }
 
-            set
-            {
+            set {
                 levelYeast = value;
                 OnPropertyChanged("SeriesCollection");
             }
         }
 
 
-        public double ValueMaintenance
-        {
+        public double ValueMaintenance {
             get { return _value; }
-            set
-            {
+            set {
                 _value = value;
                 OnPropertyChanged("ValueMaintenance");
             }
         }
 
-        public double MachineSpeed
-        {
+        public double MachineSpeed {
             get { return machineSpeed; }
 
-            set
-            {
+            set {
                 machineSpeed = value;
                 OnPropertyChanged("MachineSpeed");
             }
         }
 
-        public double Temperature
-        {
+        public double Temperature {
             get { return temperature; }
 
-            set
-            {
+            set {
                 temperature = value;
                 OnPropertyChanged("Temperature");
             }
         }
 
-        public double Humidity
-        {
+        public double Humidity {
             get { return humidity; }
 
-            set
-            {
+            set {
                 humidity = value;
                 OnPropertyChanged("Humidity");
             }
         }
 
-        public double Vibration
-        {
+        public double Vibration {
             get { return vibration; }
 
-            set
-            {
+            set {
                 vibration = value;
                 OnPropertyChanged("Vibration");
             }
         }
 
-        public double BatchID
-        {
+        public double BatchID {
             get { return batchID; }
 
-            set
-            {
+            set {
                 batchID = value;
                 OnPropertyChanged("Batch_ID");
             }
         }
 
-        public double Amount
-        {
+        public double Amount {
             get { return amount; }
 
-            set
-            {
+            set {
                 amount = value;
                 OnPropertyChanged("Amount");
             }
         }
 
 
-        public double Produced
-        {
+        public double Produced {
             get { return produced; }
 
-            set
-            {
+            set {
                 produced = value;
                 OnPropertyChanged("Produced");
             }
         }
 
-        public double AcceptableProducts
-        {
+        public double AcceptableProducts {
             get { return acceptableProducts; }
 
-            set
-            {
+            set {
                 acceptableProducts = value;
                 OnPropertyChanged("AcceptableProducts");
             }
         }
 
-        public double DefectProducts
-        {
+        public double DefectProducts {
             get { return defectProducts; }
 
-            set
-            {
+            set {
                 defectProducts = value;
                 OnPropertyChanged("DefectProducts");
             }
         }
 
-        public double Status
-        {
+        public double Status {
             get { return status; }
 
-            set
-            {
+            set {
                 status = value;
                 OnPropertyChanged("Status");
             }
         }
 
-        public IPresentation PresentationFacade
-        {
+        public IPresentation PresentationFacade {
             get { return presentation; }
             set { presentation = value; }
         }
 
-        protected void OnPropertyChanged(string name)
-        {
+        protected void OnPropertyChanged(string name) {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
+        private void button_Click(object sender, RoutedEventArgs e) {
             int number = 0;
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
