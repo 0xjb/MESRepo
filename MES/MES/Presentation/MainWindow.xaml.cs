@@ -12,8 +12,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 
-namespace MES.Presentation
-{
+namespace MES.Presentation {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -79,8 +78,11 @@ namespace MES.Presentation
             //Get logiclayer
             iLogic = presentation.ILogic;
 
-            if (!presentation.ILogic.IsSimulationOn)
-            {
+            
+            
+            iLogic.ErrorHandler.Alarms.CollectionChanged += EventHandling;
+
+            if (!presentation.ILogic.IsSimulationOn) {
                 //Connects to OPC server
                 iLogic.OPC.Connect();
             }
@@ -107,8 +109,7 @@ namespace MES.Presentation
                 new ObservableValue(LevelWheat),
                 new ObservableValue(LevelYeast)
             };
-            var columnSeries = new ColumnSeries
-            {
+            var columnSeries = new ColumnSeries {
                 Title = "[Ingredients]",
                 Values = ValuesIngredients,
                 DataLabels = true
@@ -320,14 +321,12 @@ namespace MES.Presentation
         private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
         {
             IAlarmObject s = e.NewItems[0] as IAlarmObject;
-            if (s.StopReason == "Empty inventory" || s.StopReason == "Maintenance")
-            {
+            if (s.StopReason == "Empty inventory" || s.StopReason == "Maintenance") {
                 Dispatcher.BeginInvoke(new Action(delegate { ActivateAlarmWindow(s); }));
             }
         }
 
-        private void ActivateAlarmWindow(IAlarmObject alarmObject)
-        {
+        private void ActivateAlarmWindow(IAlarmObject alarmObject) {
             PopupAlarm pop = new PopupAlarm(alarmObject);
             pop.Show();
         }
@@ -336,8 +335,7 @@ namespace MES.Presentation
 
         #region XAML generated code
 
-        void MainWindow_Closed(object sender, EventArgs e)
-        {
+        void MainWindow_Closed(object sender, EventArgs e) {
             //Put your close code here
         }
 
@@ -367,43 +365,37 @@ namespace MES.Presentation
             iLogic.OPC.ClearMachine();
         }
 
-        private void btnAlarms_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnAlarms_Click(object sender, RoutedEventArgs e) {
             Alarms alarms = new Alarms(presentation, this);
             this.Hide();
             alarms.Show();
         }
 
-        private void btnOEE_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnOEE_Click(object sender, RoutedEventArgs e) {
             OEE oEE = new OEE(presentation, this);
             this.Hide();
             oEE.Show();
         }
 
-        private void btnOptimization_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnOptimization_Click(object sender, RoutedEventArgs e) {
             Optimization optimization = new Optimization(presentation, this);
             this.Hide();
             optimization.Show();
         }
 
-        private void btnHistory_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnHistory_Click(object sender, RoutedEventArgs e) {
             History history = new History(presentation, this);
             this.Hide();
             history.Show();
         }
 
-        private void btnBatchSetup_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnBatchSetup_Click(object sender, RoutedEventArgs e) {
             BatchSetup batchSetup = new BatchSetup(presentation, this);
             this.Hide();
             batchSetup.Show();
         }
 
-        private void btnMachineSettings_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnMachineSettings_Click(object sender, RoutedEventArgs e) {
             Simulation simulation = new Simulation(presentation, presentation.ILogic.IsSimulationOn, this);
             this.Hide();
             simulation.Show();
@@ -411,56 +403,46 @@ namespace MES.Presentation
 
         #endregion
 
-        public double LevelBarley
-        {
+        public double LevelBarley {
             get { return levelBarley; }
 
-            set
-            {
+            set {
                 levelBarley = value;
                 OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
-        public double LevelHops
-        {
+        public double LevelHops {
             get { return levelHops; }
 
-            set
-            {
+            set {
                 levelHops = value;
                 OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
-        public double LevelMalt
-        {
+        public double LevelMalt {
             get { return levelMalt; }
 
-            set
-            {
+            set {
                 levelMalt = value;
                 OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
-        public double LevelWheat
-        {
+        public double LevelWheat {
             get { return levelWheat; }
 
-            set
-            {
+            set {
                 levelWheat = value;
                 OnPropertyChanged("SeriesCollectionIngredients");
             }
         }
 
-        public double LevelYeast
-        {
+        public double LevelYeast {
             get { return levelYeast; }
 
-            set
-            {
+            set {
                 levelYeast = value;
                 OnPropertyChanged("SeriesCollectionIngredients");
             }
@@ -477,45 +459,37 @@ namespace MES.Presentation
             }
         }
 
-        public double MachineSpeed
-        {
+        public double MachineSpeed {
             get { return machineSpeed; }
 
-            set
-            {
+            set {
                 machineSpeed = value;
                 OnPropertyChanged("MachineSpeed");
             }
         }
 
-        public double Temperature
-        {
+        public double Temperature {
             get { return temperature; }
 
-            set
-            {
+            set {
                 temperature = value;
                 OnPropertyChanged("Temperature");
             }
         }
 
-        public double Humidity
-        {
+        public double Humidity {
             get { return humidity; }
 
-            set
-            {
+            set {
                 humidity = value;
                 OnPropertyChanged("Humidity");
             }
         }
 
-        public double Vibration
-        {
+        public double Vibration {
             get { return vibration; }
 
-            set
-            {
+            set {
                 vibration = value;
                 OnPropertyChanged("Vibration");
             }
@@ -528,9 +502,32 @@ namespace MES.Presentation
             {
                 statusString = value;
                 OnPropertyChanged("StatusString");
+        public double BatchID {
+            get { return batchID; }
+
+            set {
+                batchID = value;
+                OnPropertyChanged("Batch_ID");
             }
         }
 
+        public double Amount {
+            get { return amount; }
+
+            set {
+                amount = value;
+                OnPropertyChanged("Amount");
+            }
+        }
+
+
+        public double Produced {
+            get { return produced; }
+
+            set {
+                produced = value;
+                OnPropertyChanged("Produced");
+            }
         public List<string> ArrayListLabelsTemperature
         {
             get => arrayListLabelsTemperature;
@@ -541,26 +538,45 @@ namespace MES.Presentation
         {
             get => arrayListLabelsHumidity;
             set => arrayListLabelsHumidity = value;
+        public double AcceptableProducts {
+            get { return acceptableProducts; }
+
+            set {
+                acceptableProducts = value;
+                OnPropertyChanged("AcceptableProducts");
+            }
         }
 
         public List<string> ArrayListLabelsVibration
         {
             get => arrayListLabelsVibration;
             set => arrayListLabelsVibration = value;
+        public double DefectProducts {
+            get { return defectProducts; }
+
+            set {
+                defectProducts = value;
+                OnPropertyChanged("DefectProducts");
+            }
         }
 
+        public double Status {
+            get { return status; }
 
-        public IPresentation PresentationFacade
-        {
+            set {
+                status = value;
+                OnPropertyChanged("Status");
+            }
+        }
+
+        public IPresentation PresentationFacade {
             get { return presentation; }
             set { presentation = value; }
         }
 
-        protected void OnPropertyChanged(string name)
-        {
+        protected void OnPropertyChanged(string name) {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
@@ -51,13 +52,22 @@ namespace MES.Logic
         public void Connect()
         {
             session = new Session();
+            //TODO skal tjekkes.
+            try
+            {
+                //Connect to server with no security (simulator)
+                //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
-            //Connect to server with no security (simulator)
-            //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+                session.UseDnsNameAndPortFromDiscoveryUrl = true;
+                //Connect to server with no security (machine)
+                session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+            }
+            catch (Exception ex)
+            {
 
-            session.UseDnsNameAndPortFromDiscoveryUrl = true;
-            //Connect to server with no security (machine)
-            session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+                MessageBox.Show(ex.ToString());
+                
+            }
 
             //TODO SKAL denne fjernes??
             batchId = ReadCurrentBatchId();

@@ -55,6 +55,7 @@ namespace MES.Data
 
         public ObservableCollection<IAlarmObject> ReadFile()
         {
+            //TODO try/catch ikke nødvendig?
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
@@ -94,6 +95,7 @@ namespace MES.Data
 
         private bool IsFileIsEmpty()
         {
+            Console.WriteLine("\n\nIS FILE EMPTY\n");
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
