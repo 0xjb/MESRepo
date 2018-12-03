@@ -268,13 +268,13 @@ namespace MES.data
 
         public bool InsertIntoBatchesTable(IBatch batch)
         {
-            IList<IBatchValue> bTems = batch.GetBatchTemperatures();
-            IList<IBatchValue> bHums = batch.GetBatchHumidities();
+            IList<IBatchValue> bTemps = batch.GetBatchTemperatures();
+            IList<IBatchValue> bHumids = batch.GetBatchHumidities();
             IList<IBatchValue> bVibs = batch.GetBatchVibrations();
 
             ISet<IList<IBatchValue>> setOfValues = new HashSet<IList<IBatchValue>>();
-            setOfValues.Add(bTems);
-            setOfValues.Add(bHums);
+            setOfValues.Add(bTemps);
+            setOfValues.Add(bHumids);
             setOfValues.Add(bVibs);
 
             string sql0 = "INSERT INTO " + batchesTable + " VALUES ("
