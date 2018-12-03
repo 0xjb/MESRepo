@@ -12,11 +12,11 @@ namespace MES.Acquintance
         bool InsertIntoBatchesTable(IBatch batch);
 
         /// <summary>
-        /// Insert batch values into the db
+        /// Inserts batch values into the db
         /// </summary>
         /// <param name="batchValues"></param>
         /// <returns></returns>
-        bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float id);
+        bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float batchId);
 
         /// <summary>
         /// Updates a batch in the db

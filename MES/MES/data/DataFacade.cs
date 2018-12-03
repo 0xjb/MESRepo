@@ -1,6 +1,6 @@
-﻿using System;
-using MES.Acquintance;
+﻿using MES.Acquintance;
 using MES.data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -19,7 +19,7 @@ namespace MES.Data
             dbManager = new DBManager();
             userManager = new UserManager();
             currentUser = null;
-            fileManager=new FileManager();
+            fileManager = new FileManager();
         }
 
         public ObservableCollection<IAlarmObject> ReadFile()
@@ -45,11 +45,9 @@ namespace MES.Data
             return dbManager.InsertIntoBatchesTable(batch);
         }
 
-        public bool InsertBatchValueSet(float temperature, float humidity,
-            float vibration, string timestamp, float batchId)
+        public bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float batchId)
         {
-            return dbManager.InsertBatchValueSet(temperature, humidity,
-                vibration, timestamp, batchId);
+            return dbManager.InsertBatchValueSet(batchValues, batchId);
         }
 
         public bool UpdateBatch(IBatch batch)
@@ -94,7 +92,7 @@ namespace MES.Data
 
         public bool RunQuery(string statement)
         {
-            string[] s = {statement};
+            string[] s = { statement };
             return dbManager.RunQueries(s);
         }
 
