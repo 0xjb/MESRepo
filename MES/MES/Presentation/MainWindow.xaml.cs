@@ -154,7 +154,6 @@ namespace MES.Presentation
                 }
             };
 
-
             arrayListLabelsTemperature = new List<string>();
             arrayListLabelsHumidity = new List<string>();
             arrayListLabelsVibration = new List<string>();
