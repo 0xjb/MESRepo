@@ -1,11 +1,7 @@
 ﻿using MES.Acquintance;
 using MES.Data;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MES.Tests
 {
@@ -29,34 +25,40 @@ namespace MES.Tests
             // Testing InsertBatch & InsertBatchValueSet
 
             IBatch batch0 = new Batch(-1, 3, 90, 10,
-                "02/11/2018 09:18:35", "02/11/2018 09:20:35");
-            batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:18:35");
-            batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:19:35");
-            batch0.AddBatchValues(20, 30, 40, "02/11/2018 09:20:35");
+                "02/11/2018 09:18:35", "02/11/2018 09:26:35");
+            batch0.AddBatchValue(20, "02/11/2018 09:18:35", -1);
+            batch0.AddBatchValue(30, "02/11/2018 09:19:35", 0);
+            batch0.AddBatchValue(40, "02/11/2018 09:20:35", 1);
+            batch0.AddBatchValue(60, "02/11/2018 09:21:35", -1);
+            batch0.AddBatchValue(70, "02/11/2018 09:22:35", 0);
+            batch0.AddBatchValue(80, "02/11/2018 09:23:35", 1);
+            batch0.AddBatchValue(70, "02/11/2018 09:24:35", -1);
+            batch0.AddBatchValue(80, "02/11/2018 09:25:35", 0);
+            batch0.AddBatchValue(90, "02/11/2018 09:26:35", 1);
             bool inserted0 = dbManager.InsertIntoBatchesTable(batch0);
             Assert.IsTrue(inserted0, "Inserted first");
 
             IBatch batch1 = new Batch(-2, 3, 90, 10,
                 "02/11/2018 10:18:35", "02/11/2018 10:20:35");
-            batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:18:35");
-            batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:19:35");
-            batch1.AddBatchValues(20, 30, 40, "02/11/2018 10:20:35");
+            batch1.AddBatchValue(30, "02/11/2018 10:18:35", -1);
+            batch1.AddBatchValue(40, "02/11/2018 10:19:35", 0);
+            batch1.AddBatchValue(50, "02/11/2018 10:20:35", 1);
             bool inserted1 = dbManager.InsertIntoBatchesTable(batch1);
             Assert.IsTrue(inserted1, "Inserted second");
 
             IBatch batch2 = new Batch(-3, 3, 90, 10,
                 "02/12/2018 11:18:35", "02/12/2018 11:20:35");
-            batch2.AddBatchValues(20, 30, 40, "02/12/2018 11:18:35");
-            batch2.AddBatchValues(20, 30, 40, "02/12/2018 11:19:35");
-            batch2.AddBatchValues(20, 30, 40, "02/12/2018 11:20:35");
+            batch2.AddBatchValue(40, "02/12/2018 11:18:35", -1);
+            batch2.AddBatchValue(50, "02/12/2018 11:19:35", 0);
+            batch2.AddBatchValue(60, "02/12/2018 11:20:35", 1);
             bool inserted2 = dbManager.InsertIntoBatchesTable(batch2);
             Assert.IsTrue(inserted2, "Inserted third");
 
             IBatch batch3 = new Batch(-4, 3, 90, 10,
                 "02/12/2018 12:18:35", "02/12/2018 12:20:35");
-            batch3.AddBatchValues(20, 30, 40, "02/12/2018 12:18:35");
-            batch3.AddBatchValues(20, 30, 40, "02/12/2018 12:19:35");
-            batch3.AddBatchValues(20, 30, 40, "02/12/2018 12:20:35");
+            batch3.AddBatchValue(50, "02/12/2018 12:18:35", -1);
+            batch3.AddBatchValue(60, "02/12/2018 12:19:35", 0);
+            batch3.AddBatchValue(70, "02/12/2018 12:20:35", 1);
             bool inserted3 = dbManager.InsertIntoBatchesTable(batch3);
             Assert.IsTrue(inserted3, "Inserted fourth");
 
@@ -64,7 +66,7 @@ namespace MES.Tests
 
             batch3.AddProducts(15, true);
             batch3.AddProducts(5, false);
-            batch3.SetTimestampEnd("02/11/2018 09:20:40");
+            batch3.SetTimestampEnd("02/12/2018 12:21:35");
             bool updateSucces = dbManager.UpdateBatch(batch3);
             Assert.IsTrue(updateSucces, "Succes");
 
@@ -90,13 +92,22 @@ namespace MES.Tests
 
             // Testing if batch values was loaded
 
-            bool loadedBatchValuesO = false;
-            if (loadedBatch0.GetBatchValues().Count == 3)
-            {
-                loadedBatchValuesO = true;
-            }
+            IList<IBatchValue> temps0 = loadedBatch0.GetBatchTemperatures();
+            IList<IBatchValue> humids0 = loadedBatch0.GetBatchHumidities();
+            IList<IBatchValue> vibs0 = loadedBatch0.GetBatchVibrations();
 
-            Assert.IsTrue(loadedBatchValuesO, "Succes");
+            bool loadedBatchValues0 = false;
+            if (temps0.Count == 3 && humids0.Count == 3 && vibs0.Count == 3)
+            {
+                foreach (IBatchValue value in temps0)
+                {
+                    if (value.GetTimeStamp().Equals("02/11/2018 09:24:35"))
+                    {
+                        loadedBatchValues0 = true;
+                    }
+                }
+            }
+            Assert.IsTrue(loadedBatchValues0, "Succes");
 
             // Testing if the batch was updated correctly
 
@@ -156,7 +167,66 @@ namespace MES.Tests
             Assert.IsNull(loadedBatch13, "Succes");
         }
 
-        /*
+
+        [Test]
+        public void DBSetup()
+        {
+            string[] statements = new string[5];
+
+            statements[0] = "CREATE TABLE recipes ("
+                + "beerid FLOAT PRIMARY KEY, "
+                + "maxspeed FLOAT, "
+                + "name VARCHAR(20), "
+                + "barley FLOAT, "
+                + "hops FLOAT, "
+                + "malt FLOAT, "
+                + "wheat FLOAT, "
+                + "yeast FLOAT);";
+
+            statements[1] = "CREATE TABLE batches ("
+                + "batchid FLOAT PRIMARY KEY, "
+                + "beerid FLOAT, "
+                + "acceptableproducts INT, "
+                + "defectproducts INT, "
+                + "timestampStart CHAR(19), "
+                + "timestampEnd CHAR(19),"
+                + "FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE);";
+
+            statements[2] = "CREATE TABLE temperaturevalues ("
+                + "temperature FLOAT, "
+                + "timestampx CHAR(19), "
+                + "belongingto FLOAT, "
+                + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
+                + "PRIMARY KEY(timestampx, belongingto));";
+
+            statements[3] = "CREATE TABLE humidityvalues ("
+                + "humidity FLOAT, "
+                + "timestampx CHAR(19), "
+                + "belongingto FLOAT, "
+                + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
+                + "PRIMARY KEY(timestampx, belongingto));";
+
+            statements[4] = "CREATE TABLE vibrationvalues ("
+                + "vibration FLOAT, "
+                + "timestampx CHAR(19), "
+                + "belongingto FLOAT, "
+                + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
+                + "PRIMARY KEY(timestampx, belongingto));";
+
+            bool succes = dbManager.RunQueries(statements);
+            Assert.IsTrue(succes, "Tables created");
+        }
+
+        [Test]
+        public void DBDelete()
+        {
+            string[] statements = { "DROP TABLE temperaturevalues",
+                "DROP TABLE humidityvalues", "DROP TABLE vibrationvalues",
+                "DROP TABLE batches", "DROP TABLE recipes" };
+            bool succes = dbManager.RunQueries(statements);
+            Assert.IsTrue(succes, "Tables deleted");
+        }
+
         [Test]
         public void CreateRecipes()
         {
@@ -199,75 +269,39 @@ namespace MES.Tests
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Succes");
         }
-        
+
         [Test]
         public void DeleteBatches()
         {
             bool deleted0 = dbManager.DeleteBatch(-1);
             Assert.IsTrue(deleted0, "Deleted");
-            IBatch loadedBatch10 = dbManager.GetBatch(-1);
-            Assert.IsNull(loadedBatch10, "Succes");
+            IBatch loadedBatch0 = dbManager.GetBatch(-1);
+            Assert.IsNull(loadedBatch0, "Succes");
 
             bool deleted1 = dbManager.DeleteBatch(-2);
             Assert.IsTrue(deleted1, "Deleted");
-            IBatch loadedBatch11 = dbManager.GetBatch(-2);
-            Assert.IsNull(loadedBatch11, "Succes");
+            IBatch loadedBatch1 = dbManager.GetBatch(-2);
+            Assert.IsNull(loadedBatch1, "Succes");
 
             bool deleted2 = dbManager.DeleteBatch(-3);
             Assert.IsTrue(deleted2, "Deleted");
-            IBatch loadedBatch12 = dbManager.GetBatch(-3);
-            Assert.IsNull(loadedBatch12, "Succes");
+            IBatch loadedBatch2 = dbManager.GetBatch(-3);
+            Assert.IsNull(loadedBatch2, "Succes");
 
             bool deleted3 = dbManager.DeleteBatch(-4);
             Assert.IsTrue(deleted3, "Deleted");
-            IBatch loadedBatch13 = dbManager.GetBatch(-4);
-            Assert.IsNull(loadedBatch13, "Succes");
-        }
-        
-        [Test]
-        public void DBSetup()
-        {
-            string[] statements = new string[3];
-
-            statements[0] = "CREATE TABLE recipes("
-                + "beerid FLOAT PRIMARY KEY, "
-                + "maxspeed FLOAT, "
-                + "name VARCHAR(20), "
-                + "barley FLOAT, "
-                + "hops FLOAT, "
-                + "malt FLOAT, "
-                + "wheat FLOAT, "
-                + "yeast FLOAT);";
-
-            statements[1] = "CREATE TABLE batches("
-                + "batchid FLOAT PRIMARY KEY, "
-                + "beerid FLOAT, "
-                + "acceptableproducts INT, "
-                + "defectproducts INT, "
-                + "timestampStart CHAR(19), "
-                + "timestampEnd CHAR(19),"
-                + "FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE);";
-
-            statements[2] = "CREATE TABLE batchvalues("
-                + "temperature FLOAT, "
-                + "humidity FLOAT, "
-                + "vibration FLOAT, "
-                + "timestampx CHAR(19), "
-                + "belongingto FLOAT, "
-                + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
-                + "PRIMARY KEY(timestampx, belongingto));";
-
-            bool succes = dbManager.RunQueries(statements);
-            Assert.IsTrue(succes, "Tables created");
+            IBatch loadedBatch3 = dbManager.GetBatch(-4);
+            Assert.IsNull(loadedBatch3, "Succes");
         }
 
         [Test]
-        public void DBDelete()
+        public void OldDBDelete()
         {
-            string[] statements = { "DROP TABLE batchvalues", "DROP TABLE batches", "DROP TABLE recipes" };
+            string[] statements = { "DROP TABLE batchvalues",
+                "DROP TABLE batches", "DROP TABLE recipes" };
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Tables deleted");
         }
-        */
+
     }
 }

@@ -3,7 +3,6 @@ using MES.Data;
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace MES.data
@@ -20,9 +19,11 @@ namespace MES.data
         private string connString;
 
         // database table names
-        private string batchesTable;
-        private string batchValuesTable;
         private string recipesTable;
+        private string batchesTable;
+        private string temperatureTable;
+        private string humidityTable;
+        private string vibrationTable;
 
         public DBManager()
         {
@@ -34,9 +35,11 @@ namespace MES.data
 
             connString = "Server=" + server + "; Port=" + port + "; User Id=" + userId + "; Password=" + password + "; Database=" + database;
 
-            batchesTable = "batches";
-            batchValuesTable = "batchvalues";
             recipesTable = "recipes";
+            batchesTable = "batches";
+            temperatureTable = "temperaturevalues";
+            humidityTable = "humidityvalues";
+            vibrationTable = "vibrationvalues";
         }
 
         /// <summary>
@@ -107,12 +110,11 @@ namespace MES.data
                         acceptableProducts, defectProducts,
                         timestampStart, timestampEnd));
                 }
-
                 dRead.Close();
 
                 foreach (IBatch batch in batches.Values)
                 {
-                    batch.SetBatchValueSet(GetBatchValues(conn, batch.GetBatchId()));
+                    batch.AddBatchValues(GetBatchValues(conn, batch.GetBatchId()));
                 }
 
                 conn.Close();
@@ -131,27 +133,43 @@ namespace MES.data
         /// <param name="conn"></param>
         /// <param name="batchId"></param>
         /// <returns></returns>
-        private IList<IBatchValueSet> GetBatchValues(NpgsqlConnection conn, float batchId)
+        private IList<IBatchValue> GetBatchValues(NpgsqlConnection conn, float batchId)
         {
-            string statement = "SELECT * FROM " + batchValuesTable
+            string[] sql = new string[3];
+            sql[0] = "SELECT * FROM " + temperatureTable
+                + " WHERE belongingto = " + batchId;
+            sql[1] = "SELECT * FROM " + humidityTable
+                + " WHERE belongingto = " + batchId;
+            sql[2] = "SELECT * FROM " + vibrationTable
                 + " WHERE belongingto = " + batchId;
 
-            NpgsqlCommand command = new NpgsqlCommand(statement, conn);
-            NpgsqlDataReader dRead = command.ExecuteReader();
+            IList<IBatchValue> values = new List<IBatchValue>();
 
-            IList<IBatchValueSet> values = new List<IBatchValueSet>();
-            while (dRead.Read())
+            for (int i = 0; i < sql.Length; i++)
             {
-                double temperature = dRead.GetDouble(0);
-                double humidity = dRead.GetDouble(1);
-                double vibration = dRead.GetDouble(2);
-                string timestamp = dRead.GetString(3);
+                NpgsqlCommand command = new NpgsqlCommand(sql[i], conn);
+                NpgsqlDataReader dRead = command.ExecuteReader();
 
-                values.Add(new BatchValueSet((float)temperature,
-                    (float)humidity, (float)vibration, timestamp));
+                while (dRead.Read())
+                {
+                    double value = dRead.GetDouble(0);
+                    string timestamp = dRead.GetString(1);
+                    if (i == 0)
+                    {
+                        values.Add(new BatchTemperature((float)value, timestamp));
+                    }
+                    else if (i == 1)
+                    {
+                        values.Add(new BatchHumidity((float)value, timestamp));
+                    }
+                    else if (i == 2)
+                    {
+                        values.Add(new BatchVibration((float)value, timestamp));
+                    }
+                    else { }
+                }
+                dRead.Close();
             }
-
-            dRead.Close();
             return values;
         }
 
@@ -198,44 +216,77 @@ namespace MES.data
             }
         }
 
+        /// <summary>
+        /// Creates statements for inserting batch values into the db
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="batchId"></param>
+        /// <returns></returns>
+        private String[] CreateBatchValuesStatements(ISet<IList<IBatchValue>> set,
+            float batchId, int freeSpace)
+        {
+            int valueCount = 0;
+            foreach (IList<IBatchValue> list in set)
+            {
+                valueCount += list.Count;
+            }
+            String[] sql = new String[valueCount + freeSpace];
+
+            int index = freeSpace;
+            foreach (IList<IBatchValue> list in set)
+            {
+                foreach (IBatchValue value in list)
+                {
+                    string table;
+                    if (value is BatchTemperature)
+                    { table = temperatureTable; }
+                    else if (value is BatchHumidity)
+                    { table = humidityTable; }
+                    else if (value is BatchVibration)
+                    { table = vibrationTable; }
+                    else
+                    {
+                        table = null;
+                        sql[index] = null;
+                    }
+
+                    if (table != null)
+                    {
+                        sql[index] = "INSERT INTO " + table + " VALUES ("
+                            + value.GetValue() + ", "
+                            + value.GetTimeStamp() + ", "
+                            + batchId + ")";
+                    }
+                    index++;
+                }
+            }
+            return sql;
+        }
+
         public bool InsertIntoBatchesTable(IBatch batch)
         {
-            string[] sql = new string[batch.GetBatchValues().Count() + 1];
-            uint stringsAdded = 0;
+            IList<IBatchValue> bTems = batch.GetBatchTemperatures();
+            IList<IBatchValue> bHums = batch.GetBatchHumidities();
+            IList<IBatchValue> bVibs = batch.GetBatchVibrations();
+
+            ISet<IList<IBatchValue>> setOfValues = new HashSet<IList<IBatchValue>>();
 
             string sql0 = "INSERT INTO " + batchesTable + " VALUES("
-                + batch.GetBatchId() + ", "
                 + batch.GetBeerId() + ", "
                 + batch.GetAcceptableProducts() + ", "
                 + batch.GetDefectProducts() + ", '"
                 + batch.GetTimestampStart() + "', '"
                 + batch.GetTimestampEnd() + "');";
 
+            String[] sql = CreateBatchValuesStatements(null, batch.GetBatchId(), 1);
             sql[0] = sql0;
-            stringsAdded++;
-
-            foreach (IBatchValueSet values in batch.GetBatchValues())
-            {
-                string sqlString = "INSERT INTO " + batchValuesTable + " VALUES("
-                    + values.GetTemperature() + ", "
-                    + values.GetHumidity() + ", "
-                    + values.GetVibration() + ", '"
-                    + values.GetTimeStamp() + "', "
-                    + batch.GetBatchId() + ");";
-
-                sql[stringsAdded] = sqlString;
-                stringsAdded++;
-            }
 
             return SendSqlCommand(sql);
         }
 
-        public bool InsertBatchValueSet(float temperature, float humidity,
-            float vibration, string timestamp, float batchId)
+        public bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float batchId)
         {
-            string sql = "INSERT INTO " + batchValuesTable + " VALUES("
-            + temperature + ", " + humidity + ", " + vibration
-            + ", '" + timestamp + "', " + batchId + ");";
+            String[] sql = CreateBatchValuesStatements(batchValues, batchId, 0);
 
             return SendSqlCommand(sql);
         }

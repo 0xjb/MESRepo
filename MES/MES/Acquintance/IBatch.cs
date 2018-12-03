@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MES.Acquintance
 {
@@ -45,10 +41,22 @@ namespace MES.Acquintance
         string GetTimestampEnd();
 
         /// <summary>
-        /// Returns a list of IBatchValue objects
+        /// Returns a list of temperatures
         /// </summary>
         /// <returns></returns>
-        IList<IBatchValueSet> GetBatchValues();
+        IList<IBatchValue> GetBatchTemperatures();
+
+        /// <summary>
+        /// Returns a list of humidities
+        /// </summary>
+        /// <returns></returns>
+        IList<IBatchValue> GetBatchHumidities();
+
+        /// <summary>
+        /// Returns a list of vibrations
+        /// </summary>
+        /// <returns></returns>
+        IList<IBatchValue> GetBatchVibrations();
 
         /// <summary>
         /// Adds to the ammount of acceptable or defect products
@@ -64,20 +72,24 @@ namespace MES.Acquintance
         void SetTimestampEnd(string timestamp);
 
         /// <summary>
-        /// Adds a new IBatchValue object to the batch
-        /// </summary>
-        /// <param name="temperature"></param>
-        /// <param name="humidity"></param>
-        /// <param name="vibration"></param>
-        /// <param name="timestamp"></param>
-        /// <returns></returns>
-        bool AddBatchValues(float temperature, float humidity,
-            float vibration, string timestamp);
-
-        /// <summary>
-        /// Set the list of IBatchValue ofjects
+        /// Add an IBatchValue object
         /// </summary>
         /// <param name="values"></param>
-        void SetBatchValueSet(IList<IBatchValueSet> values);
+        void AddBatchValue(IBatchValue value);
+
+        /// <summary>
+        /// Add a new IBatchValue object.
+        /// Set type to a negative integer to create a temperature object.
+        /// Set type to 0 to create a humidity object.
+        /// Set type to a positive integer to create a vibration object.
+        /// </summary>
+        /// <param name="values"></param>
+        void AddBatchValue(float value, string timestamp, int type);
+
+        /// <summary>
+        /// Add a list of IBatchValue objects
+        /// </summary>
+        /// <param name="values"></param>
+        void AddBatchValues(IList<IBatchValue> values);
     }
 }

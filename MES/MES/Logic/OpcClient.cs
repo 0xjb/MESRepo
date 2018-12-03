@@ -57,17 +57,17 @@ namespace MES.Logic
             try
             {
                 //Connect to server with no security (simulator)
-                session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+                //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 //Connect to server with no security (machine)
-                //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+                session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show(ex.ToString());
-                
+
             }
 
             //TODO SKAL denne fjernes??
@@ -161,7 +161,7 @@ namespace MES.Logic
                         break;
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
-                        TempCurrent =  double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":

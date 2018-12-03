@@ -1,9 +1,5 @@
 ﻿using MES.Acquintance;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MES.Data
 {
@@ -15,7 +11,9 @@ namespace MES.Data
         private int defectProducts;
         private readonly string timestampStart;
         private string timestampEnd;
-        private IList<IBatchValueSet> batchValues;
+        private IList<IBatchValue> batchTemperatures;
+        private IList<IBatchValue> batchHumidities;
+        private IList<IBatchValue> batchVibrations;
 
         public Batch(float batchId, float beerId, int acceptableProducts,
             int defectProducts, string timestampStart, string timestampEnd)
@@ -26,7 +24,9 @@ namespace MES.Data
             this.defectProducts = defectProducts;
             this.timestampStart = timestampStart;
             this.timestampEnd = timestampEnd;
-            this.batchValues = new List<IBatchValueSet>();
+            this.batchTemperatures = new List<IBatchValue>();
+            this.batchHumidities = new List<IBatchValue>();
+            this.batchVibrations = new List<IBatchValue>();
         }
 
         override
@@ -67,9 +67,19 @@ namespace MES.Data
             return timestampEnd;
         }
 
-        public IList<IBatchValueSet> GetBatchValues()
+        public IList<IBatchValue> GetBatchTemperatures()
         {
-            return batchValues;
+            return batchTemperatures;
+        }
+
+        public IList<IBatchValue> GetBatchHumidities()
+        {
+            return batchHumidities;
+        }
+
+        public IList<IBatchValue> GetBatchVibrations()
+        {
+            return batchVibrations;
         }
 
         public void AddProducts(int amount, bool acceptable)
@@ -89,31 +99,29 @@ namespace MES.Data
             this.timestampEnd = timestamp;
         }
 
-        public bool AddBatchValues(float temperature, float humidity,
-            float vibration, string timestamp)
+        public void AddBatchValue(IBatchValue value)
         {
-            bool timestampExists = false;
-            foreach (IBatchValueSet valueSet in batchValues)
+            if (value is BatchTemperature)
             {
-                if (valueSet.GetTimeStamp() == timestamp)
-                {
-                    timestampExists = true;
-                    break;
-                }
+                this.batchTemperatures.Add(value);
             }
-
-            if (!timestampExists)
+            else if (value is BatchHumidity)
             {
-                batchValues.Add(new BatchValueSet(temperature,
-                    humidity, vibration, timestamp));
-                return true;
+                this.batchHumidities.Add(value);
             }
-            else return false;
+            else if (value is BatchVibration)
+            {
+                this.batchVibrations.Add(value);
+            }
+            else { }
         }
 
-        public void SetBatchValueSet(IList<IBatchValueSet> values)
+        public void AddBatchValues(IList<IBatchValue> values)
         {
-            this.batchValues = values;
+            foreach (IBatchValue value in values)
+            {
+                AddBatchValue(value);
+            }
         }
     }
 }
