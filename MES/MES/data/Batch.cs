@@ -116,6 +116,23 @@ namespace MES.Data
             else { }
         }
 
+        public void AddBatchValue(float value, string timestamp, int type)
+        {
+            if (type < 0)
+            {
+                this.batchTemperatures.Add(new BatchTemperature(value, timestamp));
+            }
+            else if (type == 0)
+            {
+                this.batchHumidities.Add(new BatchHumidity(value, timestamp));
+            }
+            else if (type > 0)
+            {
+                this.batchVibrations.Add(new BatchVibration(value, timestamp));
+            }
+            else { }
+        }
+
         public void AddBatchValues(IList<IBatchValue> values)
         {
             foreach (IBatchValue value in values)
