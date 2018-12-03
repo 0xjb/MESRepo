@@ -304,27 +304,27 @@
         </Viewbox>
         <DataGrid MinColumnWidth="110" Name="DataGridQuedBatches" Margin="5,5,5,5" Grid.ColumnSpan="3" Grid.Column="7" 
                   Grid.Row="1" Grid.RowSpan="7" />
-        <Viewbox Grid.Column="8" Grid.Row="8" Stretch="Uniform" >
+        <Viewbox Grid.Column="8" Grid.Row="8" Stretch="Uniform" VerticalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="Amount to produce" Grid.Row="0"  />
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center"  Text="Amount to produce" Grid.Row="0"  />
                 <TextBox Name="txtAmount" Margin="5,0,5,0"
                         Grid.Row="1"
                          TextWrapping="Wrap" IsReadOnly="True"  />
 
             </Grid>
         </Viewbox>
-        <Viewbox Grid.Column="9" Grid.Row="8" Stretch="Uniform"  Margin="5,0,5,0">
+        <Viewbox Grid.Column="9" Grid.Row="8" Stretch="Uniform" VerticalAlignment="Center" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="Products per minute" Grid.Row="0" />
-                <TextBox Name="txtSpeed" Text="{Binding Path=MachineSpeed}" Grid.Row="1"
+                <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Products per minute" Grid.Row="0" />
+                <TextBox Name="txtSpeed"  Text="{Binding Path=MachineSpeed}" Margin="5,0,5,0"   Grid.Row="1"
                          TextWrapping="Wrap" IsReadOnly="True" />
             </Grid>
         </Viewbox>
