@@ -188,27 +188,27 @@ namespace MES.Tests
                 + "beerid FLOAT, "
                 + "acceptableproducts INT, "
                 + "defectproducts INT, "
-                + "timestampStart CHAR(19), "
-                + "timestampEnd CHAR(19),"
+                + "timestampStart CHAR(23), "
+                + "timestampEnd CHAR(23),"
                 + "FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE);";
 
             statements[2] = "CREATE TABLE temperaturevalues ("
                 + "temperature FLOAT, "
-                + "timestampx CHAR(19), "
+                + "timestampx CHAR(23), "
                 + "belongingto FLOAT, "
                 + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
                 + "PRIMARY KEY(timestampx, belongingto));";
 
             statements[3] = "CREATE TABLE humidityvalues ("
                 + "humidity FLOAT, "
-                + "timestampx CHAR(19), "
+                + "timestampx CHAR(23), "
                 + "belongingto FLOAT, "
                 + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
                 + "PRIMARY KEY(timestampx, belongingto));";
 
             statements[4] = "CREATE TABLE vibrationvalues ("
                 + "vibration FLOAT, "
-                + "timestampx CHAR(19), "
+                + "timestampx CHAR(23), "
                 + "belongingto FLOAT, "
                 + "FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE, "
                 + "PRIMARY KEY(timestampx, belongingto));";
