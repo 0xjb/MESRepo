@@ -43,6 +43,76 @@
         </Grid.RowDefinitions>
         <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
 
+        <Viewbox Grid.Column="1" Grid.Row="8" Stretch="Uniform" VerticalAlignment="Center" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="OEE" Grid.Row="0" />
+                <TextBox Name="txtOEE"  Text="{Binding Path=MachineSpeed}" MinWidth="100"  Margin="5,0,5,0"   Grid.Row="1"
+                         TextWrapping="Wrap" IsReadOnly="True" />
+            </Grid>
+        </Viewbox>
+
+
+        <Viewbox Grid.Column="3" Grid.Row="4" Stretch="Uniform" VerticalAlignment="Center" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Search Batch Id:" Grid.Row="0" />
+                <TextBox Name="txtSearchBatchId" HorizontalAlignment="Left"  MinWidth="100"     Grid.Row="1"
+                         TextWrapping="Wrap"  />
+            </Grid>
+        </Viewbox>
+
+        <Viewbox Grid.Column="4" Grid.Row="4" Stretch="Uniform" VerticalAlignment="Center" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Search Newest Batches:" Grid.Row="0" />
+                <TextBox Name="txtSearchNewestBacthId" HorizontalAlignment="Left"   MinWidth="100"    Grid.Row="1"
+                         TextWrapping="Wrap" />
+            </Grid>
+        </Viewbox>
+
+        <Viewbox Grid.Column="5" Grid.Row="4" Stretch="Uniform" VerticalAlignment="Center" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Search Month and Year:" Grid.Row="0" />
+                <TextBox Name="txtSearchMonthAndYear" HorizontalAlignment="Left"   MinWidth="100"     Grid.Row="1" 
+                         TextWrapping="Wrap" />
+             
+
+            </Grid>
+        </Viewbox>
+
+        <DataGrid MinColumnWidth="110" Name="DataGridShowBatches" Margin="5,5,5,5" Grid.ColumnSpan="4" Grid.Column="3" 
+                  Grid.Row="6" Grid.RowSpan="5" />
+        <Viewbox Grid.Column="3" Margin="5,5,5,5"  Grid.Row="5"  Stretch="Uniform">
+
+            <Button Content="Search Batch Id:" Height="30" Width="150 " RenderTransformOrigin="0.263,0.263" Click="Button_Click" />
+
+        </Viewbox>
+  
+        <Viewbox Grid.Column="4" Margin="5,5,5,5"  Grid.Row="5"  Stretch="Uniform">
+
+            <Button Content="Search Newest Batches:"  Height="30" Width="150 " />
+
+        </Viewbox>
+
+        <Viewbox Grid.Column="5" Margin="5,5,5,5"  Grid.Row="5"  Stretch="Uniform">
+
+            <Button Content="Search Month/Year:"  Height="30" Width="150 "  />
+
+        </Viewbox>
 
     </Grid>
 </Window>

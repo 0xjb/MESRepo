@@ -1,4 +1,5 @@
-﻿using MES.Acquintance;
+﻿using System;
+using MES.Acquintance;
 using System.Windows;
 
 namespace MES.Presentation
@@ -24,6 +25,14 @@ namespace MES.Presentation
             this.Close();
             //mainWindow.Show();
             mw.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int batchId = Int32.Parse(txtSearchBatchId.Text);
+            DataGridShowBatches.ItemsSource = presentationFacade.ILogic.Data.GetBatches(batchId);
+
+
         }
     }
 }

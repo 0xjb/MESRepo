@@ -65,7 +65,7 @@
 
 
         <TextBox x:Name="txtBoxShowBatchID" MinWidth="100" MinHeight="600" Grid.ColumnSpan="2" Grid.Column="4"
-                 Grid.Row="4" Grid.RowSpan="4" />
+                 Grid.Row="4" Grid.RowSpan="6" Margin="0,0,0,10" />
 
         <Viewbox Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="3" Stretch="Fill" Margin="5,5,5,5">
             <Label x:Name="label3" Content="Search Results Batch ID" />

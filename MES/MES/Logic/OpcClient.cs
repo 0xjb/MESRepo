@@ -56,11 +56,11 @@ namespace MES.Logic
             try
             {
                 //Connect to server with no security (simulator)
-                session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+                //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 //Connect to server with no security (machine)
-                //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+                session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@ namespace MES.Logic
                         break;
                     // products processed
                     case "::Program:Cube.Admin.ProdProcessedCount":
-                        ProcessedProducts = double.Parse(dc.Value.ToString());
+                        ProcessedProducts= double.Parse(dc.Value.ToString());
                         break;
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
