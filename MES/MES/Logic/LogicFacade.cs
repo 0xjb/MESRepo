@@ -62,11 +62,11 @@ namespace MES.Logic {
             this.errorHandler = new ErrorHandler(this);
         }
         public void CreateBatch(float batchId, float amount, float productType) {
-            Batch b = new Batch(batchId, productType, amount);
+            SimpleBatch b = new SimpleBatch(batchId, productType, amount);
             if (Batches.CurrentBatch == null) {
                 Batches.CurrentBatch = b;
             } else {
-                Batches.Batches.Add(new Batch(batchId, productType, amount));
+                Batches.Batches.Add(new SimpleBatch(batchId, productType, amount));
             }
         }
 

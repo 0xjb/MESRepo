@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MES.Acquintance {
     public class IBatchQueue {
-        ObservableCollection<Batch> Batches { get; set; }
-        Batch CurrentBatch { get; set; }
+        ObservableCollection<SimpleBatch> Batches { get; set; }
+        SimpleBatch CurrentBatch { get; set; }
     }
 }

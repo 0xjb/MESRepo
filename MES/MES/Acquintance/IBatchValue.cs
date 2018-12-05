@@ -1,17 +1,15 @@
-﻿namespace MES.Acquintance
-{
-    public interface IBatchValue
-    {
-        /// <summary>
-        /// Returns the batch value
-        /// </summary>
-        /// <returns></returns>
-        float GetValue();
+﻿namespace MES.Acquintance {
+    public interface IBatchValue {
+        float Value { get; }
+
+        string Timestamp { get; }
 
         /// <summary>
-        /// Returns the timestamp
+        /// Negative ints = Temp
+        /// 0 = Humidity
+        /// Positive ints = Vibration
         /// </summary>
-        /// <returns></returns>
-        string GetTimeStamp();
+        int Type { get; }
+
     }
 }

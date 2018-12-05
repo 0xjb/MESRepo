@@ -101,15 +101,15 @@ namespace MES.Data
 
         public void AddBatchValue(IBatchValue value)
         {
-            if (value is BatchTemperature)
+            if (value.Type > 1)
             {
                 this.batchTemperatures.Add(value);
             }
-            else if (value is BatchHumidity)
+            else if (value.Type == 1)
             {
                 this.batchHumidities.Add(value);
             }
-            else if (value is BatchVibration)
+            else if (value.Type == 1)
             {
                 this.batchVibrations.Add(value);
             }
@@ -118,17 +118,19 @@ namespace MES.Data
 
         public void AddBatchValue(float value, string timestamp, int type)
         {
-            if (type < 0)
+            IBatchValue bValue = new BatchValue(value, timestamp, type);
+
+            if (bValue.Type < 0)
             {
-                this.batchTemperatures.Add(new BatchTemperature(value, timestamp));
+                this.batchTemperatures.Add(bValue);
             }
-            else if (type == 0)
+            else if (bValue.Type == 0)
             {
-                this.batchHumidities.Add(new BatchHumidity(value, timestamp));
+                this.batchHumidities.Add(bValue);
             }
-            else if (type > 0)
+            else if (bValue.Type > 0)
             {
-                this.batchVibrations.Add(new BatchVibration(value, timestamp));
+                this.batchVibrations.Add(bValue);
             }
             else { }
         }

@@ -45,9 +45,7 @@ namespace MES.Tests
             ValueOverProdTime[] brrt = new ValueOverProdTime[100];
             for (int i = 0; i < 100; i++)
             {
-                ValueOverProdTime temp = new ValueOverProdTime();
-                temp.Value = rand.Next(100);
-                temp.Time = DateTime.Today.AddDays(rand.Next(1000));
+                ValueOverProdTime temp = new ValueOverProdTime(rand.Next(100),DateTime.Now.ToString());
                 brrt[i] = temp;
             }
 

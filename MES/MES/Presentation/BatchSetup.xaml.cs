@@ -49,14 +49,14 @@ namespace MES.Presentation {
 
         private void Button1_Click(object sender, RoutedEventArgs e) {
             if(batchQueueGrid.SelectedItem != null) {
-                presentationFacade.ILogic.Batches.MoveUp(batchQueueGrid.SelectedItem as Batch);
+                presentationFacade.ILogic.Batches.MoveUp(batchQueueGrid.SelectedItem as SimpleBatch);
             }
 
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e) {
             if (batchQueueGrid.SelectedItem != null) {
-                presentationFacade.ILogic.Batches.MoveDown(batchQueueGrid.SelectedItem as Batch);
+                presentationFacade.ILogic.Batches.MoveDown(batchQueueGrid.SelectedItem as SimpleBatch);
             }
 
         }

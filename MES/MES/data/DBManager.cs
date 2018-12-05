@@ -157,19 +157,16 @@ namespace MES.data
                 {
                     double value = dRead.GetDouble(0);
                     string timestamp = dRead.GetString(1);
-                    if (i == 0)
-                    {
-                        values.Add(new BatchTemperature((float)value, timestamp));
+                    int type = 0;
+
+                    if (i == 0) {
+                        type = -1;
+                    } else if (i == 1) {
+                        type = 0;
+                    } else if (i == 2) {
+                        type = 1;
                     }
-                    else if (i == 1)
-                    {
-                        values.Add(new BatchHumidity((float)value, timestamp));
-                    }
-                    else if (i == 2)
-                    {
-                        values.Add(new BatchVibration((float)value, timestamp));
-                    }
-                    else { }
+                    values.Add(new BatchValue((float)value, timestamp, type));                    
                 }
                 dRead.Close();
             }
@@ -241,11 +238,11 @@ namespace MES.data
                 foreach (IBatchValue value in list)
                 {
                     string table;
-                    if (value is BatchTemperature)
+                    if (value.Type < 0)
                     { table = temperatureTable; }
-                    else if (value is BatchHumidity)
+                    else if (value.Type == 0)
                     { table = humidityTable; }
-                    else if (value is BatchVibration)
+                    else if (value.Type > 0)
                     { table = vibrationTable; }
                     else
                     {
@@ -256,8 +253,8 @@ namespace MES.data
                     if (table != null)
                     {
                         sql[index] = "INSERT INTO " + table + " VALUES ("
-                            + value.GetValue() + ", '"
-                            + value.GetTimeStamp() + "', "
+                            + value.Value + ", '"
+                            + value.Timestamp + "', "
                             + batchId + ");";
                     }
                     index++;

@@ -29,7 +29,10 @@ namespace MES.Logic
         private double maintenanceCounter;
         private ErrorHandler errorHandler;
         private ILogic iLogic;
-
+        // temp, humidity & vibration measurements
+        private List<ValueOverProdTime> tempList;
+        private List<ValueOverProdTime> humidityList;
+        private List<ValueOverProdTime> vibrationList;
 
         public Session session;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,6 +40,9 @@ namespace MES.Logic
 
         public OpcClient(ILogic il)
         {
+            tempList = new List<ValueOverProdTime>();
+            humidityList = new List<ValueOverProdTime>();
+            vibrationList = new List<ValueOverProdTime>();
             Console.WriteLine("CONSTRUCTOR OPC CLIENT");
             this.iLogic = il;
             //this.errorHandler = new ErrorHandler();
@@ -162,6 +168,7 @@ namespace MES.Logic
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
                         TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        tempList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString()));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -170,10 +177,12 @@ namespace MES.Logic
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
                         HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        humidityList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString()));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        vibrationList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString()));
                         break;
                     //stop reason id
                     case "::Program:Cube.Admin.StopReason.ID":

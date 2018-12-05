@@ -120,14 +120,12 @@
     <Compile Include="Acquintance\IUser.cs" />
     <Compile Include="Acquintance\IUserManager.cs" />
     <Compile Include="Data\AlarmObject.cs" />
-    <Compile Include="Data\BatchHumidity.cs" />
-    <Compile Include="Data\BatchVibration.cs" />
     <Compile Include="Data\FileManager.cs" />
     <Compile Include="Data\Recipe.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Data\UserManager.cs" />
     <Compile Include="Logic\AlarmObject.cs" />
-    <Compile Include="Logic\Batch.cs" />
+    <Compile Include="Logic\SimpleBatch.cs" />
     <Compile Include="Logic\BatchQueue.cs" />
     <Compile Include="Logic\BatchReportGenerator.cs" />
     <Compile Include="Logic\ErrorHandler.cs" />
@@ -146,7 +144,7 @@
       <DependentUpon>Simulation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Data\BatchTemperature.cs" />
+    <Compile Include="Data\BatchValue.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="Presentation\HumidityHistory.xaml.cs">

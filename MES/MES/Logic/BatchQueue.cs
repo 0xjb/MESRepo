@@ -12,17 +12,17 @@ namespace MES.Logic {
     
     public class BatchQueue : IBatchQueue, INotifyPropertyChanged {
         private static object _lock = new object();
-        private Batch currentBatch;
-        public Batch CurrentBatch {
+        private SimpleBatch currentBatch;
+        public SimpleBatch CurrentBatch {
             get { return currentBatch; }
             set { currentBatch = value;
                 OnPropertyChanged("CurrentBatch"); }
         }
-        private ObservableCollection<Batch> batches = new ObservableCollection<Batch>();
+        private ObservableCollection<SimpleBatch> batches = new ObservableCollection<SimpleBatch>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Batch> Batches {
+        public ObservableCollection<SimpleBatch> Batches {
             get { return batches; }
             set { batches = value;
                 OnPropertyChanged("Batches");
@@ -39,18 +39,18 @@ namespace MES.Logic {
 
             }
         }
-        public void MoveUp(Batch b) {
+        public void MoveUp(SimpleBatch b) {
             int bIndex = Batches.IndexOf(b);
             if(bIndex != 0) {
-                Batch temp = b;
+                SimpleBatch temp = b;
                 Batches[bIndex] = Batches[bIndex - 1];
                 Batches[bIndex - 1] = temp;
             }
         }
-        public void MoveDown(Batch b) {
+        public void MoveDown(SimpleBatch b) {
             int bIndex = Batches.IndexOf(b);
             if (bIndex != Batches.Count-1) {
-                Batch temp = b;
+                SimpleBatch temp = b;
                 Batches[bIndex] = Batches[bIndex + 1];
                 Batches[bIndex + 1] = temp;
             }
@@ -58,7 +58,9 @@ namespace MES.Logic {
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
            if(e.PropertyName.Equals("StateCurrent")) {
                 if((sender as OpcClient).StateCurrent == 17) {
-                    //TODO: Fix this
+                    if(CurrentBatch != null) {
+
+                    }
                     try {
                         CurrentBatch = Batches[0];
                         Batches.RemoveAt(0);
