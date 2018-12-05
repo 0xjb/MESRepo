@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MES.Data;
 
 namespace MES.Acquintance
 {
@@ -120,8 +116,7 @@ namespace MES.Acquintance
         bool AuthenticateUserInformation(string username, string password);
 
         ObservableCollection<IAlarmObject> ReadFile();
-        void WriteToFile(string s);
 
-        IAlarmObject CreateNewAlarm(int alarmNumber, int batchId, string date, string stopReason, int stopId);
+        void WriteToFile(string s);
     }
 }

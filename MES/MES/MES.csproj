@@ -119,7 +119,7 @@
     <Compile Include="Acquintance\IRecipe.cs" />
     <Compile Include="Acquintance\IUser.cs" />
     <Compile Include="Acquintance\IUserManager.cs" />
-    <Compile Include="Data\AlarmObject.cs" />
+    <Compile Include="Data\DataAlarm.cs" />
     <Compile Include="Data\FileManager.cs" />
     <Compile Include="Data\Recipe.cs" />
     <Compile Include="Data\User.cs" />
@@ -128,6 +128,7 @@
     <Compile Include="Logic\BatchQueue.cs" />
     <Compile Include="Logic\BatchReportGenerator.cs" />
     <Compile Include="Logic\ErrorHandler.cs" />
+    <Compile Include="Logic\LogicAlarm.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />
     <Compile Include="Presentation\BatchReport.xaml.cs">

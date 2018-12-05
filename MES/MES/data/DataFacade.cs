@@ -1,5 +1,4 @@
-﻿using System;
-using MES.Acquintance;
+﻿using MES.Acquintance;
 using MES.data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +17,7 @@ namespace MES.Data
             dbManager = new DBManager();
             userManager = new UserManager();
             currentUser = null;
-            fileManager=new FileManager();
+            fileManager = new FileManager();
         }
 
         public ObservableCollection<IAlarmObject> ReadFile()
@@ -93,7 +92,7 @@ namespace MES.Data
 
         public bool RunQuery(string statement)
         {
-            string[] s = {statement};
+            string[] s = { statement };
             return dbManager.RunQueries(s);
         }
 
@@ -119,19 +118,6 @@ namespace MES.Data
             {
                 return false;
             }
-        }
-
-        public IAlarmObject CreateNewAlarm(int alarmNumber, int batchId, string date, string stopReason, int stopId)
-        {
-            IAlarmObject alarm = new AlarmObject();
-
-            alarm.AlarmNumber = alarmNumber;
-            alarm.BatchID = batchId;
-            alarm.Timestamp = date;
-            alarm.StopReason = stopReason;
-            alarm.StopID = stopId;
-
-            return alarm;
         }
     }
 }

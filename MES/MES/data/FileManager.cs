@@ -77,7 +77,7 @@ namespace MES.Data
                         if (stringTokens.Length == 7) {
                             //if (stringTokens.Length == 6) {
                             _alarms.Add(
-                                new AlarmObject()
+                                new DataAlarm()
                                 {
                                     AlarmNumber = Int32.Parse(stringTokens[0]),
                                     BatchID = Int32.Parse(stringTokens[1]),

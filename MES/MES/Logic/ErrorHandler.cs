@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using MES.Acquintance;
+using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
-using MES.Acquintance;
-using MES.Annotations;
-using MES.Presentation;
 
 
 namespace MES.Logic
@@ -49,7 +38,7 @@ namespace MES.Logic
 
         public void AddAlarm(int batchID, double stopReason)
         {
-            int index = (int) stopReason - 9;
+            int index = (int)stopReason - 9;
             if (index < 0)
             {
                 index = 0;
@@ -61,15 +50,15 @@ namespace MES.Logic
             {
                 if (index > 0)
                 {
-                    
+
                     alarmNumber = _alarms.Count + 1;
-                     stopReasonID = (int)stopReason;
-                    _alarms.Add(iLogic.Data.CreateNewAlarm(alarmNumber, batchID, _date, stopReasons[index], stopReasonID));
-             
+                    stopReasonID = (int)stopReason;
+                    _alarms.Add(new LogicAlarm(alarmNumber, _date, stopReasons[index], batchID, stopReasonID));
+
 
 
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
-                                      stopReasons[index]+" "+stopReason);
+                                      stopReasons[index] + " " + stopReason);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
                     alarmsToFile[0] = alarmNumber.ToString();
                     alarmsToFile[1] = batchID.ToString();
@@ -78,7 +67,7 @@ namespace MES.Logic
                     alarmsToFile[4] = stopReasonID.ToString();
 
                     stringBuilder.AppendFormat("{0,-15} {1,-20} {2,-40} {3,-40} {4,-40}", alarmsToFile[0], alarmsToFile[1],
-                        alarmsToFile[2], alarmsToFile[3],alarmsToFile[4]);
+                        alarmsToFile[2], alarmsToFile[3], alarmsToFile[4]);
                     stringBuilder.AppendLine();
 
                     string result = stringBuilder.ToString();
