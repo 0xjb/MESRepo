@@ -63,14 +63,18 @@ namespace MES.Logic {
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName.Equals("StateCurrent")) {
                 if ((sender as OpcClient).StateCurrent == 17 && CurrentBatch != null) {
-                    //TODO: Fix this
-                    if (Batches != null && Batches.Count != 0) {
-                        CurrentBatch = Batches[0];
-                        Batches.RemoveAt(0);
+                    if(CurrentBatch != null) {
+                        _logic.WriteBatchData();
+                        if(Batches.Count >= 1) {
+                            CurrentBatch = Batches[0];
+                            Batches.RemoveAt(0);
+                            _logic.OPC.ResetMachine();
+                            System.Threading.Thread.Sleep(3000);
+                            _logic.StartProduction();
+                        } else {
+                            CurrentBatch = null;
+                        }
                     }
-                    Console.WriteLine("yeet");
-                    _logic.WriteBatchData();
-
 
 
                 }
