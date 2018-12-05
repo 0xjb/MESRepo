@@ -3,7 +3,7 @@ using MES.Acquintance;
 using System.Windows;
 
 namespace MES.Presentation
-{
+{//TODO Ændre OEE til Optimization , og bytte Optimization til OEE
     /// <summary>
     /// Interaction logic for Optimization.xaml
     /// </summary>
