@@ -39,3 +39,5 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 38              0                    12-03-2018 09:14:13                      Manual stop                              12                                      
 39              0                    12-03-2018 09:26:00                      Manual stop                              12                                      
 40              0                    12-05-2018 10:46:29                      Manual stop                              12                                      
+41              0                    12-05-2018 20:07:51                      Manual stop                              12                                      
+42              0                    12-05-2018 20:07:59                      Manual stop                              12                                      

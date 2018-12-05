@@ -43,76 +43,105 @@
         </Grid.RowDefinitions>
         <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
 
-        <Viewbox Grid.Column="1" Grid.Row="8" Stretch="Uniform" VerticalAlignment="Center" >
+        <Viewbox Grid.Column="8" Grid.Row="11" Stretch="Uniform" VerticalAlignment="Center" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="OEE" Grid.Row="0" />
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="OEE" Grid.Row="0" />
                 <TextBox Name="txtOEE"  Text="{Binding Path=MachineSpeed}" MinWidth="100"  Margin="5,0,5,0"   Grid.Row="1"
                          TextWrapping="Wrap" IsReadOnly="True" />
             </Grid>
         </Viewbox>
 
 
-        <Viewbox Grid.Column="3" Grid.Row="4" Stretch="Uniform" VerticalAlignment="Center" >
+        <Viewbox Grid.Column="2" Grid.Row="1" Stretch="Uniform" VerticalAlignment="Center" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
                 <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Search Batch Id:" Grid.Row="0" />
-                <TextBox Name="txtSearchBatchId" HorizontalAlignment="Left"  MinWidth="100"     Grid.Row="1"
+                <TextBox Name="txtSearchBatchId"   Width="75" Grid.Row="1"
                          TextWrapping="Wrap"  />
             </Grid>
         </Viewbox>
 
-        <Viewbox Grid.Column="4" Grid.Row="4" Stretch="Uniform" VerticalAlignment="Center" >
+        <Viewbox Grid.Column="4" Grid.Row="1" Stretch="Uniform" VerticalAlignment="Center" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
                 <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Search Newest Batches:" Grid.Row="0" />
-                <TextBox Name="txtSearchNewestBacthId" HorizontalAlignment="Left"   MinWidth="100"    Grid.Row="1"
+                <TextBox Name="txtSearchNewestBacthId"  Width="75"  Grid.Row="1"
                          TextWrapping="Wrap" />
             </Grid>
         </Viewbox>
 
-        <Viewbox Grid.Column="5" Grid.Row="4" Stretch="Uniform" VerticalAlignment="Center" >
+        <Viewbox Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="1" Stretch="Uniform" VerticalAlignment="Center" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Search Month and Year:" Grid.Row="0" />
-                <TextBox Name="txtSearchMonthAndYear" HorizontalAlignment="Left"   MinWidth="100"     Grid.Row="1" 
-                         TextWrapping="Wrap" />
-             
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                 
+                </Grid.ColumnDefinitions>
+
+                <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Search Month and Year:" Grid.Row="0" />
+                <ComboBox x:Name="ComboMonth" Margin="5,0,5,0" Width="100" Grid.Column="1" Grid.Row="1">
+                    <ComboBoxItem Content="January"/>
+                    <ComboBoxItem Content="February"/>
+                    <ComboBoxItem Content="March"/>
+                    <ComboBoxItem Content="April"/>
+                    <ComboBoxItem Content="May"/>
+                    <ComboBoxItem Content="June"/>
+                    <ComboBoxItem Content="July"/>
+                    <ComboBoxItem Content="August"/>
+                    <ComboBoxItem Content="September"/>
+                    <ComboBoxItem Content="October"/>
+                    <ComboBoxItem Content="November"/>
+                    <ComboBoxItem Content="December"/>
+
+                </ComboBox>
+                <ComboBox x:Name="ComboYear"  Margin="5,0,5,0" Width="100" Grid.Column="0" Grid.Row="1">
+                    <ComboBoxItem Content="2018"/>
+                    <ComboBoxItem Content="2019"/>
+                    <ComboBoxItem Content="2020"/>
+                    <ComboBoxItem Content="2021"/>
+                </ComboBox>
+
 
             </Grid>
         </Viewbox>
 
-        <DataGrid MinColumnWidth="110" Name="DataGridShowBatches" Margin="5,5,5,5" Grid.ColumnSpan="4" Grid.Column="3" 
-                  Grid.Row="6" Grid.RowSpan="5" />
-        <Viewbox Grid.Column="3" Margin="5,5,5,5"  Grid.Row="5"  Stretch="Uniform">
+        <DataGrid MinColumnWidth="110" Name="DataGridShowBatches" Margin="5,5,5,15" Grid.ColumnSpan="6" Grid.Column="2" 
+                  Grid.Row="3" Grid.RowSpan="8" />
 
-            <Button Content="Search Batch Id:" Height="30" Width="150 " RenderTransformOrigin="0.263,0.263" Click="Button_Click" />
+        <Viewbox Grid.Column="2" Margin="5,5,5,5"  Grid.Row="2"  Stretch="Uniform">
+
+            <Button Content="Search Batch Id:" Height="30" Width="150 "  Click="Button_Click" />
 
         </Viewbox>
-  
-        <Viewbox Grid.Column="4" Margin="5,5,5,5"  Grid.Row="5"  Stretch="Uniform">
+
+        <Viewbox Grid.Column="4"  Margin="5,5,5,5"  Grid.Row="2"  Stretch="Uniform">
 
             <Button Content="Search Newest Batches:"  Height="30" Width="150 " />
 
         </Viewbox>
 
-        <Viewbox Grid.Column="5" Margin="5,5,5,5"  Grid.Row="5"  Stretch="Uniform">
+        <Viewbox  Grid.Column="6" Grid.ColumnSpan="2" Margin="5,5,5,5" Grid.Row="2"  Stretch="Uniform">
 
-            <Button Content="Search Month/Year:"  Height="30" Width="150 "  />
+            <Button Content="Search Month/Year:"  Height="30" Width="150 " Margin="10,10,10,10"  />
 
         </Viewbox>
+
+     
 
     </Grid>
 </Window>
