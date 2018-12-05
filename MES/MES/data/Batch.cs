@@ -101,19 +101,18 @@ namespace MES.Data
 
         public void AddBatchValue(IBatchValue value)
         {
-            if (value.Type > 1)
+            if (value.Type < 0)
             {
                 this.batchTemperatures.Add(value);
             }
-            else if (value.Type == 1)
+            else if (value.Type == 0)
             {
                 this.batchHumidities.Add(value);
             }
-            else if (value.Type == 1)
+            else if (value.Type > 0)
             {
                 this.batchVibrations.Add(value);
             }
-            else { }
         }
 
         public void AddBatchValue(float value, string timestamp, int type)

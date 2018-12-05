@@ -114,7 +114,7 @@ namespace MES.Logic {
             MonitoredItem miMaintenanceCounterNode = new DataMonitoredItem(maintenanceCounterNode);
 
             miTempNode.SamplingInterval = 500;
-            miVibrationNode.SamplingInterval = 500;
+            miVibrationNode.SamplingInterval = 1000;
             miHumidityNode.SamplingInterval = 500;
 
             monitoredItems.Add(miAmountNode);
@@ -135,7 +135,7 @@ namespace MES.Logic {
 
             // init subscription with parameters
             s = new Subscription(session);
-            s.PublishingInterval = 100;
+            s.PublishingInterval = 250;
             s.MaxKeepAliveTime = 1000;
             s.Lifetime = 1000000;
             s.MaxNotificationsPerPublish = 1;
