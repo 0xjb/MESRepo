@@ -8,10 +8,30 @@ namespace MES.Acquintance
         /// <summary>
         /// Saves a batch in the db
         /// </summary>
-        /// <param name="batch"></param>
+        /// <param name="batchId"></param>
+        /// <param name="beerId"></param>
+        /// <param name="acceptableProducts"></param>
+        /// <param name="defectProducts"></param>
+        /// <param name="timeStampStart"></param>
+        /// <param name="timeStampEnd"></param>
         /// <returns></returns>
         bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timeStampStart, string timeStampEnd);
+            int defectProducts, string timestampStart, string timestampEnd);
+
+        /// <summary>
+        /// Saves a batch in the db
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="beerId"></param>
+        /// <param name="acceptableProducts"></param>
+        /// <param name="defectProducts"></param>
+        /// <param name="timeStampStart"></param>
+        /// <param name="timeStampEnd"></param>
+        /// <param name="batchValues"></param>
+        /// <returns></returns>
+        bool SaveBatch(float batchId, float beerId, int acceptableProducts,
+           int defectProducts, string timestampStart, string timestampEnd,
+            ISet<IList<IBatchValue>> batchValues);
 
         /// <summary>
         /// Saves a batch in the db
@@ -23,10 +43,7 @@ namespace MES.Acquintance
         /// <summary>
         /// Inserts batch values into the db
         /// </summary>
-        /// <param name="temperature"></param>
-        /// <param name="humidity"></param>
-        /// <param name="vibration"></param>
-        /// <param name="timestamp"></param>
+        /// <param name="batchValues"></param>
         /// <param name="batchId"></param>
         /// <returns></returns>
         bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float batchId);

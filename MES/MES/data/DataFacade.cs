@@ -40,6 +40,19 @@ namespace MES.Data
                     defectProducts, timestampStart, timestampEnd));
         }
 
+        public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
+           int defectProducts, string timestampStart, string timestampEnd,
+            ISet<IList<IBatchValue>> batchValues)
+        {
+            IBatch batch = new Batch(batchId, beerId, acceptableProducts,
+                    defectProducts, timestampStart, timestampEnd);
+            foreach (IList<IBatchValue> list in batchValues)
+            {
+                batch.AddBatchValues(list);
+            }
+            return dbManager.InsertIntoBatchesTable(batch);
+        }
+
         public bool SaveBatch(IBatch batch)
         {
             return dbManager.InsertIntoBatchesTable(batch);
