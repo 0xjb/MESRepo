@@ -108,10 +108,11 @@ namespace MES.data
                     int defectProducts = dRead.GetInt32(3);
                     string timestampStart = dRead.GetString(4);
                     string timestampEnd = dRead.GetString(5);
+                    double oee = dRead.GetDouble(6);
 
                     batches.Add((float)batchId, new Batch((float)batchId, (float)beerId,
                         acceptableProducts, defectProducts,
-                        timestampStart, timestampEnd));
+                        timestampStart, timestampEnd, oee));
                 }
                 dRead.Close();
 
@@ -159,14 +160,19 @@ namespace MES.data
                     string timestamp = dRead.GetString(1);
                     int type = 0;
 
-                    if (i == 0) {
+                    if (i == 0)
+                    {
                         type = -1;
-                    } else if (i == 1) {
+                    }
+                    else if (i == 1)
+                    {
                         type = 0;
-                    } else if (i == 2) {
+                    }
+                    else if (i == 2)
+                    {
                         type = 1;
                     }
-                    values.Add(new BatchValue((float)value, timestamp, type));                    
+                    values.Add(new BatchValue((float)value, timestamp, type));
                 }
                 dRead.Close();
             }
@@ -259,7 +265,6 @@ namespace MES.data
                             + batchId + ");";
                     }
                     index++;
-
                 }
             }
             return sql;
@@ -282,7 +287,8 @@ namespace MES.data
                 + batch.GetAcceptableProducts() + ", "
                 + batch.GetDefectProducts() + ", '"
                 + batch.GetTimestampStart() + "', '"
-                + batch.GetTimestampEnd() + "');";
+                + batch.GetTimestampEnd() + "', "
+                + batch.GetOEE() + ");";
 
             String[] sql = CreateBatchValuesStatements(setOfValues, batch.GetBatchId(), 1);
             sql[0] = sql0;

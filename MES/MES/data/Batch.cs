@@ -11,12 +11,13 @@ namespace MES.Data
         private int defectProducts;
         private readonly string timestampStart;
         private string timestampEnd;
+        private double oee;
         private IList<IBatchValue> batchTemperatures;
         private IList<IBatchValue> batchHumidities;
         private IList<IBatchValue> batchVibrations;
 
         public Batch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timestampStart, string timestampEnd)
+            int defectProducts, string timestampStart, string timestampEnd, double oee)
         {
             this.batchId = batchId;
             this.beerId = beerId;
@@ -24,6 +25,7 @@ namespace MES.Data
             this.defectProducts = defectProducts;
             this.timestampStart = timestampStart;
             this.timestampEnd = timestampEnd;
+            this.oee = oee;
             this.batchTemperatures = new List<IBatchValue>();
             this.batchHumidities = new List<IBatchValue>();
             this.batchVibrations = new List<IBatchValue>();
@@ -34,7 +36,7 @@ namespace MES.Data
         {
             return batchId + ", " + beerId + ", "
                    + acceptableProducts + ", " + defectProducts + ", "
-                   + timestampStart + ", " + timestampEnd;
+                   + timestampStart + ", " + timestampEnd + ", " + oee;
         }
 
         public float GetBatchId()
@@ -65,6 +67,11 @@ namespace MES.Data
         public string GetTimestampEnd()
         {
             return timestampEnd;
+        }
+
+        public double GetOEE()
+        {
+            return oee;
         }
 
         public IList<IBatchValue> GetBatchTemperatures()

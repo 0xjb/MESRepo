@@ -16,7 +16,7 @@ namespace MES.Acquintance
         /// <param name="timeStampEnd"></param>
         /// <returns></returns>
         bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timestampStart, string timestampEnd);
+            int defectProducts, string timestampStart, string timestampEnd, double oee);
 
         /// <summary>
         /// Saves a batch in the db
@@ -30,8 +30,8 @@ namespace MES.Acquintance
         /// <param name="batchValues"></param>
         /// <returns></returns>
         bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-           int defectProducts, string timestampStart, string timestampEnd,
-            ISet<IList<IBatchValue>> batchValues);
+           int defectProducts, string timestampStart, string timestampEnd, double oee,
+           ISet<IList<IBatchValue>> batchValues);
 
         /// <summary>
         /// Saves a batch in the db

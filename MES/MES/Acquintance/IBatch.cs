@@ -41,6 +41,12 @@ namespace MES.Acquintance
         string GetTimestampEnd();
 
         /// <summary>
+        /// Returns the oee
+        /// </summary>
+        /// <returns></returns>
+        double GetOEE();
+
+        /// <summary>
         /// Returns a list of temperatures
         /// </summary>
         /// <returns></returns>

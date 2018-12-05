@@ -33,19 +33,19 @@ namespace MES.Data
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timestampStart, string timestampEnd)
+            int defectProducts, string timestampStart, string timestampEnd, double oee)
         {
             return dbManager.InsertIntoBatchesTable(
                 new Batch(batchId, beerId, acceptableProducts,
-                    defectProducts, timestampStart, timestampEnd));
+                    defectProducts, timestampStart, timestampEnd, oee));
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-           int defectProducts, string timestampStart, string timestampEnd,
+           int defectProducts, string timestampStart, string timestampEnd, double oee,
             ISet<IList<IBatchValue>> batchValues)
         {
             IBatch batch = new Batch(batchId, beerId, acceptableProducts,
-                    defectProducts, timestampStart, timestampEnd);
+                    defectProducts, timestampStart, timestampEnd, oee);
             foreach (IList<IBatchValue> list in batchValues)
             {
                 batch.AddBatchValues(list);

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MES.Acquintance {
-   public interface ISimpleBatch {
+﻿namespace MES.Acquintance
+{
+    public interface ISimpleBatch
+    {
         float BatchID { get; set; }
 
         float BeerType { get; set; }
@@ -15,5 +11,7 @@ namespace MES.Acquintance {
         string TimestampStart { get; set; }
 
         string TimestampEnd { get; set; }
+
+        double OEE { get; set; }
     }
 }
