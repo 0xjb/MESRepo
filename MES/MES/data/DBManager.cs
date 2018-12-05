@@ -230,6 +230,7 @@ namespace MES.data
             {
                 valueCount += list.Count;
             }
+            Console.WriteLine(valueCount);
             String[] sql = new String[valueCount + freeSpace];
 
             int index = freeSpace;
@@ -258,6 +259,7 @@ namespace MES.data
                             + batchId + ");";
                     }
                     index++;
+
                 }
             }
             return sql;
