@@ -1,5 +1,7 @@
 ﻿using MES.Acquintance;
+using System.Collections;
 using System;
+using System.Collections.Generic;
 
 namespace MES.Logic {
     public class LogicFacade : ILogic {
@@ -12,7 +14,7 @@ namespace MES.Logic {
 
         public LogicFacade() {
             this.opc = new OpcClient(this);
-            Batches = new BatchQueue(OPC);
+            Batches = new BatchQueue(this);
         }
 
         public BatchQueue Batches {
@@ -80,6 +82,18 @@ namespace MES.Logic {
 
         public bool AuthenticateUserInformation(string username, string password) {
             return data.AuthenticateUserInformation(username, password);
+        }
+        public void SaveBatch(ISimpleBatch s) {
+            ISet<IList<IBatchValue>> set = new HashSet<IList<IBatchValue>>();
+            set.Add(OPC.TempList);
+            set.Add(OPC.HumidityList);
+            set.Add(OPC.VibrationList);
+            Data.SaveBatch(s.BatchID,s.BeerType, (int)OPC.AcceptableProducts, (int)OPC.DefectProducts, s.TimestampStart
+                ,s.TimestampEnd, set);
+
+        }
+        public ISimpleBatch GetCurrentBatch() {
+            return Batches.CurrentBatch;
         }
     }
 }

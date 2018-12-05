@@ -117,6 +117,7 @@
     <Compile Include="Acquintance\IBatchqueue.cs" />
     <Compile Include="Acquintance\IBatchValue.cs" />
     <Compile Include="Acquintance\IRecipe.cs" />
+    <Compile Include="Acquintance\ISimpleBatch.cs" />
     <Compile Include="Acquintance\IUser.cs" />
     <Compile Include="Acquintance\IUserManager.cs" />
     <Compile Include="Data\AlarmObject.cs" />

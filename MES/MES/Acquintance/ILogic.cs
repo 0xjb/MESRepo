@@ -34,5 +34,7 @@ namespace MES.Acquintance
         bool AuthenticateUserInformation(string username, string password);
 
         void CreateErrorHandler();
+        void SaveBatch(ISimpleBatch s);
+        ISimpleBatch GetCurrentBatch();
     }
 }

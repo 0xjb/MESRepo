@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using MES.Acquintance;
 
 namespace MES {
-    class ValueOverProdTime : IBatchValue {
+    public class ValueOverProdTime : IBatchValue {
         private string timestamp;
         private float value;
     
-        public ValueOverProdTime(float _value, string _timestamp) {
+        public ValueOverProdTime(float _value, string _timestamp, int _type) {
             value = _value;
             timestamp = _timestamp;
+            Type = _type;
         }
 
 

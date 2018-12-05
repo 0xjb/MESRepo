@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MES.Logic {
-    public class SimpleBatch : INotifyPropertyChanged {
+    public class SimpleBatch : INotifyPropertyChanged, ISimpleBatch {
         private float batchID;
         public float BatchID {
             get { return batchID; }
@@ -32,6 +32,8 @@ namespace MES.Logic {
                 OnPropertyChanged("DesiredAmount");
             }
         }
+        public string TimestampStart { get; set; }
+        public string TimestampEnd { get; set; }
         public SimpleBatch(float id, float bt, float amount) {
             BatchID = id;
             BeerType = bt;
