@@ -21,8 +21,6 @@ namespace MES.Acquintance
 
         void CreateBatch(float batchId, float amount, float productType);
 
-        void AddBatch(string batchID, string productType, string amount);
-
         void StartProduction();
 
         /// <summary>
