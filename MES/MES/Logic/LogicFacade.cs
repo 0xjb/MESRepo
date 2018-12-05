@@ -87,10 +87,6 @@ namespace MES.Logic
             }
         }
 
-        public void AddBatch(string batchID, string productType, string amount)
-        {
-            Console.WriteLine("yeet");
-        }
 
         public void StartProduction()
         {

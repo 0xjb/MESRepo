@@ -15,7 +15,6 @@ namespace MES.Data
 
         public DataFacade()
         {
-            Console.WriteLine("\n\nCONSTRUCTOR DATAFACADE\n\n");
             dbManager = new DBManager();
             userManager = new UserManager();
             currentUser = null;

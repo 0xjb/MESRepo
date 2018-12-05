@@ -30,8 +30,10 @@ namespace MES.Logic
 
             this.opc = opcClient;
             opc.TempCurrent = 35;
+            opc.VibrationCurrent = 2;
+            opc.HumidityCurrent = 200;
 
-     
+
         }
 
   
@@ -52,23 +54,33 @@ namespace MES.Logic
             {
                 Random random = new Random();
 
-                double number = random.NextDouble() / 8;
-                number = Math.Round(number, 2);
+                double numberTemp = random.NextDouble() / 8;
+                double numberHumid = random.NextDouble() ;
+                double numberVibration = random.NextDouble();
+                numberTemp = Math.Round(numberTemp, 2);
+                numberHumid = Math.Round(numberHumid, 2);
+                numberVibration = Math.Round(numberVibration, 2);
 
                 if (b == false)
                 {
-                    opc.TempCurrent += number;
+                    opc.TempCurrent += numberTemp;
+                    opc.HumidityCurrent += numberHumid;
+                    opc.VibrationCurrent += numberVibration;
                     b = true;
                 }
                 else
                 {
-                    opc.TempCurrent -= number;
+                    opc.TempCurrent -= numberTemp;
+                    opc.HumidityCurrent -= numberHumid;
+                    opc.VibrationCurrent -= numberVibration;
                     b = false;
                 }
             }
             else
             {
                 opc.TempCurrent = 0;
+                opc.HumidityCurrent = 0;
+                opc.VibrationCurrent = 0;
             }
         }
     }

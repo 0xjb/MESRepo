@@ -54,7 +54,8 @@
                         <GridViewColumn Header="Alarm number" Width="120" DisplayMemberBinding="{Binding AlarmNumber}" />
                         <GridViewColumn Header="Batch ID" Width="50" DisplayMemberBinding="{Binding BatchID}" />
                         <GridViewColumn Header="Date and Time" Width="150" DisplayMemberBinding="{Binding Timestamp}" />
-                        <GridViewColumn Header="Stop reason" Width="200" DisplayMemberBinding="{Binding StopReason}" />
+                        <GridViewColumn Header="Stop reason" Width="150" DisplayMemberBinding="{Binding StopReason}" />
+                        <GridViewColumn Header="Stop Id" Width="100" DisplayMemberBinding="{Binding StopID}" />
                     </GridView>
                 </ListView.View>
             </ListView>

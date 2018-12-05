@@ -21,7 +21,7 @@ namespace MES.Presentation
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
-            SeriesCollection = new SeriesCollection
+            SeriesCollectionVibration = new SeriesCollection
             {
                 new LineSeries
                 {
@@ -30,8 +30,8 @@ namespace MES.Presentation
                 }
             };
 
-            Labels = new string[1000];
-            YFormatter = value => value;
+            LabelsVibration = new string[1000];
+            FormatterVibration = value => value;
             DataContext = this;
         }
 
@@ -54,11 +54,11 @@ namespace MES.Presentation
             if (PointChanged != null) PointChanged.Invoke();
         }
 
-        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection SeriesCollectionVibration { get; set; }
 
-        public string[] Labels { get; set; }
+        public string[] LabelsVibration { get; set; }
 
-        public Func<double, double> YFormatter { get; set; }
+        public Func<double, double> FormatterVibration { get; set; }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -78,9 +78,9 @@ namespace MES.Presentation
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            Labels[indexOfArray] = DateTime.Now.ToString();
+            LabelsVibration[indexOfArray] = DateTime.Now.ToString();
             _value = generateRandomNumber();
-            SeriesCollection[0].Values.Add(Value);
+            SeriesCollectionVibration[0].Values.Add(Value);
             indexOfArray++;
         }
     }

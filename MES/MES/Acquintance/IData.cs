@@ -132,6 +132,7 @@ namespace MES.Acquintance
         bool AuthenticateUserInformation(string username, string password);
 
         ObservableCollection<IAlarmObject> ReadFile();
+
         void WriteToFile(string s);
 
     }

@@ -25,7 +25,6 @@ namespace MES.Logic {
         private double yeast;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
-        private ErrorHandler errorHandler;
         private ILogic iLogic;
         // temp, humidity & vibration measurements
         private List<IBatchValue> tempList;
@@ -176,18 +175,16 @@ namespace MES.Logic {
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                         vibrationList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff"), 1));
                         break;
-                    //stop reason id
+                    //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
-                        BatchId = double.Parse(dc.Value.ToString());
-                        //errorHandler.AddAlarm((int)BatchId, StopReasonId);
-                        Console.WriteLine("\n\nKALDER ERROR HANDLER FRA OPC CLIENT\n\n");
+                        StopReasonId = double.Parse(dc.Value.ToString());
                         iLogic.ErrorHandler.AddAlarm((int)BatchId, StopReasonId);
                         break;
-                    //batch id 
+                    //batch id  BatchId
                     case "::Program:Cube.Status.Parameter[0].Value":
-                        StopReasonId = double.Parse(dc.Value.ToString());
+                        BatchId = double.Parse(dc.Value.ToString());
                         break;
-                    //barley
+                    //barley 
                     case "::Program:Inventory.Barley":
                         Barley = double.Parse(dc.Value.ToString());
                         break;
@@ -584,10 +581,6 @@ namespace MES.Logic {
             }
         }
 
-        public ErrorHandler ErrorHandler {
-            get => errorHandler;
-            set => errorHandler = value;
-        }
 
         public double Barley {
             get { return barley; }
@@ -661,5 +654,7 @@ namespace MES.Logic {
             get { return vibrationList; }
             set { vibrationList = value; }
         }
+
+      
     }
 }
