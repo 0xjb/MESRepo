@@ -557,8 +557,6 @@ namespace MES.Presentation
             {
                 produced = value;
                 acceptableProducts = produced - defectProducts;
-                OnPropertyChanged("AcceptableProducts");
-                OnPropertyChanged("DefectProducts");
                 OnPropertyChanged("Produced");
             }
         }
@@ -594,9 +592,7 @@ namespace MES.Presentation
             {
                 defectProducts = value;
                 acceptableProducts = produced - defectProducts;
-                OnPropertyChanged("AcceptableProducts");
                 OnPropertyChanged("DefectProducts");
-                OnPropertyChanged("Produced");
             }
         }
 
