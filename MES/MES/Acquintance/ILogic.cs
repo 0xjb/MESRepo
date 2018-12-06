@@ -1,5 +1,5 @@
 ﻿using MES.Logic;
-
+using System.Collections.Generic;
 
 namespace MES.Acquintance
 {
@@ -34,5 +34,6 @@ namespace MES.Acquintance
         void CreateErrorHandler();
         void SaveBatch(ISimpleBatch s);
         ISimpleBatch GetCurrentBatch();
+        IDictionary<float,IBatch> GetAllBatches();
     }
 }

@@ -1,4 +1,14 @@
-﻿using MES.Acquintance;
+﻿
+
+
+
+
+
+
+
+
+
+using MES.Acquintance;
 using MES.Data;
 using Npgsql;
 using System;
@@ -258,7 +268,8 @@ namespace MES.data
                     }
 
                     if (table != null)
-                    {
+                    { 
+                        // INSERT INTO vibrationvalues VALUES (40, 'lmao', 1);
                         sql[index] = "INSERT INTO " + table + " VALUES ("
                             + value.Value + ", '"
                             + value.Timestamp + "', "

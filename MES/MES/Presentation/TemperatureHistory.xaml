@@ -45,7 +45,8 @@
         <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
 
         <Grid Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="1" Grid.RowSpan="10">
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right">
+            <lvc:CartesianChart Series="{Binding SeriesCollectionTemperature
+}" LegendLocation="Right">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Temperature" LabelFormatter="{Binding FormatterTemperature}" />
                 </lvc:CartesianChart.AxisY>

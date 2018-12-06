@@ -119,5 +119,8 @@ namespace MES.Logic
         {
             return Batches.CurrentBatch;
         }
+        public IDictionary<float,IBatch> GetAllBatches() {
+            return data.GetAllBatches();
+        }
     }
 }

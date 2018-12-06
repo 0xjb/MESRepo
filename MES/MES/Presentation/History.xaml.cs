@@ -1,4 +1,5 @@
 ﻿using MES.Acquintance;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace MES.Presentation
@@ -9,13 +10,18 @@ namespace MES.Presentation
     public partial class History : Window
     {
         private IPresentation presentationFacade;
+        private ICollection<IBatch> batches;
         private MainWindow mw;
 
         public History(IPresentation pf, MainWindow mainWindow)
         {
+            DataContext = this;
             this.presentationFacade = pf;
+            batches = pf.ILogic.GetAllBatches().Values;
+
             this.mw = mainWindow;
             InitializeComponent();
+            comboBox.ItemsSource = batches;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -28,8 +34,8 @@ namespace MES.Presentation
 
         private void btnShowTemperatureHistory_Click(object sender, RoutedEventArgs e)
         {
-            TemperatureHistory temperatureHistory = new TemperatureHistory(presentationFacade, mw);
-            this.Close();
+            TemperatureHistory temperatureHistory = new TemperatureHistory(comboBox.SelectedItem as IBatch, this);
+            this.Hide();
             temperatureHistory.Show();
         }
 
