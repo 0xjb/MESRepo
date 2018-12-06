@@ -144,6 +144,16 @@ namespace MES.Tests
             IBatch loadedBatch9 = dbManager.GetBatch(-1);
             Assert.IsNotNull(loadedBatch9, "Succes");
 
+            // Testing GetHighestBatchId
+
+            float id = dbManager.GetHighestBatchId();
+            bool succes = false;
+            if (id >= -1)
+            {
+                succes = true;
+            }
+            Assert.IsTrue(succes, "Succes");
+
             // Testing DeleteBatch
 
             bool deleted0 = dbManager.DeleteBatch(-1);
@@ -167,7 +177,7 @@ namespace MES.Tests
             Assert.IsNull(loadedBatch13, "Succes");
         }
 
-
+        /*
         [Test]
         public void DBSetup()
         {
@@ -294,6 +304,6 @@ namespace MES.Tests
             IBatch loadedBatch3 = dbManager.GetBatch(-4);
             Assert.IsNull(loadedBatch3, "Succes");
         }
-
+        */
     }
 }

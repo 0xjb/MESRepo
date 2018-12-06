@@ -124,6 +124,12 @@ namespace MES.Acquintance
         bool AddRecipes(IRecipe[] recipes);
 
         /// <summary>
+        /// Returns the highest Batch id in the db
+        /// </summary>
+        /// <returns></returns>
+        float GetHighestBatchId();
+
+        /// <summary>
         /// Authenticates the user information
         /// </summary>
         /// <param name="username"></param>
