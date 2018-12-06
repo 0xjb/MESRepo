@@ -47,7 +47,7 @@
         <Grid Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="1" Grid.RowSpan="10">
             <lvc:CartesianChart Series="{Binding SeriesCollectionHumidity}" LegendLocation="Right">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Humidity" LabelFormatter="{Binding YFormatter}" />
+                    <lvc:Axis Title="Humidity" LabelFormatter="{Binding FormatterHumidity}" />
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Date" Labels="{Binding LabelsHumidity}" />

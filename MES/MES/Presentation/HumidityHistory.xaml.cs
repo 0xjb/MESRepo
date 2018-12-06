@@ -33,6 +33,9 @@ namespace MES.Presentation
             LabelsHumidity = new string[1000];
             FormatterHumidity = value => value;
             DataContext = this;
+            foreach(var humi in batch.GetBatchHumidities()) {
+                Console.WriteLine(humi.Value);
+            }
             InsertHumidityData();
         }
 
