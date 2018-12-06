@@ -39,7 +39,7 @@ namespace MES.Presentation
             try
             {
                 float batchId = presentationFacade.ILogic.GetHighestBatchId() + 1;
-                float productType = ((IRecipe)ProductTypeTB.SelectedItem).BeerId;
+                IRecipe productType = (IRecipe)ProductTypeTB.SelectedItem;
                 float amount = float.Parse(AmountTB.Text);
                 presentationFacade.ILogic.CreateBatch(batchId, amount, productType);
                 testlabel.Content = "Batch added to the list";
