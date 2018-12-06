@@ -66,7 +66,7 @@ namespace MES.data
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("ERROR\n" + ex.ToString());
+                        //MessageBox.Show("ERROR\n" + ex.ToString());
                     }
                 }
 
@@ -187,7 +187,7 @@ namespace MES.data
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("ERROR\n" + ex.ToString());
+                    //MessageBox.Show("ERROR\n" + ex.ToString());
                 }
             }
             return values;
