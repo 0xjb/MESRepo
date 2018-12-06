@@ -66,6 +66,7 @@ namespace MES.Data
         {
             this.beerId = beerId;
             this.maxSpeed = maxSpeed;
+            this.name = name;
             this.barley = barley;
             this.hops = hops;
             this.malt = malt;

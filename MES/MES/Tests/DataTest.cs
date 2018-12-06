@@ -177,7 +177,7 @@ namespace MES.Tests
             Assert.IsNull(loadedBatch13, "Succes");
         }
 
-        /*
+
         [Test]
         public void DBSetup()
         {
@@ -304,6 +304,6 @@ namespace MES.Tests
             IBatch loadedBatch3 = dbManager.GetBatch(-4);
             Assert.IsNull(loadedBatch3, "Succes");
         }
-        */
+
     }
 }
