@@ -33,7 +33,7 @@ namespace MES.Acquintance
         bool AuthenticateUserInformation(string username, string password);
 
         void CreateErrorHandler();
-        void addOEEFromBatch(int batchId);
+        bool addOEEFromBatch(int batchId);
 
         ObservableCollection<IBatch> OEeList { get; set; }
         void SaveBatch(ISimpleBatch s);

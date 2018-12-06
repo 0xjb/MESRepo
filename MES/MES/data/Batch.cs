@@ -44,6 +44,25 @@ namespace MES.Data
             return batchId;
         }
 
+        //public float BatchId { get; set; }
+
+        
+
+        public float BatchId
+        {
+            get { return batchId; }
+            
+        }
+   
+
+        public double OEE
+        {
+            get { return oee; }
+        
+        }
+
+
+
         public float GetBeerId()
         {
             return beerId;

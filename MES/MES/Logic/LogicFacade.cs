@@ -2,6 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using MES.Annotations;
+using MES.Data;
 
 namespace MES.Logic
 {
@@ -19,7 +24,7 @@ namespace MES.Logic
         {
             this.opc = new OpcClient(this);
             Batches = new BatchQueue(this);
-            Batches = new BatchQueue(OPC);
+            //Batches = new BatchQueue(OPC);
             oEEList = new ObservableCollection<IBatch>();
         }
 
@@ -105,9 +110,18 @@ namespace MES.Logic
             return data.AuthenticateUserInformation(username, password);
         }
 
-        public void addOEEFromBatch(int batchId)
+        public bool addOEEFromBatch(int batchId)
         {
-            oEEList.Add(data.GetBatch(batchId));
+            if (data.GetBatch(batchId) != null)
+            {
+                oEEList.Add(data.GetBatch(batchId));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+         
         }
 
         public ObservableCollection<IBatch> OEeList
@@ -115,9 +129,9 @@ namespace MES.Logic
             get => oEEList;
             set => oEEList = value;
         }
-    }
-}
-        public void SaveBatch(ISimpleBatch s)
+
+
+    public void SaveBatch(ISimpleBatch s)
         {
             ISet<IList<IBatchValue>> set = new HashSet<IList<IBatchValue>>();
             set.Add(OPC.TempList);
@@ -139,5 +153,9 @@ namespace MES.Logic
         {
             return Batches.CurrentBatch;
         }
+
+        
+
+    
     }
 }

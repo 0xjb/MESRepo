@@ -634,6 +634,11 @@ namespace MES.Presentation
             handler(this, new PropertyChangedEventArgs(name));
         }
     }
+
+        private void DataGridQuedBatches_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 
