@@ -410,27 +410,21 @@ namespace MES.data
 
         public float GetHighestBatchId()
         {
-            string sql = "SELECT 1 FROM " + batchesTable
+            string sql = "SELECT * FROM " + batchesTable
                 + " WHERE batchid = (SELECT MAX(batchid) FROM "
                 + batchesTable + ");";
 
             IDictionary<float, IBatch> collection = GetSqlCommand(sql);
-            if (collection.Count > 1)
-            {
-                foreach (KeyValuePair<float, IBatch> batch in collection)
-                {
-                    MessageBox.Show(collection.Count + "!!!\n" + batch.Value.ToString());
-                }
-            }
+           
             if (collection.Count > 0)
             {
                 foreach (KeyValuePair<float, IBatch> batch in collection)
                 {
-                    MessageBox.Show(batch.Value.ToString());
+                   
                     return batch.Key;
                 }
             }
-            MessageBox.Show(0.ToString());
+            
             return 0;
         }
     }
