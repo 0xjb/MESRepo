@@ -127,7 +127,7 @@
     <Compile Include="Data\UserManager.cs" />
     <Compile Include="Logic\SimpleBatch.cs" />
     <Compile Include="Logic\BatchQueue.cs" />
-    <Compile Include="Logic\BatchReportGenerator.cs" />
+    <Compile Include="Data\BatchReportGenerator.cs" />
     <Compile Include="Logic\ErrorHandler.cs" />
     <Compile Include="Logic\LogicAlarm.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
