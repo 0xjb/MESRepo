@@ -562,6 +562,8 @@ namespace MES.Presentation
             set
             {
                 produced = value;
+                OnPropertyChanged("AcceptableProducts");
+                OnPropertyChanged("DefectProducts");
                 OnPropertyChanged("Produced");
             }
         }
@@ -605,7 +607,9 @@ namespace MES.Presentation
             set
             {
                 defectProducts = value;
+                OnPropertyChanged("AcceptableProducts");
                 OnPropertyChanged("DefectProducts");
+                OnPropertyChanged("Produced");
             }
         }
 
