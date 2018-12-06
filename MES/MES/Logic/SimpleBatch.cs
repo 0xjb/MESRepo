@@ -46,6 +46,7 @@ namespace MES.Logic
             BeerType = recipe.BeerId;
             MachineSpeed = recipe.MaxSpeed;
             DesiredAmount = amount;
+            OEE = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
