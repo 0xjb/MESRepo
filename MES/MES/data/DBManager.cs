@@ -56,10 +56,17 @@ namespace MES.data
 
                 foreach (String statement in statements)
                 {
-                    if (statement != null)
+                    try
                     {
-                        NpgsqlCommand command = new NpgsqlCommand(statement, conn);
-                        command.ExecuteNonQuery();
+                        if (statement != null)
+                        {
+                            NpgsqlCommand command = new NpgsqlCommand(statement, conn);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("ERROR\n" + ex.ToString());
                     }
                 }
 
@@ -151,30 +158,37 @@ namespace MES.data
 
             for (int i = 0; i < sql.Length; i++)
             {
-                NpgsqlCommand command = new NpgsqlCommand(sql[i], conn);
-                NpgsqlDataReader dRead = command.ExecuteReader();
-
-                while (dRead.Read())
+                try
                 {
-                    double value = dRead.GetDouble(0);
-                    string timestamp = dRead.GetString(1);
-                    int type = 0;
+                    NpgsqlCommand command = new NpgsqlCommand(sql[i], conn);
+                    NpgsqlDataReader dRead = command.ExecuteReader();
 
-                    if (i == 0)
+                    while (dRead.Read())
                     {
-                        type = -1;
+                        double value = dRead.GetDouble(0);
+                        string timestamp = dRead.GetString(1);
+                        int type = 0;
+
+                        if (i == 0)
+                        {
+                            type = -1;
+                        }
+                        else if (i == 1)
+                        {
+                            type = 0;
+                        }
+                        else if (i == 2)
+                        {
+                            type = 1;
+                        }
+                        values.Add(new BatchValue((float)value, timestamp, type));
                     }
-                    else if (i == 1)
-                    {
-                        type = 0;
-                    }
-                    else if (i == 2)
-                    {
-                        type = 1;
-                    }
-                    values.Add(new BatchValue((float)value, timestamp, type));
+                    dRead.Close();
                 }
-                dRead.Close();
+                catch (Exception ex)
+                {
+                    MessageBox.Show("ERROR\n" + ex.ToString());
+                }
             }
             return values;
         }
@@ -406,6 +420,25 @@ namespace MES.data
             }
 
             return SendSqlCommand(statements);
+        }
+
+        public float GetHighestBatchId()
+        {
+            string sql = "SELECT * FROM " + batchesTable
+                + " WHERE batchid = (SELECT MAX(batchid) FROM "
+                + batchesTable + ");";
+
+            IDictionary<float, IBatch> collection = GetSqlCommand(sql);
+
+            if (collection.Count > 0)
+            {
+                foreach (KeyValuePair<float, IBatch> batch in collection)
+                {
+
+                    return batch.Key;
+                }
+            }
+            return 0;
         }
     }
 }

@@ -144,6 +144,16 @@ namespace MES.Tests
             IBatch loadedBatch9 = dbManager.GetBatch(-1);
             Assert.IsNotNull(loadedBatch9, "Succes");
 
+            // Testing GetHighestBatchId
+
+            float id = dbManager.GetHighestBatchId();
+            bool succes = false;
+            if (id >= -1)
+            {
+                succes = true;
+            }
+            Assert.IsTrue(succes, "Succes");
+
             // Testing DeleteBatch
 
             bool deleted0 = dbManager.DeleteBatch(-1);
@@ -264,7 +274,9 @@ namespace MES.Tests
                     + ", malt = " + recipes[i].Malt
                     + ", wheat = " + recipes[i].Wheat
                     + ", yeast = " + recipes[i].Yeast
-                    + " WHERE beerid = " + recipes[i].BeerId;
+                    + ", maxspeed = " + recipes[i].MaxSpeed
+                    + ", name = '" + recipes[i].Name
+                    + "' WHERE beerid = " + recipes[i].BeerId;
             }
 
             bool succes = dbManager.RunQueries(statements);

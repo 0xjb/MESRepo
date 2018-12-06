@@ -83,26 +83,38 @@ namespace MES.Logic
         {
             this.errorHandler = new ErrorHandler(this);
         }
-        public void CreateBatch(float batchId, float amount, float productType)
+
+        public void CreateBatch(float batchId, float amount, IRecipe recipe)
         {
-            SimpleBatch b = new SimpleBatch(batchId, productType, amount);
+            SimpleBatch b = new SimpleBatch(batchId, recipe, amount);
             if (Batches.CurrentBatch == null)
             {
                 Batches.CurrentBatch = b;
             }
             else
             {
-                Batches.Batches.Add(new SimpleBatch(batchId, productType, amount));
+                Batches.Batches.Add(new SimpleBatch(batchId, recipe, amount));
             }
+        }
+
+        public IDictionary<float, IRecipe> GetAllRecipes()
+        {
+            return data.GetAllRecipes();
         }
 
         public void AddBatch(string batchID, string productType, string amount) {
           
         }
 
+        public float GetHighestBatchId()
+        {
+            return data.GetHighestBatchId();
+        }
+
         public void StartProduction()
         {
-            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount, 60);
+            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
+                Batches.CurrentBatch.DesiredAmount, Batches.CurrentBatch.MachineSpeed);
         }
 
         public bool AuthenticateUserInformation(string username, string password)

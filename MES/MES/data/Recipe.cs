@@ -1,9 +1,4 @@
 ﻿using MES.Acquintance;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MES.Data
 {
@@ -71,11 +66,18 @@ namespace MES.Data
         {
             this.beerId = beerId;
             this.maxSpeed = maxSpeed;
+            this.name = name;
             this.barley = barley;
             this.hops = hops;
             this.malt = malt;
             this.wheat = wheat;
             this.yeast = yeast;
+        }
+
+        override
+        public string ToString()
+        {
+            return beerId + ": " + name;
         }
     }
 }
