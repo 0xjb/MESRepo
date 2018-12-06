@@ -38,6 +38,7 @@ namespace MES.Presentation
         private double produced;
         private double acceptableProducts;
         private double defectProducts;
+        private double amountToProduce;
 
         private int indexOfArrayTemp = 0;
         private int indexOfArrayHumid = 0;
@@ -579,6 +580,17 @@ namespace MES.Presentation
             {
                 acceptableProducts = value;
                 OnPropertyChanged("AcceptableProducts");
+            }
+        }
+
+        public double AmountToProduce
+        {
+            get { return amountToProduce; }
+
+            set
+            {
+                amountToProduce = value;
+                OnPropertyChanged("AmountToProduce");
             }
         }
 
