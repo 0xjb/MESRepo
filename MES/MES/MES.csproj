@@ -115,8 +115,9 @@
   <ItemGroup>
     <Compile Include="Acquintance\IAlarmObject.cs" />
     <Compile Include="Acquintance\IBatchqueue.cs" />
-    <Compile Include="Acquintance\IBatchValueSet.cs" />
+    <Compile Include="Acquintance\IBatchValue.cs" />
     <Compile Include="Acquintance\IRecipe.cs" />
+    <Compile Include="Acquintance\ISimpleBatch.cs" />
     <Compile Include="Acquintance\IUser.cs" />
     <Compile Include="Acquintance\IUserManager.cs" />
     <Compile Include="Data\DataAlarm.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="Data\Recipe.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Data\UserManager.cs" />
-    <Compile Include="Logic\Batch.cs" />
+    <Compile Include="Logic\SimpleBatch.cs" />
     <Compile Include="Logic\BatchQueue.cs" />
     <Compile Include="Logic\BatchReportGenerator.cs" />
     <Compile Include="Logic\ErrorHandler.cs" />
@@ -145,7 +146,7 @@
       <DependentUpon>Simulation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Data\BatchValueSet.cs" />
+    <Compile Include="Data\BatchValue.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="Presentation\HumidityHistory.xaml.cs">

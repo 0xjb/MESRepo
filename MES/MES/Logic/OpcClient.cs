@@ -6,10 +6,8 @@ using System.Windows;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
-namespace MES.Logic
-{
-    public class OpcClient : INotifyPropertyChanged
-    {
+namespace MES.Logic {
+    public class OpcClient : INotifyPropertyChanged {
         private bool isProcessRunning = false;
         private double processedProducts;
         private double defectProducts;
@@ -28,14 +26,19 @@ namespace MES.Logic
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
         private ILogic iLogic;
-
+        // temp, humidity & vibration measurements
+        private List<IBatchValue> tempList;
+        private List<IBatchValue> humidityList;
+        private List<IBatchValue> vibrationList;
 
         public Session session;
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        public OpcClient(ILogic il)
-        {
+        public OpcClient(ILogic il) {
+            tempList = new List<IBatchValue>();
+            humidityList = new List<IBatchValue>();
+            vibrationList = new List<IBatchValue>();
             Console.WriteLine("CONSTRUCTOR OPC CLIENT");
             this.iLogic = il;
             //this.errorHandler = new ErrorHandler();
@@ -43,30 +46,25 @@ namespace MES.Logic
             CreateSubscription();
         }
 
-        public OpcClient()
-        {
+        public OpcClient() {
             Connect();
             CreateSubscription();
         }
 
-        public void Connect()
-        {
+        public void Connect() {
             session = new Session();
             //TODO skal tjekkes.
-            try
-            {
+            try {
                 //Connect to server with no security (simulator)
-                session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
+                //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
 
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 //Connect to server with no security (machine)
-                //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
-            }
-            catch (Exception ex)
-            {
+                session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+            } catch (Exception ex) {
 
                 MessageBox.Show(ex.ToString());
-                
+
             }
 
             //TODO SKAL denne fjernes??
@@ -75,8 +73,7 @@ namespace MES.Logic
             maintenanceTrigger = ReadMaintenanceTrigger();
         }
 
-        public void CreateSubscription()
-        {
+        public void CreateSubscription() {
             Subscription s = new Subscription(session);
             // node to monitor
             NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
@@ -115,6 +112,10 @@ namespace MES.Logic
             MonitoredItem miMaintenanceTriggerNode = new DataMonitoredItem(maintenanceTriggerNode);
             MonitoredItem miMaintenanceCounterNode = new DataMonitoredItem(maintenanceCounterNode);
 
+            miTempNode.SamplingInterval = 500;
+            miVibrationNode.SamplingInterval = 1000;
+            miHumidityNode.SamplingInterval = 500;
+
             monitoredItems.Add(miAmountNode);
             monitoredItems.Add(miStateNode);
             monitoredItems.Add(miDefectNode);
@@ -133,7 +134,7 @@ namespace MES.Logic
 
             // init subscription with parameters
             s = new Subscription(session);
-            s.PublishingInterval = 100;
+            s.PublishingInterval = 250;
             s.MaxKeepAliveTime = 1000;
             s.Lifetime = 1000000;
             s.MaxNotificationsPerPublish = 1;
@@ -145,12 +146,9 @@ namespace MES.Logic
             s.Create(new RequestSettings() { OperationTimeout = 10000 });
         }
 
-        private void OnDataChanged(Subscription s, DataChangedEventArgs e)
-        {
-            foreach (DataChange dc in e.DataChanges)
-            {
-                switch (dc.MonitoredItem.NodeId.Identifier.ToString())
-                {
+        private void OnDataChanged(Subscription s, DataChangedEventArgs e) {
+            foreach (DataChange dc in e.DataChanges) {
+                switch (dc.MonitoredItem.NodeId.Identifier.ToString()) {
                     case "::Program:Cube.Status.StateCurrent":
                         StateCurrent = double.Parse(dc.Value.ToString());
                         break;
@@ -160,7 +158,8 @@ namespace MES.Logic
                         break;
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
-                        TempCurrent =  double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        tempList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff"), -1));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -169,10 +168,12 @@ namespace MES.Logic
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
                         HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        humidityList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff"), 0));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        vibrationList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff"), 1));
                         break;
                     //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
@@ -217,15 +218,12 @@ namespace MES.Logic
             }
         }
 
-        public void Disconnect()
-        {
+        public void Disconnect() {
             session.Disconnect();
         }
 
-        public void ResetMachine()
-        {
-            if (!isProcessRunning)
-            {
+        public void ResetMachine() {
+            if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -242,10 +240,8 @@ namespace MES.Logic
             }
         }
 
-        public void StopMachine()
-        {
-            if (!isProcessRunning)
-            {
+        public void StopMachine() {
+            if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -262,10 +258,8 @@ namespace MES.Logic
             }
         }
 
-        public void AbortMachine()
-        {
-            if (!isProcessRunning)
-            {
+        public void AbortMachine() {
+            if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -282,10 +276,8 @@ namespace MES.Logic
             }
         }
 
-        public void ClearMachine()
-        {
-            if (!isProcessRunning)
-            {
+        public void ClearMachine() {
+            if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -302,10 +294,8 @@ namespace MES.Logic
             }
         }
 
-        public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed)
-        {
-            if (!isProcessRunning)
-            {
+        public void StartMachine(float batchId, float productType, float amountToProduce, float machineSpeed) {
+            if (!isProcessRunning) {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -340,40 +330,32 @@ namespace MES.Logic
             }
         }
 
-        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val)
-        {
-            return new WriteValue()
-            {
+        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val) {
+            return new WriteValue() {
                 NodeId = new NodeId(nodeId, namespaceIndex),
                 AttributeId = attributeId,
                 Value = val
             };
         }
 
-        private DataValue CreateDataValue(float f)
-        {
-            return new DataValue()
-            {
+        private DataValue CreateDataValue(float f) {
+            return new DataValue() {
                 Value = f
             };
         }
 
-        public void Write(WriteValueCollection nodesToWrite)
-        {
+        public void Write(WriteValueCollection nodesToWrite) {
             session.Write(nodesToWrite);
         }
 
         //TODO skal fjernes herfra og ned (read metoder)
-        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e)
-        {
+        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e) {
             Console.WriteLine("succ");
         }
 
-        public Int32 ReadStateCurrent()
-        {
+        public Int32 ReadStateCurrent() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.StateCurrent", 6),
                 AttributeId = Attributes.Value
             });
@@ -384,11 +366,9 @@ namespace MES.Logic
         }
 
 
-        public int readDataTypes()
-        {
+        public int readDataTypes() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Command.Parameter[0].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -399,11 +379,9 @@ namespace MES.Logic
             return (int)result[0].Value;
         }
 
-        public float ReadCurrentMachineSpeed()
-        {
+        public float ReadCurrentMachineSpeed() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.CurMachSpeed", 6),
                 AttributeId = Attributes.Value
             });
@@ -413,11 +391,9 @@ namespace MES.Logic
             return (float)dv.Value;
         }
 
-        public float ReadMachineSpeed()
-        {
+        public float ReadMachineSpeed() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.MachSpeed", 6),
                 AttributeId = Attributes.Value
             });
@@ -427,11 +403,9 @@ namespace MES.Logic
             return (float)dv.Value;
         }
 
-        public float ReadCurrentBatchId()
-        {
+        public float ReadCurrentBatchId() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -441,11 +415,9 @@ namespace MES.Logic
             return (float)dv.Value;
         }
 
-        public float ReadProductAmountInBatch()
-        {
+        public float ReadProductAmountInBatch() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[1].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -455,11 +427,9 @@ namespace MES.Logic
             return (float)dv.Value;
         }
 
-        public float ReadCurrentHumidity()
-        {
+        public float ReadCurrentHumidity() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -469,11 +439,9 @@ namespace MES.Logic
             return (float)dv.Value;
         }
 
-        public float ReadCurrentTemperature()
-        {
+        public float ReadCurrentTemperature() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -483,11 +451,9 @@ namespace MES.Logic
             return (float)dv.Value;
         }
 
-        public float ReadCurrentVibration()
-        {
+        public float ReadCurrentVibration() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -497,11 +463,9 @@ namespace MES.Logic
             return (float)dv.Value;
         }
 
-        public Int32 ReadCurrentProductsProcessed()
-        {
+        public Int32 ReadCurrentProductsProcessed() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6),
                 AttributeId = Attributes.Value
             });
@@ -511,11 +475,9 @@ namespace MES.Logic
             return (int)dv.Value;
         }
 
-        public Int32 ReadDefectProducts()
-        {
+        public Int32 ReadDefectProducts() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6),
                 AttributeId = Attributes.Value
             });
@@ -525,11 +487,9 @@ namespace MES.Logic
             return (int)dv.Value;
         }
 
-        public UInt16 ReadMaintenanceTrigger()
-        {
+        public UInt16 ReadMaintenanceTrigger() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId()
-            {
+            nodesToRead.Add(new ReadValueId() {
                 NodeId = new NodeId("::Program:Maintenance.Trigger", 6),
                 AttributeId = Attributes.Value
             });
@@ -540,185 +500,159 @@ namespace MES.Logic
         }
 
 
-        protected void OnPropertyChanged(string name)
-        {
+        protected void OnPropertyChanged(string name) {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
 
-        public double ProcessedProducts
-        {
+        public double ProcessedProducts {
             get { return processedProducts; }
-            set
-            {
+            set {
                 processedProducts = value;
                 AcceptableProducts = processedProducts - defectProducts;
                 OnPropertyChanged("ProcessedProducts");
             }
         }
 
-        public double DefectProducts
-        {
+        public double DefectProducts {
             get { return defectProducts; }
-            set
-            {
+            set {
                 defectProducts = value;
                 OnPropertyChanged("DefectProducts");
             }
         }
 
-        public double AcceptableProducts
-        {
+        public double AcceptableProducts {
             get { return acceptableProducts; }
-            set
-            {
+            set {
                 acceptableProducts = value;
                 OnPropertyChanged("AcceptableProducts");
             }
 
         }
 
-        public double StateCurrent
-        {
+        public double StateCurrent {
             get { return stateCurrent; }
-            set
-            {
+            set {
                 stateCurrent = value;
                 OnPropertyChanged("StateCurrent");
             }
         }
 
-        public double TempCurrent
-        {
+        public double TempCurrent {
             get { return tempCurrent; }
-            set
-            {
+            set {
                 tempCurrent = value;
                 OnPropertyChanged("TempCurrent");
             }
         }
 
-        public double HumidityCurrent
-        {
+        public double HumidityCurrent {
             get { return humidityCurrent; }
-            set
-            {
+            set {
                 humidityCurrent = value;
                 OnPropertyChanged("HumidityCurrent");
             }
         }
 
-        public double VibrationCurrent
-        {
+        public double VibrationCurrent {
             get { return vibrationCurrent; }
-            set
-            {
+            set {
                 vibrationCurrent = value;
                 OnPropertyChanged("VibrationCurrent");
             }
         }
 
-        public double BatchId
-        {
+        public double BatchId {
             get { return batchId; }
-            set
-            {
+            set {
                 stopReasonId = value;
                 OnPropertyChanged("BatchId");
             }
         }
 
-        public double StopReasonId
-        {
+        public double StopReasonId {
             get { return stopReasonId; }
-            set
-            {
+            set {
                 stopReasonId = value;
                 OnPropertyChanged("StopReasonId");
             }
         }
 
 
-        public double Barley
-        {
+        public double Barley {
             get { return barley; }
-            set
-            {
+            set {
                 barley = value;
                 OnPropertyChanged("Barley");
             }
         }
 
-        public double Hops
-        {
+        public double Hops {
             get { return hops; }
-            set
-            {
+            set {
                 hops = value;
                 OnPropertyChanged("Hops");
             }
         }
 
-        public double Malt
-        {
+        public double Malt {
             get { return malt; }
-            set
-            {
+            set {
                 malt = value;
                 OnPropertyChanged("Malt");
             }
         }
 
-        public double Wheat
-        {
+        public double Wheat {
             get { return wheat; }
-            set
-            {
+            set {
                 wheat = value;
                 OnPropertyChanged("Wheat");
             }
         }
-        public double Yeast
-        {
+        public double Yeast {
             get { return yeast; }
-            set
-            {
+            set {
                 yeast = value;
                 OnPropertyChanged("Yeast");
             }
         }
 
-        public double MaintenanceTrigger
-        {
+        public double MaintenanceTrigger {
             get { return maintenanceTrigger; }
-            set
-            {
+            set {
                 maintenanceTrigger = value;
                 OnPropertyChanged("MaintenanceTrigger");
             }
         }
 
-        public double MaintenanceCounter
-        {
-            get
-            {
-                if (maintenanceTrigger == 0)
-                {
+        public double MaintenanceCounter {
+            get {
+                if (maintenanceTrigger == 0) {
                     return maintenanceCounter;
-                }
-                else
-                {
+                } else {
                     return maintenanceCounter / maintenanceTrigger * 100;
                 }
             }
-            set
-            {
+            set {
                 maintenanceCounter = value;
                 OnPropertyChanged("MaintenanceCounter");
             }
+        }
+        public List<IBatchValue> TempList {
+            get { return tempList; }
+            set { tempList = value; }
+        }
+        public List<IBatchValue> HumidityList {
+            get { return humidityList; }
+            set { humidityList = value; }
+        }
+        public List<IBatchValue> VibrationList {
+            get { return vibrationList; }
+            set { vibrationList = value; }
         }
 
       

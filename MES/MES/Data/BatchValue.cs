@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MES.Acquintance;
+﻿using MES.Acquintance;
 
-namespace MES {
-    public class ValueOverProdTime : IBatchValue {
+namespace MES.Data {
+    public class BatchValue : IBatchValue {
         private string timestamp;
         private float value;
-    
-        public ValueOverProdTime(float _value, string _timestamp, int _type) {
+        private int type;
+
+        public BatchValue(float _value, string _timestamp, int _type) {
             value = _value;
             timestamp = _timestamp;
-            Type = _type;
+            type = _type;
         }
 
 
@@ -27,6 +23,9 @@ namespace MES {
             set { this.value = value; }
         }
 
-        public int Type { get; set; }
-    }
+        public int Type {
+            get { return type; }
+            set { type = value; }
+        }
+    }    
 }

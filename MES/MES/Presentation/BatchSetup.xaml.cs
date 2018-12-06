@@ -1,9 +1,10 @@
 ﻿using System.IO;
 using MES.Acquintance;
 using System.Windows;
-using MES.Logic;
+using MES.Acquintance;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
 
 namespace MES.Presentation {
     /// <summary>
@@ -44,19 +45,21 @@ namespace MES.Presentation {
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) {
+            ISimpleBatch b = presentationFacade.ILogic.GetCurrentBatch();
+            b.TimestampStart = DateTime.Now.ToString();
             presentationFacade.ILogic.StartProduction();
         }
-
+        // TODO: Fix below shit 2 interfaec yeahh
         private void Button1_Click(object sender, RoutedEventArgs e) {
             if(batchQueueGrid.SelectedItem != null) {
-                presentationFacade.ILogic.Batches.MoveUp(batchQueueGrid.SelectedItem as Batch);
+                presentationFacade.ILogic.Batches.MoveUp(batchQueueGrid.SelectedItem as ISimpleBatch);
             }
 
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e) {
             if (batchQueueGrid.SelectedItem != null) {
-                presentationFacade.ILogic.Batches.MoveDown(batchQueueGrid.SelectedItem as Batch);
+                presentationFacade.ILogic.Batches.MoveDown(batchQueueGrid.SelectedItem as ISimpleBatch);
             }
 
         }

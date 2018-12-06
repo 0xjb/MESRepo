@@ -1,5 +1,6 @@
 ﻿using MES.Acquintance;
 using MES.data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -31,11 +32,24 @@ namespace MES.Data
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timestampStart, string timestampEnd)
+            int defectProducts, string timestampStart, string timestampEnd, double oee)
         {
             return dbManager.InsertIntoBatchesTable(
                 new Batch(batchId, beerId, acceptableProducts,
-                    defectProducts, timestampStart, timestampEnd));
+                    defectProducts, timestampStart, timestampEnd, oee));
+        }
+
+        public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
+           int defectProducts, string timestampStart, string timestampEnd, double oee,
+            ISet<IList<IBatchValue>> batchValues)
+        {
+            IBatch batch = new Batch(batchId, beerId, acceptableProducts,
+                    defectProducts, timestampStart, timestampEnd, oee);
+            foreach (IList<IBatchValue> list in batchValues)
+            {
+                batch.AddBatchValues(list);
+            }
+            return dbManager.InsertIntoBatchesTable(batch);
         }
 
         public bool SaveBatch(IBatch batch)
@@ -43,11 +57,9 @@ namespace MES.Data
             return dbManager.InsertIntoBatchesTable(batch);
         }
 
-        public bool InsertBatchValueSet(float temperature, float humidity,
-            float vibration, string timestamp, float batchId)
+        public bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float batchId)
         {
-            return dbManager.InsertBatchValueSet(temperature, humidity,
-                vibration, timestamp, batchId);
+            return dbManager.InsertBatchValueSet(batchValues, batchId);
         }
 
         public bool UpdateBatch(IBatch batch)

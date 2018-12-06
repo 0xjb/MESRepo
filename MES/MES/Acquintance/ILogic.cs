@@ -22,8 +22,6 @@ namespace MES.Acquintance
 
         void CreateBatch(float batchId, float amount, float productType);
 
-        void AddBatch(string batchID, string productType, string amount);
-
         void StartProduction();
 
         /// <summary>
@@ -38,5 +36,7 @@ namespace MES.Acquintance
         void addOEEFromBatch(int batchId);
 
         ObservableCollection<IBatch> OEeList { get; set; }
+        void SaveBatch(ISimpleBatch s);
+        ISimpleBatch GetCurrentBatch();
     }
 }

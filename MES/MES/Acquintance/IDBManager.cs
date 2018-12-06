@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MES.Acquintance
 {
@@ -18,16 +12,11 @@ namespace MES.Acquintance
         bool InsertIntoBatchesTable(IBatch batch);
 
         /// <summary>
-        /// Inserts a set of batch values into the db
+        /// Inserts batch values into the db
         /// </summary>
-        /// <param name="temperature"></param>
-        /// <param name="humidity"></param>
-        /// <param name="vibration"></param>
-        /// <param name="timestamp"></param>
-        /// <param name="batchId"></param>
+        /// <param name="batchValues"></param>
         /// <returns></returns>
-        bool InsertBatchValueSet(float temperature, float humidity,
-            float vibration, string timestamp, float batchId);
+        bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float batchId);
 
         /// <summary>
         /// Updates a batch in the db

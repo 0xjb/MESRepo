@@ -1,9 +1,5 @@
 ﻿using MES.Acquintance;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MES.Data
 {
@@ -15,10 +11,13 @@ namespace MES.Data
         private int defectProducts;
         private readonly string timestampStart;
         private string timestampEnd;
-        private IList<IBatchValueSet> batchValues;
+        private double oee;
+        private IList<IBatchValue> batchTemperatures;
+        private IList<IBatchValue> batchHumidities;
+        private IList<IBatchValue> batchVibrations;
 
         public Batch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timestampStart, string timestampEnd)
+            int defectProducts, string timestampStart, string timestampEnd, double oee)
         {
             this.batchId = batchId;
             this.beerId = beerId;
@@ -26,7 +25,10 @@ namespace MES.Data
             this.defectProducts = defectProducts;
             this.timestampStart = timestampStart;
             this.timestampEnd = timestampEnd;
-            this.batchValues = new List<IBatchValueSet>();
+            this.oee = oee;
+            this.batchTemperatures = new List<IBatchValue>();
+            this.batchHumidities = new List<IBatchValue>();
+            this.batchVibrations = new List<IBatchValue>();
         }
 
         override
@@ -34,7 +36,7 @@ namespace MES.Data
         {
             return batchId + ", " + beerId + ", "
                    + acceptableProducts + ", " + defectProducts + ", "
-                   + timestampStart + ", " + timestampEnd;
+                   + timestampStart + ", " + timestampEnd + ", " + oee;
         }
 
         public float GetBatchId()
@@ -67,9 +69,24 @@ namespace MES.Data
             return timestampEnd;
         }
 
-        public IList<IBatchValueSet> GetBatchValues()
+        public double GetOEE()
         {
-            return batchValues;
+            return oee;
+        }
+
+        public IList<IBatchValue> GetBatchTemperatures()
+        {
+            return batchTemperatures;
+        }
+
+        public IList<IBatchValue> GetBatchHumidities()
+        {
+            return batchHumidities;
+        }
+
+        public IList<IBatchValue> GetBatchVibrations()
+        {
+            return batchVibrations;
         }
 
         public void AddProducts(int amount, bool acceptable)
@@ -89,31 +106,47 @@ namespace MES.Data
             this.timestampEnd = timestamp;
         }
 
-        public bool AddBatchValues(float temperature, float humidity,
-            float vibration, string timestamp)
+        public void AddBatchValue(IBatchValue value)
         {
-            bool timestampExists = false;
-            foreach (IBatchValueSet valueSet in batchValues)
+            if (value.Type < 0)
             {
-                if (valueSet.GetTimeStamp() == timestamp)
-                {
-                    timestampExists = true;
-                    break;
-                }
+                this.batchTemperatures.Add(value);
             }
-
-            if (!timestampExists)
+            else if (value.Type == 0)
             {
-                batchValues.Add(new BatchValueSet(temperature,
-                    humidity, vibration, timestamp));
-                return true;
+                this.batchHumidities.Add(value);
             }
-            else return false;
+            else if (value.Type > 0)
+            {
+                this.batchVibrations.Add(value);
+            }
         }
 
-        public void SetBatchValueSet(IList<IBatchValueSet> values)
+        public void AddBatchValue(float value, string timestamp, int type)
         {
-            this.batchValues = values;
+            IBatchValue bValue = new BatchValue(value, timestamp, type);
+
+            if (bValue.Type < 0)
+            {
+                this.batchTemperatures.Add(bValue);
+            }
+            else if (bValue.Type == 0)
+            {
+                this.batchHumidities.Add(bValue);
+            }
+            else if (bValue.Type > 0)
+            {
+                this.batchVibrations.Add(bValue);
+            }
+            else { }
+        }
+
+        public void AddBatchValues(IList<IBatchValue> values)
+        {
+            foreach (IBatchValue value in values)
+            {
+                AddBatchValue(value);
+            }
         }
     }
 }

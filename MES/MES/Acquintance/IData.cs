@@ -8,10 +8,30 @@ namespace MES.Acquintance
         /// <summary>
         /// Saves a batch in the db
         /// </summary>
-        /// <param name="batch"></param>
+        /// <param name="batchId"></param>
+        /// <param name="beerId"></param>
+        /// <param name="acceptableProducts"></param>
+        /// <param name="defectProducts"></param>
+        /// <param name="timeStampStart"></param>
+        /// <param name="timeStampEnd"></param>
         /// <returns></returns>
         bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timeStampStart, string timeStampEnd);
+            int defectProducts, string timestampStart, string timestampEnd, double oee);
+
+        /// <summary>
+        /// Saves a batch in the db
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="beerId"></param>
+        /// <param name="acceptableProducts"></param>
+        /// <param name="defectProducts"></param>
+        /// <param name="timeStampStart"></param>
+        /// <param name="timeStampEnd"></param>
+        /// <param name="batchValues"></param>
+        /// <returns></returns>
+        bool SaveBatch(float batchId, float beerId, int acceptableProducts,
+           int defectProducts, string timestampStart, string timestampEnd, double oee,
+           ISet<IList<IBatchValue>> batchValues);
 
         /// <summary>
         /// Saves a batch in the db
@@ -21,16 +41,12 @@ namespace MES.Acquintance
         bool SaveBatch(IBatch batch);
 
         /// <summary>
-        /// Inserts a set of batch values into the db
+        /// Inserts batch values into the db
         /// </summary>
-        /// <param name="temperature"></param>
-        /// <param name="humidity"></param>
-        /// <param name="vibration"></param>
-        /// <param name="timestamp"></param>
+        /// <param name="batchValues"></param>
         /// <param name="batchId"></param>
         /// <returns></returns>
-        bool InsertBatchValueSet(float temperature, float humidity,
-            float vibration, string timestamp, float batchId);
+        bool InsertBatchValueSet(ISet<IList<IBatchValue>> batchValues, float batchId);
 
         /// <summary>
         /// Updates a batch in the db
@@ -118,5 +134,6 @@ namespace MES.Acquintance
         ObservableCollection<IAlarmObject> ReadFile();
 
         void WriteToFile(string s);
+
     }
 }

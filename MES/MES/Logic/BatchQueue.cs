@@ -9,27 +9,32 @@ using System.ComponentModel;
 using System.Windows.Data;
 
 namespace MES.Logic {
-    
+
     public class BatchQueue : IBatchQueue, INotifyPropertyChanged {
         private static object _lock = new object();
-        private Batch currentBatch;
-        public Batch CurrentBatch {
+        private ILogic logic;
+        private ISimpleBatch currentBatch;
+        public ISimpleBatch CurrentBatch {
             get { return currentBatch; }
-            set { currentBatch = value;
-                OnPropertyChanged("CurrentBatch"); }
+            set {
+                currentBatch = value;
+                OnPropertyChanged("CurrentBatch");
+            }
         }
-        private ObservableCollection<Batch> batches = new ObservableCollection<Batch>();
+        private ObservableCollection<ISimpleBatch> batches = new ObservableCollection<ISimpleBatch>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Batch> Batches {
+        public ObservableCollection<ISimpleBatch> Batches {
             get { return batches; }
-            set { batches = value;
+            set {
+                batches = value;
                 OnPropertyChanged("Batches");
             }
         }
-        public BatchQueue(OpcClient c) {
-           c.PropertyChanged += CheckBatchProdStatus;
+        public BatchQueue(ILogic l) {
+            logic = l;
+            l.OPC.PropertyChanged += CheckBatchProdStatus;
             BindingOperations.EnableCollectionSynchronization(Batches, _lock);
         }
         protected void OnPropertyChanged(string name) {
@@ -39,35 +44,35 @@ namespace MES.Logic {
 
             }
         }
-        public void MoveUp(Batch b) {
+        public void MoveUp(ISimpleBatch b) {
             int bIndex = Batches.IndexOf(b);
-            if(bIndex != 0) {
-                Batch temp = b;
+            if (bIndex != 0) {
+                ISimpleBatch temp = b;
                 Batches[bIndex] = Batches[bIndex - 1];
                 Batches[bIndex - 1] = temp;
             }
         }
-        public void MoveDown(Batch b) {
+        public void MoveDown(ISimpleBatch b) {
             int bIndex = Batches.IndexOf(b);
-            if (bIndex != Batches.Count-1) {
-                Batch temp = b;
+            if (bIndex != Batches.Count - 1) {
+                ISimpleBatch temp = b;
                 Batches[bIndex] = Batches[bIndex + 1];
                 Batches[bIndex + 1] = temp;
             }
         }
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
-           if(e.PropertyName.Equals("StateCurrent")) {
-                if((sender as OpcClient).StateCurrent == 17) {
-                    //TODO: Fix this
-                    try {
-                        CurrentBatch = Batches[0];
-                        Batches.RemoveAt(0);
-                    } catch(ArgumentOutOfRangeException ex) {
-                        Console.WriteLine(":)");
+            if (e.PropertyName.Equals("StateCurrent")) {
+                if ((sender as OpcClient).StateCurrent == 17) {
+                    if (CurrentBatch != null) {
+                        CurrentBatch.TimestampEnd = DateTime.Now.ToString();
+                        logic.SaveBatch(CurrentBatch);
+                        if (Batches.Count >= 1) {
+                            CurrentBatch = Batches[0];
+                            Batches.RemoveAt(0);
+                        } else {
+                            CurrentBatch = null;
+                        }
                     }
-                        
-                    
-
                 }
             }
         }
