@@ -20,6 +20,7 @@ namespace MES.Presentation
             batchQueueGrid.ItemsSource = presentationFacade.ILogic.Batches.Batches;
             DataContext = this;
             ProductTypeTB.DataContext = GetRecipes();
+            ProductTypeTB.DisplayMemberPath = "Name";
         }
 
         public IPresentation PresentationFacade
