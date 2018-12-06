@@ -88,12 +88,12 @@ namespace MES.Logic
             NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
             NodeId stateNode = new NodeId("::Program:Cube.Status.StateCurrent", 6);
             NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
+            NodeId acceptableNode = new NodeId("::Program:product.good", 6);
             NodeId tempNode = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6);
             NodeId humidityNode = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6);
             NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
             NodeId stopReasonNode = new NodeId("::Program:Cube.Admin.StopReason.ID", 6);
             NodeId bacthIdNode = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6);
-
             NodeId barleyNode = new NodeId("::Program:Inventory.Barley", 6);
             NodeId hopsNode = new NodeId("::Program:Inventory.Hops", 6);
             NodeId maltNode = new NodeId("::Program:Inventory.Malt", 6);
@@ -108,6 +108,7 @@ namespace MES.Logic
             MonitoredItem miAmountNode = new DataMonitoredItem(amountNode);
             MonitoredItem miStateNode = new DataMonitoredItem(stateNode);
             MonitoredItem miDefectNode = new DataMonitoredItem(defectNode);
+            MonitoredItem miAcceptableNode = new DataMonitoredItem(acceptableNode);
             MonitoredItem miTempNode = new DataMonitoredItem(tempNode);
             MonitoredItem miHumidityNode = new DataMonitoredItem(humidityNode);
             MonitoredItem miVibrationNode = new DataMonitoredItem(vibrationNode);
@@ -128,6 +129,7 @@ namespace MES.Logic
             monitoredItems.Add(miAmountNode);
             monitoredItems.Add(miStateNode);
             monitoredItems.Add(miDefectNode);
+            monitoredItems.Add(miAcceptableNode);
             monitoredItems.Add(miTempNode);
             monitoredItems.Add(miHumidityNode);
             monitoredItems.Add(miVibrationNode);
@@ -176,6 +178,10 @@ namespace MES.Logic
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
                         DefectProducts = double.Parse(dc.Value.ToString());
+                        break;
+                    // acceptable products processed
+                    case "::Program:product.good":
+                        AcceptableProducts = double.Parse(dc.Value.ToString());
                         break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
@@ -568,18 +574,7 @@ namespace MES.Logic
             set
             {
                 processedProducts = value;
-                AcceptableProducts = processedProducts - defectProducts;
                 OnPropertyChanged("ProcessedProducts");
-            }
-        }
-
-        public double DefectProducts
-        {
-            get { return defectProducts; }
-            set
-            {
-                defectProducts = value;
-                OnPropertyChanged("DefectProducts");
             }
         }
 
@@ -592,6 +587,16 @@ namespace MES.Logic
                 OnPropertyChanged("AcceptableProducts");
             }
 
+        }
+
+        public double DefectProducts
+        {
+            get { return defectProducts; }
+            set
+            {
+                defectProducts = value;
+                OnPropertyChanged("DefectProducts");
+            }
         }
 
         public double StateCurrent

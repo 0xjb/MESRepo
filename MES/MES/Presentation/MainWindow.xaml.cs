@@ -37,7 +37,6 @@ namespace MES.Presentation
         private double amount;
         private double produced;
         private double acceptableProducts;
-
         private double defectProducts;
 
         private int indexOfArrayTemp = 0;
@@ -556,7 +555,6 @@ namespace MES.Presentation
             set
             {
                 produced = value;
-                acceptableProducts = produced - defectProducts;
                 OnPropertyChanged("Produced");
             }
         }
@@ -576,6 +574,12 @@ namespace MES.Presentation
         public double AcceptableProducts
         {
             get { return acceptableProducts; }
+
+            set
+            {
+                acceptableProducts = value;
+                OnPropertyChanged("AcceptableProducts");
+            }
         }
 
         public List<string> ArrayListLabelsVibration
@@ -591,7 +595,6 @@ namespace MES.Presentation
             set
             {
                 defectProducts = value;
-                acceptableProducts = produced - defectProducts;
                 OnPropertyChanged("DefectProducts");
             }
         }
