@@ -49,6 +49,9 @@ namespace MES.Acquintance
         void CreateErrorHandler();
         bool addOEEFromBatch(int batchId);
 
+        void SearchNewestBatches(int number);
+        void SearchDateYearBatches(string month, string year);
+
         ObservableCollection<IBatch> OEeList { get; set; }
         void SaveBatch(ISimpleBatch s);
 

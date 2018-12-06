@@ -32,16 +32,24 @@ namespace MES.Presentation
         private void SearchBatch_Click(object sender, RoutedEventArgs e)
         {
             presentationFacade.ILogic.OEeList.Clear();
-            int batchId = Int32.Parse(txtSearchBatchId.Text);
+            try
+            {
 
-            if (!presentationFacade.ILogic.addOEEFromBatch(batchId))
-            {
-                lblInfo.Content = "Batch does not exist... ";
+                int batchId = Int32.Parse(txtSearchBatchId.Text);
+
+                if (!presentationFacade.ILogic.addOEEFromBatch(batchId)) {
+                    lblInfo.Content = "Batch does not exist... ";
+                }
+                else {
+                    lblInfo.Content = "";
+                }
             }
-            else
+            catch (FormatException exception)
             {
-                lblInfo.Content = "";
+                Console.WriteLine(exception);
+                lblInfo.Content = "Incorrect input..";
             }
+    
          
 
         }
@@ -53,12 +61,47 @@ namespace MES.Presentation
 
         private void SearchNewestBatches_Click(object sender, RoutedEventArgs e)
         {
+            presentationFacade.ILogic.OEeList.Clear();
 
+            try
+            {
+                int number = Int32.Parse(txtSearchNewestBacthId.Text);
+                presentationFacade.ILogic.SearchNewestBatches(number);
+            }
+            catch (FormatException exception)
+            {
+                Console.WriteLine(exception);
+                lblInfo.Content = "Incorrect input..";
+            }
+         
         }
 
         private void MonthYear_Click(object sender, RoutedEventArgs e)
         {
+            lblInfo.Content = "";
+            presentationFacade.ILogic.OEeList.Clear();
 
+            string month = (ComboMonth.SelectedIndex + 1).ToString();
+            string year = ComboYear.Text;
+
+            //Console.WriteLine("\n\nis focused " + ComboMonth.+ "\n\n");
+
+            if (ComboMonth.SelectedItem != null && ComboYear.SelectedItem != null) {
+                presentationFacade.ILogic.SearchDateYearBatches(month, year);
+
+                if (presentationFacade.ILogic.OEeList.Count.Equals(0))
+                {
+                    lblInfo.Content = "No batches found";
+                }
         }
+            else
+            {
+                lblInfo.Content = "Select month and year..";
+            }
+
+
+
+
+}
     }
 }

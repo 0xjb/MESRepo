@@ -102,8 +102,8 @@ namespace MES.Logic
             return data.GetAllRecipes();
         }
 
-        public void AddBatch(string batchID, string productType, string amount) {
-          
+        public void AddBatch(string batchID, string productType, string amount)
+        {
         }
 
         public float GetHighestBatchId()
@@ -133,7 +133,28 @@ namespace MES.Logic
             {
                 return false;
             }
-         
+        }
+
+        public void SearchNewestBatches(int number)
+        {
+            IDictionary<float, IBatch> dictionary = data.GetBatches(number);
+
+
+            foreach (KeyValuePair<float, IBatch> entry in dictionary)
+            {
+                oEEList.Add(entry.Value);
+            }
+        }
+
+        public void SearchDateYearBatches(string month, string year)
+        {
+            IDictionary<float, IBatch> dictionary = data.GetBatches(month,year);
+
+
+
+            foreach (KeyValuePair<float, IBatch> entry in dictionary) {
+                oEEList.Add(entry.Value);
+            }
         }
 
         public ObservableCollection<IBatch> OEeList
@@ -143,7 +164,7 @@ namespace MES.Logic
         }
 
 
-    public void SaveBatch(ISimpleBatch s)
+        public void SaveBatch(ISimpleBatch s)
         {
             ISet<IList<IBatchValue>> set = new HashSet<IList<IBatchValue>>();
             set.Add(OPC.TempList);
@@ -153,21 +174,19 @@ namespace MES.Logic
             {
                 Console.WriteLine(yeet.Value + " " + yeet.Type);
             }
+
             foreach (var yeets in OPC.HumidityList)
             {
                 Console.WriteLine(yeets.Value + " " + yeets.Type);
             }
-            Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
-                (int)OPC.DefectProducts, s.TimestampStart, s.TimestampEnd, s.OEE, set);
+
+            Data.SaveBatch(s.BatchID, s.BeerType, (int) OPC.AcceptableProducts,
+                (int) OPC.DefectProducts, s.TimestampStart, s.TimestampEnd, s.OEE, set);
         }
 
         public ISimpleBatch GetCurrentBatch()
         {
             return Batches.CurrentBatch;
         }
-
-        
-
-    
     }
 }
