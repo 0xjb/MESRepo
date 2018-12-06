@@ -39,7 +39,7 @@ namespace MES.Presentation
             try
             {
                 float batchId = presentationFacade.ILogic.GetHighestBatchId() + 1;
-                float productType = ((KeyValuePair<float, IRecipe>)ProductTypeTB.SelectedItem).Key;
+                float productType = ((IRecipe)ProductTypeTB.SelectedItem).BeerId;
                 float amount = float.Parse(AmountTB.Text);
                 presentationFacade.ILogic.CreateBatch(batchId, amount, productType);
                 testlabel.Content = "Batch added to the list";
@@ -75,9 +75,15 @@ namespace MES.Presentation
 
         }
 
-        private IDictionary<float, IRecipe> GetRecipes()
+        private ISet<IRecipe> GetRecipes()
         {
-            return presentationFacade.ILogic.GetAllRecipes();
+            IDictionary<float, IRecipe> recipes = presentationFacade.ILogic.GetAllRecipes();
+            ISet<IRecipe> set = new HashSet<IRecipe>();
+            foreach (KeyValuePair<float, IRecipe> recipe in recipes)
+            {
+                set.Add(recipe.Value);
+            }
+            return set;
         }
     }
 }
