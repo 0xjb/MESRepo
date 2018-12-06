@@ -77,7 +77,6 @@ namespace MES.Presentation
             //Get logiclayer
             iLogic = presentation.ILogic;
 
-
             iLogic.ErrorHandler.Alarms.CollectionChanged += EventHandling;
 
             if (!presentation.ILogic.IsSimulationOn)
@@ -93,7 +92,6 @@ namespace MES.Presentation
             timerTrend.Elapsed += OnTimedEvent;
 
             InitializeComponent();
-
 
             DataGridQuedBatches.ItemsSource = presentation.ILogic.Batches.Batches;
 
@@ -222,7 +220,6 @@ namespace MES.Presentation
             LevelYeast = iLogic.OPC.Yeast;
         }
 
-
         private void CheckIngredientsLevel()
         {
             this.levelBarley = iLogic.OPC.Barley;
@@ -233,7 +230,6 @@ namespace MES.Presentation
 
             iLogic.OPC.PropertyChanged += CheckForChangesIngredientsLevel;
         }
-
 
         private void CheckChangesInStatus(object sender, PropertyChangedEventArgs e)
         {
@@ -257,7 +253,6 @@ namespace MES.Presentation
                 arrayListLabelsTemperature.Add(DateTime.Now.ToString());
             }
         }
-
 
         private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
         {
@@ -587,7 +582,7 @@ namespace MES.Presentation
 
             set
             {
-                acceptableProducts = value;
+                acceptableProducts = produced - defectProducts;
                 OnPropertyChanged("AcceptableProducts");
                 OnPropertyChanged("DefectProducts");
                 OnPropertyChanged("Produced");
