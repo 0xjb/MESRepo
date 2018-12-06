@@ -274,7 +274,7 @@ namespace MES.Tests
                     + ", malt = " + recipes[i].Malt
                     + ", wheat = " + recipes[i].Wheat
                     + ", yeast = " + recipes[i].Yeast
-                    + ", maxspeed" + recipes[i].MaxSpeed
+                    + ", maxspeed = " + recipes[i].MaxSpeed
                     + ", name = '" + recipes[i].Name
                     + "' WHERE beerid = " + recipes[i].BeerId;
             }
