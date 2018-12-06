@@ -415,16 +415,15 @@ namespace MES.data
                 + batchesTable + ");";
 
             IDictionary<float, IBatch> collection = GetSqlCommand(sql);
-           
+
             if (collection.Count > 0)
             {
                 foreach (KeyValuePair<float, IBatch> batch in collection)
                 {
-                   
+
                     return batch.Key;
                 }
             }
-            
             return 0;
         }
     }

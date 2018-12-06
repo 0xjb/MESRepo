@@ -2,7 +2,6 @@
 using MES.Data;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace MES.Tests
 {
@@ -153,7 +152,6 @@ namespace MES.Tests
             {
                 succes = true;
             }
-           
             Assert.IsTrue(succes, "Succes");
 
             // Testing DeleteBatch
