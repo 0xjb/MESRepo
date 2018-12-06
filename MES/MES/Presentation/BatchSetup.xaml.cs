@@ -75,15 +75,15 @@ namespace MES.Presentation
 
         }
 
-        private ISet<IRecipe> GetRecipes()
+        private IList<IRecipe> GetRecipes()
         {
             IDictionary<float, IRecipe> recipes = presentationFacade.ILogic.GetAllRecipes();
-            ISet<IRecipe> set = new HashSet<IRecipe>();
+            IList<IRecipe> list = new List<IRecipe>();
             foreach (KeyValuePair<float, IRecipe> recipe in recipes)
             {
-                set.Add(recipe.Value);
+                list.Add(recipe.Value);
             }
-            return set;
+            return list;
         }
     }
 }
