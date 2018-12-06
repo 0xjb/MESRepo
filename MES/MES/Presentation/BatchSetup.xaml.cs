@@ -19,8 +19,7 @@ namespace MES.Presentation
             InitializeComponent();
             batchQueueGrid.ItemsSource = presentationFacade.ILogic.Batches.Batches;
             DataContext = this;
-            ProductTypeTB.DataContext = GetRecipes();
-            ProductTypeTB.DisplayMemberPath = "Name";
+            ProductTypeTB.ItemsSource = GetRecipes();
         }
 
         public IPresentation PresentationFacade
@@ -40,7 +39,7 @@ namespace MES.Presentation
             try
             {
                 float batchId = presentationFacade.ILogic.GetHighestBatchId() + 1;
-                float productType = float.Parse(ProductTypeTB.Text);
+                float productType = ((KeyValuePair<float, IRecipe>)ProductTypeTB.SelectedItem).Key;
                 float amount = float.Parse(AmountTB.Text);
                 presentationFacade.ILogic.CreateBatch(batchId, amount, productType);
                 testlabel.Content = "Batch added to the list";
@@ -76,15 +75,9 @@ namespace MES.Presentation
 
         }
 
-        private IList<IRecipe> GetRecipes()
+        private IDictionary<float, IRecipe> GetRecipes()
         {
-            IDictionary<float, IRecipe> recipes = presentationFacade.ILogic.GetAllRecipes();
-            IList<IRecipe> list = new List<IRecipe>();
-            foreach (KeyValuePair<float, IRecipe> recipe in recipes)
-            {
-                list.Add(recipe.Value);
-            }
-            return list;
+            return presentationFacade.ILogic.GetAllRecipes();
         }
     }
 }
