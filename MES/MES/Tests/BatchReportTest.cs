@@ -4,24 +4,28 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MES.Acquintance;
 using NUnit.Framework;
 using OfficeOpenXml;
 
-namespace MES.Tests
-{
+
+namespace MES.Tests {
     [TestFixture]
-    class BatchReportTest
-    {
+    class BatchReportTest {
         private readonly BatchReportGenerator brg = new BatchReportGenerator();
         private readonly Random rand = new Random();
 
         [Test]
-        public void CheckFileCreation()
-        {
-            int[] stringArray = {2, 5, 7, 9, 3, 5, 4, 12};
-            ValueOverProdTime[] temperatureData = GenerateTestData();
-            ValueOverProdTime[] humidityData = GenerateTestData();
-            brg.GenerateFile("10", "10", "10", "10", stringArray, temperatureData, humidityData);
+        public void CheckFileCreation() {
+            int[] stringArray = { 2, 5, 7, 9, 3, 5, 4, 12 };
+            ValueOverProdTime[] temperatureData = GenerateTestData(-1);
+            ValueOverProdTime[] humidityData = GenerateTestData(0);
+            ValueOverProdTime[] vibrationData = GenerateTestData(1);
+            ISet<IList<IBatchValue>> iBatchValueSet = new HashSet<IList<IBatchValue>>();
+            iBatchValueSet.Add(temperatureData);
+            iBatchValueSet.Add(humidityData);
+            iBatchValueSet.Add(vibrationData);
+            brg.GenerateFile(10, 10, 10, 10, stringArray, iBatchValueSet );
             // booleans for verification
             bool fileExists = File.Exists(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx");
 
@@ -40,12 +44,10 @@ namespace MES.Tests
             Assert.AreEqual(ws.Cells["F3"].Value, 20);
         }
 
-        private ValueOverProdTime[] GenerateTestData()
-        {
+        private ValueOverProdTime[] GenerateTestData(int type) {
             ValueOverProdTime[] brrt = new ValueOverProdTime[100];
-            for (int i = 0; i < 100; i++)
-            {
-                ValueOverProdTime temp = new ValueOverProdTime(rand.Next(100),DateTime.Now.ToString(), 0);
+            for (int i = 0; i < 100; i++) {
+                ValueOverProdTime temp = new ValueOverProdTime(rand.Next(100), DateTime.Now.ToString(), type);
                 brrt[i] = temp;
             }
 

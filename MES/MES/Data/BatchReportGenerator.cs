@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OfficeOpenXml;
 using System.IO;
 using OfficeOpenXml.Drawing.Chart;
+using MES.Acquintance;
 
 namespace MES
 {
@@ -23,10 +24,19 @@ namespace MES
         /// <param name="timeUsed"></param> Time spent in the different machine states.
         /// <param name="tData"></param> Temperature over production time.
         /// <param name="hData"></param> Humidity over production time.
-        public void GenerateFile(string batchID, string productType, string aProduct, string dProduct,
-            int[] timeUsed,
-            ValueOverProdTime[] tData, ValueOverProdTime[] hData)
+        public void GenerateFile(float batchID, float productType, int aProduct, int dProduct,
+            int[] timeUsed, ISet<IList<IBatchValue>> batchValues
+            )
         {
+            IList<IBatchValue> tData = new List<IBatchValue>();
+            IList<IBatchValue> hData = new List<IBatchValue>();
+            foreach(IList<IBatchValue> list in batchValues) {
+                if(list[0].Type < 0 ) {
+                    tData = list;
+                } else if (list[0].Type == 0) {
+                    hData = list;
+                }
+            }
             //A workbook must have at least on cell, so lets add one... 
             var ws = ep.Workbook.Worksheets.Add("Batch Report");
             var temp = ep.Workbook.Worksheets.Add("Temperature");
@@ -85,7 +95,7 @@ namespace MES
 
             //TODO mangler try/catch??
             //Save the new workbook. We haven't specified the filename so use the Save as method.
-            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx"));
+            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport" + batchID + ".xlsx"));
         }
 
         /// <summary>
@@ -94,7 +104,7 @@ namespace MES
         /// <param name="data"></param> Array filled with either temperature or humidity data.
         /// <param name="ew"></param> Worksheet to write in.
         /// <param name="title"></param> Title of graph.
-        private void WriteData(ValueOverProdTime[] data, ExcelWorksheet ew, string title)
+        private void WriteData(IList<IBatchValue> data, ExcelWorksheet ew, string title)
         {
             ew.Cells["A1"].Value = "Temp:";
             ew.Cells["A1"].Style.Font.Bold = true;
@@ -102,9 +112,8 @@ namespace MES
             ew.Cells["B1"].Value = "Time:";
             ew.Cells["B1"].Style.Font.Bold = true;
 
-            for (int i = 0; i < data.Length; i++)
-            {
-                ew.Cells["A" + (i + 2)].Value = i;
+            for (int i = 0; i < data.Count; i++) {
+                ew.Cells["A" + (i + 2)].Value = data[i].Timestamp;
                 ew.Cells["B" + (i + 2)].Value = data[i].Value;
             }
 
