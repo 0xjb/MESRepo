@@ -549,7 +549,6 @@ namespace MES.Presentation
             }
         }
 
-
         public double Produced
         {
             get { return produced; }
@@ -557,6 +556,7 @@ namespace MES.Presentation
             set
             {
                 produced = value;
+                acceptableProducts = produced - defectProducts;
                 OnPropertyChanged("AcceptableProducts");
                 OnPropertyChanged("DefectProducts");
                 OnPropertyChanged("Produced");
@@ -569,7 +569,6 @@ namespace MES.Presentation
             set => arrayListLabelsTemperature = value;
         }
 
-
         public List<string> ArrayListLabelsHumidity
         {
             get => arrayListLabelsHumidity;
@@ -579,11 +578,6 @@ namespace MES.Presentation
         public double AcceptableProducts
         {
             get { return acceptableProducts; }
-
-            set
-            {
-                acceptableProducts = value;
-            }
         }
 
         public List<string> ArrayListLabelsVibration
