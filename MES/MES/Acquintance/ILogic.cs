@@ -1,4 +1,5 @@
-﻿using MES.Logic;
+﻿using System.Collections.ObjectModel;
+using MES.Logic;
 
 
 namespace MES.Acquintance
@@ -34,5 +35,8 @@ namespace MES.Acquintance
         bool AuthenticateUserInformation(string username, string password);
 
         void CreateErrorHandler();
+        void addOEEFromBatch(int batchId);
+
+        ObservableCollection<IBatch> OEeList { get; set; }
     }
 }

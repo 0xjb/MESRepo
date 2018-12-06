@@ -109,11 +109,12 @@
                     <ComboBoxItem Content="December"/>
 
                 </ComboBox>
-                <ComboBox x:Name="ComboYear"  Margin="5,0,5,0" Width="100" Grid.Column="0" Grid.Row="1">
+                <ComboBox x:Name="ComboYear"  Margin="5,0,5,0" Width="100" Grid.Column="0" Grid.Row="1" SelectionChanged="ComboYear_SelectionChanged">
                     <ComboBoxItem Content="2018"/>
                     <ComboBoxItem Content="2019"/>
                     <ComboBoxItem Content="2020"/>
                     <ComboBoxItem Content="2021"/>
+                   
                 </ComboBox>
 
 

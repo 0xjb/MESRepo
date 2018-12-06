@@ -110,8 +110,7 @@ namespace MES.data
 
                 dRead.Close();
 
-                foreach (IBatch batch in batches.Values)
-                {
+                foreach (IBatch batch in batches.Values) {
                     batch.SetBatchValueSet(GetBatchValues(conn, batch.GetBatchId()));
                 }
 

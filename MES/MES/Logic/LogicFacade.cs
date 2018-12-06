@@ -1,5 +1,6 @@
 ﻿using MES.Acquintance;
 using System;
+using System.Collections.ObjectModel;
 
 namespace MES.Logic {
     public class LogicFacade : ILogic {
@@ -9,10 +10,12 @@ namespace MES.Logic {
         private BatchQueue batches;
         private TestSimulation _testSimulation;
         private bool isSimulationON;
+        private ObservableCollection<IBatch> oEEList;
 
         public LogicFacade() {
             this.opc = new OpcClient(this);
             Batches = new BatchQueue(OPC);
+            oEEList = new ObservableCollection<IBatch>();
         }
 
         public BatchQueue Batches {
@@ -71,8 +74,7 @@ namespace MES.Logic {
         }
 
         public void AddBatch(string batchID, string productType, string amount) {
-            //TODO Fjerne yeet
-            Console.WriteLine("yeet");
+          
         }
 
         public void StartProduction() {
@@ -81,6 +83,17 @@ namespace MES.Logic {
 
         public bool AuthenticateUserInformation(string username, string password) {
             return data.AuthenticateUserInformation(username, password);
+        }
+
+        public void addOEEFromBatch(int batchId)
+        {
+            oEEList.Add(data.GetBatch(batchId));
+        }
+
+        public ObservableCollection<IBatch> OEeList
+        {
+            get => oEEList;
+            set => oEEList = value;
         }
     }
 }

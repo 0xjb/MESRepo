@@ -17,6 +17,7 @@ namespace MES.Presentation
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
+            DataGridShowBatches.ItemsSource = pf.ILogic.OEeList;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -30,14 +31,14 @@ namespace MES.Presentation
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int batchId = Int32.Parse(txtSearchBatchId.Text);
-            DataGridShowBatches.ItemsSource = presentationFacade.ILogic.Data.GetBatches(batchId);
-
-
+            presentationFacade.ILogic.addOEEFromBatch(batchId);
+            Console.WriteLine("\n\n ********************************************   " + presentationFacade.ILogic.OEeList.Count+" \n\n");
+            
         }
 
-        private void addMonthsToComboBox()
+        private void ComboYear_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            
+           
         }
     }
 }
