@@ -38,6 +38,7 @@ namespace MES.Logic
         public string TimestampStart { get; set; }
         public string TimestampEnd { get; set; }
         public double OEE { get; set; }
+        public float MachineSpeed { get; set; }
 
         public SimpleBatch(float id, float bt, float amount)
         {

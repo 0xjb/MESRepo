@@ -13,5 +13,7 @@
         string TimestampEnd { get; set; }
 
         double OEE { get; set; }
+
+        float MachineSpeed { get; set; }
     }
 }

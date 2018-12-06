@@ -87,10 +87,20 @@ namespace MES.Logic
             }
         }
 
+        public IDictionary<float, IRecipe> GetAllRecipes()
+        {
+            return data.GetAllRecipes();
+        }
+
+        public float GetHighestBatchId()
+        {
+            return data.GetHighestBatchId();
+        }
 
         public void StartProduction()
         {
-            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType, Batches.CurrentBatch.DesiredAmount, 60);
+            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
+                Batches.CurrentBatch.DesiredAmount, Batches.CurrentBatch.MachineSpeed);
         }
 
         public bool AuthenticateUserInformation(string username, string password)
