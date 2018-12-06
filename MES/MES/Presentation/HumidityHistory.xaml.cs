@@ -12,17 +12,16 @@ namespace MES.Presentation
     public partial class HumidityHistory : Window, IObservableChartPoint
     {
         //TODO Størrelse af array i constructor Humidity History
-        private IPresentation presentationFacade;
-        private MainWindow mw;
+        private History history;
         int indexOfArray = 0;
+        IBatch batch;
 
-        public HumidityHistory(IPresentation pf, MainWindow mainWindow)
+        public HumidityHistory(IBatch b, History history)
         {
-            this.presentationFacade = pf;
-            this.mw = mainWindow;
+            this.history = history;
             InitializeComponent();
+            batch = b;
             SeriesCollectionHumidity = new SeriesCollection
-
             {
                 new LineSeries
                 {
@@ -34,6 +33,7 @@ namespace MES.Presentation
             LabelsHumidity = new string[1000];
             FormatterHumidity = value => value;
             DataContext = this;
+            InsertHumidityData();
         }
 
         private double _value;
@@ -63,7 +63,6 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade, mw);
             this.Close();
             history.Show();
         }
@@ -75,6 +74,16 @@ namespace MES.Presentation
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
             return number;
+        }
+        private void InsertHumidityData()
+        {
+            foreach (var batchvalue in batch.GetBatchHumidities())
+            {
+                LabelsHumidity[indexOfArray] = batchvalue.Timestamp;
+                _value = batchvalue.Value;
+                SeriesCollectionHumidity[0].Values.Add(Value);
+                indexOfArray++;
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

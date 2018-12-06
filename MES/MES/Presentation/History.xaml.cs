@@ -41,19 +41,18 @@ namespace MES.Presentation
 
         private void btnShowHumidityHistory_Click(object sender, RoutedEventArgs e)
         {
-            HumidityHistory humidityHistory = new HumidityHistory(presentationFacade, mw);
-            this.Close();
+            HumidityHistory humidityHistory = new HumidityHistory(comboBox.SelectedItem as IBatch, this);
+            this.Hide();
             humidityHistory.Show();
         }
 
         private void btnShowVibrationHistory_Click(object sender, RoutedEventArgs e)
         {
-            VibrationHistory vibrationHistory = new VibrationHistory(presentationFacade, mw);
-            this.Close();
+            VibrationHistory vibrationHistory = new VibrationHistory(comboBox.SelectedItem as IBatch, this);
+            this.Hide();
             vibrationHistory.Show();
         }
-
-        private void btnShowBatchReport_Click(object sender, RoutedEventArgs e)
+            private void btnShowBatchReport_Click(object sender, RoutedEventArgs e)
         {
             BatchReport batchReport = new BatchReport(presentationFacade);
             this.Close();
