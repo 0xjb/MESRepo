@@ -2,6 +2,7 @@
 using MES.Data;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace MES.Tests
 {
@@ -143,6 +144,17 @@ namespace MES.Tests
 
             IBatch loadedBatch9 = dbManager.GetBatch(-1);
             Assert.IsNotNull(loadedBatch9, "Succes");
+
+            // Testing GetHighestBatchId
+
+            float id = dbManager.GetHighestBatchId();
+            bool succes = false;
+            if (id >= -1)
+            {
+                succes = true;
+            }
+            MessageBox.Show("Test: " + id);
+            Assert.IsTrue(succes, "Succes");
 
             // Testing DeleteBatch
 

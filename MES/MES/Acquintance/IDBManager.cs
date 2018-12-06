@@ -86,5 +86,11 @@ namespace MES.Acquintance
         /// <param name="recipes"></param>
         /// <returns></returns>
         bool AddRecipes(IRecipe[] recipes);
+
+        /// <summary>
+        /// Returns the highest Batch id in the db
+        /// </summary>
+        /// <returns></returns>
+        float GetHighestBatchId();
     }
 }
