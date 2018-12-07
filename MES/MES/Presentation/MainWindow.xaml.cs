@@ -3,11 +3,9 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using MES.Acquintance;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Runtime.Remoting.Channels;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -39,8 +37,8 @@ namespace MES.Presentation
         private double amount;
         private double produced;
         private double acceptableProducts;
-
         private double defectProducts;
+        private double amountToProduce;
 
         private int indexOfArrayTemp = 0;
         private int indexOfArrayHumid = 0;
@@ -79,7 +77,6 @@ namespace MES.Presentation
             //Get logiclayer
             iLogic = presentation.ILogic;
 
-
             iLogic.ErrorHandler.Alarms.CollectionChanged += EventHandling;
 
             if (!presentation.ILogic.IsSimulationOn)
@@ -95,7 +92,6 @@ namespace MES.Presentation
             timerTrend.Elapsed += OnTimedEvent;
 
             InitializeComponent();
-
 
             DataGridQuedBatches.ItemsSource = presentation.ILogic.Batches.Batches;
 
@@ -118,12 +114,12 @@ namespace MES.Presentation
             };
 
             //Place valuelabel inside the column
-            columnSeries.LabelsPosition = (BarLabelPosition) 3;
+            columnSeries.LabelsPosition = (BarLabelPosition)3;
 
-            SeriesCollectionIngredients = new SeriesCollection {columnSeries};
+            SeriesCollectionIngredients = new SeriesCollection { columnSeries };
 
             //put label stuff here
-            LabelsIngredients = new[] {"Barley", "Hops", "Malt", "Wheat", "Yeast"};
+            LabelsIngredients = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
 
             SeriesCollectionTemperature = new SeriesCollection
 
@@ -224,7 +220,6 @@ namespace MES.Presentation
             LevelYeast = iLogic.OPC.Yeast;
         }
 
-
         private void CheckIngredientsLevel()
         {
             this.levelBarley = iLogic.OPC.Barley;
@@ -236,10 +231,9 @@ namespace MES.Presentation
             iLogic.OPC.PropertyChanged += CheckForChangesIngredientsLevel;
         }
 
-
         private void CheckChangesInStatus(object sender, PropertyChangedEventArgs e)
         {
-            int index = (int) iLogic.OPC.StateCurrent;
+            int index = (int)iLogic.OPC.StateCurrent;
             StatusString = statusArray[index];
         }
 
@@ -259,7 +253,6 @@ namespace MES.Presentation
                 arrayListLabelsTemperature.Add(DateTime.Now.ToString());
             }
         }
-
 
         private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
         {
@@ -297,7 +290,7 @@ namespace MES.Presentation
 
         private void CheckStatus()
         {
-            int index = (int) iLogic.OPC.StateCurrent;
+            int index = (int)iLogic.OPC.StateCurrent;
             txtStatus.Text = statusArray[index];
             iLogic.OPC.PropertyChanged += CheckChangesInStatus;
         }
@@ -556,7 +549,6 @@ namespace MES.Presentation
             }
         }
 
-
         public double Produced
         {
             get { return produced; }
@@ -574,7 +566,6 @@ namespace MES.Presentation
             set => arrayListLabelsTemperature = value;
         }
 
-
         public List<string> ArrayListLabelsHumidity
         {
             get => arrayListLabelsHumidity;
@@ -582,15 +573,26 @@ namespace MES.Presentation
         }
 
         public double AcceptableProducts
-    {
-        get { return acceptableProducts; }
-
-        set
         {
-            acceptableProducts = value;
-            OnPropertyChanged("AcceptableProducts");
+            get { return acceptableProducts; }
+
+            set
+            {
+                acceptableProducts = value;
+                OnPropertyChanged("AcceptableProducts");
+            }
         }
-    }
+
+        public double AmountToProduce
+        {
+            get { return amountToProduce; }
+
+            set
+            {
+                amountToProduce = value;
+                OnPropertyChanged("AmountToProduce");
+            }
+        }
 
         public List<string> ArrayListLabelsVibration
         {
@@ -599,41 +601,40 @@ namespace MES.Presentation
         }
 
         public double DefectProducts
-    {
-        get { return defectProducts; }
-
-        set
         {
-            defectProducts = value;
-            OnPropertyChanged("DefectProducts");
+            get { return defectProducts; }
+
+            set
+            {
+                defectProducts = value;
+                OnPropertyChanged("DefectProducts");
+            }
         }
-    }
 
-    public double Status
-    {
-        get { return status; }
-
-        set
+        public double Status
         {
-            status = value;
-            OnPropertyChanged("Status");
+            get { return status; }
+
+            set
+            {
+                status = value;
+                OnPropertyChanged("Status");
+            }
         }
-    }
 
-    public IPresentation PresentationFacade
-    {
-        get { return presentation; }
-        set { presentation = value; }
-    }
-
-    protected void OnPropertyChanged(string name)
-    {
-        PropertyChangedEventHandler handler = PropertyChanged;
-        if (handler != null)
+        public IPresentation PresentationFacade
         {
-            handler(this, new PropertyChangedEventArgs(name));
+            get { return presentation; }
+            set { presentation = value; }
         }
-    }
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
     }
 }
-

@@ -12,16 +12,30 @@ namespace MES.Acquintance
         void CreateSimulation();
 
         IData Data { get; set; }
+
         OpcClient OPC { get; set; }
+
         ErrorHandler ErrorHandler { get; set; }
 
         void InjectData(IData dataLayer);
 
         bool IsSimulationOn { get; set; }
 
-        void CreateBatch(float batchId, float amount, float productType);
+        void CreateBatch(float batchId, float amount, IRecipe recipe);
 
         void StartProduction();
+
+        /// <summary>
+        /// Returns all recipes from the db
+        /// </summary>
+        /// <returns></returns>
+        IDictionary<float, IRecipe> GetAllRecipes();
+
+        /// <summary>
+        /// Returns the highest Batch id in the db
+        /// </summary>
+        /// <returns></returns>
+        float GetHighestBatchId();
 
         /// <summary>
         /// Authenticates the user information
@@ -32,7 +46,9 @@ namespace MES.Acquintance
         bool AuthenticateUserInformation(string username, string password);
 
         void CreateErrorHandler();
+
         void SaveBatch(ISimpleBatch s);
+
         ISimpleBatch GetCurrentBatch();
         IDictionary<float,IBatch> GetAllBatches();
     }

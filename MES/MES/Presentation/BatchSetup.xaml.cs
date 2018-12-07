@@ -1,69 +1,96 @@
-﻿using System.IO;
-using MES.Acquintance;
-using System.Windows;
-using MES.Acquintance;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using MES.Acquintance;
 using System;
+using System.Collections.Generic;
+using System.Windows;
 
-namespace MES.Presentation {
+namespace MES.Presentation
+{
     /// <summary>
     /// Interaction logic for BatchSetup.xaml
     /// </summary>
-    public partial class BatchSetup : Window {
+    public partial class BatchSetup : Window
+    {
         private IPresentation presentationFacade;
         MainWindow window;
-        public BatchSetup(IPresentation pf, MainWindow w) {
+        public BatchSetup(IPresentation pf, MainWindow w)
+        {
             window = w;
             PresentationFacade = pf;
             InitializeComponent();
             batchQueueGrid.ItemsSource = presentationFacade.ILogic.Batches.Batches;
             DataContext = this;
+            ProductTypeCB.ItemsSource = GetRecipes();
         }
-        public IPresentation PresentationFacade {
+
+        public IPresentation PresentationFacade
+        {
             get { return presentationFacade; }
             set { presentationFacade = value; }
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e) {
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
             window.Show();
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            try {
-                float batchId = float.Parse(BatchIdTB.Text);
-                float productType = float.Parse(ProductTypeTB.Text);
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                float batchId = presentationFacade.ILogic.GetHighestBatchId() + 1;
+                IRecipe productType = (IRecipe)ProductTypeCB.SelectedItem;
                 float amount = float.Parse(AmountTB.Text);
                 presentationFacade.ILogic.CreateBatch(batchId, amount, productType);
                 testlabel.Content = "Batch added to the list";
-            } catch (System.FormatException) {
+            }
+            catch (System.FormatException)
+            {
                 testlabel.Content = "you must insert correct values into the boxes";
             }
-
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e) {
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
             ISimpleBatch b = presentationFacade.ILogic.GetCurrentBatch();
-            b.TimestampStart = DateTime.Now.ToString();
+            b.TimestampStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
             presentationFacade.ILogic.StartProduction();
         }
-        // TODO: Fix below shit 2 interfaec yeahh
-        private void Button1_Click(object sender, RoutedEventArgs e) {
-            if(batchQueueGrid.SelectedItem != null) {
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+            if (batchQueueGrid.SelectedItem != null)
+            {
                 presentationFacade.ILogic.Batches.MoveUp(batchQueueGrid.SelectedItem as ISimpleBatch);
             }
 
         }
 
-        private void Button2_Click(object sender, RoutedEventArgs e) {
-            if (batchQueueGrid.SelectedItem != null) {
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            if (batchQueueGrid.SelectedItem != null)
+            {
                 presentationFacade.ILogic.Batches.MoveDown(batchQueueGrid.SelectedItem as ISimpleBatch);
             }
 
         }
+
+        private ISet<IRecipe> GetRecipes()
+        {
+            try
+            {
+                IDictionary<float, IRecipe> recipes = presentationFacade.ILogic.GetAllRecipes();
+                ISet<IRecipe> set = new HashSet<IRecipe>();
+                foreach (KeyValuePair<float, IRecipe> recipe in recipes)
+                {
+                    set.Add(recipe.Value);
+                }
+                return set;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+        }
     }
 }
-
-

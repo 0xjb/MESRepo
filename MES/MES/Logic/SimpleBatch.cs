@@ -38,12 +38,15 @@ namespace MES.Logic
         public string TimestampStart { get; set; }
         public string TimestampEnd { get; set; }
         public double OEE { get; set; }
+        public float MachineSpeed { get; set; }
 
-        public SimpleBatch(float id, float bt, float amount)
+        public SimpleBatch(float id, IRecipe recipe, float amount)
         {
             BatchID = id;
-            BeerType = bt;
+            BeerType = recipe.BeerId;
+            MachineSpeed = recipe.MaxSpeed;
             DesiredAmount = amount;
+            OEE = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

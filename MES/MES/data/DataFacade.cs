@@ -1,6 +1,5 @@
 ﻿using MES.Acquintance;
 using MES.data;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -116,6 +115,11 @@ namespace MES.Data
         public bool AddRecipes(IRecipe[] recipes)
         {
             return dbManager.AddRecipes(recipes);
+        }
+
+        public float GetHighestBatchId()
+        {
+            return dbManager.GetHighestBatchId();
         }
 
         public bool AuthenticateUserInformation(string username, string password)
