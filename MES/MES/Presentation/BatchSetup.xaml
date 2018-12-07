@@ -43,7 +43,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="btnBack"  Content="Back" Grid.Column="1"  Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
         
-        <ComboBox x:Name="ProductTypeTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,12,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="ProductTypeCB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,12,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120"/>
 
        
         <TextBox x:Name="AmountTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,18,0,0" RenderTransformOrigin="0.833,1.022"/>

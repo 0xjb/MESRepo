@@ -114,14 +114,7 @@ namespace MES.Logic
             set.Add(OPC.TempList);
             set.Add(OPC.HumidityList);
             set.Add(OPC.VibrationList);
-            foreach (var yeet in OPC.TempList)
-            {
-                Console.WriteLine(yeet.Value + " " + yeet.Type);
-            }
-            foreach (var yeets in OPC.HumidityList)
-            {
-                Console.WriteLine(yeets.Value + " " + yeets.Type);
-            }
+
             Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
                 (int)OPC.DefectProducts, s.TimestampStart, s.TimestampEnd, s.OEE, set);
         }
@@ -129,6 +122,9 @@ namespace MES.Logic
         public ISimpleBatch GetCurrentBatch()
         {
             return Batches.CurrentBatch;
+        }
+        public IDictionary<float,IBatch> GetAllBatches() {
+            return data.GetAllBatches();
         }
     }
 }

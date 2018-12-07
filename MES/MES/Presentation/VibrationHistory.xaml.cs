@@ -12,15 +12,15 @@ namespace MES.Presentation
     public partial class VibrationHistory : Window, IObservableChartPoint
     {
         //TODO Størrelse af array i constructor Vibration History
-        private IPresentation presentationFacade;
-        private MainWindow mw;
+        private History history;
         int indexOfArray = 0;
+        IBatch batch;
 
-        public VibrationHistory(IPresentation pf, MainWindow mainWindow)
+        public VibrationHistory(IBatch b, History history)
         {
-            this.presentationFacade = pf;
-            this.mw = mainWindow;
+            this.history = history;
             InitializeComponent();
+            batch = b;
             SeriesCollectionVibration = new SeriesCollection
             {
                 new LineSeries
@@ -33,6 +33,7 @@ namespace MES.Presentation
             LabelsVibration = new string[1000];
             FormatterVibration = value => value;
             DataContext = this;
+            InsertVibrationData();
         }
 
         private double _value;
@@ -62,7 +63,6 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade, mw);
             this.Close();
             history.Show();
         }
@@ -74,6 +74,16 @@ namespace MES.Presentation
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
             return number;
+        }
+        private void InsertVibrationData()
+        {
+            foreach (var batchvalue in batch.GetBatchVibrations())
+            {
+                LabelsVibration[indexOfArray] = batchvalue.Timestamp;
+                _value = batchvalue.Value;
+                SeriesCollectionVibration[0].Values.Add(Value);
+                indexOfArray++;
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
