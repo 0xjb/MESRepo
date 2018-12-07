@@ -13,6 +13,10 @@ namespace MES.Tests
         [Test]
         public void TestDBManager()
         {
+            // Clearing Test Batches
+
+            DeleteBatches();
+
             // Testing GetAllRecipes
 
             IDictionary<float, IRecipe> recipes = dbManager.GetAllRecipes();
@@ -156,28 +160,33 @@ namespace MES.Tests
 
             // Testing DeleteBatch
 
+            DeleteBatches();
+        }
+
+        private void DeleteBatches()
+        {
             bool deleted0 = dbManager.DeleteBatch(-1);
             Assert.IsTrue(deleted0, "Deleted");
-            IBatch loadedBatch10 = dbManager.GetBatch(-1);
-            Assert.IsNull(loadedBatch10, "Succes");
+            IBatch loadedBatch0 = dbManager.GetBatch(-1);
+            Assert.IsNull(loadedBatch0, "Succes");
 
             bool deleted1 = dbManager.DeleteBatch(-2);
             Assert.IsTrue(deleted1, "Deleted");
-            IBatch loadedBatch11 = dbManager.GetBatch(-2);
-            Assert.IsNull(loadedBatch11, "Succes");
+            IBatch loadedBatch1 = dbManager.GetBatch(-2);
+            Assert.IsNull(loadedBatch1, "Succes");
 
             bool deleted2 = dbManager.DeleteBatch(-3);
             Assert.IsTrue(deleted2, "Deleted");
-            IBatch loadedBatch12 = dbManager.GetBatch(-3);
-            Assert.IsNull(loadedBatch12, "Succes");
+            IBatch loadedBatch2 = dbManager.GetBatch(-3);
+            Assert.IsNull(loadedBatch2, "Succes");
 
             bool deleted3 = dbManager.DeleteBatch(-4);
             Assert.IsTrue(deleted3, "Deleted");
-            IBatch loadedBatch13 = dbManager.GetBatch(-4);
-            Assert.IsNull(loadedBatch13, "Succes");
+            IBatch loadedBatch3 = dbManager.GetBatch(-4);
+            Assert.IsNull(loadedBatch3, "Succes");
         }
 
-
+        /*
         [Test]
         public void DBSetup()
         {
@@ -282,30 +291,6 @@ namespace MES.Tests
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Succes");
         }
-
-        [Test]
-        public void DeleteBatches()
-        {
-            bool deleted0 = dbManager.DeleteBatch(-1);
-            Assert.IsTrue(deleted0, "Deleted");
-            IBatch loadedBatch0 = dbManager.GetBatch(-1);
-            Assert.IsNull(loadedBatch0, "Succes");
-
-            bool deleted1 = dbManager.DeleteBatch(-2);
-            Assert.IsTrue(deleted1, "Deleted");
-            IBatch loadedBatch1 = dbManager.GetBatch(-2);
-            Assert.IsNull(loadedBatch1, "Succes");
-
-            bool deleted2 = dbManager.DeleteBatch(-3);
-            Assert.IsTrue(deleted2, "Deleted");
-            IBatch loadedBatch2 = dbManager.GetBatch(-3);
-            Assert.IsNull(loadedBatch2, "Succes");
-
-            bool deleted3 = dbManager.DeleteBatch(-4);
-            Assert.IsTrue(deleted3, "Deleted");
-            IBatch loadedBatch3 = dbManager.GetBatch(-4);
-            Assert.IsNull(loadedBatch3, "Succes");
-        }
-
+        */
     }
 }
