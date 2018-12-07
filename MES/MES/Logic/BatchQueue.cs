@@ -64,7 +64,7 @@ namespace MES.Logic {
             if (e.PropertyName.Equals("StateCurrent")) {
                 if ((sender as OpcClient).StateCurrent == 17) {
                     if (CurrentBatch != null) {
-                        CurrentBatch.TimestampEnd = DateTime.Now.ToString();
+                        CurrentBatch.TimestampEnd = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
                         logic.SaveBatch(CurrentBatch);
                         if (Batches.Count >= 1) {
                             CurrentBatch = Batches[0];
