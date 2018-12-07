@@ -93,7 +93,7 @@ namespace MES.Logic
             NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
             NodeId acceptableNode = new NodeId("::Program:product.good", 6);
             NodeId amountToProduceNode = new NodeId("::Program:product.produce_amount", 6);
-            NodeId productsPerMinuteNode = new NodeId("::Program:Cube.Command.MachSpeed", 6);
+            NodeId productsPerMinuteNode = new NodeId("::Program:Cube.Status.MachSpeed", 6);
             NodeId tempNode = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6);
             NodeId humidityNode = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6);
             NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
@@ -198,7 +198,7 @@ namespace MES.Logic
                         AmountToProduce = double.Parse(dc.Value.ToString());
                         break;
                     // products per minute
-                    case "::Program:Cube.Command.MachSpeed":
+                    case "::Program:Cube.Status.MachSpeed":
                         ProductsPerMinute = double.Parse(dc.Value.ToString());
                         break;
                     //relative humidity
