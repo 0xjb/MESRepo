@@ -12,18 +12,19 @@ namespace MES.Presentation
     public partial class TemperatureHistory : Window, IObservableChartPoint
     {
         //TODO Størrelse af array i constructor Temperature History
+        IBatch batch;
         private IPresentation presentationFacade;
-        private History hw;
+        private History history;
         private int indexOfArray = 0;
         private bool closeApp;
 
-        public TemperatureHistory(IPresentation pf, History hw)
+        public TemperatureHistory(IBatch b, History history)
         {
-            this.presentationFacade = pf;
-            this.hw = hw;
-            InitializeComponent();
-            SeriesCollectionTemperature = new SeriesCollection
 
+            this.history = history;
+            InitializeComponent();
+            batch = b;
+            SeriesCollectionTemperature = new SeriesCollection
             {
                 new LineSeries
                 {
@@ -35,7 +36,7 @@ namespace MES.Presentation
             LabelsTemperature = new string[1000];
             FormatterTemperature = value => value;
             DataContext = this;
-
+            InsertTemperatureData();
             Closed += new EventHandler(Window_Closed);
             closeApp = true;
         }
@@ -54,9 +55,11 @@ namespace MES.Presentation
             }
         }
 
+
         protected void OnPointChanged()
         {
-            if (PointChanged != null) PointChanged.Invoke();
+            if (PointChanged != null)
+                PointChanged.Invoke();
         }
 
         public SeriesCollection SeriesCollectionTemperature { get; set; }
@@ -69,7 +72,7 @@ namespace MES.Presentation
         {
             closeApp = false;
             this.Close();
-            hw.Show();
+            this.history.Show();
         }
 
         //Skal fjernes bare til Test
@@ -80,13 +83,26 @@ namespace MES.Presentation
             number = randomNumber.Next(19, 26);
             return number;
         }
+        private void InsertTemperatureData()
+        {
+            foreach (var batchvalue in batch.GetBatchTemperatures())
+            {
+                LabelsTemperature[indexOfArray] = batchvalue.Timestamp;
+                _value = batchvalue.Value;
+                SeriesCollectionTemperature[0].Values.Add(Value);
+                indexOfArray++;
+            }
+        }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            LabelsTemperature[indexOfArray] = DateTime.Now.ToString();
-            _value = generateRandomNumber();
-            SeriesCollectionTemperature[0].Values.Add(Value);
-            indexOfArray++;
+            foreach (var batchvalue in batch.GetBatchTemperatures())
+            {
+                LabelsTemperature[indexOfArray] = batchvalue.Timestamp;
+                _value = batchvalue.Value;
+                SeriesCollectionTemperature[0].Values.Add(Value);
+                indexOfArray++;
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)

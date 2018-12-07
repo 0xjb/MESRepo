@@ -38,3 +38,11 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 37              0                    12-03-2018 08:24:10                      Manual stop                              12                                      
 38              0                    12-03-2018 09:14:13                      Manual stop                              12                                      
 39              0                    12-03-2018 09:26:00                      Manual stop                              12                                      
+40              15                   12/06/2018 10:38:47 AM                   Manual abort                             14                                      
+40              35478                12/06/2018 13:25:55 PM                   Manual stop                              12                                      
+40              35478                12/06/2018 13:26:38 PM                   Manual stop                              12                                      
+40              35485                12/06/2018 13:54:30 PM                   Empty inventory                          10                                      
+40              35485                12/06/2018 13:55:52 PM                   Empty inventory                          10                                      
+40              35485                12/06/2018 13:57:08 PM                   Empty inventory                          10                                      
+40              35485                12/06/2018 14:00:11 PM                   Empty inventory                          10                                      
+40              35485                12/06/2018 14:03:09 PM                   Empty inventory                          10                                      
