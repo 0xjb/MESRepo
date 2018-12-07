@@ -19,13 +19,11 @@ namespace MES.Presentation
         {
             DataContext = this;
             this.presentationFacade = pf;
-            try
-            {
-                batches = pf.ILogic.GetAllBatches().Values;
-            }
-            catch (NullReferenceException) { }
+            
+            batches = pf.ILogic.GetAllBatches().Values;
             this.mw = mainWindow;
             InitializeComponent();
+            comboBox.ItemsSource = batches;
             this.Closed += new EventHandler(Window_Closed);
             closeApp = true;
         }
