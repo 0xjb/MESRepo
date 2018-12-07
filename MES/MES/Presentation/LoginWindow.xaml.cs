@@ -1,4 +1,5 @@
 ﻿using MES.Acquintance;
+using System;
 using System.Windows;
 
 namespace MES.Presentation
@@ -17,8 +18,8 @@ namespace MES.Presentation
 
             loginButton.IsDefault = true;
             usernameTextBox.Focus();
-     
-            
+
+            Closed += new EventHandler(Window_Closed);
         }
 
         private void HandleClickLoginButtonEvent(object sender, RoutedEventArgs e)
@@ -32,6 +33,11 @@ namespace MES.Presentation
                 this.Close();
                 mainWindow.Show();
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

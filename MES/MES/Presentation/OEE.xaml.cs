@@ -1,10 +1,10 @@
-﻿
-using System.Collections.Generic;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
 using MES.Acquintance;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
-using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace MES.Presentation
 {
@@ -18,7 +18,6 @@ namespace MES.Presentation
 
         private int speed;
 
-
         public SeriesCollection SeriesCollectionPilsner { get; set; }
         public SeriesCollection SeriesCollectionWheat { get; set; }
         public SeriesCollection SeriesCollectionIPA { get; set; }
@@ -26,10 +25,9 @@ namespace MES.Presentation
         public SeriesCollection SeriesCollectionAle { get; set; }
         public SeriesCollection SeriesCollectionAlcoholFree { get; set; }
 
-
         private List<string> arrayListLabels;
-  
 
+        private bool closeApp;
 
         public OEE(IPresentation pf, MainWindow mainWindow)
         {
@@ -38,7 +36,6 @@ namespace MES.Presentation
             InitializeComponent();
 
             arrayListLabels = new List<string>();
-            //arrayListLabelsWheat= new List<string>();
 
             SeriesCollectionPilsner = new SeriesCollection
 
@@ -63,8 +60,6 @@ namespace MES.Presentation
                     Fill = Brushes.Aqua, Stroke = Brushes.CornflowerBlue, PointGeometrySize = 5,
                     Values = new ChartValues<int> {  },
                 },
-
-                
                 new LineSeries
                 {
                     Title = "Speed Stout",
@@ -83,18 +78,18 @@ namespace MES.Presentation
                     Fill = Brushes.Gold, Stroke = Brushes.DarkGoldenrod, PointGeometrySize = 5,
                     Values = new ChartValues<int> {  },
                 }
-
             };
 
             DataContext = this;
 
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(presentationFacade);
+            closeApp = false;
             this.Close();
-            //mainWindow.Show();
             mw.Show();
         }
 
@@ -154,8 +149,6 @@ namespace MES.Presentation
             arrayListLabels.Add(64.5.ToString());
         }
 
-
-
         private void Wheat_Checked(object sender, RoutedEventArgs e)
         {
             PilserCheckBox.IsChecked = false;
@@ -211,8 +204,6 @@ namespace MES.Presentation
             Speed = 300;
             SeriesCollectionPilsner[1].Values.Add(Speed);
             arrayListLabels.Add(100.ToString());
-
-
         }
 
         public int Speed
@@ -399,7 +390,6 @@ namespace MES.Presentation
             Speed = 300;
             SeriesCollectionPilsner[4].Values.Add(Speed);
             arrayListLabels.Add(100.ToString());
-
         }
 
         private void AlcoholFree_Checked(object sender, RoutedEventArgs e)
@@ -458,7 +448,12 @@ namespace MES.Presentation
             Speed = 300;
             SeriesCollectionPilsner[5].Values.Add(Speed);
             arrayListLabels.Add(100.ToString());
+        }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

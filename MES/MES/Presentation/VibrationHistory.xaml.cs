@@ -13,13 +13,14 @@ namespace MES.Presentation
     {
         //TODO Størrelse af array i constructor Vibration History
         private IPresentation presentationFacade;
-        private MainWindow mw;
-        int indexOfArray = 0;
+        private History hw;
+        private int indexOfArray = 0;
+        private bool closeApp;
 
-        public VibrationHistory(IPresentation pf, MainWindow mainWindow)
+        public VibrationHistory(IPresentation pf, History hw)
         {
             this.presentationFacade = pf;
-            this.mw = mainWindow;
+            this.hw = hw;
             InitializeComponent();
             SeriesCollectionVibration = new SeriesCollection
             {
@@ -33,6 +34,9 @@ namespace MES.Presentation
             LabelsVibration = new string[1000];
             FormatterVibration = value => value;
             DataContext = this;
+
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private double _value;
@@ -62,9 +66,9 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade, mw);
+            closeApp = false;
             this.Close();
-            history.Show();
+            hw.Show();
         }
 
         //TODO Skal fjernes bare til Test
@@ -82,6 +86,12 @@ namespace MES.Presentation
             _value = generateRandomNumber();
             SeriesCollectionVibration[0].Values.Add(Value);
             indexOfArray++;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

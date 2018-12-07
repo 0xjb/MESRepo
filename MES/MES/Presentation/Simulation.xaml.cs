@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MES.Acquintance;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MES.Acquintance;
 
 namespace MES.Presentation
 {
@@ -22,12 +11,14 @@ namespace MES.Presentation
     {
         private IPresentation presentationFacade;
         private MainWindow mw;
+        private bool closeApp;
 
         public Simulation(IPresentation pf, bool isSimulationOn, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
+
             if (isSimulationOn)
             {
                 checkBockSimulation.IsChecked = true;
@@ -37,13 +28,15 @@ namespace MES.Presentation
             {
                 checkBockSimulation.IsEnabled = false;
             }
+
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            //MainWindow mainWindow = new MainWindow(presentationFacade);
+            closeApp = false;
             this.Close();
-            //mainWindow.Show();
             mw.Show();
         }
 
@@ -55,7 +48,6 @@ namespace MES.Presentation
                 presentationFacade.ILogic.CreateSimulation();
                 Console.WriteLine(" is checked");
             }
-
         }
 
         private void CheckBox_OnUnchecked(object sender, RoutedEventArgs e)
@@ -65,6 +57,12 @@ namespace MES.Presentation
                 presentationFacade.ILogic.IsSimulationOn = false;
                 Console.WriteLine(" is unchecked");
             }
-      }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
+        }
     }
 }

@@ -332,11 +332,10 @@ namespace MES.Presentation
 
         #region XAML generated code
 
-        void MainWindow_Closed(object sender, EventArgs e)
+        private void MainWindow_Closed(object sender, EventArgs e)
         {
-            //Put your close code here
+            Application.Current.Shutdown();
         }
-
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {

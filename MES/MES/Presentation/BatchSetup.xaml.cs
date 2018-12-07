@@ -11,7 +11,9 @@ namespace MES.Presentation
     public partial class BatchSetup : Window
     {
         private IPresentation presentationFacade;
-        MainWindow window;
+        private MainWindow window;
+        private bool closeApp;
+
         public BatchSetup(IPresentation pf, MainWindow w)
         {
             window = w;
@@ -20,6 +22,8 @@ namespace MES.Presentation
             batchQueueGrid.ItemsSource = presentationFacade.ILogic.Batches.Batches;
             DataContext = this;
             ProductTypeCB.ItemsSource = GetRecipes();
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         public IPresentation PresentationFacade
@@ -30,6 +34,7 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            closeApp = false;
             this.Close();
             window.Show();
         }
@@ -91,6 +96,12 @@ namespace MES.Presentation
             {
                 return null;
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

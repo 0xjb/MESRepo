@@ -1,4 +1,5 @@
 ﻿using MES.Acquintance;
+using System;
 using System.Windows;
 
 namespace MES.Presentation
@@ -10,20 +11,28 @@ namespace MES.Presentation
     {
         private IPresentation presentationFacade;
         private MainWindow mw;
+        private bool closeApp;
 
         public Optimization(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
             this.mw = mainWindow;
             InitializeComponent();
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(presentationFacade);
+            closeApp = false;
             this.Close();
-            //mainWindow.Show();
             mw.Show();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

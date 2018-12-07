@@ -13,13 +13,14 @@ namespace MES.Presentation
     {
         //TODO Størrelse af array i constructor Temperature History
         private IPresentation presentationFacade;
-        private MainWindow mw;
-        int indexOfArray = 0;
+        private History hw;
+        private int indexOfArray = 0;
+        private bool closeApp;
 
-        public TemperatureHistory(IPresentation pf, MainWindow mainWindow)
+        public TemperatureHistory(IPresentation pf, History hw)
         {
             this.presentationFacade = pf;
-            this.mw = mainWindow;
+            this.hw = hw;
             InitializeComponent();
             SeriesCollectionTemperature = new SeriesCollection
 
@@ -34,6 +35,9 @@ namespace MES.Presentation
             LabelsTemperature = new string[1000];
             FormatterTemperature = value => value;
             DataContext = this;
+
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private double _value;
@@ -50,7 +54,6 @@ namespace MES.Presentation
             }
         }
 
-
         protected void OnPointChanged()
         {
             if (PointChanged != null) PointChanged.Invoke();
@@ -62,12 +65,11 @@ namespace MES.Presentation
 
         public Func<double, double> FormatterTemperature { get; set; }
 
-
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade, mw);
+            closeApp = false;
             this.Close();
-            history.Show();
+            hw.Show();
         }
 
         //Skal fjernes bare til Test
@@ -85,6 +87,12 @@ namespace MES.Presentation
             _value = generateRandomNumber();
             SeriesCollectionTemperature[0].Values.Add(Value);
             indexOfArray++;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }
