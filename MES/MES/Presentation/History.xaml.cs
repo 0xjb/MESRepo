@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 namespace MES.Presentation
 {
@@ -20,10 +19,15 @@ namespace MES.Presentation
         {
             DataContext = this;
             this.presentationFacade = pf;
-            batches = pf.ILogic.GetAllBatches().Values;
-
+            try
+            {
+                batches = pf.ILogic.GetAllBatches().Values;
+            }
+            catch (NullReferenceException) { }
             this.mw = mainWindow;
             InitializeComponent();
+            this.Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -65,6 +69,10 @@ namespace MES.Presentation
             catch (System.ComponentModel.Win32Exception exs)
             {
                 MessageBox.Show("The selected batch does not have a batch report.");
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.StackTrace);
             }
         }
 

@@ -12,15 +12,14 @@ namespace MES.Presentation
     public partial class HumidityHistory : Window, IObservableChartPoint
     {
         //TODO Størrelse af array i constructor Humidity History
-        IBatch batch;
-        private IPresentation presentationFacade;
+        private IBatch batch;
         private History history;
         private int indexOfArray = 0;
         private bool closeApp;
 
         public HumidityHistory(IBatch b, History history)
         {
-            this.history = this.history;
+            this.history = history;
             InitializeComponent();
             batch = b;
             SeriesCollectionHumidity = new SeriesCollection
@@ -35,10 +34,14 @@ namespace MES.Presentation
             LabelsHumidity = new string[1000];
             FormatterHumidity = value => value;
             DataContext = this;
-            foreach (var humi in batch.GetBatchHumidities())
+            try
             {
-                Console.WriteLine(humi.Value);
+                foreach (var humi in batch.GetBatchHumidities())
+                {
+                    Console.WriteLine(humi.Value);
+                }
             }
+            catch (NullReferenceException) { }
             InsertHumidityData();
             Closed += new EventHandler(Window_Closed);
             closeApp = true;
@@ -71,7 +74,7 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade, mw);
+            closeApp = false;
             this.Close();
             this.history.Show();
         }
@@ -86,13 +89,17 @@ namespace MES.Presentation
         }
         private void InsertHumidityData()
         {
-            foreach (var batchvalue in batch.GetBatchHumidities())
+            try
             {
-                LabelsHumidity[indexOfArray] = batchvalue.Timestamp;
-                _value = batchvalue.Value;
-                SeriesCollectionHumidity[0].Values.Add(Value);
-                indexOfArray++;
+                foreach (var batchvalue in batch.GetBatchHumidities())
+                {
+                    LabelsHumidity[indexOfArray] = batchvalue.Timestamp;
+                    _value = batchvalue.Value;
+                    SeriesCollectionHumidity[0].Values.Add(Value);
+                    indexOfArray++;
+                }
             }
+            catch (NullReferenceException) { }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

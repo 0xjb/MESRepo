@@ -66,7 +66,7 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History(presentationFacade, mw);
+            closeApp = false;
             this.Close();
             this.history.Show();
         }
@@ -81,13 +81,17 @@ namespace MES.Presentation
         }
         private void InsertVibrationData()
         {
-            foreach (var batchvalue in batch.GetBatchVibrations())
+            try
             {
-                LabelsVibration[indexOfArray] = batchvalue.Timestamp;
-                _value = batchvalue.Value;
-                SeriesCollectionVibration[0].Values.Add(Value);
-                indexOfArray++;
+                foreach (var batchvalue in batch.GetBatchVibrations())
+                {
+                    LabelsVibration[indexOfArray] = batchvalue.Timestamp;
+                    _value = batchvalue.Value;
+                    SeriesCollectionVibration[0].Values.Add(Value);
+                    indexOfArray++;
+                }
             }
+            catch (NullReferenceException) { }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

@@ -10,13 +10,13 @@ namespace MES.Presentation
     public partial class BatchReport : Window
     {
         private IPresentation presentationFacade;
-        private History hw;
+        private History history;
         private bool closeApp;
 
-        public BatchReport(IPresentation pf, History hw)
+        public BatchReport(IPresentation pf, History history)
         {
             this.presentationFacade = pf;
-            this.hw = hw;
+            this.history = history;
             InitializeComponent();
             Closed += new EventHandler(Window_Closed);
             closeApp = true;
@@ -26,7 +26,7 @@ namespace MES.Presentation
         {
             closeApp = false;
             this.Close();
-            hw.Show();
+            history.Show();
         }
 
         private void Window_Closed(object sender, EventArgs e)

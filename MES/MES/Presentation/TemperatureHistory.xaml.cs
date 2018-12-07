@@ -12,15 +12,13 @@ namespace MES.Presentation
     public partial class TemperatureHistory : Window, IObservableChartPoint
     {
         //TODO Størrelse af array i constructor Temperature History
-        IBatch batch;
-        private IPresentation presentationFacade;
+        private IBatch batch;
         private History history;
         private int indexOfArray = 0;
         private bool closeApp;
 
         public TemperatureHistory(IBatch b, History history)
         {
-
             this.history = history;
             InitializeComponent();
             batch = b;
@@ -55,7 +53,6 @@ namespace MES.Presentation
             }
         }
 
-
         protected void OnPointChanged()
         {
             if (PointChanged != null)
@@ -85,13 +82,17 @@ namespace MES.Presentation
         }
         private void InsertTemperatureData()
         {
-            foreach (var batchvalue in batch.GetBatchTemperatures())
+            try
             {
-                LabelsTemperature[indexOfArray] = batchvalue.Timestamp;
-                _value = batchvalue.Value;
-                SeriesCollectionTemperature[0].Values.Add(Value);
-                indexOfArray++;
+                foreach (var batchvalue in batch.GetBatchTemperatures())
+                {
+                    LabelsTemperature[indexOfArray] = batchvalue.Timestamp;
+                    _value = batchvalue.Value;
+                    SeriesCollectionTemperature[0].Values.Add(Value);
+                    indexOfArray++;
+                }
             }
+            catch (NullReferenceException) { }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

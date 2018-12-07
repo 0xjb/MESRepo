@@ -46,3 +46,4 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 40              35485                12/06/2018 13:57:08 PM                   Empty inventory                          10                                      
 40              35485                12/06/2018 14:00:11 PM                   Empty inventory                          10                                      
 40              35485                12/06/2018 14:03:09 PM                   Empty inventory                          10                                      
+40              600                  12-07-2018 14:42:34                      Manual abort                             14                                      
