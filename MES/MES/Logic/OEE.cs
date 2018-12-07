@@ -27,7 +27,8 @@ namespace MES.Logic
             DateTime startTime = DateTime.Parse(timestampStart);
             DateTime stopTime = DateTime.Parse(timestampEnd);
             TimeSpan elapsedTime = stopTime - startTime;
-            int elapsedTimeInt = Int32.Parse(elapsedTime.ToString());
+            int elapsedTimeInt = (int)elapsedTime.TotalSeconds;
+            Console.WriteLine("\n\n" + elapsedTimeInt + "\n\n");
             return elapsedTimeInt;
         }
 
