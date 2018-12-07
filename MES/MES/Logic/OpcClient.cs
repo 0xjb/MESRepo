@@ -177,7 +177,7 @@ namespace MES.Logic {
                         break;
                     //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
-                        StopReasonId = double.Parse(dc.Value.ToString());
+                        StopReasonId = double.Parse(dc.Value.ToString()); 
                         iLogic.ErrorHandler.AddAlarm((int)BatchId, StopReasonId);
                         break;
                     //batch id  BatchId
