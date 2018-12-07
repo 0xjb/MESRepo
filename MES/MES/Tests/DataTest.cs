@@ -186,7 +186,7 @@ namespace MES.Tests
             Assert.IsNull(loadedBatch3, "Succes");
         }
 
-
+        /*
         [Test]
         public void DBSetup()
         {
@@ -291,5 +291,6 @@ namespace MES.Tests
             bool succes = dbManager.RunQueries(statements);
             Assert.IsTrue(succes, "Succes");
         }
+        */
     }
 }
