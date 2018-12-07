@@ -29,7 +29,7 @@ namespace MES.Tests
             // Testing InsertBatch & InsertBatchValueSet
 
             IBatch batch0 = new Batch(-1, 3, 90, 10,
-                "02/11/2018 09:18:35.500", "02/11/2018 09:26:35.500", 10);
+                "02/11/2018 09:18:35.500", "02/11/2018 09:26:35.500", 10, 10);
             batch0.AddBatchValue(20, "02/11/2018 09:18:35.500", -1);
             batch0.AddBatchValue(30, "02/11/2018 09:19:35.500", 0);
             batch0.AddBatchValue(40, "02/11/2018 09:20:35.500", 1);
@@ -43,7 +43,7 @@ namespace MES.Tests
             Assert.IsTrue(inserted0, "Inserted first");
 
             IBatch batch1 = new Batch(-2, 3, 90, 10,
-                "02/11/2018 10:18:35.500", "02/11/2018 10:20:35.500", 10);
+                "02/11/2018 10:18:35.500", "02/11/2018 10:20:35.500", 10, 10);
             batch1.AddBatchValue(30, "02/11/2018 10:18:35.500", -1);
             batch1.AddBatchValue(40, "02/11/2018 10:19:35.500", 0);
             batch1.AddBatchValue(50, "02/11/2018 10:20:35.500", 1);
@@ -51,7 +51,7 @@ namespace MES.Tests
             Assert.IsTrue(inserted1, "Inserted second");
 
             IBatch batch2 = new Batch(-3, 3, 90, 10,
-                "02/12/2018 11:18:35.500", "02/12/2018 11:20:35.500", 10);
+                "02/12/2018 11:18:35.500", "02/12/2018 11:20:35.500", 10, 10);
             batch2.AddBatchValue(40, "02/12/2018 11:18:35.500", -1);
             batch2.AddBatchValue(50, "02/12/2018 11:19:35.500", 0);
             batch2.AddBatchValue(60, "02/12/2018 11:20:35.500", 1);
@@ -59,7 +59,7 @@ namespace MES.Tests
             Assert.IsTrue(inserted2, "Inserted third");
 
             IBatch batch3 = new Batch(-4, 3, 90, 10,
-                "02/12/2018 12:18:35.500", "02/12/2018 12:20:35.500", 10);
+                "02/12/2018 12:18:35.500", "02/12/2018 12:20:35.500", 10, 10);
             batch3.AddBatchValue(50, "02/12/2018 12:18:35.500", -1);
             batch3.AddBatchValue(60, "02/12/2018 12:19:35.500", 0);
             batch3.AddBatchValue(70, "02/12/2018 12:20:35.500", 1);

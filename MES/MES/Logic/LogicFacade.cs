@@ -6,6 +6,10 @@ namespace MES.Logic
 {
     public class LogicFacade : ILogic
     {
+        // shouldnt be here
+        private double productionCost = 5;
+        private double salePrice = 20;
+
         private IData data;
         private ErrorHandler errorHandler;
         private OpcClient opc;
@@ -108,6 +112,22 @@ namespace MES.Logic
         {
             return data.AuthenticateUserInformation(username, password);
         }
+        private double CalculatePPM(ISimpleBatch b) {
+            //Profit per minute
+            DateTime startTime = DateTime.Parse(b.TimestampStart);
+            DateTime endTime = DateTime.Parse(b.TimestampEnd);
+            TimeSpan elapsedTime = endTime - startTime;
+            //Sale price
+            double timeInMinutes = elapsedTime.TotalMinutes;
+            double salePricePerMin = (OPC.AcceptableProducts / timeInMinutes) * salePrice;
+
+            //Costs
+            double costPerMin = (OPC.DefectProducts / timeInMinutes) * productionCost;
+
+            //Profit
+            return salePricePerMin - costPerMin;
+
+        }
         public void SaveBatch(ISimpleBatch s)
         {
             ISet<IList<IBatchValue>> set = new HashSet<IList<IBatchValue>>();
@@ -115,8 +135,10 @@ namespace MES.Logic
             set.Add(OPC.HumidityList);
             set.Add(OPC.VibrationList);
 
+
+
             Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
-                (int)OPC.DefectProducts, s.TimestampStart, s.TimestampEnd, s.OEE, set);
+                (int)OPC.DefectProducts, s.TimestampStart, s.TimestampEnd, s.OEE, set, CalculatePPM(s));
         }
 
         public ISimpleBatch GetCurrentBatch()

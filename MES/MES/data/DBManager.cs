@@ -126,10 +126,11 @@ namespace MES.data
                     string timestampStart = dRead.GetString(4);
                     string timestampEnd = dRead.GetString(5);
                     double oee = dRead.GetDouble(6);
+                    double ppm = dRead.GetDouble(7);
 
                     batches.Add((float)batchId, new Batch((float)batchId, (float)beerId,
                         acceptableProducts, defectProducts,
-                        timestampStart, timestampEnd, oee));
+                        timestampStart, timestampEnd, oee, ppm));
                 }
                 dRead.Close();
 
@@ -313,7 +314,8 @@ namespace MES.data
                 + batch.GetDefectProducts() + ", '"
                 + batch.GetTimestampStart() + "', '"
                 + batch.GetTimestampEnd() + "', "
-                + batch.GetOEE() + ");";
+                + batch.GetOEE() + ", "
+                + batch.ProfitPerMin + ");";
 
             String[] sql = CreateBatchValuesStatements(setOfValues, batch.GetBatchId(), 1);
             sql[0] = sql0;

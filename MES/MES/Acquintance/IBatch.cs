@@ -4,6 +4,9 @@ namespace MES.Acquintance
 {
     public interface IBatch
     {
+
+        double ProfitPerMin { get; set; }
+
         /// <summary>
         /// Returns the batch id
         /// </summary>

@@ -37,17 +37,17 @@ namespace MES.Data
         {
             return dbManager.InsertIntoBatchesTable(
                 new Batch(batchId, beerId, acceptableProducts,
-                    defectProducts, timestampStart, timestampEnd, oee));
+                    defectProducts, timestampStart, timestampEnd, oee, 10));
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
            int defectProducts, string timestampStart, string timestampEnd, double oee,
-            ISet<IList<IBatchValue>> batchValues) {
+            ISet<IList<IBatchValue>> batchValues, double ppm) {
             // Creates batch report - null value is given in place of "timeUsed", which has not been implemented.
             batchReportGenerator.GenerateFile(batchId, beerId, acceptableProducts, defectProducts,null,batchValues);
 
             IBatch batch = new Batch(batchId, beerId, acceptableProducts,
-                    defectProducts, timestampStart, timestampEnd, oee);
+                    defectProducts, timestampStart, timestampEnd, oee, ppm);
             foreach (IList<IBatchValue> list in batchValues)
             {
                 batch.AddBatchValues(list);
