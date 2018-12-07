@@ -19,7 +19,7 @@ namespace MES.Presentation
             InitializeComponent();
             batchQueueGrid.ItemsSource = presentationFacade.ILogic.Batches.Batches;
             DataContext = this;
-            ProductTypeTB.ItemsSource = GetRecipes();
+            ProductTypeCB.ItemsSource = GetRecipes();
         }
 
         public IPresentation PresentationFacade
@@ -39,7 +39,7 @@ namespace MES.Presentation
             try
             {
                 float batchId = presentationFacade.ILogic.GetHighestBatchId() + 1;
-                IRecipe productType = (IRecipe)ProductTypeTB.SelectedItem;
+                IRecipe productType = (IRecipe)ProductTypeCB.SelectedItem;
                 float amount = float.Parse(AmountTB.Text);
                 presentationFacade.ILogic.CreateBatch(batchId, amount, productType);
                 testlabel.Content = "Batch added to the list";
@@ -53,7 +53,7 @@ namespace MES.Presentation
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             ISimpleBatch b = presentationFacade.ILogic.GetCurrentBatch();
-            b.TimestampStart = DateTime.Now.ToString();
+            b.TimestampStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
             presentationFacade.ILogic.StartProduction();
         }
 
