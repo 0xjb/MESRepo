@@ -9,7 +9,8 @@ namespace MES.Presentation
     /// </summary>
     public partial class LoginWindow : Window
     {
-        IPresentation presentation;
+        private IPresentation presentation;
+        private bool closeApp;
 
         public LoginWindow(IPresentation presentation)
         {
@@ -20,6 +21,7 @@ namespace MES.Presentation
             usernameTextBox.Focus();
 
             Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private void HandleClickLoginButtonEvent(object sender, RoutedEventArgs e)
@@ -30,6 +32,7 @@ namespace MES.Presentation
             if (authenticated)
             {
                 MainWindow mainWindow = new MainWindow(presentation);
+                closeApp = false;
                 this.Close();
                 mainWindow.Show();
             }
@@ -37,7 +40,8 @@ namespace MES.Presentation
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Application.Current.Shutdown();
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }
