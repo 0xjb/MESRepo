@@ -77,13 +77,20 @@ namespace MES.Presentation
 
         private ISet<IRecipe> GetRecipes()
         {
-            IDictionary<float, IRecipe> recipes = presentationFacade.ILogic.GetAllRecipes();
-            ISet<IRecipe> set = new HashSet<IRecipe>();
-            foreach (KeyValuePair<float, IRecipe> recipe in recipes)
+            try
             {
-                set.Add(recipe.Value);
+                IDictionary<float, IRecipe> recipes = presentationFacade.ILogic.GetAllRecipes();
+                ISet<IRecipe> set = new HashSet<IRecipe>();
+                foreach (KeyValuePair<float, IRecipe> recipe in recipes)
+                {
+                    set.Add(recipe.Value);
+                }
+                return set;
             }
-            return set;
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
     }
 }

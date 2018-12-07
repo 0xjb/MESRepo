@@ -1,4 +1,14 @@
-﻿using MES.Acquintance;
+﻿
+
+
+
+
+
+
+
+
+
+using MES.Acquintance;
 using MES.Data;
 using Npgsql;
 using System;
@@ -66,7 +76,7 @@ namespace MES.data
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("ERROR\n" + ex.ToString());
+                        //MessageBox.Show("ERROR\n" + ex.ToString());
                     }
                 }
 
@@ -187,7 +197,7 @@ namespace MES.data
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("ERROR\n" + ex.ToString());
+                    //MessageBox.Show("ERROR\n" + ex.ToString());
                 }
             }
             return values;
@@ -272,7 +282,8 @@ namespace MES.data
                     }
 
                     if (table != null)
-                    {
+                    { 
+                        // INSERT INTO vibrationvalues VALUES (40, 'lmao', 1);
                         sql[index] = "INSERT INTO " + table + " VALUES ("
                             + value.Value + ", '"
                             + value.Timestamp + "', "

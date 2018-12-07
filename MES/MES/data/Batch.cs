@@ -34,9 +34,10 @@ namespace MES.Data
         override
             public string ToString()
         {
-            return batchId + ", " + beerId + ", "
-                   + acceptableProducts + ", " + defectProducts + ", "
-                   + timestampStart + ", " + timestampEnd + ", " + oee;
+            //return batchId + ", " + beerId + ", "
+            //       + acceptableProducts + ", " + defectProducts + ", "
+            //       + timestampStart + ", " + timestampEnd + ", " + oee;
+            return "Batch ID: " + batchId;
         }
 
         public float GetBatchId()

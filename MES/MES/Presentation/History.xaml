@@ -45,7 +45,8 @@
         <Viewbox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2" Stretch="Fill">
             <Grid Height="45" Width="200">
                 <Label x:Name="label1" Content="Select Batch:" VerticalAlignment="Top" Margin="0,0,0,0" />
-                <ComboBox x:Name="comboBoxSelectBatch1" VerticalAlignment="Bottom" Margin="0,0,0,0" />
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="120"/>
+          <!--    <ComboBox x:Name="comboBoxSelectBatch1" VerticalAlignment="Bottom" Margin="0,0,0,0" /> -->
             </Grid>
         </Viewbox>
 

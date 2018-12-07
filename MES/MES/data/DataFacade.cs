@@ -11,6 +11,7 @@ namespace MES.Data
         private IUserManager userManager;
         private IUser currentUser;
         private FileManager fileManager;
+        private BatchReportGenerator batchReportGenerator;
 
         public DataFacade()
         {
@@ -18,6 +19,7 @@ namespace MES.Data
             userManager = new UserManager();
             currentUser = null;
             fileManager = new FileManager();
+            batchReportGenerator = new BatchReportGenerator();
         }
 
         public ObservableCollection<IAlarmObject> ReadFile()
@@ -40,8 +42,10 @@ namespace MES.Data
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
            int defectProducts, string timestampStart, string timestampEnd, double oee,
-            ISet<IList<IBatchValue>> batchValues)
-        {
+            ISet<IList<IBatchValue>> batchValues) {
+            // Creates batch report - null value is given in place of "timeUsed", which has not been implemented.
+            batchReportGenerator.GenerateFile(batchId, beerId, acceptableProducts, defectProducts,null,batchValues);
+
             IBatch batch = new Batch(batchId, beerId, acceptableProducts,
                     defectProducts, timestampStart, timestampEnd, oee);
             foreach (IList<IBatchValue> list in batchValues)

@@ -14,6 +14,8 @@ namespace MES.Logic
         private double processedProducts;
         private double defectProducts;
         private double acceptableProducts;
+        private double amountToProduce;
+        private double productsPerMinute;
         private double stateCurrent;
         private double tempCurrent;
         private double humidityCurrent;
@@ -27,6 +29,7 @@ namespace MES.Logic
         private double yeast;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
+
         private ILogic iLogic;
         // temp, humidity & vibration measurements
         private List<IBatchValue> tempList;
@@ -86,12 +89,14 @@ namespace MES.Logic
             NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
             NodeId stateNode = new NodeId("::Program:Cube.Status.StateCurrent", 6);
             NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
+            NodeId acceptableNode = new NodeId("::Program:product.good", 6);
+            NodeId amountToProduceNode = new NodeId("::Program:product.produce_amount", 6);
+            NodeId productsPerMinuteNode = new NodeId("::Program:Cube.Status.MachSpeed", 6);
             NodeId tempNode = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6);
             NodeId humidityNode = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6);
             NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
             NodeId stopReasonNode = new NodeId("::Program:Cube.Admin.StopReason.ID", 6);
             NodeId bacthIdNode = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6);
-
             NodeId barleyNode = new NodeId("::Program:Inventory.Barley", 6);
             NodeId hopsNode = new NodeId("::Program:Inventory.Hops", 6);
             NodeId maltNode = new NodeId("::Program:Inventory.Malt", 6);
@@ -106,6 +111,9 @@ namespace MES.Logic
             MonitoredItem miAmountNode = new DataMonitoredItem(amountNode);
             MonitoredItem miStateNode = new DataMonitoredItem(stateNode);
             MonitoredItem miDefectNode = new DataMonitoredItem(defectNode);
+            MonitoredItem miAcceptableNode = new DataMonitoredItem(acceptableNode);
+            MonitoredItem miAmountToProduceNode = new DataMonitoredItem(amountToProduceNode);
+            MonitoredItem miProductsPerMinuteNode = new DataMonitoredItem(productsPerMinuteNode);
             MonitoredItem miTempNode = new DataMonitoredItem(tempNode);
             MonitoredItem miHumidityNode = new DataMonitoredItem(humidityNode);
             MonitoredItem miVibrationNode = new DataMonitoredItem(vibrationNode);
@@ -126,6 +134,9 @@ namespace MES.Logic
             monitoredItems.Add(miAmountNode);
             monitoredItems.Add(miStateNode);
             monitoredItems.Add(miDefectNode);
+            monitoredItems.Add(miAcceptableNode);
+            monitoredItems.Add(miAmountToProduceNode);
+            monitoredItems.Add(miProductsPerMinuteNode);
             monitoredItems.Add(miTempNode);
             monitoredItems.Add(miHumidityNode);
             monitoredItems.Add(miVibrationNode);
@@ -159,6 +170,7 @@ namespace MES.Logic
             {
                 switch (dc.MonitoredItem.NodeId.Identifier.ToString())
                 {
+                    // current state
                     case "::Program:Cube.Status.StateCurrent":
                         StateCurrent = double.Parse(dc.Value.ToString());
                         break;
@@ -175,6 +187,18 @@ namespace MES.Logic
                     case "::Program:Cube.Admin.ProdDefectiveCount":
                         DefectProducts = double.Parse(dc.Value.ToString());
                         break;
+                    // acceptable products processed
+                    case "::Program:product.good":
+                        AcceptableProducts = double.Parse(dc.Value.ToString());
+                        break;
+                    // amount of products to be produced
+                    case "::Program:product.produce_amount":
+                        AmountToProduce = double.Parse(dc.Value.ToString());
+                        break;
+                    // products per minute
+                    case "::Program:Cube.Status.MachSpeed":
+                        ProductsPerMinute = double.Parse(dc.Value.ToString());
+                        break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
                         HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
@@ -187,7 +211,7 @@ namespace MES.Logic
                         break;
                     //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
-                        StopReasonId = double.Parse(dc.Value.ToString());
+                        StopReasonId = double.Parse(dc.Value.ToString()); 
                         iLogic.ErrorHandler.AddAlarm((int)BatchId, StopReasonId);
                         break;
                     //batch id  BatchId
@@ -566,18 +590,7 @@ namespace MES.Logic
             set
             {
                 processedProducts = value;
-                AcceptableProducts = processedProducts - defectProducts;
                 OnPropertyChanged("ProcessedProducts");
-            }
-        }
-
-        public double DefectProducts
-        {
-            get { return defectProducts; }
-            set
-            {
-                defectProducts = value;
-                OnPropertyChanged("DefectProducts");
             }
         }
 
@@ -590,6 +603,38 @@ namespace MES.Logic
                 OnPropertyChanged("AcceptableProducts");
             }
 
+        }
+
+        public double DefectProducts
+        {
+            get { return defectProducts; }
+            set
+            {
+                defectProducts = value;
+                OnPropertyChanged("DefectProducts");
+            }
+        }
+
+        public double AmountToProduce
+        {
+            get { return amountToProduce; }
+
+            set
+            {
+                amountToProduce = value;
+                OnPropertyChanged("AmountToProduce");
+            }
+        }
+
+        public double ProductsPerMinute
+        {
+            get { return productsPerMinute; }
+
+            set
+            {
+                productsPerMinute = value;
+                OnPropertyChanged("ProductsPerMinute");
+            }
         }
 
         public double StateCurrent
@@ -651,7 +696,6 @@ namespace MES.Logic
                 OnPropertyChanged("StopReasonId");
             }
         }
-
 
         public double Barley
         {

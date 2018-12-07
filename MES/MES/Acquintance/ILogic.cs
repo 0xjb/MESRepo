@@ -56,5 +56,6 @@ namespace MES.Acquintance
         void SaveBatch(ISimpleBatch s);
 
         ISimpleBatch GetCurrentBatch();
+        IDictionary<float,IBatch> GetAllBatches();
     }
 }

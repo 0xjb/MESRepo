@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using OfficeOpenXml;
 using System.IO;
 using OfficeOpenXml.Drawing.Chart;
+using MES.Acquintance;
 
-namespace MES
-{
-    class BatchReportGenerator
-    {
+namespace MES {
+    class BatchReportGenerator {
         private ExcelPackage ep = new ExcelPackage();
 
         /// <summary>
@@ -23,10 +22,18 @@ namespace MES
         /// <param name="timeUsed"></param> Time spent in the different machine states.
         /// <param name="tData"></param> Temperature over production time.
         /// <param name="hData"></param> Humidity over production time.
-        public void GenerateFile(string batchID, string productType, string aProduct, string dProduct,
-            int[] timeUsed,
-            ValueOverProdTime[] tData, ValueOverProdTime[] hData)
-        {
+        public void GenerateFile(float batchID, float productType, int aProduct, int dProduct,
+            int[] timeUsed, ISet<IList<IBatchValue>> batchValues
+            ) {
+            IList<IBatchValue> tData = new List<IBatchValue>();
+            IList<IBatchValue> hData = new List<IBatchValue>();
+            foreach (IList<IBatchValue> list in batchValues) {
+                if (list[0].Type < 0) {
+                    tData = list;
+                } else if (list[0].Type == 0) {
+                    hData = list;
+                }
+            }
             //A workbook must have at least on cell, so lets add one... 
             var ws = ep.Workbook.Worksheets.Add("Batch Report");
             var temp = ep.Workbook.Worksheets.Add("Temperature");
@@ -51,21 +58,21 @@ namespace MES
             ws.Cells["A5"].Value = "Time spent in different states:";
             ws.Cells["A5"].Style.Font.Bold = true;
             ws.Cells["A6"].Value = "Deactivated:";
-            ws.Cells["B6"].Value = timeUsed[0];
+            ws.Cells["B6"].Value = 1; // this, along with other hardcoded int values, has not been implemented yet.
             ws.Cells["A7"].Value = "Stopped:";
-            ws.Cells["B7"].Value = timeUsed[1];
+            ws.Cells["B7"].Value = 2;
             ws.Cells["A8"].Value = "Idle:";
-            ws.Cells["B8"].Value = timeUsed[2];
+            ws.Cells["B8"].Value = 3;
             ws.Cells["A9"].Value = "Suspended:";
-            ws.Cells["B9"].Value = timeUsed[3];
+            ws.Cells["B9"].Value = 4;
             ws.Cells["A10"].Value = "Execute:";
-            ws.Cells["B10"].Value = timeUsed[4];
+            ws.Cells["B10"].Value = 5;
             ws.Cells["A11"].Value = "Aborted:";
-            ws.Cells["B11"].Value = timeUsed[5];
+            ws.Cells["B11"].Value = 6;
             ws.Cells["A12"].Value = "Held:";
-            ws.Cells["B12"].Value = timeUsed[6];
+            ws.Cells["B12"].Value = 7;
             ws.Cells["A13"].Value = "Complete:";
-            ws.Cells["B13"].Value = timeUsed[7];
+            ws.Cells["B13"].Value = 8;
 
             ws.Cells["A15"].Value = "TempatureProductionTime:";
             ws.Cells["A15"].Style.Font.Bold = true;
@@ -85,7 +92,7 @@ namespace MES
 
             //TODO mangler try/catch??
             //Save the new workbook. We haven't specified the filename so use the Save as method.
-            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx"));
+            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport" + batchID + ".xlsx"));
         }
 
         /// <summary>
@@ -94,17 +101,15 @@ namespace MES
         /// <param name="data"></param> Array filled with either temperature or humidity data.
         /// <param name="ew"></param> Worksheet to write in.
         /// <param name="title"></param> Title of graph.
-        private void WriteData(ValueOverProdTime[] data, ExcelWorksheet ew, string title)
-        {
+        private void WriteData(IList<IBatchValue> data, ExcelWorksheet ew, string title) {
             ew.Cells["A1"].Value = "Temp:";
             ew.Cells["A1"].Style.Font.Bold = true;
 
             ew.Cells["B1"].Value = "Time:";
             ew.Cells["B1"].Style.Font.Bold = true;
 
-            for (int i = 0; i < data.Length; i++)
-            {
-                ew.Cells["A" + (i + 2)].Value = i;
+            for (int i = 0; i < data.Count; i++) {
+                ew.Cells["A" + (i + 2)].Value = data[i].Timestamp;
                 ew.Cells["B" + (i + 2)].Value = data[i].Value;
             }
 
@@ -125,8 +130,7 @@ namespace MES
         /// <param name="title"></param> Title of the graph.
         /// <param name="chartType"></param> Graph type.
         private void CreateGraph(ExcelWorksheet ew, int row, int col, int height, int width,
-            string valueSeries, string nameSeries, string title, eChartType chartType)
-        {
+            string valueSeries, string nameSeries, string title, eChartType chartType) {
             //Add the XY graph
             var xyGraph = ew.Drawings.AddChart("chart", chartType);
             xyGraph.ShowHiddenData = true;
