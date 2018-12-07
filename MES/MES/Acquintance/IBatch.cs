@@ -11,7 +11,7 @@ namespace MES.Acquintance
         float GetBatchId();
 
          float BatchId { get;  }
-        double OEE { get; }
+        double OEE { get; set; }
 
         //TODO Fjerne getter/setter metoder 
         /// <summary>

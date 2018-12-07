@@ -46,3 +46,11 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 45              35490                12-07-2018 13:00:52                      Manual stop                              12                                      
 46              0                    12-07-2018 13:05:12                      Manual stop                              12                                      
 47              0                    12-07-2018 13:06:27                      Manual stop                              12                                      
+48              35493                12-07-2018 13:13:45                      Manual stop                              12                                      
+49              35496                12-07-2018 13:14:43                      Manual stop                              12                                      
+50              35496                12-07-2018 13:17:50                      Manual stop                              12                                      
+51              35496                12-07-2018 13:20:25                      Manual stop                              12                                      
+52              35496                12-07-2018 13:24:09                      Manual stop                              12                                      
+53              35497                12-07-2018 13:26:07                      Manual stop                              12                                      
+54              35497                12-07-2018 13:35:10                      Manual stop                              12                                      
+55              35502                12-07-2018 14:38:41                      Manual stop                              12                                      

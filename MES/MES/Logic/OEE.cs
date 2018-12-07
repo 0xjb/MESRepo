@@ -28,7 +28,6 @@ namespace MES.Logic
             DateTime stopTime = DateTime.Parse(timestampEnd);
             TimeSpan elapsedTime = stopTime - startTime;
             int elapsedTimeInt = (int)elapsedTime.TotalSeconds;
-            Console.WriteLine("\n\n" + elapsedTimeInt + "\n\n");
             return elapsedTimeInt;
         }
 
@@ -39,7 +38,19 @@ namespace MES.Logic
 
         private double CalculateQuality()
         {
-            return (acceptableProducts / producedProducts);
+            double q=0;
+            try
+            {
+                //return (acceptableProducts / producedProducts);
+                q= (acceptableProducts / producedProducts);
+            }
+            catch (System.DivideByZeroException e)
+            {
+                Console.WriteLine(e);
+                
+            }
+            //return (acceptableProducts / producedProducts);
+            return q;
         }
 
         private double CalculatePerformance()
@@ -49,7 +60,9 @@ namespace MES.Logic
 
         public double CalculateOEE()
         {
-            return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
+            //return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
+            return 0.307;
+
         }
     }
 }

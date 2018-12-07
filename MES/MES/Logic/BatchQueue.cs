@@ -66,8 +66,12 @@ namespace MES.Logic {
                     if (CurrentBatch != null) {
                         CurrentBatch.TimestampEnd = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
                         OEE currentOEE = new OEE((int)logic.OPC.AcceptableProducts, (int)logic.OPC.DefectProducts, currentBatch.TimestampStart, currentBatch.TimestampEnd, (int)currentBatch.MachineSpeed);
-                        currentBatch.OEE = currentOEE.CalculateOEE();
+                        //currentBatch.OEE = currentOEE.CalculateOEE();
+                        //currentBatch.OEE = 0.32;
+                        currentBatch.OEE = 3.5;
+                        Console.WriteLine("\n\nCurrent batch" + currentBatch.OEE);
                         logic.SaveBatch(CurrentBatch);
+                        
                         if (Batches.Count >= 1) {
                             CurrentBatch = Batches[0];
                             Batches.RemoveAt(0);

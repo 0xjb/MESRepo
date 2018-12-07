@@ -51,13 +51,14 @@ namespace MES.Data
 
         public float BatchId
         {
+           
             get { return batchId; }
-            
         }
    
 
         public double OEE
         {
+            set { oee = value;}
             get { return oee; }
         
         }
