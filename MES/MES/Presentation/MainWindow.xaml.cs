@@ -340,7 +340,14 @@ namespace MES.Presentation
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            ISimpleBatch b = presentation.ILogic.GetCurrentBatch();
+            // ye have to change some stuff
+            // u remember how previously when u added a batch to the batch queue
+            // it wouldnt add it to the list, but instead just set it as current batch?
+            // we have to add it to the list so we can actually see it in the mainwindow
+            // and then we have to start production with the first element of the list
+            // cause we no longer have a currentbatch set
+            // end paragraph
+            ISimpleBatch b = presentation.ILogic.Batches.Batches[0];
             b.TimestampStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
             presentation.ILogic.StartProduction();
         }

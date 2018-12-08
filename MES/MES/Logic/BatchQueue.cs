@@ -60,6 +60,10 @@ namespace MES.Logic {
                 Batches[bIndex + 1] = temp;
             }
         }
+        public void PrepareBatchForProduction() {
+            CurrentBatch = Batches[0];
+            Batches.RemoveAt(0);
+        }
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName.Equals("StateCurrent")) {
                 if ((sender as OpcClient).StateCurrent == 17) {
