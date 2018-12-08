@@ -340,7 +340,9 @@ namespace MES.Presentation
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            iLogic.OPC.StartMachine(1, 2, 200, 100);
+            ISimpleBatch b = presentation.ILogic.GetCurrentBatch();
+            b.TimestampStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
+            presentation.ILogic.StartProduction();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)

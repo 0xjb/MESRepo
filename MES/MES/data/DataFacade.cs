@@ -139,5 +139,9 @@ namespace MES.Data
                 return false;
             }
         }
+
+        public double GetOptimalSpeed(IRecipe recipe) {
+            return dbManager.GetOptimalSpeed(recipe);
+        }
     }
 }

@@ -141,7 +141,10 @@ namespace MES.Acquintance
 
         void WriteToFile(string s);
 
-        
+        double GetOptimalSpeed(IRecipe recipe);
+
+
+
 
     }
 }

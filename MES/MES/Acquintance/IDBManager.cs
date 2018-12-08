@@ -92,5 +92,7 @@ namespace MES.Acquintance
         /// </summary>
         /// <returns></returns>
         float GetHighestBatchId();
+
+        double GetOptimalSpeed(IRecipe recipe);
     }
 }

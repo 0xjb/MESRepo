@@ -40,11 +40,11 @@ namespace MES.Logic
         public double OEE { get; set; }
         public float MachineSpeed { get; set; }
 
-        public SimpleBatch(float id, IRecipe recipe, float amount)
+        public SimpleBatch(float id, float amount, float speed, IRecipe recipe)
         {
             BatchID = id;
             BeerType = recipe.BeerId;
-            MachineSpeed = recipe.MaxSpeed;
+            MachineSpeed = speed;
             DesiredAmount = amount;
             OEE = 0;
         }

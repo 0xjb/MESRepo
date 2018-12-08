@@ -23,38 +23,32 @@ namespace MES.Logic
             Batches = new BatchQueue(this);
         }
 
-        public BatchQueue Batches
-        {
+        public BatchQueue Batches {
             get { return batches; }
             set { batches = value; }
         }
 
-        public TestSimulation TestSimulation
-        {
+        public TestSimulation TestSimulation {
             get => _testSimulation;
             set => _testSimulation = value;
         }
 
-        public OpcClient OPC
-        {
+        public OpcClient OPC {
             get { return opc; }
             set { opc = value; }
         }
 
-        public IData Data
-        {
+        public IData Data {
             get => data;
             set => data = value;
         }
 
-        public ErrorHandler ErrorHandler
-        {
+        public ErrorHandler ErrorHandler {
             get => errorHandler;
             set => errorHandler = value;
         }
 
-        public bool IsSimulationOn
-        {
+        public bool IsSimulationOn {
             get => isSimulationON;
             set => isSimulationON = value;
         }
@@ -79,17 +73,11 @@ namespace MES.Logic
             this.errorHandler = new ErrorHandler(this);
         }
 
-        public void CreateBatch(float batchId, float amount, IRecipe recipe)
+        public void CreateBatch(float batchId, float amount, float speed, IRecipe recipe)
         {
-            SimpleBatch b = new SimpleBatch(batchId, recipe, amount);
-            if (Batches.CurrentBatch == null)
-            {
-                Batches.CurrentBatch = b;
-            }
-            else
-            {
-                Batches.Batches.Add(new SimpleBatch(batchId, recipe, amount));
-            }
+            SimpleBatch b = new SimpleBatch(batchId, amount, speed, recipe);
+            Batches.Batches.Add(b);
+
         }
 
         public IDictionary<float, IRecipe> GetAllRecipes()
@@ -106,13 +94,14 @@ namespace MES.Logic
         {
             OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
                 Batches.CurrentBatch.DesiredAmount, Batches.CurrentBatch.MachineSpeed);
-        }
+        } 
 
         public bool AuthenticateUserInformation(string username, string password)
         {
             return data.AuthenticateUserInformation(username, password);
         }
-        private double CalculatePPM(ISimpleBatch b) {
+        private double CalculatePPM(ISimpleBatch b)
+        {
             //Profit per minute
             DateTime startTime = DateTime.Parse(b.TimestampStart);
             DateTime endTime = DateTime.Parse(b.TimestampEnd);
@@ -145,8 +134,14 @@ namespace MES.Logic
         {
             return Batches.CurrentBatch;
         }
-        public IDictionary<float,IBatch> GetAllBatches() {
+        public IDictionary<float, IBatch> GetAllBatches()
+        {
             return data.GetAllBatches();
+        }
+
+        public double GetOptimalSpeed(IRecipe recipe)
+        {
+            return data.GetOptimalSpeed(recipe);
         }
     }
 }
