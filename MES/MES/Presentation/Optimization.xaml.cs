@@ -1,9 +1,10 @@
 ﻿using System;
 using MES.Acquintance;
 using System.Windows;
+using System.Windows.Input;
 
 namespace MES.Presentation
-{//TODO Ændre OEE til Optimization , og bytte Optimization til OEE
+{ //TODO Ændre OEE til Optimization , og bytte Optimization til OEE
     /// <summary>
     /// Interaction logic for Optimization.xaml
     /// </summary>
@@ -34,13 +35,14 @@ namespace MES.Presentation
             presentationFacade.ILogic.OEeList.Clear();
             try
             {
-
                 int batchId = Int32.Parse(txtSearchBatchId.Text);
 
-                if (!presentationFacade.ILogic.addOEEFromBatch(batchId)) {
+                if (!presentationFacade.ILogic.addOEEFromBatch(batchId))
+                {
                     lblInfo.Content = "Batch does not exist... ";
                 }
-                else {
+                else
+                {
                     lblInfo.Content = "";
                 }
             }
@@ -49,14 +51,10 @@ namespace MES.Presentation
                 Console.WriteLine(exception);
                 lblInfo.Content = "Incorrect input..";
             }
-    
-         
-
         }
 
         private void ComboYear_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-           
         }
 
         private void SearchNewestBatches_Click(object sender, RoutedEventArgs e)
@@ -73,7 +71,6 @@ namespace MES.Presentation
                 Console.WriteLine(exception);
                 lblInfo.Content = "Incorrect input..";
             }
-         
         }
 
         private void MonthYear_Click(object sender, RoutedEventArgs e)
@@ -86,36 +83,58 @@ namespace MES.Presentation
 
             //Console.WriteLine("\n\nis focused " + ComboMonth.+ "\n\n");
 
-            if (ComboMonth.SelectedItem != null && ComboYear.SelectedItem != null) {
+            if (ComboMonth.SelectedItem != null && ComboYear.SelectedItem != null)
+            {
                 presentationFacade.ILogic.SearchDateYearBatches(month, year);
 
                 if (presentationFacade.ILogic.OEeList.Count.Equals(0))
                 {
                     lblInfo.Content = "No batches found";
                 }
-        }
+            }
             else
             {
                 lblInfo.Content = "Select month and year..";
             }
+        }
 
 
-
-
-}
-
-        private void TxtSearchNewestBacthId_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void TxtSearchNewestBacthId_OnKeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Return)
+            {
+                lblInfo.Content = "";
+                presentationFacade.ILogic.OEeList.Clear();
+                try
+                {
+                    int number = Int32.Parse(txtSearchNewestBacthId.Text);
+                    presentationFacade.ILogic.SearchNewestBatches(number);
+                }
+                catch (FormatException exception)
+                {
+                    Console.WriteLine(exception);
+                    lblInfo.Content = "Incorrect input..";
+                }
+            }
+        }
 
-            //if(e.)
-            //try {
-            //    int number = Int32.Parse(txtSearchNewestBacthId.Text);
-            //    presentationFacade.ILogic.SearchNewestBatches(number);
-            //}
-            //catch (FormatException exception) {
-            //    Console.WriteLine(exception);
-            //    lblInfo.Content = "Incorrect input..";
-            //}
+        private void TxtSearchBatchId_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            presentationFacade.ILogic.OEeList.Clear();
+            try {
+                int batchId = Int32.Parse(txtSearchBatchId.Text);
+
+                if (!presentationFacade.ILogic.addOEEFromBatch(batchId)) {
+                    lblInfo.Content = "Batch does not exist... ";
+                }
+                else {
+                    lblInfo.Content = "";
+                }
+            }
+            catch (FormatException exception) {
+                Console.WriteLine(exception);
+                lblInfo.Content = "Incorrect input..";
+            }
         }
     }
 }
