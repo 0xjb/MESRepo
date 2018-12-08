@@ -30,7 +30,7 @@ namespace MES.Logic
 
         private double CalculateAvailability()
         {
-            return ((operatingTime - downtime) / operatingTime);
+            return (((double)operatingTime - (double)downtime) / (double)operatingTime);
         }
 
         private double CalculateQuality()
@@ -39,7 +39,7 @@ namespace MES.Logic
             try
             {
                 //return (acceptableProducts / producedProducts);
-                q = (acceptableProducts / producedProducts);
+                q = ((double)acceptableProducts / (double)producedProducts);
             }
             catch (System.DivideByZeroException e)
             {
@@ -52,12 +52,15 @@ namespace MES.Logic
 
         private double CalculatePerformance()
         {
-            return ((producedProducts * (60 / machineSpeed)) / operatingTime);
+            return (((double)producedProducts * (60.0 / (double)machineSpeed)) / (double)operatingTime);
         }
 
         public double CalculateOEE()
         {
-            MessageBox.Show(CalculateAvailability() + ", " + CalculateQuality() + ", " + CalculatePerformance());
+            MessageBox.Show("Availability: " + operatingTime + ", " + downtime);
+            MessageBox.Show("Quality: " + acceptableProducts + ", " + producedProducts);
+            MessageBox.Show("Performance: " + producedProducts + ", " + machineSpeed + ", " + operatingTime);
+            MessageBox.Show("OEE: " + CalculateAvailability() + ", " + CalculateQuality() + ", " + CalculatePerformance());
             return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
             //return 0.307;
 

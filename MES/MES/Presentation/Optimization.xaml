@@ -76,7 +76,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Search Newest Batches:" Grid.Row="0" />
                 <TextBox Name="txtSearchNewestBacthId"  Width="75"  Grid.Row="1"
-                         TextWrapping="Wrap" />
+                         TextWrapping="Wrap" Height="25" Margin="25,0" VerticalAlignment="Top" TextChanged="TxtSearchNewestBacthId_TextChanged" />
             </Grid>
         </Viewbox>
 

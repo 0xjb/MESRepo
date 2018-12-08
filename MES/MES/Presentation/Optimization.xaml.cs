@@ -103,5 +103,19 @@ namespace MES.Presentation
 
 
 }
+
+        private void TxtSearchNewestBacthId_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+            //if(e.)
+            //try {
+            //    int number = Int32.Parse(txtSearchNewestBacthId.Text);
+            //    presentationFacade.ILogic.SearchNewestBatches(number);
+            //}
+            //catch (FormatException exception) {
+            //    Console.WriteLine(exception);
+            //    lblInfo.Content = "Incorrect input..";
+            //}
+        }
     }
 }
