@@ -35,9 +35,11 @@ namespace MES.Data
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
             int defectProducts, string timestampStart, string timestampEnd, double oee)
         {
+            // this overload of savebatch isn't really used for anything so we just insert a couple of values to avoid build errors
+            // why keep it? idk
             return dbManager.InsertIntoBatchesTable(
                 new Batch(batchId, beerId, acceptableProducts,
-                    defectProducts, timestampStart, timestampEnd, oee, 10));
+                    defectProducts,10, timestampStart, timestampEnd, oee, 10));
         }
 
         public bool SaveBatch(float batchId, float beerId, int acceptableProducts,
@@ -47,7 +49,7 @@ namespace MES.Data
             batchReportGenerator.GenerateFile(batchId, beerId, acceptableProducts, defectProducts,null,batchValues);
 
             IBatch batch = new Batch(batchId, beerId, acceptableProducts,
-                    defectProducts, timestampStart, timestampEnd, oee, ppm);
+                    defectProducts, speed, timestampStart, timestampEnd, oee, ppm);
             foreach (IList<IBatchValue> list in batchValues)
             {
                 batch.AddBatchValues(list);
