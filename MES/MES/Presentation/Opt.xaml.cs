@@ -19,12 +19,8 @@ namespace MES.Presentation
 
         private int speed;
 
-        public SeriesCollection SeriesCollectionPilsner { get; set; }
-        public SeriesCollection SeriesCollectionWheat { get; set; }
-        public SeriesCollection SeriesCollectionIPA { get; set; }
-        public SeriesCollection SeriesCollectionStout { get; set; }
-        public SeriesCollection SeriesCollectionAle { get; set; }
-        public SeriesCollection SeriesCollectionAlcoholFree { get; set; }
+        public SeriesCollection SeriesCollectionBeer { get; set; }
+
 
         private List<string> arrayListLabels;
 
@@ -38,46 +34,61 @@ namespace MES.Presentation
 
             arrayListLabels = new List<string>();
 
-            SeriesCollectionPilsner = new SeriesCollection
+            SeriesCollectionBeer = new SeriesCollection
 
             {
                 new LineSeries
                 {
-                    Title = " Speed Pilsner",
+                    //Title = " Speed Pilsner",
+                    Title = "OEE Pilsner",
                     Fill = Brushes.Chartreuse, Stroke = Brushes.Coral, PointGeometrySize = 5,
-                    Values = new ChartValues<int> { }
+                    //Values = new ChartValues<int> { }
+                    Values = new ChartValues<double> { }
                 }
                 ,
                 new LineSeries
                 {
-                    Title = "Speed Wheat",
+                    //Title = "Speed Wheat",
+                    Title = "OEE Wheat",
+                    LabelPoint =point => "TESTING",
                     Fill = Brushes.DarkOrchid, Stroke = Brushes.LawnGreen, PointGeometrySize = 5,
-                    Values = new ChartValues<int> {  },
+                    //Values = new ChartValues<int> {  },
+                    Values = new ChartValues<double> {  }
+
+
                 }
                 ,
                 new LineSeries
                 {
-                    Title = "Speed IPA",
+                    //Title = "Speed IPA",
+                    Title = "OEE IPA",
                     Fill = Brushes.Aqua, Stroke = Brushes.CornflowerBlue, PointGeometrySize = 5,
-                    Values = new ChartValues<int> {  },
+                    //Values = new ChartValues<int> {  },
+                    Values = new ChartValues<double> {  },
                 },
                 new LineSeries
                 {
-                    Title = "Speed Stout",
+                    //Title = "Speed Stout",
+                    Title = "OEE Stout",
                     Fill = Brushes.Chocolate, Stroke = Brushes.AntiqueWhite, PointGeometrySize = 5,
-                    Values = new ChartValues<int> {  },
+                    //Values = new ChartValues<int> {  },
+                    Values = new ChartValues<double> {  },
                 },
                 new LineSeries
                 {
-                    Title = "Speed Ale",
+                    //Title = "Speed Ale",
+                    Title = "OEE Ale",
                     Fill = Brushes.CadetBlue, Stroke = Brushes.BlueViolet, PointGeometrySize = 5,
-                    Values = new ChartValues<int> {  },
+                    //Values = new ChartValues<int> {  },
+                    Values = new ChartValues<double> {  },
                 },
                 new LineSeries
                 {
-                    Title = "Speed Alcohol Free",
+                    //Title = "Speed Alcohol Free",
+                    Title = "OEE Alcohol Free",
                     Fill = Brushes.Gold, Stroke = Brushes.DarkGoldenrod, PointGeometrySize = 5,
-                    Values = new ChartValues<int> {  },
+                    //Values = new ChartValues<int> {  },
+                    Values = new ChartValues<double> {  },
                 }
             };
 
@@ -101,53 +112,73 @@ namespace MES.Presentation
             StoutCheckBox.IsChecked = false;
             AleCheckBox.IsChecked = false;
             AlcoholFreeCheckBox.IsChecked = false;
-            SeriesCollectionPilsner[0].Values.Clear();
-            SeriesCollectionPilsner[1].Values.Clear();
-            SeriesCollectionPilsner[2].Values.Clear();
-            SeriesCollectionPilsner[3].Values.Clear();
-            SeriesCollectionPilsner[4].Values.Clear();
-            SeriesCollectionPilsner[5].Values.Clear();
+            SeriesCollectionBeer[0].Values.Clear();
+            SeriesCollectionBeer[1].Values.Clear();
+            SeriesCollectionBeer[2].Values.Clear();
+            SeriesCollectionBeer[3].Values.Clear();
+            SeriesCollectionBeer[4].Values.Clear();
+            SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
             Speed = 60;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(0.125.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(0.125);
+            //arrayListLabels.Add(0.125.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 120;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(0.125.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(0.125);
+            //arrayListLabels.Add(0.125.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 180;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(0.75.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(0.75);
+            //arrayListLabels.Add(0.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 180;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(1.75.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(1.75);
+            //arrayListLabels.Add(1.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 300;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(4.75.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(4.75);
+            //arrayListLabels.Add(4.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 360;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(5.5.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(5.5);
+            //arrayListLabels.Add(5.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 420;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(13.25.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(13.5);
+            //arrayListLabels.Add(13.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 480;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(21.5.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(21.5);
+            //arrayListLabels.Add(21.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 540;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(38.875.ToString());
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            SeriesCollectionBeer[0].Values.Add(38.875);
+            //arrayListLabels.Add(38.875.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 600;
-            SeriesCollectionPilsner[0].Values.Add(Speed);
-            arrayListLabels.Add(64.5.ToString());
+            SeriesCollectionBeer[0].Values.Add(64.5);
+            //SeriesCollectionBeer[0].Values.Add(Speed);
+            //arrayListLabels.Add(64.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
         }
 
         private void Wheat_Checked(object sender, RoutedEventArgs e)
@@ -157,54 +188,74 @@ namespace MES.Presentation
             StoutCheckBox.IsChecked = false;
             AleCheckBox.IsChecked = false;
             AlcoholFreeCheckBox.IsChecked = false;
-            SeriesCollectionPilsner[0].Values.Clear();
-            SeriesCollectionPilsner[1].Values.Clear();
-            SeriesCollectionPilsner[2].Values.Clear();
-            SeriesCollectionPilsner[3].Values.Clear();
-            SeriesCollectionPilsner[4].Values.Clear();
-            SeriesCollectionPilsner[5].Values.Clear();
+            SeriesCollectionBeer[0].Values.Clear();
+            SeriesCollectionBeer[1].Values.Clear();
+            SeriesCollectionBeer[2].Values.Clear();
+            SeriesCollectionBeer[3].Values.Clear();
+            SeriesCollectionBeer[4].Values.Clear();
+            SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
             Speed = 30;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(6.5.ToString());
+            SeriesCollectionBeer[1].Values.Add(6.5);
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            //arrayListLabels.Add(6.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 60;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(10.25.ToString());
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(10.25);
+            //arrayListLabels.Add(10.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 90;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(18.75.ToString());
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(18.75);
+            //arrayListLabels.Add(18.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 120;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(23.25.ToString());
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(23.25);
+            //arrayListLabels.Add(23.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 150;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(33.5.ToString());
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(33.5);
+            //arrayListLabels.Add(33.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
 
             Speed = 180;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(49.5.ToString());
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(49.5);
+            //arrayListLabels.Add(49.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 210;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(65.75);
+            //arrayListLabels.Add(65.75.ToString());
             arrayListLabels.Add(65.75.ToString());
 
             Speed = 240;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(72.75.ToString());
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(72.75);
+            //arrayListLabels.Add(72.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 270;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(90.25);
+            //arrayListLabels.Add(90.25.ToString());
             arrayListLabels.Add(90.25.ToString());
 
             Speed = 300;
-            SeriesCollectionPilsner[1].Values.Add(Speed);
-            arrayListLabels.Add(100.ToString());
+            //SeriesCollectionBeer[1].Values.Add(Speed);
+            SeriesCollectionBeer[1].Values.Add(100.0);
+            //arrayListLabels.Add(100.ToString());
+            arrayListLabels.Add(Speed.ToString());
         }
 
         public int Speed
@@ -227,54 +278,74 @@ namespace MES.Presentation
             AleCheckBox.IsChecked = false;
             AlcoholFreeCheckBox.IsChecked = false;
 
-            SeriesCollectionPilsner[0].Values.Clear();
-            SeriesCollectionPilsner[1].Values.Clear();
-            SeriesCollectionPilsner[2].Values.Clear();
-            SeriesCollectionPilsner[3].Values.Clear();
-            SeriesCollectionPilsner[4].Values.Clear();
-            SeriesCollectionPilsner[5].Values.Clear();
+            SeriesCollectionBeer[0].Values.Clear();
+            SeriesCollectionBeer[1].Values.Clear();
+            SeriesCollectionBeer[2].Values.Clear();
+            SeriesCollectionBeer[3].Values.Clear();
+            SeriesCollectionBeer[4].Values.Clear();
+            SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
             Speed = 30;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(6.5.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(6.5);
+            //arrayListLabels.Add(6.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 60;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(10.25.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(10.25);
+            //arrayListLabels.Add(10.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 90;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(18.75.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(18.75);
+            //arrayListLabels.Add(18.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 120;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(23.25.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(23.25);
+            //arrayListLabels.Add(23.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 150;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(33.5.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(33.5);
+            //arrayListLabels.Add(33.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
 
             Speed = 180;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(49.5.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(49.5);
+            //arrayListLabels.Add(49.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 210;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(65.75);
+            //arrayListLabels.Add(65.75.ToString());
             arrayListLabels.Add(65.75.ToString());
 
             Speed = 240;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(72.75.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(72.75);
+            //arrayListLabels.Add(72.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 270;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(90.25.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(90.25);
+            //arrayListLabels.Add(90.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 300;
-            SeriesCollectionPilsner[2].Values.Add(Speed);
-            arrayListLabels.Add(100.ToString());
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(100.0);
+            //arrayListLabels.Add(100.ToString());
+            arrayListLabels.Add(Speed.ToString());
         }
 
         private void Stout_Checked(object sender, RoutedEventArgs e)
@@ -285,54 +356,76 @@ namespace MES.Presentation
             AleCheckBox.IsChecked = false;
             AlcoholFreeCheckBox.IsChecked = false;
 
-            SeriesCollectionPilsner[0].Values.Clear();
-            SeriesCollectionPilsner[1].Values.Clear();
-            SeriesCollectionPilsner[2].Values.Clear();
-            SeriesCollectionPilsner[3].Values.Clear();
-            SeriesCollectionPilsner[4].Values.Clear();
-            SeriesCollectionPilsner[5].Values.Clear();
+            SeriesCollectionBeer[0].Values.Clear();
+            SeriesCollectionBeer[1].Values.Clear();
+            SeriesCollectionBeer[2].Values.Clear();
+            SeriesCollectionBeer[3].Values.Clear();
+            SeriesCollectionBeer[4].Values.Clear();
+            SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
             Speed = 30;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(6.5.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(6.5);
+            //arrayListLabels.Add(6.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
+
 
             Speed = 60;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(10.25.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(10.25);
+            //arrayListLabels.Add(10.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 90;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(18.75.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(18.75);
+            //arrayListLabels.Add(18.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 120;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(23.25.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(23.25);
+            //arrayListLabels.Add(23.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 150;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(33.5.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(33.5);
+            //arrayListLabels.Add(33.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
 
             Speed = 180;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(49.5.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(49.5);
+            //arrayListLabels.Add(49.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
+
 
             Speed = 210;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(65.75.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(65.75);
+            //arrayListLabels.Add(65.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 240;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(72.75.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(72.75);
+            //arrayListLabels.Add(72.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 270;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(90.25.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(90.25);
+            //arrayListLabels.Add(90.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 300;
-            SeriesCollectionPilsner[3].Values.Add(Speed);
-            arrayListLabels.Add(100.ToString());
+            //SeriesCollectionBeer[3].Values.Add(Speed);
+            SeriesCollectionBeer[3].Values.Add(100.0);
+            //arrayListLabels.Add(100.ToString());
+            arrayListLabels.Add(Speed.ToString());
         }
 
         private void Ale_Checked(object sender, RoutedEventArgs e)
@@ -343,54 +436,74 @@ namespace MES.Presentation
             PilserCheckBox.IsChecked = false;
             AlcoholFreeCheckBox.IsChecked = false;
 
-            SeriesCollectionPilsner[0].Values.Clear();
-            SeriesCollectionPilsner[1].Values.Clear();
-            SeriesCollectionPilsner[2].Values.Clear();
-            SeriesCollectionPilsner[3].Values.Clear();
-            SeriesCollectionPilsner[4].Values.Clear();
-            SeriesCollectionPilsner[5].Values.Clear();
+            SeriesCollectionBeer[0].Values.Clear();
+            SeriesCollectionBeer[1].Values.Clear();
+            SeriesCollectionBeer[2].Values.Clear();
+            SeriesCollectionBeer[3].Values.Clear();
+            SeriesCollectionBeer[4].Values.Clear();
+            SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
             Speed = 30;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(6.5.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(6.5);
+            //arrayListLabels.Add(6.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 60;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(10.25.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(10.25);
+            //arrayListLabels.Add(10.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 90;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(18.75.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(18.75);
+            //arrayListLabels.Add(18.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 120;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(23.25.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(23.25);
+            //arrayListLabels.Add(23.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 150;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(33.5.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(33.5);
+            //arrayListLabels.Add(33.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
 
             Speed = 180;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(49.5.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(49.5);
+            //arrayListLabels.Add(49.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 210;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(65.75.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(65.75);
+            //arrayListLabels.Add(65.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 240;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(72.75.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(72.75);
+            //arrayListLabels.Add(72.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 270;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(90.25.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(90.25);
+            //arrayListLabels.Add(90.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 300;
-            SeriesCollectionPilsner[4].Values.Add(Speed);
-            arrayListLabels.Add(100.ToString());
+            //SeriesCollectionBeer[4].Values.Add(Speed);
+            SeriesCollectionBeer[4].Values.Add(100.0);
+            //arrayListLabels.Add(100.ToString());
+            arrayListLabels.Add(Speed.ToString());
         }
 
         private void AlcoholFree_Checked(object sender, RoutedEventArgs e)
@@ -401,54 +514,74 @@ namespace MES.Presentation
             AleCheckBox.IsChecked = false;
             PilserCheckBox.IsChecked = false;
 
-            SeriesCollectionPilsner[0].Values.Clear();
-            SeriesCollectionPilsner[1].Values.Clear();
-            SeriesCollectionPilsner[2].Values.Clear();
-            SeriesCollectionPilsner[3].Values.Clear();
-            SeriesCollectionPilsner[4].Values.Clear();
-            SeriesCollectionPilsner[5].Values.Clear();
+            SeriesCollectionBeer[0].Values.Clear();
+            SeriesCollectionBeer[1].Values.Clear();
+            SeriesCollectionBeer[2].Values.Clear();
+            SeriesCollectionBeer[3].Values.Clear();
+            SeriesCollectionBeer[4].Values.Clear();
+            SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
             Speed = 30;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(6.5.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(6.5);
+            //arrayListLabels.Add(6.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 60;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(10.25.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(10.25);
+            //arrayListLabels.Add(10.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 90;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(18.75.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(18.75);
+            //arrayListLabels.Add(18.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 120;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(23.25.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(23.25);
+            //arrayListLabels.Add(23.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 150;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(33.5.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(33.5);
+            //arrayListLabels.Add(33.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
 
             Speed = 180;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(49.5.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(49.5);
+            //arrayListLabels.Add(49.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 210;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(65.75.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(65.75);
+            //arrayListLabels.Add(65.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 240;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(72.75.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(72.75);
+            //arrayListLabels.Add(72.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 270;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(90.25.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(90.25);
+            //arrayListLabels.Add(90.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
             Speed = 300;
-            SeriesCollectionPilsner[5].Values.Add(Speed);
-            arrayListLabels.Add(100.ToString());
+            //SeriesCollectionBeer[5].Values.Add(Speed);
+            SeriesCollectionBeer[5].Values.Add(100.0);
+            //arrayListLabels.Add(100.ToString());
+            arrayListLabels.Add(Speed.ToString());
         }
 
         private void Window_Closed(object sender, EventArgs e)
