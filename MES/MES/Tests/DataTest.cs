@@ -210,6 +210,8 @@ namespace MES.Tests
                 + "timestampStart CHAR(23), "
                 + "timestampEnd CHAR(23), "
                 + "oee FLOAT, "
+                + "ppm DOUBLE, "
+                + "speed DOUBLE, "
                 + "FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE);";
 
             statements[2] = "CREATE TABLE temperaturevalues ("
