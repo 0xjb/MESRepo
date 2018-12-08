@@ -68,3 +68,6 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 62              35518                12/08/2018 11:31:28 AM                   Manual stop                              12                                      
 63              35518                12/08/2018 11:31:41 AM                   Manual stop                              12                                      
 62              0                    12/08/2018 11:33:11 AM                   Manual stop                              12                                      
+62              0                    12/08/2018 11:43:36 AM                   Manual abort                             14                                      
+63              0                    12/08/2018 11:44:17 AM                   Manual stop                              12                                      
+64              0                    12/08/2018 11:44:20 AM                   Manual abort                             14                                      

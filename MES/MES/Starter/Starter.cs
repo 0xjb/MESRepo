@@ -3,8 +3,6 @@ using MES.Data;
 using MES.Logic;
 using MES.Presentation;
 using System;
-using System.Globalization;
-using System.Threading;
 using System.Windows;
 
 
