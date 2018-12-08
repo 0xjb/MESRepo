@@ -125,8 +125,6 @@ namespace MES.Logic
             set.Add(OPC.HumidityList);
             set.Add(OPC.VibrationList);
 
-
-
             Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
                 (int)OPC.DefectProducts,s.MachineSpeed, s.TimestampStart, s.TimestampEnd, s.OEE, set, CalculatePPM(s));
         }

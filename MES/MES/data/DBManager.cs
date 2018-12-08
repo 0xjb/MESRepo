@@ -66,14 +66,14 @@ namespace MES.data {
                             command.ExecuteNonQuery();
                         }
                     } catch (Exception ex) {
-                        //MessageBox.Show("ERROR\n" + ex.ToString());
+                        MessageBox.Show(ex.Message);
                     }
                 }
 
                 conn.Close();
                 return true;
             } catch (Exception ex) {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
                 return false;
             }
         }
@@ -208,7 +208,7 @@ namespace MES.data {
                 conn.Close();
                 return recipes;
             } catch (Exception ex) {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
@@ -396,7 +396,7 @@ namespace MES.data {
             try {              
                 return (double)new NpgsqlCommand(sql,conn).ExecuteScalar();
             } catch(Exception ex) {
-                MessageBox.Show(ex.StackTrace);
+                MessageBox.Show(ex.Message);
                 return 0;
             } finally {
                 conn.Close();
