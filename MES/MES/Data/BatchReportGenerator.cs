@@ -10,7 +10,7 @@ using MES.Acquintance;
 
 namespace MES {
     class BatchReportGenerator {
-        private ExcelPackage ep = new ExcelPackage();
+        private ExcelPackage ep;
 
         /// <summary>
         /// Generates and fills an excel file with given data.
@@ -22,9 +22,10 @@ namespace MES {
         /// <param name="timeUsed"></param> Time spent in the different machine states.
         /// <param name="tData"></param> Temperature over production time.
         /// <param name="hData"></param> Humidity over production time.
-        public void GenerateFile(float batchID, float productType, int aProduct, int dProduct,
+        public void GenerateFile(float batchID, float productType, int aProduct, int dProduct,            
             int[] timeUsed, ISet<IList<IBatchValue>> batchValues
             ) {
+            ep = new ExcelPackage();
             IList<IBatchValue> tData = new List<IBatchValue>();
             IList<IBatchValue> hData = new List<IBatchValue>();
             foreach (IList<IBatchValue> list in batchValues) {

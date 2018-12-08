@@ -387,13 +387,13 @@ namespace MES.data {
 
         public double GetOptimalSpeed(IRecipe recipe) {
             // query for db
-            string sql = String.Format("SELECT MAX(ppm) FROM {0} WHERE productType = {1};", batchesTable, recipe.BeerId);
+            string sql = String.Format("SELECT speed FROM {0} WHERE ppm = (SELECT MAX(ppm) FROM batches WHERE beerid = {1});", batchesTable, recipe.BeerId);
             // executes query and returns first column of the first row as a double
             
             try {
                 return (double)new NpgsqlCommand(sql).ExecuteScalar();
-            } catch(Exception ex ) {
-                MessageBox.Show("Could not retrieve optimal speed");
+            } catch(Exception ex) {
+                MessageBox.Show(ex.Message);
                 return 0;
             } 
 

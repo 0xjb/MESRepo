@@ -70,12 +70,7 @@ namespace MES.Logic {
                     if (CurrentBatch != null) {
                         CurrentBatch.TimestampEnd = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
                         logic.SaveBatch(CurrentBatch);
-                        if (Batches.Count >= 1) {
-                            CurrentBatch = Batches[0];
-                            Batches.RemoveAt(0);
-                        } else {
-                            CurrentBatch = null;
-                        }
+                        CurrentBatch = null;
                     }
                 }
             }
