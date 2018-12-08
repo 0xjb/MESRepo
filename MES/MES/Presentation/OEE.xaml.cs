@@ -8,6 +8,7 @@ using System.Windows.Media;
 
 namespace MES.Presentation
 {
+    //TODO Ændre OEE til Optimization , og bytte Optimization til OEE
     /// <summary>
     /// Interaction logic for OEE.xaml
     /// </summary>

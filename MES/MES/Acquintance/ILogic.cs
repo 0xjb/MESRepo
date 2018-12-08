@@ -1,4 +1,5 @@
-﻿using MES.Logic;
+﻿using System.Collections.ObjectModel;
+using MES.Logic;
 using System.Collections.Generic;
 
 namespace MES.Acquintance
@@ -46,7 +47,12 @@ namespace MES.Acquintance
         bool AuthenticateUserInformation(string username, string password);
 
         void CreateErrorHandler();
+        bool addOEEFromBatch(int batchId);
 
+        void SearchNewestBatches(int number);
+        void SearchDateYearBatches(string month, string year);
+
+        ObservableCollection<IBatch> OEeList { get; set; }
         void SaveBatch(ISimpleBatch s);
 
         ISimpleBatch GetCurrentBatch();

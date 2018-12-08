@@ -53,7 +53,9 @@
        
         <Button Content="Create Batch" Grid.Column="7" HorizontalAlignment="Left" Margin="3,10,0,0" Grid.Row="9" VerticalAlignment="Top" Width="145" Click="Button_Click" RenderTransformOrigin="1.173,3.925" Height="63" Grid.RowSpan="2" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
         <Label x:Name="testlabel" Content="" Grid.Column="5" HorizontalAlignment="Left" Margin="10,0.2,0,0" Grid.Row="6" VerticalAlignment="Top" Height="31" Width="168" Grid.ColumnSpan="2"/>
+       
         <DataGrid x:Name="batchQueueGrid" Grid.ColumnSpan="4" Grid.Column="4" HorizontalAlignment="Left" Height="169" Grid.Row="3" Grid.RowSpan="3" VerticalAlignment="Top" Width="287"/>
+      
         <Label x:Name="label" Content="Queued Batches" Grid.Column="4" HorizontalAlignment="Left" Margin="73,10,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="105"/>
         <TextBox x:Name="batchIDTB" Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.BatchID}" Grid.Column="3" HorizontalAlignment="Left" Height="21" Margin="71,10,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2"/>
         <Label x:Name="label1" Content="Current Batch" Grid.Column="3" HorizontalAlignment="Left" Margin="40,19,0,0" Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="23" Width="89"/>

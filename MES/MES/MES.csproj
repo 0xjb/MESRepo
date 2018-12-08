@@ -130,6 +130,7 @@
     <Compile Include="Data\BatchReportGenerator.cs" />
     <Compile Include="Logic\ErrorHandler.cs" />
     <Compile Include="Logic\LogicAlarm.cs" />
+    <Compile Include="Logic\OEE.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />
     <Compile Include="Presentation\BatchReport.xaml.cs">

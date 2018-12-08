@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
@@ -42,10 +43,11 @@ namespace MES.Logic
 
         public OpcClient(ILogic il)
         {
+
+
             tempList = new List<IBatchValue>();
             humidityList = new List<IBatchValue>();
             vibrationList = new List<IBatchValue>();
-            Console.WriteLine("CONSTRUCTOR OPC CLIENT");
             this.iLogic = il;
             //this.errorHandler = new ErrorHandler();
             Connect();
@@ -54,6 +56,7 @@ namespace MES.Logic
 
         public OpcClient()
         {
+
             Connect();
             CreateSubscription();
         }
@@ -70,9 +73,7 @@ namespace MES.Logic
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 //Connect to server with no security (machine)
                 session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
 
                 MessageBox.Show(ex.ToString());
 
@@ -178,7 +179,7 @@ namespace MES.Logic
                         break;
                     // products processed
                     case "::Program:Cube.Admin.ProdProcessedCount":
-                        ProcessedProducts = double.Parse(dc.Value.ToString());
+                        ProcessedProducts= double.Parse(dc.Value.ToString());
                         break;
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":

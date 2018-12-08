@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Globalization;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -18,6 +19,9 @@ namespace MES.Presentation
     /// 
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
+       
+
+
         private ILogic iLogic;
         private IPresentation presentation;
 
@@ -627,13 +631,18 @@ namespace MES.Presentation
             set { presentation = value; }
         }
 
-        protected void OnPropertyChanged(string name)
+    protected void OnPropertyChanged(string name)
+    {
+        PropertyChangedEventHandler handler = PropertyChanged;
+        if (handler != null)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
+            handler(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+        private void DataGridQuedBatches_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
