@@ -389,13 +389,16 @@ namespace MES.data {
             // query for db
             string sql = String.Format("SELECT speed FROM {0} WHERE ppm = (SELECT MAX(ppm) FROM batches WHERE beerid = {1});", batchesTable, recipe.BeerId);
             // executes query and returns first column of the first row as a double
-            
-            try {
+            NpgsqlConnection conn = new NpgsqlConnection(connString);
+            conn.Open();
+            try {               
                 return (double)new NpgsqlCommand(sql).ExecuteScalar();
             } catch(Exception ex) {
                 MessageBox.Show(ex.Message);
                 return 0;
-            } 
+            } finally {
+                conn.Close();
+            }
 
         }
     }
