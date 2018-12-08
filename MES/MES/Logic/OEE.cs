@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MES.Logic
 {
@@ -22,7 +19,7 @@ namespace MES.Logic
             this.machineSpeed = machineSpeed;
         }
 
-        private int CalculateOperatingTime( string timestampStart, string timestampEnd)
+        private int CalculateOperatingTime(string timestampStart, string timestampEnd)
         {
             DateTime startTime = DateTime.Parse(timestampStart);
             DateTime stopTime = DateTime.Parse(timestampEnd);
@@ -38,16 +35,16 @@ namespace MES.Logic
 
         private double CalculateQuality()
         {
-            double q=0;
+            double q = 0;
             try
             {
                 //return (acceptableProducts / producedProducts);
-                q= (acceptableProducts / producedProducts);
+                q = (acceptableProducts / producedProducts);
             }
             catch (System.DivideByZeroException e)
             {
                 Console.WriteLine(e);
-                
+
             }
             //return (acceptableProducts / producedProducts);
             return q;
@@ -60,6 +57,7 @@ namespace MES.Logic
 
         public double CalculateOEE()
         {
+            MessageBox.Show(CalculateAvailability() + ", " + CalculateQuality() + ", " + CalculatePerformance());
             return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
             //return 0.307;
 
