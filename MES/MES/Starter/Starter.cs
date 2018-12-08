@@ -5,7 +5,6 @@ using MES.Presentation;
 using System;
 using System.Windows;
 
-
 namespace MES.Starter
 {
     class Starter : Application
