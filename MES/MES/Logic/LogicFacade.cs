@@ -6,9 +6,11 @@ namespace MES.Logic
 {
     public class LogicFacade : ILogic
     {
-        // shouldnt be here
+        // should depend on actual data but we dont have any
         private double productionCost = 5;
         private double salePrice = 20;
+
+        private float currentBatchID;
 
         private IData data;
         private ErrorHandler errorHandler;
@@ -57,6 +59,7 @@ namespace MES.Logic
         {
             data = dataLayer;
             CreateErrorHandler();
+            currentBatchID = data.GetHighestBatchId() + 1;
         }
 
         public void CreateSimulation()
@@ -73,9 +76,11 @@ namespace MES.Logic
             this.errorHandler = new ErrorHandler(this);
         }
 
-        public void CreateBatch(float batchId, float amount, float speed, IRecipe recipe)
+        public void CreateBatch(float amount, float speed, IRecipe recipe)
         {
-            SimpleBatch b = new SimpleBatch(batchId, amount, speed, recipe);
+            SimpleBatch b = new SimpleBatch(currentBatchID, amount, speed, recipe);
+            // increment by one for the next batch
+            currentBatchID++;
             Batches.Batches.Add(b);
 
         }

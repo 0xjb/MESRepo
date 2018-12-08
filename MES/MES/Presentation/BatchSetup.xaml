@@ -60,7 +60,7 @@
         <Label x:Name="speedLabel" Content="Speed" Grid.Column="1" HorizontalAlignment="Left" Margin="0,9,0,0" Grid.Row="6" VerticalAlignment="Top"/>
         <TextBox x:Name="speedTB" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,13,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="speedButton" Grid.ColumnSpan="2" Content="Get optimal speed" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="114" Click="SpeedButton_Click"/>
-        <Button x:Name="button" Content="Delete selected batch" Grid.Column="4" HorizontalAlignment="Left" Margin="73,11,0,0" Grid.Row="6" VerticalAlignment="Top" Width="129" Grid.ColumnSpan="3" Height="25" Click="Button_Click_2"/>
+        <Button x:Name="button" Content="Delete selected batch" Grid.Column="4" HorizontalAlignment="Left" Margin="73,29,0,0" Grid.Row="6" VerticalAlignment="Top" Width="129" Grid.ColumnSpan="3" Height="25" Click="Button_Click_2" Grid.RowSpan="2"/>
 
 
 

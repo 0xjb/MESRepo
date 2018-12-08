@@ -21,7 +21,7 @@ namespace MES.Acquintance
 
         bool IsSimulationOn { get; set; }
 
-        void CreateBatch(float batchId, float amount, float speed, IRecipe recipe);
+        void CreateBatch(float amount, float speed, IRecipe recipe);
 
         void StartProduction();
 
