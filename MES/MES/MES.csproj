@@ -212,11 +212,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Presentation\OEE.xaml">
+    <Page Include="Presentation\Opt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Optimization.xaml">
+    <Page Include="Presentation\OEE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,11 +238,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presentation\Opt.xaml.cs">
+      <DependentUpon>Opt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\OEE.xaml.cs">
       <DependentUpon>OEE.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Optimization.xaml.cs">
-      <DependentUpon>Optimization.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
