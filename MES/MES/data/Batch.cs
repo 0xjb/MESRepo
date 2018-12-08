@@ -14,13 +14,15 @@ namespace MES.Data {
         private IList<IBatchValue> batchHumidities;
         private IList<IBatchValue> batchVibrations;
         public double ProfitPerMin { get; set; }
+        public double Speed { get; set; }
 
         public Batch(float batchId, float beerId, int acceptableProducts,
-            int defectProducts, string timestampStart, string timestampEnd, double oee, double ppm) {
+            int defectProducts, double speed, string timestampStart, string timestampEnd, double oee, double ppm) {
             this.batchId = batchId;
             this.beerId = beerId;
             this.acceptableProducts = acceptableProducts;
             this.defectProducts = defectProducts;
+            Speed = speed;
             this.timestampStart = timestampStart;
             this.timestampEnd = timestampEnd;
             this.oee = oee;

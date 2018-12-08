@@ -128,7 +128,7 @@ namespace MES.Logic
 
 
             Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
-                (int)OPC.DefectProducts, s.TimestampStart, s.TimestampEnd, s.OEE, set, CalculatePPM(s));
+                (int)OPC.DefectProducts,s.MachineSpeed, s.TimestampStart, s.TimestampEnd, s.OEE, set, CalculatePPM(s));
         }
 
         public ISimpleBatch GetCurrentBatch()

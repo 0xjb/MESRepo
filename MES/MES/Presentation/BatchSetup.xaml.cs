@@ -86,7 +86,7 @@ namespace MES.Presentation {
 
         private void SpeedButton_Click(object sender, RoutedEventArgs e) {
             if (ProductTypeCB.SelectedItem != null) { 
-                speedLabel.Content = presentationFacade.ILogic.GetOptimalSpeed(ProductTypeCB.SelectedItem as IRecipe);
+                speedTB.Text = presentationFacade.ILogic.GetOptimalSpeed(ProductTypeCB.SelectedItem as IRecipe).ToString();
             }
 
         }

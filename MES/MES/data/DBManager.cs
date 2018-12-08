@@ -111,9 +111,10 @@ namespace MES.data {
                     string timestampEnd = dRead.GetString(5);
                     double oee = dRead.GetDouble(6);
                     double ppm = dRead.GetDouble(7);
+                    double speed = dRead.GetDouble(8);
 
                     batches.Add((float)batchId, new Batch((float)batchId, (float)beerId,
-                        acceptableProducts, defectProducts,
+                        acceptableProducts, defectProducts, speed,
                         timestampStart, timestampEnd, oee, ppm));
                 }
                 dRead.Close();
@@ -267,7 +268,8 @@ namespace MES.data {
                 + batch.GetTimestampStart() + "', '"
                 + batch.GetTimestampEnd() + "', "
                 + batch.GetOEE() + ", "
-                + batch.ProfitPerMin + ");";
+                + batch.ProfitPerMin + ", "
+                + batch.Speed + ");";
 
             String[] sql = CreateBatchValuesStatements(setOfValues, batch.GetBatchId(), 1);
             sql[0] = sql0;
@@ -387,13 +389,12 @@ namespace MES.data {
 
         public double GetOptimalSpeed(IRecipe recipe) {
             // query for db
-            string sql = string.Format("SELECT speed FROM {0} WHERE ppm = (SELECT MAX(ppm) FROM batches WHERE beerid = {1});", batchesTable, recipe.BeerId);
+            string sql = String.Format("SELECT speed FROM {0} WHERE ppm = (SELECT MAX(ppm) FROM batches WHERE beerid = {1});", batchesTable, recipe.BeerId);
             // executes query and returns first column of the first row as a double
             NpgsqlConnection conn = new NpgsqlConnection(connString);
             conn.Open();
-            try {
-                NpgsqlCommand command = new NpgsqlCommand(sql,conn);
-                return (double)command.ExecuteScalar();
+            try {              
+                return (double)new NpgsqlCommand(sql,conn).ExecuteScalar();
             } catch(Exception ex) {
                 MessageBox.Show(ex.StackTrace);
                 return 0;

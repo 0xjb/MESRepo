@@ -7,6 +7,8 @@ namespace MES.Acquintance
 
         double ProfitPerMin { get; set; }
 
+        double Speed { get; set; }
+
         /// <summary>
         /// Returns the batch id
         /// </summary>
