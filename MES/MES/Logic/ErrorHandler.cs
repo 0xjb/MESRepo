@@ -1,6 +1,7 @@
 ﻿using MES.Acquintance;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 
@@ -44,6 +45,8 @@ namespace MES.Logic
                 index = 0;
             }
 
+            //DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff");
+            DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
             string _date = DateTime.Now.ToString("MM/dd/yyyy") + " " + DateTime.Now.ToString("HH:mm:ss tt ");
             try
             {
@@ -57,6 +60,9 @@ namespace MES.Logic
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
                                       stopReasons[index] + " " + stopReason);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
+
+                    Console.WriteLine("CurrentCulture is {0}.", CultureInfo.CurrentCulture.Name);
+
                     alarmsToFile[0] = alarmNumber.ToString();
                     alarmsToFile[1] = batchID.ToString();
                     alarmsToFile[2] = _date;

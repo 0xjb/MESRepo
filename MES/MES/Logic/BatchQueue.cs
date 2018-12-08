@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Data;
 
 namespace MES.Logic {
@@ -33,6 +34,7 @@ namespace MES.Logic {
             }
         }
         public BatchQueue(ILogic l) {
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
             logic = l;
             l.OPC.PropertyChanged += CheckBatchProdStatus;
             BindingOperations.EnableCollectionSynchronization(Batches, _lock);
