@@ -45,7 +45,7 @@ namespace MES.Data {
             return batchId;
         }
 
-        public float BatchId { get; set; }
+        //public float BatchId { get; set; }
 
         
 
