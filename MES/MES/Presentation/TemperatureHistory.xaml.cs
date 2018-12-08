@@ -4,18 +4,21 @@ using MES.Acquintance;
 using System;
 using System.Windows;
 
-namespace MES.Presentation {
+namespace MES.Presentation
+{
     /// <summary>
     /// Interaction logic for TemperatureHistory.xaml
     /// </summary>
-    public partial class TemperatureHistory : Window, IObservableChartPoint {
+    public partial class TemperatureHistory : Window, IObservableChartPoint
+    {
         //TODO Størrelse af array i constructor Temperature History
+        private IBatch batch;
         private History history;
-        int indexOfArray = 0;
-        IBatch batch;
+        private int indexOfArray = 0;
+        private bool closeApp;
 
-        public TemperatureHistory(IBatch b, History history) {
-
+        public TemperatureHistory(IBatch b, History history)
+        {
             this.history = history;
             InitializeComponent();
             batch = b;
@@ -32,22 +35,26 @@ namespace MES.Presentation {
             FormatterTemperature = value => value;
             DataContext = this;
             InsertTemperatureData();
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private double _value;
 
         public event Action PointChanged;
 
-        public double Value {
+        public double Value
+        {
             get { return _value; }
-            set {
+            set
+            {
                 _value = value;
                 OnPointChanged();
             }
         }
 
-
-        protected void OnPointChanged() {
+        protected void OnPointChanged()
+        {
             if (PointChanged != null)
                 PointChanged.Invoke();
         }
@@ -58,36 +65,51 @@ namespace MES.Presentation {
 
         public Func<double, double> FormatterTemperature { get; set; }
 
-
-        private void btnBack_Click(object sender, RoutedEventArgs e) {
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            closeApp = false;
             this.Close();
-            history.Show();
+            this.history.Show();
         }
 
         //Skal fjernes bare til Test
-        int generateRandomNumber() {
-
+        int generateRandomNumber()
+        {
             int number = 0;
             Random randomNumber = new Random();
             number = randomNumber.Next(19, 26);
             return number;
         }
-        private void InsertTemperatureData() {
-            foreach (var batchvalue in batch.GetBatchTemperatures()) {
+        private void InsertTemperatureData()
+        {
+            try
+            {
+                foreach (var batchvalue in batch.GetBatchTemperatures())
+                {
+                    LabelsTemperature[indexOfArray] = batchvalue.Timestamp;
+                    _value = batchvalue.Value;
+                    SeriesCollectionTemperature[0].Values.Add(Value);
+                    indexOfArray++;
+                }
+            }
+            catch (NullReferenceException) { }
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var batchvalue in batch.GetBatchTemperatures())
+            {
                 LabelsTemperature[indexOfArray] = batchvalue.Timestamp;
                 _value = batchvalue.Value;
                 SeriesCollectionTemperature[0].Values.Add(Value);
                 indexOfArray++;
             }
         }
-        private void button_Click(object sender, RoutedEventArgs e) {
-            foreach (var batchvalue in batch.GetBatchTemperatures()) {
-                LabelsTemperature[indexOfArray] = batchvalue.Timestamp;
-                _value = batchvalue.Value;
-                SeriesCollectionTemperature[0].Values.Add(Value);
-                indexOfArray++;
-            }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

@@ -1,6 +1,13 @@
 ﻿using MES.Acquintance;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using MES.Annotations;
+using MES.Data;
 
 namespace MES.Logic
 {
@@ -18,11 +25,16 @@ namespace MES.Logic
         private BatchQueue batches;
         private TestSimulation _testSimulation;
         private bool isSimulationON;
+        private ObservableCollection<IBatch> oEEList;
 
         public LogicFacade()
         {
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
+
             this.opc = new OpcClient(this);
             Batches = new BatchQueue(this);
+            //Batches = new BatchQueue(OPC);
+            oEEList = new ObservableCollection<IBatch>();
         }
 
         public BatchQueue Batches {
@@ -90,6 +102,10 @@ namespace MES.Logic
             return data.GetAllRecipes();
         }
 
+        public void AddBatch(string batchID, string productType, string amount)
+        {
+        }
+
         public float GetHighestBatchId()
         {
             return data.GetHighestBatchId();
@@ -106,6 +122,49 @@ namespace MES.Logic
         {
             return data.AuthenticateUserInformation(username, password);
         }
+
+        public bool addOEEFromBatch(int batchId)
+        {
+            if (data.GetBatch(batchId) != null)
+            {
+                oEEList.Add(data.GetBatch(batchId));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void SearchNewestBatches(int number)
+        {
+            IDictionary<float, IBatch> dictionary = data.GetBatches(number);
+
+
+            foreach (KeyValuePair<float, IBatch> entry in dictionary)
+            {
+                oEEList.Add(entry.Value);
+            }
+        }
+
+        public void SearchDateYearBatches(string month, string year)
+        {
+            IDictionary<float, IBatch> dictionary = data.GetBatches(month,year);
+
+
+
+            foreach (KeyValuePair<float, IBatch> entry in dictionary) {
+                oEEList.Add(entry.Value);
+            }
+        }
+
+        public ObservableCollection<IBatch> OEeList
+        {
+            get => oEEList;
+            set => oEEList = value;
+        }
+
+
         private double CalculatePPM(ISimpleBatch b)
         {
             //Profit per minute
@@ -129,6 +188,10 @@ namespace MES.Logic
             set.Add(OPC.TempList);
             set.Add(OPC.HumidityList);
             set.Add(OPC.VibrationList);
+            foreach (var yeet in OPC.TempList)
+            {
+                Console.WriteLine(yeet.Value + " " + yeet.Type);
+            }
 
             Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
                 (int)OPC.DefectProducts,s.MachineSpeed, s.TimestampStart, s.TimestampEnd, s.OEE, set, CalculatePPM(s));

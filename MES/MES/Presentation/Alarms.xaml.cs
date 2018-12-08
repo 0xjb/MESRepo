@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using MES.Acquintance;
+﻿using MES.Acquintance;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using MES.Logic;
 
 namespace MES.Presentation
 {
@@ -16,27 +12,23 @@ namespace MES.Presentation
     {
         private IPresentation presentationFacade;
         private MainWindow mw;
-
+        private bool closeApp;
 
         public Alarms(IPresentation pf, MainWindow mainWindow)
         {
             this.presentationFacade = pf;
-
             this.mw = mainWindow;
-
             InitializeComponent();
-
-            //listViewAlarms.ItemsSource = presentationFacade.ILogic.OPC.ErrorHandler.Alarms;
             listViewAlarms.ItemsSource = presentationFacade.ILogic.ErrorHandler.Alarms;
             this.DataContext = this;
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            //MainWindow mainWindow = new MainWindow(presentationFacade);
-
+            closeApp = false;
             this.Close();
-            //mainWindow.Show();
             mw.Show();
         }
 
@@ -48,6 +40,12 @@ namespace MES.Presentation
         private void ShowPopUp()
         {
             //listViewAlarms.
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

@@ -12,9 +12,10 @@ namespace MES.Presentation
     public partial class VibrationHistory : Window, IObservableChartPoint
     {
         //TODO Størrelse af array i constructor Vibration History
+        private IBatch batch;
         private History history;
-        int indexOfArray = 0;
-        IBatch batch;
+        private int indexOfArray = 0;
+        private bool closeApp;
 
         public VibrationHistory(IBatch b, History history)
         {
@@ -34,6 +35,8 @@ namespace MES.Presentation
             FormatterVibration = value => value;
             DataContext = this;
             InsertVibrationData();
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private double _value;
@@ -63,8 +66,9 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            closeApp = false;
             this.Close();
-            history.Show();
+            this.history.Show();
         }
 
         //TODO Skal fjernes bare til Test
@@ -77,13 +81,17 @@ namespace MES.Presentation
         }
         private void InsertVibrationData()
         {
-            foreach (var batchvalue in batch.GetBatchVibrations())
+            try
             {
-                LabelsVibration[indexOfArray] = batchvalue.Timestamp;
-                _value = batchvalue.Value;
-                SeriesCollectionVibration[0].Values.Add(Value);
-                indexOfArray++;
+                foreach (var batchvalue in batch.GetBatchVibrations())
+                {
+                    LabelsVibration[indexOfArray] = batchvalue.Timestamp;
+                    _value = batchvalue.Value;
+                    SeriesCollectionVibration[0].Values.Add(Value);
+                    indexOfArray++;
+                }
             }
+            catch (NullReferenceException) { }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -92,6 +100,12 @@ namespace MES.Presentation
             _value = generateRandomNumber();
             SeriesCollectionVibration[0].Values.Add(Value);
             indexOfArray++;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

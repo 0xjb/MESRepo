@@ -5,7 +5,6 @@ using MES.Presentation;
 using System;
 using System.Windows;
 
-
 namespace MES.Starter
 {
     class Starter : Application
@@ -18,12 +17,10 @@ namespace MES.Starter
             IPresentation presentation = new PresentationFacade();
             logic.InjectData(data);
             presentation.InjectLogic(logic);
-            Presentation.MainWindow mainWindow = new MainWindow(presentation);
-            //LoginWindow loginWindow = new LoginWindow(presentation);
+            LoginWindow loginWindow = new LoginWindow(presentation);
 
             Application application = new Application();
-            //application.Run(loginWindow);
-            application.Run(mainWindow);
+            application.Run(loginWindow);
         }
     }
 }

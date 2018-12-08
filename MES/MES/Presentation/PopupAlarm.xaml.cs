@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using MES.Acquintance;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MES.Acquintance;
 
 namespace MES.Presentation
 {
@@ -21,7 +9,6 @@ namespace MES.Presentation
     /// </summary>
     public partial class PopupAlarm : Window
     {
-
         private IAlarmObject _alarm;
 
         public PopupAlarm(IAlarmObject alarm)
@@ -29,8 +16,12 @@ namespace MES.Presentation
             _alarm = alarm;
             InitializeComponent();
             AlarmBox.Text = alarm.StopReason;
+            Closed += new EventHandler(Window_Closed);
         }
 
-
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

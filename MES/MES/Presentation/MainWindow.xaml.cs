@@ -122,7 +122,6 @@ namespace MES.Presentation
             LabelsIngredients = new[] { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
 
             SeriesCollectionTemperature = new SeriesCollection
-
             {
                 new LineSeries
                 {
@@ -133,7 +132,6 @@ namespace MES.Presentation
             };
 
             SeriesCollectionHumidity = new SeriesCollection
-
             {
                 new LineSeries
                 {
@@ -160,9 +158,8 @@ namespace MES.Presentation
             CheckStatus();
             CheckIngredientsLevel();
 
-
             //Er kommenteret ud, da vi gerne selv vil styre, hvornår målinger foretages (på tid)
-            // og ikke vente på en property changes fra OPC
+            //og ikke vente på en property changes fra OPC
             //CheckTemperature();
             //CheckHumidity();
             //CheckVibration();
@@ -175,7 +172,6 @@ namespace MES.Presentation
             Temperature = iLogic.OPC.TempCurrent;
             Humidity = iLogic.OPC.HumidityCurrent;
             Vibration = iLogic.OPC.VibrationCurrent;
-
 
             if (arrayListLabelsTemperature.Count >= 50)
             {
@@ -332,11 +328,10 @@ namespace MES.Presentation
 
         #region XAML generated code
 
-        void MainWindow_Closed(object sender, EventArgs e)
+        private void MainWindow_Closed(object sender, EventArgs e)
         {
-            //Put your close code here
+            Application.Current.Shutdown();
         }
-
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
@@ -379,18 +374,18 @@ namespace MES.Presentation
             alarms.Show();
         }
 
-        private void btnOEE_Click(object sender, RoutedEventArgs e)
+        private void btnOpt_Click(object sender, RoutedEventArgs e)
         {
-            OEE oEE = new OEE(presentation, this);
+            Opt opt = new Opt(presentation, this);
             this.Hide();
-            oEE.Show();
+            opt.Show();
         }
 
-        private void btnOptimization_Click(object sender, RoutedEventArgs e)
+        private void btnOEE_Click(object sender, RoutedEventArgs e)
         {
-            Optimization optimization = new Optimization(presentation, this);
+            OEE oee = new OEE(presentation, this);
             this.Hide();
-            optimization.Show();
+            oee.Show();
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
@@ -644,6 +639,11 @@ namespace MES.Presentation
             {
                 handler(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private void DataGridQuedBatches_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

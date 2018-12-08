@@ -1,14 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-using MES.Acquintance;
+﻿using MES.Acquintance;
 using MES.Data;
 using Npgsql;
 using System;

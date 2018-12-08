@@ -10,7 +10,6 @@
     mc:Ignorable="d" WindowStartupLocation="CenterScreen"
     Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
 
-
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -167,11 +166,11 @@
             <Button x:Name="btnAlarms" Content="Alarms" Click="btnAlarms_Click" Height="40" Width="85" />
         </Viewbox>
         <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="5" Stretch="Uniform">
-            <Button x:Name="btnOEE" Content="OEE" Click="btnOEE_Click" Height="40" Width="85" />
+            <Button x:Name="btnOpt" Content="Optimization" Click="btnOpt_Click" Height="40" Width="85" />
         </Viewbox>
         <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="6" Stretch="Uniform">
-            <Button x:Name="btnOptimization" Content="Optimization" Click="btnOptimization_Click" Height="40"
-                    Width="85" />
+            <Button x:Name="btnOEE" Content="OEE" Click="btnOEE_Click" Height="40"
+                    Width="85" RenderTransformOrigin="0.288,0.288" />
         </Viewbox>
         <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="7" Stretch="Uniform">
             <Button x:Name="btnHistory" Content="History" Click="btnHistory_Click" Height="40" Width="85" />
@@ -303,7 +302,7 @@
 
         </Viewbox>
         <DataGrid MinColumnWidth="110" Name="DataGridQuedBatches" Margin="5,5,5,5" Grid.ColumnSpan="3" Grid.Column="7" 
-                  Grid.Row="1" Grid.RowSpan="7" />
+                  Grid.Row="1" Grid.RowSpan="7" SelectionChanged="DataGridQuedBatches_SelectionChanged" />
         <Viewbox Grid.Column="8" Grid.Row="8" Stretch="Uniform" VerticalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>

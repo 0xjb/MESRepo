@@ -12,9 +12,10 @@ namespace MES.Presentation
     public partial class HumidityHistory : Window, IObservableChartPoint
     {
         //TODO Størrelse af array i constructor Humidity History
+        private IBatch batch;
         private History history;
-        int indexOfArray = 0;
-        IBatch batch;
+        private int indexOfArray = 0;
+        private bool closeApp;
 
         public HumidityHistory(IBatch b, History history)
         {
@@ -33,10 +34,17 @@ namespace MES.Presentation
             LabelsHumidity = new string[1000];
             FormatterHumidity = value => value;
             DataContext = this;
-            foreach(var humi in batch.GetBatchHumidities()) {
-                Console.WriteLine(humi.Value);
+            try
+            {
+                foreach (var humi in batch.GetBatchHumidities())
+                {
+                    Console.WriteLine(humi.Value);
+                }
             }
+            catch (NullReferenceException) { }
             InsertHumidityData();
+            Closed += new EventHandler(Window_Closed);
+            closeApp = true;
         }
 
         private double _value;
@@ -66,8 +74,9 @@ namespace MES.Presentation
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            closeApp = false;
             this.Close();
-            history.Show();
+            this.history.Show();
         }
 
         //Skal fjernes bare til Test
@@ -80,13 +89,17 @@ namespace MES.Presentation
         }
         private void InsertHumidityData()
         {
-            foreach (var batchvalue in batch.GetBatchHumidities())
+            try
             {
-                LabelsHumidity[indexOfArray] = batchvalue.Timestamp;
-                _value = batchvalue.Value;
-                SeriesCollectionHumidity[0].Values.Add(Value);
-                indexOfArray++;
+                foreach (var batchvalue in batch.GetBatchHumidities())
+                {
+                    LabelsHumidity[indexOfArray] = batchvalue.Timestamp;
+                    _value = batchvalue.Value;
+                    SeriesCollectionHumidity[0].Values.Add(Value);
+                    indexOfArray++;
+                }
             }
+            catch (NullReferenceException) { }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -95,6 +108,12 @@ namespace MES.Presentation
             _value = generateRandomNumber();
             SeriesCollectionHumidity[0].Values.Add(Value);
             indexOfArray++;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (closeApp)
+                Application.Current.Shutdown();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MES.Acquintance;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 
@@ -44,6 +45,8 @@ namespace MES.Logic
                 index = 0;
             }
 
+            //DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff");
+            DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
 
             string _date = DateTime.Now.ToString("MM/dd/yyyy") + " " + DateTime.Now.ToString("HH:mm:ss tt ");
             try
@@ -55,11 +58,11 @@ namespace MES.Logic
                     stopReasonID = (int)stopReason;
                     _alarms.Add(new LogicAlarm(alarmNumber, _date, stopReasons[index], batchID, stopReasonID));
 
-
-
                     Console.WriteLine("\n\n new alarm added  " + alarmNumber + " " + batchID + " " + _date + " " +
                                       stopReasons[index] + " " + stopReason);
                     Console.WriteLine(" number of alarms: " + _alarms.Count);
+
+
                     alarmsToFile[0] = alarmNumber.ToString();
                     alarmsToFile[1] = batchID.ToString();
                     alarmsToFile[2] = _date;
@@ -85,13 +88,7 @@ namespace MES.Logic
 
         private void ReadFile()
         {
-
-            //iLogic.Data.ReadFile();
-            //ArrayList list = new ArrayList();
-            //list = iLogic.Data.ReadFile();
             _alarms = iLogic.Data.ReadFile();
-            //Console.WriteLine("\n\nArrayList count     "+list.Count+"\n\n");
-
         }
 
 
@@ -101,8 +98,5 @@ namespace MES.Logic
 
             set { _alarms = value; }
         }
-
-
-
     }
 }

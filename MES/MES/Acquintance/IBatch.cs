@@ -15,6 +15,10 @@ namespace MES.Acquintance
         /// <returns></returns>
         float GetBatchId();
 
+         float BatchId { get;  }
+        double OEE { get; set; }
+
+        //TODO Fjerne getter/setter metoder 
         /// <summary>
         /// Returns the beer id
         /// </summary>
