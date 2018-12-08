@@ -60,8 +60,8 @@ namespace MES.Logic
 
         public double CalculateOEE()
         {
-            //return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
-            return 0.307;
+            return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
+            //return 0.307;
 
         }
     }

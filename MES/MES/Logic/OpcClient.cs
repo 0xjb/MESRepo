@@ -44,7 +44,6 @@ namespace MES.Logic
         public OpcClient(ILogic il)
         {
 
-            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
             tempList = new List<IBatchValue>();
             humidityList = new List<IBatchValue>();
@@ -57,7 +56,6 @@ namespace MES.Logic
 
         public OpcClient()
         {
-            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
             Connect();
             CreateSubscription();

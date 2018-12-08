@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Globalization;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -18,6 +19,9 @@ namespace MES.Presentation
     /// 
     public partial class MainWindow : Window, INotifyPropertyChanged // IObservableChartPoint//,INotifyPropertyChanged
     {
+       
+
+
         private ILogic iLogic;
         private IPresentation presentation;
 

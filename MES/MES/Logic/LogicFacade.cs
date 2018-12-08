@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using MES.Annotations;
 using MES.Data;
@@ -22,6 +23,8 @@ namespace MES.Logic
 
         public LogicFacade()
         {
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
+
             this.opc = new OpcClient(this);
             Batches = new BatchQueue(this);
             //Batches = new BatchQueue(OPC);

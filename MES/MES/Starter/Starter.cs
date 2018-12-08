@@ -25,7 +25,6 @@ namespace MES.Starter
 
             Application application = new Application();
             //application.Run(loginWindow);
-            //CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
             application.Run(mainWindow);
         }
     }

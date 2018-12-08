@@ -68,3 +68,27 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 62              35518                12/08/2018 11:31:28 AM                   Manual stop                              12                                      
 63              35518                12/08/2018 11:31:41 AM                   Manual stop                              12                                      
 62              0                    12/08/2018 11:33:11 AM                   Manual stop                              12                                      
+62              0                    12/08/2018 11:42:24 AM                   Manual stop                              12                                      
+63              0                    12/08/2018 11:42:31 AM                   Manual abort                             14                                      
+62              0                    12/08/2018 11:50:12 AM                   Manual stop                              12                                      
+63              0                    12/08/2018 11:50:15 AM                   Manual abort                             14                                      
+64              0                    12/08/2018 11:50:16 AM                   Manual stop                              12                                      
+62              0                    12-08-2018 11:51:03                      Manual stop                              12                                      
+63              0                    12-08-2018 11:51:07                      Manual abort                             14                                      
+64              0                    12-08-2018 11:51:11                      Manual stop                              12                                      
+65              0                    12-08-2018 11:51:14                      Manual abort                             14                                      
+66              0                    12-08-2018 11:51:15                      Manual stop                              12                                      
+67              0                    12-08-2018 11:51:34                      Manual stop                              12                                      
+68              0                    12/08/2018 11:56:54 AM                   Manual stop                              12                                      
+68              35520                12-08-2018 11:57:37                      Manual stop                              12                                      
+69              35520                12-08-2018 11:57:43                      Manual abort                             14                                      
+70              35520                12-08-2018 11:57:44                      Manual stop                              12                                      
+71              35521                12-08-2018 12:00:44                      Manual abort                             14                                      
+72              35521                12-08-2018 12:00:46                      Manual stop                              12                                      
+73              35521                12-08-2018 12:00:47                      Manual abort                             14                                      
+74              0                    12/08/2018 12:02:37 PM                   Manual abort                             14                                      
+75              0                    12/08/2018 12:02:41 PM                   Manual abort                             14                                      
+76              0                    12/08/2018 12:02:42 PM                   Manual stop                              12                                      
+77              0                    12/08/2018 12:02:42 PM                   Manual abort                             14                                      
+74              0                    12/08/2018 12:03:53 PM                   Manual abort                             14                                      
+75              0                    12/08/2018 12:04:00 PM                   Manual stop                              12                                      
