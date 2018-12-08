@@ -44,14 +44,14 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="1" Grid.RowSpan="10" >
-            <lvc:CartesianChart Series="{Binding SeriesCollectionPilsner}" LegendLocation="top">
+            <lvc:CartesianChart Series="{Binding SeriesCollectionBeer}" LegendLocation="top">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Speed" 
+                    <lvc:Axis Title="OEE" 
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
 
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Loss in percent" Labels="{Binding ArrayListLabels}"
+                    <lvc:Axis  Title="Speed" Labels="{Binding ArrayListLabels}"
                               Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
