@@ -42,11 +42,13 @@
             <RowDefinition />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
-        <CheckBox Name="checkBockSimulation" Content="TestSimulation On/off" Grid.ColumnSpan="2" Grid.Column="2"
+        <Viewbox Grid.Column="1"  Grid.Row="11" Stretch="Uniform">
+            <Button x:Name="btnBack" Content="Back" Click="btnBack_Click" Height="40" Width="80" />
+        </Viewbox>
+        <CheckBox x:Name="checkBockSimulation" Content="TestSimulation On/off" Grid.ColumnSpan="2" Grid.Column="2"
                   HorizontalAlignment="Left" Margin="15,0,15,0" Grid.Row="4" VerticalAlignment="Center"
                   Unchecked="CheckBox_OnUnchecked" Checked="CheckBox_Checked" />
-        <TextBlock Name="txtBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="15,0,15,0" Grid.Row="5"
+        <TextBlock x:Name="txtBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="15,0,15,0" Grid.Row="5"
                    Grid.RowSpan="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" />
 
 

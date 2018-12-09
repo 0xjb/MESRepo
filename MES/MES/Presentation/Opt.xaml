@@ -56,7 +56,9 @@
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Grid>
-        <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
+        <Viewbox Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Stretch="Uniform">
+            <Button x:Name="btnBack" Content="Back" Click="btnBack_Click" Height="40" Width="80" />
+        </Viewbox>
         <CheckBox Name="PilserCheckBox" Content="Pilsner" Grid.Column="3" HorizontalAlignment="Center"  Grid.Row="11" VerticalAlignment="Center" Checked="Pilsner_Checked"/>
         <CheckBox Name="WheatCheckBox" Content="Wheat" Grid.Column="4" HorizontalAlignment="Center"  Grid.Row="11" VerticalAlignment="Center" Checked="Wheat_Checked"/>
         <CheckBox Name="IPACheckBox" Content="IPA" Grid.Column="5" HorizontalAlignment="Center"  Grid.Row="11" VerticalAlignment="Center" Checked="IPA_Checked"/>

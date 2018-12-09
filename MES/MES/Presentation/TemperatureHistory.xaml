@@ -42,11 +42,14 @@
             <RowDefinition />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
+
+        <Viewbox Grid.Column="1"  Grid.Row="11" Stretch="Uniform">
+            <Button x:Name="btnBack" Content="Back" Click="btnBack_Click" Height="40" Width="80" />
+
+        </Viewbox>
 
         <Grid Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="1" Grid.RowSpan="10">
-            <lvc:CartesianChart Series="{Binding SeriesCollectionTemperature
-}" LegendLocation="Right">
+            <lvc:CartesianChart Series="{Binding SeriesCollectionTemperature}" LegendLocation="Right">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Temperature" LabelFormatter="{Binding FormatterTemperature}" />
                 </lvc:CartesianChart.AxisY>

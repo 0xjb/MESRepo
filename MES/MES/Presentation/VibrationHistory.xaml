@@ -42,7 +42,11 @@
             <RowDefinition />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
+
+        <Viewbox Grid.Column="1" Grid.Row="11" Stretch="Uniform">
+            <Button x:Name="btnBack" Content="Back" Click="btnBack_Click" Height="40" Width="80" />
+
+        </Viewbox>
 
         <Grid Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="1" Grid.RowSpan="10">
             <lvc:CartesianChart Series="{Binding SeriesCollectionVibration}" LegendLocation="Right">
@@ -54,8 +58,6 @@
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Grid>
-        <Button x:Name="button" Content="addNumber" Grid.Column="8" HorizontalAlignment="Left" Margin="16,10,0,0"
-                Grid.Row="11" VerticalAlignment="Top" Width="75" Click="button_Click" Grid.ColumnSpan="2" />
 
 
     </Grid>

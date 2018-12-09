@@ -55,14 +55,7 @@ namespace MES.Presentation
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            ISimpleBatch b = presentationFacade.ILogic.GetCurrentBatch();
-            b.TimestampStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
-            presentationFacade.ILogic.StartProduction();
-        }
-
-        private void Button1_Click(object sender, RoutedEventArgs e)
+   private void Button1_Click(object sender, RoutedEventArgs e)
         {
             if (batchQueueGrid.SelectedItem != null)
             {
