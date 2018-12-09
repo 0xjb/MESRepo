@@ -117,7 +117,7 @@ namespace MES.Logic
         public void StartProduction()
         {
             OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
-                Batches.CurrentBatch.DesiredAmount, Batches.CurrentBatch.MachineSpeed);
+                Batches.CurrentBatch.Amount, Batches.CurrentBatch.Speed);
         }
 
         public bool AuthenticateUserInformation(string username, string password)
@@ -184,7 +184,7 @@ namespace MES.Logic
             }
 
             Data.SaveBatch(s.BatchID, s.BeerType, (int) OPC.AcceptableProducts,
-                (int) OPC.DefectProducts, s.TimestampStart, s.TimestampEnd, s.OEE, set);
+                (int) OPC.DefectProducts, s.TimeStart, s.TimeEnd, s.OEE, set);
         }
 
         public ISimpleBatch GetCurrentBatch()

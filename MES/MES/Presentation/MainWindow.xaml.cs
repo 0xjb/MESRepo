@@ -94,6 +94,7 @@ namespace MES.Presentation
             InitializeComponent();
 
             DataGridQuedBatches.ItemsSource = presentation.ILogic.Batches.Batches;
+            DataGridQuedBatches.MinColumnWidth = 50;
 
             ////Do stuff when closing window
             this.Closed += new EventHandler(MainWindow_Closed);
@@ -337,7 +338,7 @@ namespace MES.Presentation
         {
             //iLogic.OPC.StartMachine(1, 2, 200, 100);
             ISimpleBatch b = presentation.ILogic.GetCurrentBatch();
-            b.TimestampStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
+            b.TimeStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
             presentation.ILogic.StartProduction();
         }
 
@@ -478,7 +479,7 @@ namespace MES.Presentation
             set
             {
                 machineSpeed = value;
-                OnPropertyChanged("MachineSpeed");
+                OnPropertyChanged("Speed");
             }
         }
 
@@ -635,9 +636,6 @@ namespace MES.Presentation
             }
         }
 
-        private void DataGridQuedBatches_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
+  
     }
 }

@@ -20,6 +20,7 @@ namespace MES.Presentation
             PresentationFacade = pf;
             InitializeComponent();
             batchQueueGrid.ItemsSource = presentationFacade.ILogic.Batches.Batches;
+            batchQueueGrid.ColumnWidth = 110;
             DataContext = this;
             ProductTypeCB.ItemsSource = GetRecipes();
             Closed += new EventHandler(Window_Closed);

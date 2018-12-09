@@ -65,8 +65,8 @@ namespace MES.Logic {
             if (e.PropertyName.Equals("StateCurrent")) {
                 if ((sender as OpcClient).StateCurrent == 17) {
                     if (CurrentBatch != null) {
-                        CurrentBatch.TimestampEnd = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
-                        OEE currentOEE = new OEE((int)logic.OPC.AcceptableProducts, (int)logic.OPC.DefectProducts, currentBatch.TimestampStart, currentBatch.TimestampEnd, (int)currentBatch.MachineSpeed);
+                        CurrentBatch.TimeEnd = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
+                        OEE currentOEE = new OEE((int)logic.OPC.AcceptableProducts, (int)logic.OPC.DefectProducts, currentBatch.TimeStart, currentBatch.TimeEnd, (int)currentBatch.Speed);
                         currentBatch.OEE = currentOEE.CalculateOEE();
                         //currentBatch.OEE = 0.32;
                         //currentBatch.OEE = 3.5;

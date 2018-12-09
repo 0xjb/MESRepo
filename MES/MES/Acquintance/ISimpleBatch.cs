@@ -6,14 +6,14 @@
 
         float BeerType { get; set; }
 
-        float DesiredAmount { get; set; }
+        float Amount { get; set; }
 
-        string TimestampStart { get; set; }
+        string TimeStart { get; set; }
 
-        string TimestampEnd { get; set; }
+        string TimeEnd { get; set; }
 
         double OEE { get; set; }
 
-        float MachineSpeed { get; set; }
+        float Speed { get; set; }
     }
 }
