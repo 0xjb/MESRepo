@@ -48,7 +48,7 @@ namespace MES.Logic
             //DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff");
             DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
 
-            string _date = DateTime.Now.ToString("MM/dd/yyyy") + " " + DateTime.Now.ToString("HH:mm:ss tt ");
+            string _date = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
             try
             {
                 if (index > 0)
