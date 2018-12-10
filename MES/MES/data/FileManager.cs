@@ -73,17 +73,31 @@ namespace MES.Data
                         string fileLine = sr.ReadLine();
                         i++;
                         stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-                        //Console.WriteLine("\n\n"+stringTokens.Length+"\n\n");
-                        if (stringTokens.Length == 7) {
+                        Console.WriteLine("\n\nFileManager" + stringTokens.Length + "\n\n");
+                        //if (stringTokens.Length == 7) {
+                        //    //if (stringTokens.Length == 6) {
+                        //    _alarms.Add(
+                        //        new DataAlarm()
+                        //        {
+                        //            AlarmNumber = Int32.Parse(stringTokens[0]),
+                        //            BatchID = Int32.Parse(stringTokens[1]),
+                        //            Timestamp = stringTokens[2] + " " + stringTokens[3],
+                        //            StopReason = stringTokens[4] + " " + stringTokens[5],
+                        //            StopID = Int32.Parse(stringTokens[6] )
+                        //        });
+
+                        //**
+                        //Read file modified to AM/PM format
+                        //**
+                        if (stringTokens.Length == 8) {
                             //if (stringTokens.Length == 6) {
                             _alarms.Add(
-                                new DataAlarm()
-                                {
+                                new DataAlarm() {
                                     AlarmNumber = Int32.Parse(stringTokens[0]),
                                     BatchID = Int32.Parse(stringTokens[1]),
-                                    Timestamp = stringTokens[2] + " " + stringTokens[3],
-                                    StopReason = stringTokens[4] + " " + stringTokens[5],
-                                    StopID = Int32.Parse(stringTokens[6] )
+                                    Timestamp = stringTokens[2] + " " + stringTokens[3] +" "+ stringTokens[4],
+                                    StopReason = stringTokens[5] + " " + stringTokens[6],
+                                    StopID = Int32.Parse(stringTokens[7])
                                 });
                         }
                     }
@@ -106,7 +120,6 @@ namespace MES.Data
                 using (var sr =
                     new StreamReader(path))
                 {
-                    //Console.WriteLine("\n\n******************************\n\n");
                     if (sr.Peek() <= 0)
                     {
                         return false;
