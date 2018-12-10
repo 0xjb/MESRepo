@@ -17,7 +17,6 @@ namespace MES.Logic
         private double productionCost = 5;
         private double salePrice = 20;
 
-        private float currentBatchID;
 
         private IData data;
         private ErrorHandler errorHandler;
@@ -32,7 +31,7 @@ namespace MES.Logic
             CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
             this.opc = new OpcClient(this);
-            Batches = new BatchQueue(this);
+            
             //Batches = new BatchQueue(OPC);
             oEEList = new ObservableCollection<IBatch>();
         }
@@ -71,7 +70,7 @@ namespace MES.Logic
         {
             data = dataLayer;
             CreateErrorHandler();
-            currentBatchID = data.GetHighestBatchId() + 1;
+            Batches = new BatchQueue(this);
         }
 
         public void CreateSimulation()
@@ -90,10 +89,7 @@ namespace MES.Logic
 
         public void CreateBatch(float amount, float speed, IRecipe recipe)
         {
-            SimpleBatch b = new SimpleBatch(currentBatchID, amount, speed, recipe);
-            // increment by one for the next batch
-            currentBatchID++;
-            Batches.Batches.Add(b);
+            Batches.CreateBatch(amount, speed, recipe);
 
         }
 

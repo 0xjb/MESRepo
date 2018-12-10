@@ -13,6 +13,7 @@ namespace MES.Logic {
 
     public class BatchQueue : IBatchQueue, INotifyPropertyChanged {
         private static object _lock = new object();
+        private float currentBatchID;
         private ILogic logic;
         private ISimpleBatch currentBatch;
         public ISimpleBatch CurrentBatch {
@@ -35,7 +36,8 @@ namespace MES.Logic {
         }
         public BatchQueue(ILogic l) {
             logic = l;
-            l.OPC.PropertyChanged += CheckBatchProdStatus;
+            currentBatchID = logic.GetHighestBatchId();
+            logic.OPC.PropertyChanged += CheckBatchProdStatus;
             BindingOperations.EnableCollectionSynchronization(Batches, _lock);
         }
         protected void OnPropertyChanged(string name) {
@@ -60,6 +62,13 @@ namespace MES.Logic {
                 Batches[bIndex] = Batches[bIndex + 1];
                 Batches[bIndex + 1] = temp;
             }
+        }
+        public void CreateBatch(float amount, float speed, IRecipe recipe) {
+            ISimpleBatch b = new SimpleBatch(currentBatchID, amount, speed, recipe);
+            // increment by one for the next batch
+            currentBatchID++;
+            Batches.Add(b);
+
         }
         public void PrepareBatchForProduction() {
             CurrentBatch = Batches[0];

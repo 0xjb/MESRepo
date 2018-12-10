@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Data\BatchValue.cs" />
+    <Compile Include="Tests\BatchQueueTest.cs" />
     <Compile Include="Tests\BatchReportTest.cs" />
     <Compile Include="Data\DataFacade.cs" />
     <Compile Include="Presentation\HumidityHistory.xaml.cs">
