@@ -47,7 +47,7 @@ namespace MES.Tests {
         public void CreateBatchTest() {
             batches.Batches.Clear();
             batches.CreateBatch(1, 1, recipe);
-            Assert.IsTrue(batches.Batches[0].DesiredAmount == 1 && batches.Batches[0].MachineSpeed == 1);
+            Assert.IsTrue(batches.Batches[0].Amount == 1 && batches.Batches[0].Speed == 1);
         }
 
     }
