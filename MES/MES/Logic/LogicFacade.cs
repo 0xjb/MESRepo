@@ -113,12 +113,10 @@ namespace MES.Logic
 
         public void StartProduction()
         {
-            // clear lists to get rid of old data
-            OPC.TempList.Clear();
-            OPC.HumidityList.Clear();
-            OPC.VibrationList.Clear();
+            OPC.PrepareBatchValues();
 
             Batches.PrepareBatchForProduction();
+
             OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
                 Batches.CurrentBatch.DesiredAmount, Batches.CurrentBatch.MachineSpeed);
         } 
