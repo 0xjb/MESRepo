@@ -113,7 +113,10 @@ namespace MES.Logic
 
         public void StartProduction()
         {
+            OPC.PrepareBatchValues();
+
             Batches.PrepareBatchForProduction();
+
             OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
                 Batches.CurrentBatch.DesiredAmount, Batches.CurrentBatch.MachineSpeed);
         } 

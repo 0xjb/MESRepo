@@ -166,6 +166,16 @@ namespace MES.Logic
             // create the actual subscription
             s.Create(new RequestSettings() { OperationTimeout = 10000 });
         }
+        public void PrepareBatchValues() {
+            // clear lists to get rid of old data
+            TempList.Clear();
+            HumidityList.Clear();
+            VibrationList.Clear();
+            // manually insert one value into each list
+            TempList.Add(new ValueOverProdTime(ReadCurrentTemperature(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff"), -1));
+            HumidityList.Add(new ValueOverProdTime(ReadCurrentHumidity(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff"), 0));
+            vibrationList.Add(new ValueOverProdTime(ReadCurrentVibration(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff"), 1));
+        }
 
         private void OnDataChanged(Subscription s, DataChangedEventArgs e)
         {

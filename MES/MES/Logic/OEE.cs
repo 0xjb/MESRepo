@@ -57,10 +57,6 @@ namespace MES.Logic
 
         public double CalculateOEE()
         {
-            MessageBox.Show("Availability: " + operatingTime + ", " + downtime);
-            MessageBox.Show("Quality: " + acceptableProducts + ", " + producedProducts);
-            MessageBox.Show("Performance: " + producedProducts + ", " + machineSpeed + ", " + operatingTime);
-            MessageBox.Show("OEE: " + CalculateAvailability() + ", " + CalculateQuality() + ", " + CalculatePerformance());
             return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
             //return 0.307;
 
