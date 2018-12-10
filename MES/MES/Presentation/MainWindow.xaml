@@ -301,7 +301,7 @@
                     Height="40" Width="85" />
 
         </Viewbox>
-        <DataGrid MinColumnWidth="110" Name="DataGridQuedBatches" Margin="5,5,5,5" Grid.ColumnSpan="3" Grid.Column="7" 
+        <DataGrid ColumnWidth="*" Name="DataGridQuedBatches" Margin="5,5,5,5" Grid.ColumnSpan="3" Grid.Column="7" 
                   Grid.Row="1" Grid.RowSpan="7" SelectionChanged="DataGridQuedBatches_SelectionChanged" />
         <Viewbox Grid.Column="8" Grid.Row="8" Stretch="Uniform" VerticalAlignment="Center">
             <Grid>
