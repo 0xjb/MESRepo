@@ -343,7 +343,7 @@ namespace MES.Presentation
             // cause we no longer have a currentbatch set
             // end paragraph
             ISimpleBatch b = presentation.ILogic.Batches.Batches[0];
-            b.TimestampStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
+            b.TimeStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
             presentation.ILogic.StartProduction();
         }
 
@@ -484,7 +484,7 @@ namespace MES.Presentation
             set
             {
                 machineSpeed = value;
-                OnPropertyChanged("MachineSpeed");
+                OnPropertyChanged("Speed");
             }
         }
 

@@ -118,7 +118,7 @@ namespace MES.Logic
             Batches.PrepareBatchForProduction();
 
             OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
-                Batches.CurrentBatch.DesiredAmount, Batches.CurrentBatch.MachineSpeed);
+                Batches.CurrentBatch.Amount, Batches.CurrentBatch.Speed);
         } 
 
         public bool AuthenticateUserInformation(string username, string password)
@@ -171,8 +171,8 @@ namespace MES.Logic
         private double CalculatePPM(ISimpleBatch b)
         {
             //Profit per minute
-            DateTime startTime = DateTime.Parse(b.TimestampStart);
-            DateTime endTime = DateTime.Parse(b.TimestampEnd);
+            DateTime startTime = DateTime.Parse(b.TimeStart);
+            DateTime endTime = DateTime.Parse(b.TimeEnd);
             TimeSpan elapsedTime = endTime - startTime;
             //Sale price
             double timeInMinutes = elapsedTime.TotalMinutes;
@@ -197,7 +197,7 @@ namespace MES.Logic
             }
 
             Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
-                (int)OPC.DefectProducts,s.MachineSpeed, s.TimestampStart, s.TimestampEnd, s.OEE, set, CalculatePPM(s));
+                (int)OPC.DefectProducts,s.Speed, s.TimeStart, s.TimeEnd, s.OEE, set, CalculatePPM(s));
         }
 
         public ISimpleBatch GetCurrentBatch()
