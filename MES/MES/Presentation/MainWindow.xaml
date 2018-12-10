@@ -113,7 +113,7 @@
         </Grid>
         <!-- Main Content -->
 
-        <Viewbox Grid.Column="10" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3"
+        <Viewbox Grid.Column="11" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3"
                 >
             <lvc:AngularGauge Value="{Binding PresentationFacade.ILogic.OPC.MaintenanceCounter}" FromValue="0"
                               ToValue="100"
@@ -158,24 +158,24 @@
                     Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Height="40" Width="85"
                     Click="btnClear_Click" />
         </Viewbox>
-        <Viewbox Grid.Column="10" Grid.Row="0" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Grid.Row="0" Stretch="Uniform">
             <Label x:Name="label" Content="     Maintenance Status     " Margin="0,0,0,0" />
 
         </Viewbox>
-        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="4" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="6" Stretch="Uniform">
             <Button x:Name="btnAlarms" Content="Alarms" Click="btnAlarms_Click" Height="40" Width="85" />
         </Viewbox>
-        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="5" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="7" Stretch="Uniform">
             <Button x:Name="btnOpt" Content="Optimization" Click="btnOpt_Click" Height="40" Width="85" />
         </Viewbox>
-        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="6" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="8" Stretch="Uniform">
             <Button x:Name="btnOEE" Content="OEE" Click="btnOEE_Click" Height="40"
                     Width="85" RenderTransformOrigin="0.288,0.288" />
         </Viewbox>
-        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="7" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="9" Stretch="Uniform">
             <Button x:Name="btnHistory" Content="History" Click="btnHistory_Click" Height="40" Width="85" />
         </Viewbox>
-        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="8" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="5,5,5,5" Grid.Row="10" Stretch="Uniform">
             <Button x:Name="btnBatchSetup" Content="Batch Setup" Click="btnBatchSetup_Click" Height="40" Width="85" />
         </Viewbox>
         <Viewbox Grid.Column="2" Margin="0,0,0,5" Grid.Row="8" Stretch="None">
@@ -223,7 +223,7 @@
                     <ColumnDefinition Width="70" />
                     <ColumnDefinition Width="60" />
                 </Grid.ColumnDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="Vibration" VerticalAlignment="Center" />
+                <TextBlock TextWrapping="Wrap" Text="Vibration" />
                 <TextBox Name="txtVibra" Width="35"
                          Text="{Binding Path=PresentationFacade.ILogic.OPC.VibrationCurrent}" Grid.Column="1"
                          TextWrapping="Wrap" IsReadOnly="True"  />
@@ -239,7 +239,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock TextWrapping="Wrap" Text="Batch ID" Grid.Row="0" VerticalAlignment="Center" />
                 <TextBox Name="txtBatchID" Grid.Row="1"
-                         Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.BatchID}"
+                         Text="{Binding Path=PresentationFacade.ILogic.OPC.BatchId}"
                          TextWrapping="Wrap" IsReadOnly="True"  />
             </Grid>
         </Viewbox>
@@ -251,7 +251,7 @@
                  Stretch="Uniform" />
 
         <Viewbox Grid.Column="8" Grid.Row="14" 
-                 Stretch="Uniform" Margin="5,0,5,0">
+                 Stretch="Uniform" Margin="5,0,5,0"  VerticalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
@@ -263,7 +263,7 @@
             </Grid>
         </Viewbox>
 
-        <Viewbox Grid.Column="9" Grid.Row="14" Stretch="Uniform" Margin="5,0,5,0">
+        <Viewbox Grid.Column="9" Grid.Row="14" Stretch="Uniform" Margin="5,0,5,0"  VerticalAlignment="Center" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
@@ -276,13 +276,13 @@
             </Grid>
         </Viewbox>
 
-        <Viewbox Grid.Column="7"  Grid.Row="14" Stretch="Uniform" Margin="5,0,5,0">
+        <Viewbox Grid.Column="7"  Grid.Row="14" Stretch="Uniform" Margin="5,0,5,0"  VerticalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="Defect products" Grid.Row="0"/>
+                <TextBlock TextWrapping="Wrap" Text="Defect products" Grid.Row="0" />
                 <TextBox Name="txtDefectProducts" Text="{Binding Path=PresentationFacade.ILogic.OPC.DefectProducts}"
                           Grid.Row="1" TextWrapping="Wrap" IsReadOnly="True"/>
             </Grid>
@@ -296,21 +296,25 @@
         <TextBox x:Name="txtStatus" Grid.Column="11" Grid.Row="14"
                  Text="{Binding StatusString}" TextWrapping="Wrap"
                  IsReadOnly="True" Margin="5,5,5,5" />
-        <Viewbox Grid.Column="11" Margin="0,5,0,5" Grid.Row="9" Stretch="Uniform">
+        <Viewbox Grid.Column="11" Margin="0,5,0,5" Grid.Row="11" Stretch="Uniform">
             <Button x:Name="btnMachineSettings" Content=" Machine&#xa; Settings" Click="btnMachineSettings_Click"
                     Height="40" Width="85" />
 
         </Viewbox>
-        <DataGrid MinColumnWidth="110" Name="DataGridQuedBatches" Margin="5,5,5,5" Grid.ColumnSpan="3" Grid.Column="7" 
-                  Grid.Row="1" Grid.RowSpan="7" SelectionChanged="DataGridQuedBatches_SelectionChanged" />
+        <Grid Grid.ColumnSpan="4" Grid.Column="7"  Grid.Row="1" Grid.RowSpan="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+            <DataGrid  x:Name="DataGridQuedBatches"   ColumnWidth="*"  MinColumnWidth="45" />
+
+        </Grid>
+
         <Viewbox Grid.Column="8" Grid.Row="8" Stretch="Uniform" VerticalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center"  Text="Amount to produce" Grid.Row="0"  />
-                <TextBox Name="txtAmount" Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.DesiredAmount}" Margin="5,0,5,0"
+                <TextBlock TextWrapping="Wrap"  Text="Amount to produce" Grid.Row="0"  VerticalAlignment="Center" />
+                <TextBox Name="txtAmount" Text="{Binding Path=PresentationFacade.ILogic.OPC.AmountToProduce}" Margin="5,0,5,0"
                         Grid.Row="1"
                          TextWrapping="Wrap" IsReadOnly="True"  />
 
@@ -322,8 +326,8 @@
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Products per minute" Grid.Row="0" />
-                <TextBox Name="txtSpeed"  Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.MachineSpeed}" Margin="5,0,5,0"   Grid.Row="1"
+                <TextBlock  TextWrapping="Wrap" Text="Products per minute" Grid.Row="0"  VerticalAlignment="Center" />
+                <TextBox Name="txtSpeed"  Text="{Binding Path=PresentationFacade.ILogic.OPC.ProductsPerMinute}" Margin="5,0,5,0"   Grid.Row="1"
                          TextWrapping="Wrap" IsReadOnly="True" />
             </Grid>
         </Viewbox>

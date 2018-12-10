@@ -26,26 +26,26 @@ namespace MES.Logic
             }
         }
         private float desiredAmount;
-        public float DesiredAmount
+        public float Amount
         {
             get { return desiredAmount; }
             set
             {
                 desiredAmount = value;
-                OnPropertyChanged("DesiredAmount");
+                OnPropertyChanged("Amount");
             }
         }
-        public string TimestampStart { get; set; }
-        public string TimestampEnd { get; set; }
+        public string TimeStart { get; set; }
+        public string TimeEnd { get; set; }
         public double OEE { get; set; }
-        public float MachineSpeed { get; set; }
+        public float Speed { get; set; }
 
         public SimpleBatch(float id, float amount, float speed, IRecipe recipe)
         {
             BatchID = id;
             BeerType = recipe.BeerId;
-            MachineSpeed = speed;
-            DesiredAmount = amount;
+            Speed = speed;
+            Amount = amount;
             OEE = 0;
         }
 

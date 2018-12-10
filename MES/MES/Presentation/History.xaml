@@ -41,49 +41,48 @@
             <RowDefinition />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <Button x:Name="btnBack" Content="Back" Grid.Column="1" Margin="15,0,15,0" Grid.Row="11" Click="btnBack_Click" />
-        <Viewbox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2" Stretch="Fill">
-            <Grid Height="45" Width="200">
+        <Viewbox Grid.Column="1" Grid.Row="11" Stretch="Uniform">
+            <Button x:Name="btnBack" Content="Back" Click="btnBack_Click" Height="40" Width="80" />
+        </Viewbox>
+        <Viewbox Grid.ColumnSpan="3" Grid.Column="3" Grid.Row="2" Stretch="Uniform">
+            <Grid Height="45" Width="300">
                 <Label x:Name="label1" Content="Select Batch:" VerticalAlignment="Top" Margin="0,0,0,0" />
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="120"/>
-          <!--    <ComboBox x:Name="comboBoxSelectBatch1" VerticalAlignment="Bottom" Margin="0,0,0,0" /> -->
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="300"/>
+                <!--    <ComboBox x:Name="comboBoxSelectBatch1" VerticalAlignment="Bottom" Margin="0,0,0,0" /> -->
             </Grid>
         </Viewbox>
 
         <Viewbox Grid.ColumnSpan="2" Grid.Column="4" Grid.Row="2" Stretch="Fill">
-            <Grid Height="45" Width="200">
-                <Label x:Name="label" Content="Search Batch ID:" VerticalAlignment="Top" Margin="0,0,0,0" />
-                <TextBox x:Name="txtBoxSearchBatchID" VerticalAlignment="Bottom" Margin="0,0,0,0" />
-            </Grid>
+            <Grid Height="45" Width="200"/>
         </Viewbox>
 
         <Viewbox Grid.ColumnSpan="2" Grid.Column="7" Grid.Row="2" Stretch="Fill">
-            <Grid Height="45" Width="200">
-                <Label x:Name="label2" Content="Search Production Data:" VerticalAlignment="Top" Margin="0,0,0,0" />
-                <TextBox x:Name="txtBoxSearchProductionData" VerticalAlignment="Bottom" Margin="0,0,0,0" />
-            </Grid>
+            <Grid Height="45" Width="200"/>
         </Viewbox>
 
-
-        <TextBox x:Name="txtBoxShowBatchID" MinWidth="100" MinHeight="600" Grid.ColumnSpan="2" Grid.Column="4"
-                 Grid.Row="4" Grid.RowSpan="6" Margin="0,0,0,10" />
-
-        <Viewbox Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="3" Stretch="Fill" Margin="5,5,5,5">
-            <Label x:Name="label3" Content="Search Results Batch ID" />
+        <Viewbox Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="3" Stretch="Fill" Margin="5,5,5,5"/>
+        <Viewbox Grid.Column="7" Grid.Row="3" Stretch="Fill"/>
+        <Viewbox Grid.Row="3" Grid.Column="1"
+            Margin="5,5,5,5" Stretch="Uniform">
+            <Button x:Name="btnShowTemperatureHistory" Content="Show Temperature&#xa;        History"
+                Click="btnShowTemperatureHistory_Click" Height="40" Width="130" />
         </Viewbox>
-        <Viewbox Grid.Column="7" Grid.Row="3" Stretch="Fill">
-            <Label x:Name="label4" Content="Search Results Production Data:" />
+        <Viewbox Grid.Column="1" Grid.Row="4"
+            Margin="5,5,5,5" Stretch="Uniform">
+            <Button x:Name="btnShowHumidityHistory" Content="Show Humidity&#xa;      History"
+                Click="btnShowHumidityHistory_Click" Height="40" Width="130" />
         </Viewbox>
-        <TextBox x:Name="listBoxShowProductionData" MinWidth="100" MinHeight="600" Grid.ColumnSpan="2" Grid.RowSpan="4"
-                 Grid.Column="7" Grid.Row="4" />
-        <Button x:Name="btnShowTemperatureHistory" Grid.Row="4" Grid.Column="1" Content="Show Temperature History"
-                Margin="5,5,5,5" Click="btnShowTemperatureHistory_Click" />
-        <Button x:Name="btnShowHumidityHistory" Grid.Column="1" Grid.Row="5" Content="Show Humidity History"
-                Margin="5,5,5,5" Click="btnShowHumidityHistory_Click" />
-        <Button x:Name="btnShowVibrationHistory" Grid.Column="1" Grid.Row="6" Content="Show Vibration History"
-                Margin="5,5,5,5" Click="btnShowVibrationHistory_Click" />
-        <Button x:Name="btnShowBatchReport" Grid.Column="1" Grid.Row="7" Content="Show Batch Report" Margin="5,5,5,5"
-                Click="btnShowBatchReport_Click" />
+        <Viewbox Grid.Column="1" Grid.Row="5"
+            Margin="5,5,5,5" Stretch="Uniform">
+            <Button x:Name="btnShowVibrationHistory" Content="Show Vibration&#xa;       History"
+                Click="btnShowVibrationHistory_Click" Height="40" Width="130" />
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                Stretch="Uniform">
+            <Button x:Name="btnShowBatchReport" Content="Show Batch Report"
+                Click="btnShowBatchReport_Click" Height="40" Width="130" />
+
+        </Viewbox>
 
     </Grid>
 </Window>
