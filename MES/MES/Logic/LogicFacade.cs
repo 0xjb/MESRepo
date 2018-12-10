@@ -187,11 +187,6 @@ namespace MES.Logic
             set.Add(OPC.TempList);
             set.Add(OPC.HumidityList);
             set.Add(OPC.VibrationList);
-            foreach (var yeet in OPC.TempList)
-            {
-                Console.WriteLine(yeet.Value + " " + yeet.Type);
-            }
-
             Data.SaveBatch(s.BatchID, s.BeerType, (int)OPC.AcceptableProducts,
                 (int)OPC.DefectProducts,s.Speed, s.TimeStart, s.TimeEnd, s.OEE, set, CalculatePPM(s));
         }

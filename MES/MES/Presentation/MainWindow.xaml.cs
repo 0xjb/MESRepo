@@ -343,7 +343,7 @@ namespace MES.Presentation
             // cause we no longer have a currentbatch set
             // end paragraph
             ISimpleBatch b = presentation.ILogic.Batches.Batches[0];
-            b.TimeStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
+            b.TimeStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
             presentation.ILogic.StartProduction();
         }
 
