@@ -167,6 +167,7 @@
       <DependentUpon>VibrationHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tests\FileManagerTest.cs" />
+    <Compile Include="Tests\ErrorHandlerTest.cs" />
     <Compile Include="Tests\OpcTests.cs" />
     <Page Include="Presentation\Alarms.xaml">
       <SubType>Designer</SubType>
