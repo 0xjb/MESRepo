@@ -35,18 +35,26 @@ namespace MES.Presentation {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            try {
-                IRecipe productType = (IRecipe)ProductTypeCB.SelectedItem;
-                float amount = float.Parse(AmountTB.Text);
-                float speed = float.Parse(speedTB.Text);
-                if (speed > productType.MaxSpeed) {
-                    speed = productType.MaxSpeed;
+            if(ProductTypeCB.SelectedItem != null)
+            {
+                try
+                {
+                    IRecipe productType = (IRecipe)ProductTypeCB.SelectedItem;
+                    float amount = float.Parse(AmountTB.Text);
+                    float speed = float.Parse(speedTB.Text);
+                    if (speed > productType.MaxSpeed)
+                    {
+                        speed = productType.MaxSpeed;
+                    }
+                    presentationFacade.ILogic.CreateBatch(amount, speed, productType);
+                    testlabel.Content = "Batch added to the list";
                 }
-                presentationFacade.ILogic.CreateBatch(amount, speed, productType);
-                testlabel.Content = "Batch added to the list";
-            } catch (System.FormatException) {
-                testlabel.Content = "you must insert correct values into the boxes";
+                catch (System.FormatException)
+                {
+                    testlabel.Content = "you must insert correct values into the boxes";
+                }
             }
+
         }
 
 

@@ -36,7 +36,7 @@ namespace MES.Logic {
         }
         public BatchQueue(ILogic l) {
             logic = l;
-            currentBatchID = logic.GetHighestBatchId();
+            currentBatchID = logic.GetHighestBatchId()+1;
             logic.OPC.PropertyChanged += CheckBatchProdStatus;
             BindingOperations.EnableCollectionSynchronization(Batches, _lock);
         }
