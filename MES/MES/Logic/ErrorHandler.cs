@@ -46,9 +46,11 @@ namespace MES.Logic
             }
 
             //DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff");
-            DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
-
-            string _date = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
+            //DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff");
+            //DateTime.ParseExact("7/3/2015 1:52:16 PM", "d/M/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
+            DateTime.ParseExact("7/3/2015 1:52:16 PM", "d/M/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
+            //string _date = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt");
+            string _date = DateTime.Now.ToString();
             try
             {
                 if (index > 0)

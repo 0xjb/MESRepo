@@ -1,51 +1,7 @@
 Alarm Number:   Batch Id:            Time and Date:                           Stop Reason:                             Stop Reason ID:                         
-1               0                    12-02-2018 13:23:10                      Manual stop                              12                                      
-2               0                    12-02-2018 13:23:16                      Manual abort                             14                                      
-3               0                    12-02-2018 13:23:17                      Manual stop                              12                                      
-4               0                    12-02-2018 13:23:21                      Manual abort                             14                                      
-5               0                    12-02-2018 13:23:22                      Manual stop                              12                                      
-6               0                    12-02-2018 13:23:22                      Manual abort                             14                                      
-7               0                    12-02-2018 13:23:24                      Manual stop                              12                                      
-8               0                    12-02-2018 13:23:24                      Manual abort                             14                                      
-9               0                    12-02-2018 13:23:26                      Manual stop                              12                                      
-10              0                    12-02-2018 13:23:26                      Manual abort                             14                                      
-11              0                    12-02-2018 13:23:43                      Manual abort                             14                                      
-12              0                    12-02-2018 13:28:08                      Manual abort                             14                                      
-13              0                    12-02-2018 13:29:00                      Manual stop                              12                                      
-14              0                    12-02-2018 13:37:30                      Manual stop                              12                                      
-15              0                    12-02-2018 13:38:20                      Manual stop                              12                                      
-16              0                    12-02-2018 13:38:28                      Manual stop                              12                                      
-17              0                    12-02-2018 13:39:53                      Manual stop                              12                                      
-18              0                    12-02-2018 13:45:17                      Manual stop                              12                                      
-19              0                    12-02-2018 13:46:06                      Manual stop                              12                                      
-20              0                    12-02-2018 13:59:44                      Manual stop                              12                                      
-21              1                    12-02-2018 15:51:19                      Manual stop                              12                                      
-22              1                    12-02-2018 15:51:28                      Manual stop                              12                                      
-23              1                    12-02-2018 15:55:12                      Manual stop                              12                                      
-24              1                    12-02-2018 15:55:15                      Manual stop                              12                                      
-25              0                    12-02-2018 16:04:51                      Manual stop                              12                                      
-26              0                    12-02-2018 16:08:09                      Manual stop                              12                                      
-27              0                    12-02-2018 16:12:48                      Manual stop                              12                                      
-28              0                    12-02-2018 16:16:59                      Manual stop                              12                                      
-29              0                    12-02-2018 16:18:28                      Manual stop                              12                                      
-30              0                    12-02-2018 16:21:57                      Manual stop                              12                                      
-31              0                    12-02-2018 16:23:34                      Manual stop                              12                                      
-32              0                    12-02-2018 16:24:09                      Manual stop                              12                                      
-33              0                    12-02-2018 16:24:46                      Manual stop                              12                                      
-34              0                    12-02-2018 16:36:13                      Manual stop                              12                                      
-35              1                    12-02-2018 16:38:49                      Manual stop                              12                                      
-36              1                    12-02-2018 17:11:35                      Manual stop                              12                                      
-37              0                    12-03-2018 08:24:10                      Manual stop                              12                                      
-38              0                    12-03-2018 09:14:13                      Manual stop                              12                                      
-39              0                    12-03-2018 09:26:00                      Manual stop                              12                                      
-40              15                   12/06/2018 10:38:47 AM                   Manual abort                             14                                      
-40              35478                12/06/2018 13:25:55 PM                   Manual stop                              12                                      
-40              35478                12/06/2018 13:26:38 PM                   Manual stop                              12                                      
-40              35485                12/06/2018 13:54:30 PM                   Empty inventory                          10                                      
-40              35485                12/06/2018 13:55:52 PM                   Empty inventory                          10                                      
-40              35485                12/06/2018 13:57:08 PM                   Empty inventory                          10                                      
-40              35485                12/06/2018 14:00:11 PM                   Empty inventory                          10                                      
-40              35485                12/06/2018 14:03:09 PM                   Empty inventory                          10                                      
-40              600                  12/07/2018 14:42:35 PM                   Manual abort                             14                                      
-40              0                    12/10/2018 14:35:56 PM                   Manual stop                              12                                      
-41              0                    12/10/2018 14:35:58 PM                   Manual abort                             14                                      
+1               0                    12/10/2018 6:19:25 PM                    Manual abort                             14                                      
+2               0                    12/10/2018 6:20:00 PM                    Manual abort                             14                                      
+3               0                    12/10/2018 6:20:06 PM                    Manual stop                              12                                      
+4               0                    12/10/2018 6:20:08 PM                    Manual stop                              12                                      
+5               0                    12/10/2018 6:20:10 PM                    Manual abort                             14                                      
+6               0                    12/10/2018 6:22:00 PM                    Manual abort                             14                                      
