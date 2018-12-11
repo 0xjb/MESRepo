@@ -15,7 +15,7 @@ namespace MES.Logic
     {
         // should depend on actual data but we dont have any
         private double productionCost = 5;
-        private double salePrice = 20;
+        private double salePrice = 7;
 
 
         private IData data;
@@ -109,12 +109,15 @@ namespace MES.Logic
 
         public void StartProduction()
         {
-            OPC.PrepareBatchValues();
+            if(OPC.StateCurrent == 4 && Batches.Batches.Count > 0) {
+                OPC.PrepareBatchValues();
 
-            Batches.PrepareBatchForProduction();
+                Batches.PrepareBatchForProduction();
 
-            OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
-                Batches.CurrentBatch.Amount, Batches.CurrentBatch.Speed);
+                OPC.StartMachine(Batches.CurrentBatch.BatchID, Batches.CurrentBatch.BeerType,
+                    Batches.CurrentBatch.Amount, Batches.CurrentBatch.Speed);
+            }
+
         } 
 
         public bool AuthenticateUserInformation(string username, string password)

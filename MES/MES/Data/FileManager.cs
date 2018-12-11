@@ -73,9 +73,18 @@ namespace MES.Data
                         string fileLine = sr.ReadLine();
                         i++;
                         stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-
-                        //Console.WriteLine("\n\nFileManager" + stringTokens.Length + "\n\n");
-            
+                        Console.WriteLine("\n\nFileManager" + stringTokens.Length + "\n\n");
+                        //if (stringTokens.Length == 7) {
+                        //    //if (stringTokens.Length == 6) {
+                        //    _alarms.Add(
+                        //        new DataAlarm()
+                        //        {
+                        //            AlarmNumber = Int32.Parse(stringTokens[0]),
+                        //            BatchID = Int32.Parse(stringTokens[1]),
+                        //            Timestamp = stringTokens[2] + " " + stringTokens[3],
+                        //            StopReason = stringTokens[4] + " " + stringTokens[5],
+                        //            StopID = Int32.Parse(stringTokens[6] )
+                        //        });
 
                         //**
                         //Read file modified to AM/PM format

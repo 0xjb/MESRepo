@@ -239,7 +239,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock TextWrapping="Wrap" Text="Batch ID" Grid.Row="0" VerticalAlignment="Center" />
                 <TextBox Name="txtBatchID" Grid.Row="1"
-                         Text="{Binding Path=PresentationFacade.ILogic.OPC.BatchId}"
+                         Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.BatchID}"
                          TextWrapping="Wrap" IsReadOnly="True"  />
             </Grid>
         </Viewbox>
@@ -314,7 +314,7 @@
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
                 <TextBlock TextWrapping="Wrap"  Text="Amount to produce" Grid.Row="0"  VerticalAlignment="Center" />
-                <TextBox Name="txtAmount" Text="{Binding Path=PresentationFacade.ILogic.OPC.AmountToProduce}" Margin="5,0,5,0"
+                <TextBox Name="txtAmount" Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.Amount}" Margin="5,0,5,0"
                         Grid.Row="1"
                          TextWrapping="Wrap" IsReadOnly="True"  />
 
@@ -327,7 +327,7 @@
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
                 <TextBlock  TextWrapping="Wrap" Text="Products per minute" Grid.Row="0"  VerticalAlignment="Center" />
-                <TextBox Name="txtSpeed"  Text="{Binding Path=PresentationFacade.ILogic.OPC.ProductsPerMinute}" Margin="5,0,5,0"   Grid.Row="1"
+                <TextBox Name="txtSpeed"  Text="{Binding Path=PresentationFacade.ILogic.Batches.CurrentBatch.Speed}" Margin="5,0,5,0"   Grid.Row="1"
                          TextWrapping="Wrap" IsReadOnly="True" />
             </Grid>
         </Viewbox>

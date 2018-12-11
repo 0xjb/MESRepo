@@ -72,6 +72,7 @@ namespace MES.Logic {
         }
         public void PrepareBatchForProduction() {
             CurrentBatch = Batches[0];
+            currentBatch.TimeStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
             Batches.RemoveAt(0);
         }
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
