@@ -29,20 +29,20 @@ namespace MES.Presentation
         private double levelYeast;
 
         //
-        private double machineSpeed;
-        private double temperature;
-        private double humidity;
-        private double vibration;
-        private double batchID;
-        private double amount;
-        private double produced;
-        private double acceptableProducts;
-        private double defectProducts;
-        private double amountToProduce;
+        //private double machineSpeed;
+        //private double temperature;
+        //private double humidity;
+        //private double vibration;
+        //private double batchID;
+        //private double amount;
+        //private double produced;
+        //private double acceptableProducts;
+        //private double defectProducts;
+        //private double amountToProduce;
 
-        private int indexOfArrayTemp = 0;
-        private int indexOfArrayHumid = 0;
-        private int indexOfArrayVibra = 0;
+        //private int indexOfArrayTemp = 0;
+        //private int indexOfArrayHumid = 0;
+        //private int indexOfArrayVibra = 0;
 
         private string statusString;
 
@@ -169,9 +169,9 @@ namespace MES.Presentation
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            Temperature = iLogic.OPC.TempCurrent;
-            Humidity = iLogic.OPC.HumidityCurrent;
-            Vibration = iLogic.OPC.VibrationCurrent;
+            double Temperature = iLogic.OPC.TempCurrent;
+            double Humidity = iLogic.OPC.HumidityCurrent;
+            double Vibration = iLogic.OPC.VibrationCurrent;
 
             if (arrayListLabelsTemperature.Count >= 50)
             {
@@ -233,56 +233,56 @@ namespace MES.Presentation
             StatusString = statusArray[index];
         }
 
-        private void CheckChangesInTemperature(object sender, PropertyChangedEventArgs e)
-        {
-            Temperature = iLogic.OPC.TempCurrent;
+        //private void CheckChangesInTemperature(object sender, PropertyChangedEventArgs e)
+        //{
+        //    Temperature = iLogic.OPC.TempCurrent;
 
-            if (e.PropertyName.Equals("TempCurrent"))
-            {
-                if (arrayListLabelsTemperature.Count >= 50)
-                {
-                    SeriesCollectionTemperature[0].Values.RemoveAt(0);
-                    arrayListLabelsTemperature.RemoveAt(0);
-                }
+        //    if (e.PropertyName.Equals("TempCurrent"))
+        //    {
+        //        if (arrayListLabelsTemperature.Count >= 50)
+        //        {
+        //            SeriesCollectionTemperature[0].Values.RemoveAt(0);
+        //            arrayListLabelsTemperature.RemoveAt(0);
+        //        }
 
-                SeriesCollectionTemperature[0].Values.Add(Temperature);
-                arrayListLabelsTemperature.Add(DateTime.Now.ToString());
-            }
-        }
+        //        SeriesCollectionTemperature[0].Values.Add(Temperature);
+        //        arrayListLabelsTemperature.Add(DateTime.Now.ToString());
+        //    }
+        //}
 
-        private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
-        {
-            Humidity = iLogic.OPC.HumidityCurrent;
+        //private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
+        //{
+        //    Humidity = iLogic.OPC.HumidityCurrent;
 
-            if (e.PropertyName.Equals("HumidityCurrent"))
-            {
-                if (arrayListLabelsHumidity.Count >= 50)
-                {
-                    SeriesCollectionHumidity[0].Values.RemoveAt(0);
-                    arrayListLabelsHumidity.RemoveAt(0);
-                }
+        //    if (e.PropertyName.Equals("HumidityCurrent"))
+        //    {
+        //        if (arrayListLabelsHumidity.Count >= 50)
+        //        {
+        //            SeriesCollectionHumidity[0].Values.RemoveAt(0);
+        //            arrayListLabelsHumidity.RemoveAt(0);
+        //        }
 
-                SeriesCollectionHumidity[0].Values.Add(Humidity);
-                arrayListLabelsHumidity.Add(DateTime.Now.ToString());
-            }
-        }
+        //        SeriesCollectionHumidity[0].Values.Add(Humidity);
+        //        arrayListLabelsHumidity.Add(DateTime.Now.ToString());
+        //    }
+        //}
 
-        private void CheckChangesInVibration(object sender, PropertyChangedEventArgs e)
-        {
-            Vibration = iLogic.OPC.VibrationCurrent;
+        //private void CheckChangesInVibration(object sender, PropertyChangedEventArgs e)
+        //{
+        //    Vibration = iLogic.OPC.VibrationCurrent;
 
-            if (e.PropertyName.Equals("VibrationCurrent"))
-            {
-                if (arrayListLabelsVibration.Count >= 50)
-                {
-                    SeriesCollectionVibration[0].Values.RemoveAt(0);
-                    arrayListLabelsVibration.RemoveAt(0);
-                }
+        //    if (e.PropertyName.Equals("VibrationCurrent"))
+        //    {
+        //        if (arrayListLabelsVibration.Count >= 50)
+        //        {
+        //            SeriesCollectionVibration[0].Values.RemoveAt(0);
+        //            arrayListLabelsVibration.RemoveAt(0);
+        //        }
 
-                SeriesCollectionVibration[0].Values.Add(Vibration);
-                arrayListLabelsVibration.Add(DateTime.Now.ToString());
-            }
-        }
+        //        SeriesCollectionVibration[0].Values.Add(Vibration);
+        //        arrayListLabelsVibration.Add(DateTime.Now.ToString());
+        //    }
+        //}
 
         private void CheckStatus()
         {
@@ -291,23 +291,23 @@ namespace MES.Presentation
             iLogic.OPC.PropertyChanged += CheckChangesInStatus;
         }
 
-        private void CheckTemperature()
-        {
-            temperature = iLogic.OPC.TempCurrent;
-            iLogic.OPC.PropertyChanged += CheckChangesInTemperature;
-        }
+        //private void CheckTemperature()
+        //{
+        //    temperature = iLogic.OPC.TempCurrent;
+        //    iLogic.OPC.PropertyChanged += CheckChangesInTemperature;
+        //}
 
-        private void CheckHumidity()
-        {
-            humidity = iLogic.OPC.HumidityCurrent;
-            iLogic.OPC.PropertyChanged += CheckChangesInHumidity;
-        }
+        //private void CheckHumidity()
+        //{
+        //    humidity = iLogic.OPC.HumidityCurrent;
+        //    iLogic.OPC.PropertyChanged += CheckChangesInHumidity;
+        //}
 
-        private void CheckVibration()
-        {
-            vibration = iLogic.OPC.VibrationCurrent;
-            iLogic.OPC.PropertyChanged += CheckChangesInVibration;
-        }
+        //private void CheckVibration()
+        //{
+        //    vibration = iLogic.OPC.VibrationCurrent;
+        //    iLogic.OPC.PropertyChanged += CheckChangesInVibration;
+        //}
 
         private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -476,49 +476,49 @@ namespace MES.Presentation
             }
         }
 
-        public double MachineSpeed
-        {
-            get { return machineSpeed; }
+        //public double MachineSpeed
+        //{
+        //    get { return machineSpeed; }
 
-            set
-            {
-                machineSpeed = value;
-                OnPropertyChanged("Speed");
-            }
-        }
+        //    set
+        //    {
+        //        machineSpeed = value;
+        //        OnPropertyChanged("Speed");
+        //    }
+        //}
 
-        public double Temperature
-        {
-            get { return temperature; }
+        //public double Temperature
+        //{
+        //    get { return temperature; }
 
-            set
-            {
-                temperature = value;
-                OnPropertyChanged("Temperature");
-            }
-        }
+        //    set
+        //    {
+        //        temperature = value;
+        //        OnPropertyChanged("Temperature");
+        //    }
+        //}
 
-        public double Humidity
-        {
-            get { return humidity; }
+        //public double Humidity
+        //{
+        //    get { return humidity; }
 
-            set
-            {
-                humidity = value;
-                OnPropertyChanged("Humidity");
-            }
-        }
+        //    set
+        //    {
+        //        humidity = value;
+        //        OnPropertyChanged("Humidity");
+        //    }
+        //}
 
-        public double Vibration
-        {
-            get { return vibration; }
+        //public double Vibration
+        //{
+        //    get { return vibration; }
 
-            set
-            {
-                vibration = value;
-                OnPropertyChanged("Vibration");
-            }
-        }
+        //    set
+        //    {
+        //        vibration = value;
+        //        OnPropertyChanged("Vibration");
+        //    }
+        //}
 
         public string StatusString
         {
@@ -530,38 +530,38 @@ namespace MES.Presentation
             }
         }
 
-        public double BatchID
-        {
-            get { return batchID; }
+        //public double BatchID
+        //{
+        //    get { return batchID; }
 
-            set
-            {
-                batchID = value;
-                OnPropertyChanged("Batch_ID");
-            }
-        }
+        //    set
+        //    {
+        //        batchID = value;
+        //        OnPropertyChanged("Batch_ID");
+        //    }
+        //}
 
-        public double Amount
-        {
-            get { return amount; }
+        //public double Amount
+        //{
+        //    get { return amount; }
 
-            set
-            {
-                amount = value;
-                OnPropertyChanged("Amount");
-            }
-        }
+        //    set
+        //    {
+        //        amount = value;
+        //        OnPropertyChanged("Amount");
+        //    }
+        //}
 
-        public double Produced
-        {
-            get { return produced; }
+        //public double Produced
+        //{
+        //    get { return produced; }
 
-            set
-            {
-                produced = value;
-                OnPropertyChanged("Produced");
-            }
-        }
+        //    set
+        //    {
+        //        produced = value;
+        //        OnPropertyChanged("Produced");
+        //    }
+        //}
 
         public List<string> ArrayListLabelsTemperature
         {
@@ -575,27 +575,27 @@ namespace MES.Presentation
             set => arrayListLabelsHumidity = value;
         }
 
-        public double AcceptableProducts
-        {
-            get { return acceptableProducts; }
+        //public double AcceptableProducts
+        //{
+        //    get { return acceptableProducts; }
 
-            set
-            {
-                acceptableProducts = value;
-                OnPropertyChanged("AcceptableProducts");
-            }
-        }
+        //    set
+        //    {
+        //        acceptableProducts = value;
+        //        OnPropertyChanged("AcceptableProducts");
+        //    }
+        //}
 
-        public double AmountToProduce
-        {
-            get { return amountToProduce; }
+        //public double AmountToProduce
+        //{
+        //    get { return amountToProduce; }
 
-            set
-            {
-                amountToProduce = value;
-                OnPropertyChanged("AmountToProduce");
-            }
-        }
+        //    set
+        //    {
+        //        amountToProduce = value;
+        //        OnPropertyChanged("AmountToProduce");
+        //    }
+        //}
 
         public List<string> ArrayListLabelsVibration
         {
@@ -603,16 +603,16 @@ namespace MES.Presentation
             set => arrayListLabelsVibration = value;
         }
 
-        public double DefectProducts
-        {
-            get { return defectProducts; }
+        //public double DefectProducts
+        //{
+        //    get { return defectProducts; }
 
-            set
-            {
-                defectProducts = value;
-                OnPropertyChanged("DefectProducts");
-            }
-        }
+        //    set
+        //    {
+        //        defectProducts = value;
+        //        OnPropertyChanged("DefectProducts");
+        //    }
+        //}
 
         public double Status
         {
