@@ -133,9 +133,6 @@
     <Compile Include="Logic\OEE.cs" />
     <Compile Include="Logic\TestSimulation.cs" />
     <Compile Include="Logic\ValueOverProdTime.cs" />
-    <Compile Include="Presentation\BatchReport.xaml.cs">
-      <DependentUpon>Presentation\BatchReport.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -170,10 +167,6 @@
     <Compile Include="Tests\ErrorHandlerTest.cs" />
     <Compile Include="Tests\OpcTests.cs" />
     <Page Include="Presentation\Alarms.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Presentation\BatchReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
