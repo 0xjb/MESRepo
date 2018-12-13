@@ -96,7 +96,7 @@ namespace MES {
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
-            path += @"\MES\Data\BatchReports";
+            path += @"\MES\Data\BatchReports\";
 
 
             //TODO mangler try/catch??
