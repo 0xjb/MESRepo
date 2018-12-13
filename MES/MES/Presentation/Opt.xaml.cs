@@ -122,60 +122,60 @@ namespace MES.Presentation
 
             Speed = 60;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(0.125);
+            SeriesCollectionBeer[0].Values.Add(0.09);
             //arrayListLabels.Add(0.125.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 120;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(0.125);
+            SeriesCollectionBeer[0].Values.Add(0.191);
             //arrayListLabels.Add(0.125.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 180;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(0.75);
+            SeriesCollectionBeer[0].Values.Add(0.276);
             //arrayListLabels.Add(0.75.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 180;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(1.75);
+            SeriesCollectionBeer[0].Values.Add(0.364);
             //arrayListLabels.Add(1.75.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 300;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(4.75);
+            SeriesCollectionBeer[0].Values.Add(0.45);
             //arrayListLabels.Add(4.75.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 360;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(5.5);
+            SeriesCollectionBeer[0].Values.Add(0.5);
             //arrayListLabels.Add(5.5.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 420;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(13.5);
+            SeriesCollectionBeer[0].Values.Add(0.541);
             //arrayListLabels.Add(13.25.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 480;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(21.5);
+            SeriesCollectionBeer[0].Values.Add(0.56);
             //arrayListLabels.Add(21.5.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 540;
             //SeriesCollectionBeer[0].Values.Add(Speed);
-            SeriesCollectionBeer[0].Values.Add(38.875);
+            SeriesCollectionBeer[0].Values.Add(0.478);
             //arrayListLabels.Add(38.875.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 600;
-            SeriesCollectionBeer[0].Values.Add(64.5);
+            SeriesCollectionBeer[0].Values.Add(0.28);
             //SeriesCollectionBeer[0].Values.Add(Speed);
             //arrayListLabels.Add(64.5.ToString());
             arrayListLabels.Add(Speed.ToString());
@@ -196,64 +196,64 @@ namespace MES.Presentation
             SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
-            Speed = 30;
-            SeriesCollectionBeer[1].Values.Add(6.5);
+            Speed = 20;
+            SeriesCollectionBeer[1].Values.Add(0.06);
             //SeriesCollectionBeer[1].Values.Add(Speed);
             //arrayListLabels.Add(6.5.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 60;
+            Speed = 40;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(10.25);
+            SeriesCollectionBeer[1].Values.Add(0.11);
             //arrayListLabels.Add(10.25.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 90;
+            Speed = 60;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(18.75);
+            SeriesCollectionBeer[1].Values.Add(0.152);
             //arrayListLabels.Add(18.75.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 120;
+            Speed = 80;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(23.25);
+            SeriesCollectionBeer[1].Values.Add(0.206);
             //arrayListLabels.Add(23.25.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 150;
+            Speed = 100;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(33.5);
+            SeriesCollectionBeer[1].Values.Add(0.206);
             //arrayListLabels.Add(33.5.ToString());
             arrayListLabels.Add(Speed.ToString());
 
 
-            Speed = 180;
+            Speed = 120;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(49.5);
+            SeriesCollectionBeer[1].Values.Add(0.215);
             //arrayListLabels.Add(49.5.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 210;
+            Speed = 140;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(65.75);
+            SeriesCollectionBeer[1].Values.Add(0.235);
             //arrayListLabels.Add(65.75.ToString());
-            arrayListLabels.Add(65.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
-            Speed = 240;
+            Speed = 160;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(72.75);
+            SeriesCollectionBeer[1].Values.Add(0.26);
             //arrayListLabels.Add(72.75.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 270;
+            Speed = 180;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(90.25);
+            SeriesCollectionBeer[1].Values.Add(0.222);
             //arrayListLabels.Add(90.25.ToString());
-            arrayListLabels.Add(90.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
-            Speed = 300;
+            Speed = 200;
             //SeriesCollectionBeer[1].Values.Add(Speed);
-            SeriesCollectionBeer[1].Values.Add(100.0);
+            SeriesCollectionBeer[1].Values.Add(0.203);
             //arrayListLabels.Add(100.ToString());
             arrayListLabels.Add(Speed.ToString());
         }
@@ -286,64 +286,64 @@ namespace MES.Presentation
             SeriesCollectionBeer[5].Values.Clear();
             arrayListLabels.Clear();
 
+            Speed = 15;
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(0.1);
+            //arrayListLabels.Add(6.5.ToString());
+            arrayListLabels.Add(Speed.ToString());
+
             Speed = 30;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(6.5);
-            //arrayListLabels.Add(6.5.ToString());
+            SeriesCollectionBeer[2].Values.Add(0.197);
+            //arrayListLabels.Add(10.25.ToString());
+            arrayListLabels.Add(Speed.ToString());
+
+            Speed = 45;
+            //SeriesCollectionBeer[2].Values.Add(Speed);
+            SeriesCollectionBeer[2].Values.Add(0.286);
+            //arrayListLabels.Add(18.75.ToString());
             arrayListLabels.Add(Speed.ToString());
 
             Speed = 60;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(10.25);
-            //arrayListLabels.Add(10.25.ToString());
-            arrayListLabels.Add(Speed.ToString());
-
-            Speed = 90;
-            //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(18.75);
-            //arrayListLabels.Add(18.75.ToString());
-            arrayListLabels.Add(Speed.ToString());
-
-            Speed = 120;
-            //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(23.25);
+            SeriesCollectionBeer[2].Values.Add(0.39);
             //arrayListLabels.Add(23.25.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 150;
+            Speed = 75;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(33.5);
+            SeriesCollectionBeer[2].Values.Add(0.48);
             //arrayListLabels.Add(33.5.ToString());
             arrayListLabels.Add(Speed.ToString());
 
 
-            Speed = 180;
+            Speed = 90;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(49.5);
+            SeriesCollectionBeer[2].Values.Add(0.504);
             //arrayListLabels.Add(49.5.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 210;
+            Speed = 105;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(65.75);
+            SeriesCollectionBeer[2].Values.Add(0.513);
             //arrayListLabels.Add(65.75.ToString());
-            arrayListLabels.Add(65.75.ToString());
+            arrayListLabels.Add(Speed.ToString());
 
-            Speed = 240;
+            Speed = 120;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(72.75);
+            SeriesCollectionBeer[2].Values.Add(0.446);
             //arrayListLabels.Add(72.75.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 270;
+            Speed = 135;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(90.25);
+            SeriesCollectionBeer[2].Values.Add(0.105);
             //arrayListLabels.Add(90.25.ToString());
             arrayListLabels.Add(Speed.ToString());
 
-            Speed = 300;
+            Speed = 150;
             //SeriesCollectionBeer[2].Values.Add(Speed);
-            SeriesCollectionBeer[2].Values.Add(100.0);
+            SeriesCollectionBeer[2].Values.Add(0.05);
             //arrayListLabels.Add(100.ToString());
             arrayListLabels.Add(Speed.ToString());
         }

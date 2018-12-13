@@ -86,7 +86,10 @@ namespace MES.data {
         /// <returns></returns>
         private IDictionary<float, IBatch> GetSqlCommand(String statement) {
             try {
+
                 NpgsqlConnection conn = new NpgsqlConnection(connString);
+
+                conn.Close();
                 conn.Open();
                 NpgsqlCommand command = new NpgsqlCommand(statement, conn);
                 NpgsqlDataReader dRead = command.ExecuteReader();

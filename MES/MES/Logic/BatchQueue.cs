@@ -80,7 +80,10 @@ namespace MES.Logic {
                 if ((sender as OpcClient).StateCurrent == 17) {
                     if (CurrentBatch != null) {
                         CurrentBatch.TimeEnd = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
-                        OEE currentOEE = new OEE((int)logic.OPC.AcceptableProducts, (int)logic.OPC.DefectProducts, currentBatch.TimeStart, currentBatch.TimeEnd, (int)currentBatch.Speed);
+                        IDictionary<float, IRecipe> recipes = logic.GetAllRecipes();
+                        IRecipe recipe = null;
+                        recipes.TryGetValue(currentBatch.BeerType, out recipe);
+                        OEE currentOEE = new OEE((int)logic.OPC.AcceptableProducts, (int)logic.OPC.DefectProducts, currentBatch.TimeStart, currentBatch.TimeEnd, (int)recipe.MaxSpeed);
                         currentBatch.OEE = currentOEE.CalculateOEE();
                         //currentBatch.OEE = 0.32;
                         //currentBatch.OEE = 3.5;

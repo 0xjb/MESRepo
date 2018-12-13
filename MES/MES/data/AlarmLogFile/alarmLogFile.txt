@@ -7,3 +7,26 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 6               0                    12/10/2018 6:22:00 PM                    Manual abort                             14                                      
 7               0                    12/11/2018 9:56:57 AM                    Manual stop                              12                                      
 8               35548                12/11/2018 10:13:22 AM                   Manual stop                              12                                      
+9               36                   12/12/2018 6:02:36 PM                    Manual abort                             14                                      
+10              47                   12/12/2018 7:22:49 PM                    Manual stop                              12                                      
+11              67                   12/12/2018 8:51:33 PM                    Manual stop                              12                                      
+12              69                   12/12/2018 8:52:30 PM                    Manual stop                              12                                      
+13              71                   12/12/2018 9:52:06 PM                    Maintenance                              11                                      
+13              77                   12/12/2018 9:52:30 PM                    Maintenance                              11                                      
+14              77                   12/12/2018 9:52:39 PM                    Manual stop                              12                                      
+15              77                   12/12/2018 9:53:03 PM                    Maintenance                              11                                      
+16              77                   12/12/2018 9:53:12 PM                    Manual stop                              12                                      
+17              77                   12/12/2018 9:53:13 PM                    Manual abort                             14                                      
+18              77                   12/12/2018 9:53:32 PM                    Manual stop                              12                                      
+19              77                   12/12/2018 9:53:40 PM                    Manual abort                             14                                      
+20              77                   12/12/2018 9:53:54 PM                    Manual stop                              12                                      
+21              77                   12/12/2018 9:53:56 PM                    Manual abort                             14                                      
+22              77                   12/12/2018 9:55:41 PM                    Manual stop                              12                                      
+21              0                    12/12/2018 10:13:38 PM                   Maintenance                              11                                      
+22              0                    12/12/2018 10:14:25 PM                   Manual stop                              12                                      
+23              0                    12/12/2018 10:14:30 PM                   Maintenance                              11                                      
+22              0                    12/13/2018 8:58:33 AM                    Motor power loss                         13                                      
+23              0                    12/13/2018 9:01:08 AM                    Manual stop                              12                                      
+24              0                    12/13/2018 9:11:46 AM                    Motor power loss                         13                                      
+25              0                    12/13/2018 9:12:02 AM                    Manual stop                              12                                      
+26              0                    12/13/2018 9:33:48 AM                    Manual stop                              12                                      

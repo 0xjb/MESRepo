@@ -9,14 +9,14 @@ namespace MES.Logic
         private int producedProducts;
         private int downtime = 0;
         private int operatingTime;
-        private int machineSpeed;
+        private int machineSpeedMax;
 
-        public OEE(int acceptableProducts, int defectProducts, string timeStampStart, string timeStampEnd, int machineSpeed)
+        public OEE(int acceptableProducts, int defectProducts, string timeStampStart, string timeStampEnd, int machineSpeedMax)
         {
             this.acceptableProducts = acceptableProducts;
             this.producedProducts = acceptableProducts + defectProducts;
             this.operatingTime = CalculateOperatingTime(timeStampStart, timeStampEnd);
-            this.machineSpeed = machineSpeed;
+            this.machineSpeedMax = machineSpeedMax;
         }
 
         private int CalculateOperatingTime(string timestampStart, string timestampEnd)
@@ -52,11 +52,18 @@ namespace MES.Logic
 
         private double CalculatePerformance()
         {
-            return (((double)producedProducts * (60.0 / (double)machineSpeed)) / (double)operatingTime);
+            //Console.WriteLine(producedProducts);
+            //Console.WriteLine(operatingTime);
+            //Console.WriteLine(machineSpeedMax);
+            //return (((double)producedProducts * (60.0 / (double)machineSpeed)) / (double)operatingTime);
+            return ((double)producedProducts / ((double) operatingTime/60.0)) / (double)machineSpeedMax;
         }
 
         public double CalculateOEE()
         {
+            //Console.WriteLine("qual:" + CalculateQuality());
+            //Console.WriteLine("avail:" + CalculateAvailability());
+            //Console.WriteLine("perform:" + CalculatePerformance());
             return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
             //return 0.307;
 
