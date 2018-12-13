@@ -172,9 +172,9 @@ namespace MES.Logic
             HumidityList.Clear();
             VibrationList.Clear();
             // manually insert one value into each list
-            TempList.Add(new ValueOverProdTime(ReadCurrentTemperature(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), -1));
-            HumidityList.Add(new ValueOverProdTime(ReadCurrentHumidity(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), 0));
-            vibrationList.Add(new ValueOverProdTime(ReadCurrentVibration(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), 1));
+            TempList.Add(new ValueOverProdTime(ReadCurrentTemperature(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), -1));
+            HumidityList.Add(new ValueOverProdTime(ReadCurrentHumidity(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 0));
+            vibrationList.Add(new ValueOverProdTime(ReadCurrentVibration(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 1));
         }
 
         private void OnDataChanged(Subscription s, DataChangedEventArgs e)
@@ -194,7 +194,7 @@ namespace MES.Logic
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
                         TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        tempList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), -1));
+                        tempList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), -1));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -215,12 +215,12 @@ namespace MES.Logic
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
                         HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        humidityList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), 0));
+                        humidityList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 0));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        vibrationList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), 1));
+                        vibrationList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 1));
                         break;
                     //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":

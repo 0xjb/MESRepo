@@ -72,14 +72,14 @@ namespace MES.Logic {
         }
         public void PrepareBatchForProduction() {
             CurrentBatch = Batches[0];
-            currentBatch.TimeStart = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
+            currentBatch.TimeStart = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
             Batches.RemoveAt(0);
         }
         private void CheckBatchProdStatus(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName.Equals("StateCurrent")) {
                 if ((sender as OpcClient).StateCurrent == 17) {
                     if (CurrentBatch != null) {
-                        CurrentBatch.TimeEnd = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
+                        CurrentBatch.TimeEnd = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
                         OEE currentOEE = new OEE((int)logic.OPC.AcceptableProducts, (int)logic.OPC.DefectProducts, currentBatch.TimeStart, currentBatch.TimeEnd, (int)currentBatch.Speed);
                         currentBatch.OEE = currentOEE.CalculateOEE();
                         //currentBatch.OEE = 0.32;
