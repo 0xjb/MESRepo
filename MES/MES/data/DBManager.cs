@@ -86,16 +86,14 @@ namespace MES.data {
         /// <returns></returns>
         private IDictionary<float, IBatch> GetSqlCommand(String statement) {
             try {
-
                 NpgsqlConnection conn = new NpgsqlConnection(connString);
-
-                conn.Close();
                 conn.Open();
                 NpgsqlCommand command = new NpgsqlCommand(statement, conn);
                 NpgsqlDataReader dRead = command.ExecuteReader();
 
                 IDictionary<float, IBatch> batches = new Dictionary<float, IBatch>();
-                while (dRead.Read()) {
+                while (dRead.Read())
+                {
                     double batchId = dRead.GetDouble(0);
                     double beerId = dRead.GetDouble(1);
                     int acceptableProducts = dRead.GetInt32(2);
@@ -112,15 +110,21 @@ namespace MES.data {
                 }
                 dRead.Close();
 
-                foreach (IBatch batch in batches.Values) {
+                foreach (IBatch batch in batches.Values)
+                {
                     batch.AddBatchValues(GetBatchValues(conn, batch.GetBatchId()));
                 }
 
                 conn.Close();
                 return batches;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.ToString());
                 return null;
+            } finally
+            {
+                conn.Close();
             }
         }
 
@@ -225,7 +229,10 @@ namespace MES.data {
             foreach (IList<IBatchValue> list in set) {
                 foreach (IBatchValue value in list) {
                     string table;
-                    if (value.Type < 0) { table = temperatureTable; } else if (value.Type == 0) { table = humidityTable; } else if (value.Type > 0) { table = vibrationTable; } else {
+                    if (value.Type < 0) { table = temperatureTable; }
+                    else if (value.Type == 0) { table = humidityTable; }
+                    else if (value.Type > 0) { table = vibrationTable; }
+                    else{
                         table = null;
                         sql[index] = null;
                     }
@@ -394,7 +401,6 @@ namespace MES.data {
             } finally {
                 conn.Close();
             }
-
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MES.Data
         public UserManager()
         {
             users = new Dictionary<string, IUser>();
-            IUser user = new User("", "");
+            IUser user = new User("user", "password");
             AddUser(user);
         }
 
@@ -21,7 +21,6 @@ namespace MES.Data
 
         public IUser AuthenticateUserInformation(string username, string password)
         {
-            //TODO er try/catch nødvendig?
             if (users.ContainsKey(username))
             {
                 IUser user;
