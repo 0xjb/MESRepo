@@ -91,9 +91,17 @@ namespace MES {
             WriteData(tData, temp, "Temperature over prod time");
             WriteData(hData, humid, "Humidity over prod time");
 
+
+
+            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
+            path += @"\MES\Data\BatchReports";
+
+
             //TODO mangler try/catch??
             //Save the new workbook. We haven't specified the filename so use the Save as method.
-            ep.SaveAs(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport" + batchID + ".xlsx"));
+            ep.SaveAs(new FileInfo(path + "BatchReport" + batchID + ".xlsx"));
         }
 
         /// <summary>
