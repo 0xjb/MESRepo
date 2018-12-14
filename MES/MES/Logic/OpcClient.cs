@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Markup;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
@@ -32,6 +33,7 @@ namespace MES.Logic
         private double maintenanceCounter;
 
         private ILogic iLogic;
+
         // temp, humidity & vibration measurements
         private List<IBatchValue> tempList;
         private List<IBatchValue> humidityList;
@@ -40,11 +42,9 @@ namespace MES.Logic
         public Session session;
         public event PropertyChangedEventHandler PropertyChanged;
 
-
+        //Constructor LogicFacade, List instantiating and OPC connect
         public OpcClient(ILogic il)
         {
-
-
             tempList = new List<IBatchValue>();
             humidityList = new List<IBatchValue>();
             vibrationList = new List<IBatchValue>();
@@ -54,17 +54,17 @@ namespace MES.Logic
             CreateSubscription();
         }
 
+        //Constructor with OPC connect and CreateSubscription
         public OpcClient()
         {
-
             Connect();
             CreateSubscription();
         }
 
+        //Connection to OPC
         public void Connect()
         {
             session = new Session();
-            //TODO skal tjekkes.
             try
             {
                 //Connect to server with no security (simulator)
@@ -73,15 +73,13 @@ namespace MES.Logic
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 //Connect to server with no security (machine)
                 session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
-            } catch (Exception ex) {
-
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.ToString());
-
             }
 
-            //TODO SKAL denne fjernes??
             batchId = ReadCurrentBatchId();
-
             maintenanceTrigger = ReadMaintenanceTrigger();
         }
 
@@ -159,22 +157,27 @@ namespace MES.Logic
             s.MaxKeepAliveTime = 1000;
             s.Lifetime = 1000000;
             s.MaxNotificationsPerPublish = 1;
-            s.Priority = (byte)0;
+            s.Priority = (byte) 0;
             s.DataChanged += OnDataChanged;
             s.PublishingEnabled = true;
             s.CreateMonitoredItems(monitoredItems);
             // create the actual subscription
-            s.Create(new RequestSettings() { OperationTimeout = 10000 });
+            s.Create(new RequestSettings() {OperationTimeout = 10000});
         }
-        public void PrepareBatchValues() {
+
+        public void PrepareBatchValues()
+        {
             // clear lists to get rid of old data
             TempList.Clear();
             HumidityList.Clear();
             VibrationList.Clear();
             // manually insert one value into each list
-            TempList.Add(new ValueOverProdTime(ReadCurrentTemperature(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), -1));
-            HumidityList.Add(new ValueOverProdTime(ReadCurrentHumidity(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 0));
-            vibrationList.Add(new ValueOverProdTime(ReadCurrentVibration(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 1));
+            TempList.Add(new ValueOverProdTime(ReadCurrentTemperature(),
+                DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), -1));
+            HumidityList.Add(new ValueOverProdTime(ReadCurrentHumidity(),
+                DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 0));
+            vibrationList.Add(new ValueOverProdTime(ReadCurrentVibration(),
+                DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 1));
         }
 
         private void OnDataChanged(Subscription s, DataChangedEventArgs e)
@@ -189,12 +192,13 @@ namespace MES.Logic
                         break;
                     // products processed
                     case "::Program:Cube.Admin.ProdProcessedCount":
-                        ProcessedProducts= double.Parse(dc.Value.ToString());
+                        ProcessedProducts = double.Parse(dc.Value.ToString());
                         break;
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
                         TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        tempList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), -1));
+                        tempList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(),
+                            DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), -1));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -210,22 +214,24 @@ namespace MES.Logic
                         break;
                     // products per minute
                     case "::Program:Cube.Status.MachSpeed":
-                        ProductsPerMinute = double.Parse(dc.Value.ToString());
+                        g ProductsPerMinute = double.Parse(dc.Value.ToString());
                         break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
                         HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        humidityList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 0));
+                        humidityList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(),
+                            DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 0));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        vibrationList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(), DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 1));
+                        vibrationList.Add(new ValueOverProdTime(dc.Value.WrappedValue.ToFloat(),
+                            DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt"), 1));
                         break;
                     //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
-                        StopReasonId = double.Parse(dc.Value.ToString()); 
-                        iLogic.ErrorHandler.AddAlarm((int)BatchId, StopReasonId);
+                        StopReasonId = double.Parse(dc.Value.ToString());
+                        iLogic.ErrorHandler.AddAlarm((int) BatchId, StopReasonId);
                         break;
                     //batch id  BatchId
                     case "::Program:Cube.Status.Parameter[0].Value":
@@ -388,6 +394,7 @@ namespace MES.Logic
             }
         }
 
+        //Write to OPC
         private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val)
         {
             return new WriteValue()
@@ -398,14 +405,17 @@ namespace MES.Logic
             };
         }
 
+        //Creates a OPC data value object
         private DataValue CreateDataValue(float f)
         {
+            
             return new DataValue()
             {
                 Value = f
             };
         }
 
+        //Writes a WriteValueCollection to the session
         public void Write(WriteValueCollection nodesToWrite)
         {
             session.Write(nodesToWrite);
@@ -428,7 +438,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (int)dv.Value;
+            return (int) dv.Value;
         }
 
 
@@ -444,7 +454,7 @@ namespace MES.Logic
             List<DataValue> result = null;
             result = session.Read(nodesToRead, 0, TimestampsToReturn.Neither, null);
             //return TypeUtils.GetBuiltInType((NodeId)result[0].Value);
-            return (int)result[0].Value;
+            return (int) result[0].Value;
         }
 
         public float ReadCurrentMachineSpeed()
@@ -458,7 +468,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float)dv.Value;
+            return (float) dv.Value;
         }
 
         public float ReadMachineSpeed()
@@ -472,7 +482,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float)dv.Value;
+            return (float) dv.Value;
         }
 
         public float ReadCurrentBatchId()
@@ -486,7 +496,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float)dv.Value;
+            return (float) dv.Value;
         }
 
         public float ReadProductAmountInBatch()
@@ -500,7 +510,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float)dv.Value;
+            return (float) dv.Value;
         }
 
         public float ReadCurrentHumidity()
@@ -514,7 +524,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float)dv.Value;
+            return (float) dv.Value;
         }
 
         public float ReadCurrentTemperature()
@@ -528,7 +538,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float)dv.Value;
+            return (float) dv.Value;
         }
 
         public float ReadCurrentVibration()
@@ -542,7 +552,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (float)dv.Value;
+            return (float) dv.Value;
         }
 
         public Int32 ReadCurrentProductsProcessed()
@@ -556,7 +566,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (int)dv.Value;
+            return (int) dv.Value;
         }
 
         public Int32 ReadDefectProducts()
@@ -570,7 +580,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (int)dv.Value;
+            return (int) dv.Value;
         }
 
         public UInt16 ReadMaintenanceTrigger()
@@ -584,7 +594,7 @@ namespace MES.Logic
 
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
-            return (UInt16)dv.Value;
+            return (UInt16) dv.Value;
         }
 
 
@@ -615,7 +625,6 @@ namespace MES.Logic
                 acceptableProducts = value;
                 OnPropertyChanged("AcceptableProducts");
             }
-
         }
 
         public double DefectProducts
@@ -749,6 +758,7 @@ namespace MES.Logic
                 OnPropertyChanged("Wheat");
             }
         }
+
         public double Yeast
         {
             get { return yeast; }
@@ -788,22 +798,23 @@ namespace MES.Logic
                 OnPropertyChanged("MaintenanceCounter");
             }
         }
+
         public List<IBatchValue> TempList
         {
             get { return tempList; }
             set { tempList = value; }
         }
+
         public List<IBatchValue> HumidityList
         {
             get { return humidityList; }
             set { humidityList = value; }
         }
+
         public List<IBatchValue> VibrationList
         {
             get { return vibrationList; }
             set { vibrationList = value; }
         }
-
-
     }
 }
