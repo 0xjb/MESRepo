@@ -305,8 +305,11 @@ namespace MES.data {
                 month = "0" + month;
             }
             if (month.Length == 2 && year.Length == 4) {
+                //string sql = "SELECT * FROM " + batchesTable
+                //    + " WHERE timestampEnd LIKE '___" + month + "/" + year + "%'";
+
                 string sql = "SELECT * FROM " + batchesTable
-                    + " WHERE timestampEnd LIKE '___" + month + "/" + year + "%'";
+                                              + " WHERE timestampEnd LIKE '" + month + "/" + "__" + "/" + year + "%'";
 
                 return GetSqlCommand(sql);
             } else return null;

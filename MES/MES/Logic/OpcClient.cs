@@ -214,7 +214,7 @@ namespace MES.Logic
                         break;
                     // products per minute
                     case "::Program:Cube.Status.MachSpeed":
-                        g ProductsPerMinute = double.Parse(dc.Value.ToString());
+                         ProductsPerMinute = double.Parse(dc.Value.ToString());
                         break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
