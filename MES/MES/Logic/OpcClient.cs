@@ -69,7 +69,6 @@ namespace MES.Logic
             {
                 //Connect to server with no security (simulator)
                 //session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
-
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 //Connect to server with no security (machine)
                 session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
@@ -85,8 +84,7 @@ namespace MES.Logic
 
         public void CreateSubscription()
         {
-            Subscription s = new Subscription(session);
-            // node to monitor
+            Subscription s;
             NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
             NodeId stateNode = new NodeId("::Program:Cube.Status.StateCurrent", 6);
             NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
@@ -214,7 +212,7 @@ namespace MES.Logic
                         break;
                     // products per minute
                     case "::Program:Cube.Status.MachSpeed":
-                         ProductsPerMinute = double.Parse(dc.Value.ToString());
+                        ProductsPerMinute = double.Parse(dc.Value.ToString());
                         break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
@@ -287,7 +285,6 @@ namespace MES.Logic
                 reset.Value = 1;
                 DataValue changeRequest = new DataValue();
                 changeRequest.Value = true;
-
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, reset));
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
                     changeRequest));
@@ -364,7 +361,6 @@ namespace MES.Logic
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
-
                 DataValue start = new DataValue();
                 start.Value = 2;
                 DataValue changeRequest = new DataValue();
@@ -408,7 +404,6 @@ namespace MES.Logic
         //Creates a OPC data value object
         private DataValue CreateDataValue(float f)
         {
-            
             return new DataValue()
             {
                 Value = f
@@ -435,7 +430,6 @@ namespace MES.Logic
                 NodeId = new NodeId("::Program:Cube.Status.StateCurrent", 6),
                 AttributeId = Attributes.Value
             });
-
             List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (int) dv.Value;
