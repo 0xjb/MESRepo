@@ -15,3 +15,10 @@ Alarm Number:   Batch Id:            Time and Date:                           St
 14              112                  12/16/2018 07:28:14 PM                   Manual stop                              12                                      
 15              0                    12/17/2018 10:03:41 AM                   Manual stop                              12                                      
 16              3                    12/17/2018 12:57:35 PM                   Empty inventory                          10                                      
+17              3                    12/17/2018 06:36:11 PM                   Manual stop                              12                                      
+18              1                    12/17/2018 06:36:13 PM                   Manual abort                             14                                      
+
+
+19              3                    12/17/2018 06:36:13 PM                   Manual stop                              12                                      
+20              3                    12/17/2018 06:36:14 PM                   Manual abort                             14                                      
+18              3                    12/17/2018 06:36:14 PM                   Manual abort                             14                                      

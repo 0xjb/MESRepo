@@ -27,18 +27,22 @@ namespace MES.Tests {
             iBatchValueSet.Add(vibrationData);
             brg.GenerateFile(10, 10, 10, 10, stringArray, iBatchValueSet );
             // booleans for verification
-            bool fileExists = File.Exists(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx");
+            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
+            path += @"\MES\Data\BatchReports\";
+            bool fileExists = File.Exists(path + "BatchReport10.xlsx");
 
             ExcelPackage ep =
-                new ExcelPackage(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "BatchReport.xlsx"));
+                new ExcelPackage(new FileInfo(path + "BatchReport10.xlsx"));
             ExcelWorksheet ws = ep.Workbook.Worksheets[1]; // worksheet containing batch report
             // Check if file has been created
             Assert.IsTrue(fileExists, "File exists.");
             // check if values were inserted correctly
-            Assert.AreEqual(ws.Cells["B1"].Value, "10");
-            Assert.AreEqual(ws.Cells["B2"].Value, "10");
-            Assert.AreEqual(ws.Cells["B3"].Value, "10");
-            Assert.AreEqual(ws.Cells["D3"].Value, "10");
+            Assert.AreEqual(ws.Cells["B1"].Value, 10);
+            Assert.AreEqual(ws.Cells["B2"].Value, 10);
+            Assert.AreEqual(ws.Cells["B3"].Value, 10);
+            Assert.AreEqual(ws.Cells["D3"].Value, 10);
             // check if correct sum of products has been calculated
             ws.Cells["F3"].Calculate();
             Assert.AreEqual(ws.Cells["F3"].Value, 20);
