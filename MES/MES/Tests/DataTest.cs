@@ -105,7 +105,7 @@ namespace MES.Tests
             {
                 foreach (IBatchValue value in temps0)
                 {
-                    if (value.Timestamp.Equals("02/11/2018 09:24:35.500"))
+                    if (value.Timestamp.Trim().Equals("02/11/2018 09:24:35.500"))
                     {
                         loadedBatchValues0 = true;
                     }
