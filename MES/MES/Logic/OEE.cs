@@ -38,7 +38,7 @@ namespace MES.Logic
             double q = 0;
             try
             {
-                //return (acceptableProducts / producedProducts);
+
                 q = ((double)acceptableProducts / (double)producedProducts);
             }
             catch (System.DivideByZeroException e)
@@ -46,26 +46,21 @@ namespace MES.Logic
                 Console.WriteLine(e);
 
             }
-            //return (acceptableProducts / producedProducts);
+
             return q;
         }
 
         private double CalculatePerformance()
         {
-            //Console.WriteLine(producedProducts);
-            //Console.WriteLine(operatingTime);
-            //Console.WriteLine(machineSpeedMax);
-            //return (((double)producedProducts * (60.0 / (double)machineSpeed)) / (double)operatingTime);
+
             return ((double)producedProducts / ((double) operatingTime/60.0)) / (double)machineSpeedMax;
         }
 
         public double CalculateOEE()
         {
-            //Console.WriteLine("qual:" + CalculateQuality());
-            //Console.WriteLine("avail:" + CalculateAvailability());
-            //Console.WriteLine("perform:" + CalculatePerformance());
+ 
             return (CalculateAvailability() * CalculateQuality() * CalculatePerformance());
-            //return 0.307;
+
 
         }
     }

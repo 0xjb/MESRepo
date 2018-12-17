@@ -32,7 +32,7 @@ namespace MES.Logic
 
             this.opc = new OpcClient(this);
             
-            //Batches = new BatchQueue(OPC);
+
             oEEList = new ObservableCollection<IBatch>();
         }
 
