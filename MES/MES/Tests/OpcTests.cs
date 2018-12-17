@@ -19,7 +19,7 @@ namespace MES.Tests
 
             // sleep for x amount of miliseconds because there is 
             // several machine statues before reaching endstatus.
-            Thread.Sleep(200);
+            Thread.Sleep(500);
             Assert.AreEqual(opc.session.ConnectionStatus, ServerConnectionStatus.Connected);
 
             // Test to reboot the system by aborting any current state.
@@ -27,7 +27,7 @@ namespace MES.Tests
 
             // sleep for x amount of miliseconds because there is 
             // several machine statues before reaching endstatus.
-            Thread.Sleep(200);
+            Thread.Sleep(500);
             Assert.AreEqual(opc.ReadStateCurrent(), 9);
 
             // Test to clear the abort status to be able to start the program again.
@@ -35,7 +35,7 @@ namespace MES.Tests
 
             // sleep for x amount of miliseconds because there is 
             // several machine statues before reaching endstatus.
-            Thread.Sleep(200);
+            Thread.Sleep(500);
             Assert.AreEqual(opc.ReadStateCurrent(), 2);
 
             // Test if the machine has the reset status after reset
@@ -43,7 +43,7 @@ namespace MES.Tests
 
             // sleep for x amount of miliseconds because there is 
             // several machine statues before reaching endstatus.
-            Thread.Sleep(200);
+            Thread.Sleep(4000);
             Assert.AreEqual(opc.ReadStateCurrent(), 4);
 
             // Test to see if the machine has been started correctly.
@@ -51,7 +51,7 @@ namespace MES.Tests
 
             // sleep for x amount of miliseconds because there is 
             // several machine statues before reaching endstatus.
-            Thread.Sleep(200);
+            Thread.Sleep(300);
             Assert.AreEqual(opc.ReadStateCurrent(), 6);
 
             // Test to see if the machine speed of the test system is equal 
@@ -74,21 +74,6 @@ namespace MES.Tests
             // test system is equal to the batch ID requested by the client.
             opc.ReadProductAmountInBatch();
             Assert.AreEqual(opc.ReadProductAmountInBatch(), 200);
-
-            // Test to see if the humidity of the test system is equal 0
-            // as the simulator does not produce humidity
-            opc.ReadCurrentHumidity();
-            Assert.AreEqual(opc.ReadCurrentHumidity(), 0);
-
-            // Test to see if the temperature of the test system is equal 0
-            // as the simulator does not produce temperature.
-            opc.ReadCurrentTemperature();
-            Assert.AreEqual(opc.ReadCurrentTemperature(), 0);
-
-            // Test to see if the Temperature of the test system is equal 0
-            // as the simulator does not produce humidity
-            opc.ReadCurrentVibration();
-            Assert.AreEqual(opc.ReadCurrentVibration(), 0);
 
             // Test to see if the machine has been stopped correctly.
             opc.StopMachine();
