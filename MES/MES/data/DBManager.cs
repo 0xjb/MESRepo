@@ -316,8 +316,8 @@ namespace MES.data {
         }
 
         public IDictionary<float, IBatch> GetBatches(int amount) {
-            string sql = "SELECT * FROM " + batchesTable + " LIMIT " + amount;
-
+            // "SELECT * FROM " + batchesTable + " LIMIT " + amount;
+            string sql = "select* from batches order by timestampstart desc limit "+amount+";";
             return GetSqlCommand(sql);
         }
 
