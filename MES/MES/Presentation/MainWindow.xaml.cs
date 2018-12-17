@@ -369,7 +369,7 @@ namespace MES.Presentation
         private void btnAlarms_Click(object sender, RoutedEventArgs e)
         {
             Alarms alarms = new Alarms(presentation, this);
-            this.Hide();
+            this.Hide(); 
             alarms.Show();
         }
 
