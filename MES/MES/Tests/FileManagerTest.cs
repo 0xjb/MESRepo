@@ -37,7 +37,7 @@ namespace MES.Tests {
             path += @"\MES\Data\AlarmLogFile\alarmLogFile.txt";
 
             ObservableCollection<IAlarmObject> alarms = new ObservableCollection<IAlarmObject>();
-            fileManager.WriteToFile("\n39              0                    12-03-2018 09:26:00                      Manual TEST                              12");
+            fileManager.WriteToFile("\n39              0                    12-03-2018 09:26:00 PM                   Manual TEST                              12");
             alarms = fileManager.ReadFile();
             IAlarmObject alarm = alarms.Last();
             Assert.AreEqual(alarm.StopReason, "Manual TEST");
