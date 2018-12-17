@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 namespace MES.Presentation
 {
@@ -61,8 +62,13 @@ namespace MES.Presentation
             // Why doesn't it throw a FileNotFound exception?
             try
             {
-                Process.Start(System.AppDomain.CurrentDomain.BaseDirectory + "BatchReport" +
-                    (comboBox.SelectedItem as IBatch).GetBatchId() + ".xlsx");
+                string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+                path = Directory.GetParent(path).FullName;
+                path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
+                path += @"\MES\Data\BatchReports\";
+
+                Process.Start(path+ "BatchReport" +
+                              (comboBox.SelectedItem as IBatch).GetBatchId() + ".xlsx");
             }
             catch (System.ComponentModel.Win32Exception exs)
             {
