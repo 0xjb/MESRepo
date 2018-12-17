@@ -28,21 +28,6 @@ namespace MES.Presentation
         private double levelWheat;
         private double levelYeast;
 
-        //
-        //private double machineSpeed;
-        //private double temperature;
-        //private double humidity;
-        //private double vibration;
-        //private double batchID;
-        //private double amount;
-        //private double produced;
-        //private double acceptableProducts;
-        //private double defectProducts;
-        //private double amountToProduce;
-
-        //private int indexOfArrayTemp = 0;
-        //private int indexOfArrayHumid = 0;
-        //private int indexOfArrayVibra = 0;
 
         private string statusString;
 
@@ -157,13 +142,6 @@ namespace MES.Presentation
 
             CheckStatus();
             CheckIngredientsLevel();
-
-            //Er kommenteret ud, da vi gerne selv vil styre, hvornår målinger foretages (på tid)
-            //og ikke vente på en property changes fra OPC
-            //CheckTemperature();
-            //CheckHumidity();
-            //CheckVibration();
-
             DataContext = this;
         }
 
@@ -233,56 +211,7 @@ namespace MES.Presentation
             StatusString = statusArray[index];
         }
 
-        //private void CheckChangesInTemperature(object sender, PropertyChangedEventArgs e)
-        //{
-        //    Temperature = iLogic.OPC.TempCurrent;
-
-        //    if (e.PropertyName.Equals("TempCurrent"))
-        //    {
-        //        if (arrayListLabelsTemperature.Count >= 50)
-        //        {
-        //            SeriesCollectionTemperature[0].Values.RemoveAt(0);
-        //            arrayListLabelsTemperature.RemoveAt(0);
-        //        }
-
-        //        SeriesCollectionTemperature[0].Values.Add(Temperature);
-        //        arrayListLabelsTemperature.Add(DateTime.Now.ToString());
-        //    }
-        //}
-
-        //private void CheckChangesInHumidity(object sender, PropertyChangedEventArgs e)
-        //{
-        //    Humidity = iLogic.OPC.HumidityCurrent;
-
-        //    if (e.PropertyName.Equals("HumidityCurrent"))
-        //    {
-        //        if (arrayListLabelsHumidity.Count >= 50)
-        //        {
-        //            SeriesCollectionHumidity[0].Values.RemoveAt(0);
-        //            arrayListLabelsHumidity.RemoveAt(0);
-        //        }
-
-        //        SeriesCollectionHumidity[0].Values.Add(Humidity);
-        //        arrayListLabelsHumidity.Add(DateTime.Now.ToString());
-        //    }
-        //}
-
-        //private void CheckChangesInVibration(object sender, PropertyChangedEventArgs e)
-        //{
-        //    Vibration = iLogic.OPC.VibrationCurrent;
-
-        //    if (e.PropertyName.Equals("VibrationCurrent"))
-        //    {
-        //        if (arrayListLabelsVibration.Count >= 50)
-        //        {
-        //            SeriesCollectionVibration[0].Values.RemoveAt(0);
-        //            arrayListLabelsVibration.RemoveAt(0);
-        //        }
-
-        //        SeriesCollectionVibration[0].Values.Add(Vibration);
-        //        arrayListLabelsVibration.Add(DateTime.Now.ToString());
-        //    }
-        //}
+       
 
         private void CheckStatus()
         {
@@ -291,23 +220,6 @@ namespace MES.Presentation
             iLogic.OPC.PropertyChanged += CheckChangesInStatus;
         }
 
-        //private void CheckTemperature()
-        //{
-        //    temperature = iLogic.OPC.TempCurrent;
-        //    iLogic.OPC.PropertyChanged += CheckChangesInTemperature;
-        //}
-
-        //private void CheckHumidity()
-        //{
-        //    humidity = iLogic.OPC.HumidityCurrent;
-        //    iLogic.OPC.PropertyChanged += CheckChangesInHumidity;
-        //}
-
-        //private void CheckVibration()
-        //{
-        //    vibration = iLogic.OPC.VibrationCurrent;
-        //    iLogic.OPC.PropertyChanged += CheckChangesInVibration;
-        //}
 
         private void EventHandling(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -335,14 +247,6 @@ namespace MES.Presentation
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            // ye have to change some stuff
-            // u remember how previously when u added a batch to the batch queue
-            // it wouldnt add it to the list, but instead just set it as current batch?
-            // we have to add it to the list so we can actually see it in the mainwindow
-            // and then we have to start production with the first element of the list
-            // cause we no longer have a currentbatch set
-            // end paragraph
-
             presentation.ILogic.StartProduction();
         }
 
@@ -476,49 +380,7 @@ namespace MES.Presentation
             }
         }
 
-        //public double MachineSpeed
-        //{
-        //    get { return machineSpeed; }
-
-        //    set
-        //    {
-        //        machineSpeed = value;
-        //        OnPropertyChanged("Speed");
-        //    }
-        //}
-
-        //public double Temperature
-        //{
-        //    get { return temperature; }
-
-        //    set
-        //    {
-        //        temperature = value;
-        //        OnPropertyChanged("Temperature");
-        //    }
-        //}
-
-        //public double Humidity
-        //{
-        //    get { return humidity; }
-
-        //    set
-        //    {
-        //        humidity = value;
-        //        OnPropertyChanged("Humidity");
-        //    }
-        //}
-
-        //public double Vibration
-        //{
-        //    get { return vibration; }
-
-        //    set
-        //    {
-        //        vibration = value;
-        //        OnPropertyChanged("Vibration");
-        //    }
-        //}
+        
 
         public string StatusString
         {
@@ -530,38 +392,7 @@ namespace MES.Presentation
             }
         }
 
-        //public double BatchID
-        //{
-        //    get { return batchID; }
-
-        //    set
-        //    {
-        //        batchID = value;
-        //        OnPropertyChanged("Batch_ID");
-        //    }
-        //}
-
-        //public double Amount
-        //{
-        //    get { return amount; }
-
-        //    set
-        //    {
-        //        amount = value;
-        //        OnPropertyChanged("Amount");
-        //    }
-        //}
-
-        //public double Produced
-        //{
-        //    get { return produced; }
-
-        //    set
-        //    {
-        //        produced = value;
-        //        OnPropertyChanged("Produced");
-        //    }
-        //}
+       
 
         public List<string> ArrayListLabelsTemperature
         {
@@ -575,27 +406,7 @@ namespace MES.Presentation
             set => arrayListLabelsHumidity = value;
         }
 
-        //public double AcceptableProducts
-        //{
-        //    get { return acceptableProducts; }
-
-        //    set
-        //    {
-        //        acceptableProducts = value;
-        //        OnPropertyChanged("AcceptableProducts");
-        //    }
-        //}
-
-        //public double AmountToProduce
-        //{
-        //    get { return amountToProduce; }
-
-        //    set
-        //    {
-        //        amountToProduce = value;
-        //        OnPropertyChanged("AmountToProduce");
-        //    }
-        //}
+        
 
         public List<string> ArrayListLabelsVibration
         {
@@ -603,17 +414,7 @@ namespace MES.Presentation
             set => arrayListLabelsVibration = value;
         }
 
-        //public double DefectProducts
-        //{
-        //    get { return defectProducts; }
-
-        //    set
-        //    {
-        //        defectProducts = value;
-        //        OnPropertyChanged("DefectProducts");
-        //    }
-        //}
-
+        
         public double Status
         {
             get { return status; }
@@ -640,9 +441,5 @@ namespace MES.Presentation
             }
         }
 
-        private void DataGridQuedBatches_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

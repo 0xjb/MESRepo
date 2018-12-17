@@ -48,7 +48,7 @@
 
 
             <ListView x:Name="listViewAlarms" ItemsSource="{Binding}" Height="350" Width="600"
-                      ScrollViewer.CanContentScroll="false" SelectionChanged="listViewAlarms_SelectionChanged">
+                      ScrollViewer.CanContentScroll="false" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Alarm number" Width="120" DisplayMemberBinding="{Binding AlarmNumber}" />

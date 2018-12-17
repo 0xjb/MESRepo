@@ -78,15 +78,6 @@ namespace MES.Presentation
             this.Close();
             this.history.Show();
         }
-
-        //Skal fjernes bare til Test
-        int generateRandomNumber()
-        {
-            int number = 0;
-            Random randomNumber = new Random();
-            number = randomNumber.Next(19, 26);
-            return number;
-        }
         private void InsertHumidityData()
         {
             try
@@ -101,15 +92,6 @@ namespace MES.Presentation
             }
             catch (NullReferenceException) { }
         }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            LabelsHumidity[indexOfArray] = DateTime.Now.ToString();
-            _value = generateRandomNumber();
-            SeriesCollectionHumidity[0].Values.Add(Value);
-            indexOfArray++;
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
             if (closeApp)

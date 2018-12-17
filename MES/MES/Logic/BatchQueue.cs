@@ -85,9 +85,6 @@ namespace MES.Logic {
                         recipes.TryGetValue(currentBatch.BeerType, out recipe);
                         OEE currentOEE = new OEE((int)logic.OPC.AcceptableProducts, (int)logic.OPC.DefectProducts, currentBatch.TimeStart, currentBatch.TimeEnd, (int)recipe.MaxSpeed);
                         currentBatch.OEE = currentOEE.CalculateOEE();
-                        //currentBatch.OEE = 0.32;
-                        //currentBatch.OEE = 3.5;
-                        Console.WriteLine("\n\nCurrent batch" + currentBatch.OEE);
                         logic.SaveBatch(CurrentBatch);
                         CurrentBatch = null;
                     }

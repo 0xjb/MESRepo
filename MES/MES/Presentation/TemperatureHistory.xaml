@@ -55,8 +55,6 @@
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Grid>
-        <Button x:Name="button" Content="addNumber" Grid.Column="8" HorizontalAlignment="Left" Margin="16,10,0,0"
-                Grid.Row="11" VerticalAlignment="Top" Width="75" Click="button_Click" />
 
 
     </Grid>
