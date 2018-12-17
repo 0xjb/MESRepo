@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using MES.Acquintance;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using MES.Acquintance;
 
 namespace MES.Data
 {
     class FileManager
     {
         private ObservableCollection<IAlarmObject> _alarms;
-
         private int alarmNumber;
-
         private StringBuilder stringBuilder;
         private string[] alarmsToFile;
 
@@ -38,7 +32,6 @@ namespace MES.Data
 
         public void WriteToFile(string s)
         {
-
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
@@ -46,12 +39,10 @@ namespace MES.Data
 
             stringBuilder.Append(s);
             string s2 = stringBuilder.ToString();
-           
 
             System.IO.File.AppendAllText(path, s2);
             stringBuilder.Clear();
         }
-
 
         public ObservableCollection<IAlarmObject> ReadFile()
         {
@@ -72,30 +63,17 @@ namespace MES.Data
                     {
                         string fileLine = sr.ReadLine();
                         i++;
-                        stringTokens = fileLine.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-                        Console.WriteLine("\n\nFileManager" + stringTokens.Length + "\n\n");
-                        //if (stringTokens.Length == 7) {
-                        //    //if (stringTokens.Length == 6) {
-                        //    _alarms.Add(
-                        //        new DataAlarm()
-                        //        {
-                        //            AlarmNumber = Int32.Parse(stringTokens[0]),
-                        //            BatchID = Int32.Parse(stringTokens[1]),
-                        //            Timestamp = stringTokens[2] + " " + stringTokens[3],
-                        //            StopReason = stringTokens[4] + " " + stringTokens[5],
-                        //            StopID = Int32.Parse(stringTokens[6] )
-                        //        });
+                        stringTokens = fileLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                        //**
                         //Read file modified to AM/PM format
-                        //**
-                        if (stringTokens.Length == 8) {
-                            //if (stringTokens.Length == 6) {
+                        if (stringTokens.Length == 8)
+                        {
                             _alarms.Add(
-                                new DataAlarm() {
+                                new DataAlarm()
+                                {
                                     AlarmNumber = Int32.Parse(stringTokens[0]),
                                     BatchID = Int32.Parse(stringTokens[1]),
-                                    Timestamp = stringTokens[2] + " " + stringTokens[3] +" "+ stringTokens[4],
+                                    Timestamp = stringTokens[2] + " " + stringTokens[3] + " " + stringTokens[4],
                                     StopReason = stringTokens[5] + " " + stringTokens[6],
                                     StopID = Int32.Parse(stringTokens[7])
                                 });
@@ -105,7 +83,6 @@ namespace MES.Data
             }
             return _alarms;
         }
-
 
         private bool IsFileIsEmpty()
         {
@@ -124,7 +101,6 @@ namespace MES.Data
                     {
                         return false;
                     }
-
                     return true;
                 }
             }

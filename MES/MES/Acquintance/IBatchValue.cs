@@ -1,5 +1,7 @@
-﻿namespace MES.Acquintance {
-    public interface IBatchValue {
+﻿namespace MES.Acquintance
+{
+    public interface IBatchValue
+    {
         float Value { get; }
 
         string Timestamp { get; }
@@ -10,6 +12,5 @@
         /// Positive ints = Vibration
         /// </summary>
         int Type { get; }
-
     }
 }

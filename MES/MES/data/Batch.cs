@@ -56,7 +56,6 @@ namespace MES.Data
         {
             set { oee = value; }
             get { return oee; }
-
         }
 
         public float GetBeerId()

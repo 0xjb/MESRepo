@@ -4,7 +4,6 @@ namespace MES.Acquintance
 {
     public interface IBatch
     {
-
         double ProfitPerMin { get; set; }
 
         double Speed { get; set; }
@@ -15,7 +14,8 @@ namespace MES.Acquintance
         /// <returns></returns>
         float GetBatchId();
 
-         float BatchId { get;  }
+        float BatchId { get; }
+
         double OEE { get; set; }
 
         //TODO Fjerne getter/setter metoder 

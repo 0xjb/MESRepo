@@ -30,7 +30,7 @@ namespace MES.Acquintance
         /// <param name="batchValues"></param>
         /// <returns></returns>
         bool SaveBatch(float batchId, float beerId, int acceptableProducts,
-           int defectProducts,double speed, string timestampStart, string timestampEnd, double oee,
+           int defectProducts, double speed, string timestampStart, string timestampEnd, double oee,
            ISet<IList<IBatchValue>> batchValues, double ppm);
 
         /// <summary>
@@ -142,9 +142,5 @@ namespace MES.Acquintance
         void WriteToFile(string s);
 
         double GetOptimalSpeed(IRecipe recipe);
-
-
-
-
     }
 }

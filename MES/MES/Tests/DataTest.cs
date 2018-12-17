@@ -51,18 +51,18 @@ namespace MES.Tests
             Assert.IsTrue(inserted1, "Inserted second");
 
             IBatch batch2 = new Batch(-3, 3, 90, 10, 5,
-                "02/12/2018 11:18:35.500", "02/12/2018 11:20:35.500", 10, 10);
-            batch2.AddBatchValue(40, "02/12/2018 11:18:35.500", -1);
-            batch2.AddBatchValue(50, "02/12/2018 11:19:35.500", 0);
-            batch2.AddBatchValue(60, "02/12/2018 11:20:35.500", 1);
+                "03/11/2018 11:18:35.500", "03/11/2018 11:20:35.500", 10, 10);
+            batch2.AddBatchValue(40, "03/11/2018 11:18:35.500", -1);
+            batch2.AddBatchValue(50, "03/11/2018 11:19:35.500", 0);
+            batch2.AddBatchValue(60, "03/11/2018 11:20:35.500", 1);
             bool inserted2 = dbManager.InsertIntoBatchesTable(batch2);
             Assert.IsTrue(inserted2, "Inserted third");
 
             IBatch batch3 = new Batch(-4, 3, 90, 10, 5,
-                "02/12/2018 12:18:35.500", "02/12/2018 12:20:35.500", 10, 10);
-            batch3.AddBatchValue(50, "02/12/2018 12:18:35.500", -1);
-            batch3.AddBatchValue(60, "02/12/2018 12:19:35.500", 0);
-            batch3.AddBatchValue(70, "02/12/2018 12:20:35.500", 1);
+                "03/11/2018 12:18:35.500", "03/11/2018 12:20:35.500", 10, 10);
+            batch3.AddBatchValue(50, "03/11/2018 12:18:35.500", -1);
+            batch3.AddBatchValue(60, "03/11/2018 12:19:35.500", 0);
+            batch3.AddBatchValue(70, "03/11/2018 12:20:35.500", 1);
             bool inserted3 = dbManager.InsertIntoBatchesTable(batch3);
             Assert.IsTrue(inserted3, "Inserted fourth");
 
@@ -70,7 +70,7 @@ namespace MES.Tests
 
             batch3.AddProducts(15, true);
             batch3.AddProducts(5, false);
-            batch3.SetTimestampEnd("02/12/2018 12:21:35.500");
+            batch3.SetTimestampEnd("03/11/2018 12:21:35.500");
             bool updateSucces = dbManager.UpdateBatch(batch3);
             Assert.IsTrue(updateSucces, "Succes");
 
@@ -119,7 +119,7 @@ namespace MES.Tests
 
             // Testing GetBatches
 
-            IDictionary<float, IBatch> batchesByMonth = dbManager.GetBatches("11", "2018");
+            IDictionary<float, IBatch> batchesByMonth = dbManager.GetBatches("02", "2018");
 
             IBatch loadedBatch4 = null;
             batchesByMonth.TryGetValue(-1, out loadedBatch4);

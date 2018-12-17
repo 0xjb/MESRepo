@@ -10,7 +10,7 @@ namespace MES.Data
         public UserManager()
         {
             users = new Dictionary<string, IUser>();
-            IUser user = new User("", "");
+            IUser user = new User("user", "password");
             AddUser(user);
         }
 

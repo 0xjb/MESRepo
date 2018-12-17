@@ -87,8 +87,7 @@ namespace MES.data
         /// <returns></returns>
         private bool SendSqlCommand(String statement)
         {
-            String[] statements = { statement };
-            return SendSqlCommand(statements);
+            return SendSqlCommand(new String[] { statement });
         }
 
         /// <summary>
@@ -102,7 +101,6 @@ namespace MES.data
             NpgsqlConnection conn = new NpgsqlConnection(connString);
             try
             {
-
                 conn.Open();
                 NpgsqlCommand command = new NpgsqlCommand(statement, conn);
                 NpgsqlDataReader dRead = command.ExecuteReader();
@@ -194,7 +192,7 @@ namespace MES.data
                 }
                 catch (Exception ex)
                 {
-                    //MessageBox.Show("ERROR\n" + ex.ToString());
+                    // MessageBox.Show("ERROR\n" + ex.ToString());
                 }
             }
             return values;
@@ -214,8 +212,8 @@ namespace MES.data
                 conn.Open();
                 NpgsqlCommand command = new NpgsqlCommand(statement, conn);
                 NpgsqlDataReader dRead = command.ExecuteReader();
-
                 IDictionary<float, IRecipe> recipes = new Dictionary<float, IRecipe>();
+
                 while (dRead.Read())
                 {
                     double beerId = dRead.GetDouble(0);
@@ -277,7 +275,6 @@ namespace MES.data
 
                     if (table != null)
                     {
-                        // INSERT INTO vibrationvalues VALUES (40, 'lmao', 1);
                         sql[index] = "INSERT INTO " + table + " VALUES ("
                             + value.Value + ", '"
                             + value.Timestamp + "', "
@@ -437,8 +434,7 @@ namespace MES.data
         public float GetHighestBatchId()
         {
             string sql = "SELECT * FROM " + batchesTable
-                + " WHERE batchid = (SELECT MAX(batchid) FROM "
-                + batchesTable + ");";
+                + " WHERE batchid = (SELECT MAX(batchid) FROM " + batchesTable + ");";
 
             IDictionary<float, IBatch> collection = GetSqlCommand(sql);
 
@@ -450,6 +446,7 @@ namespace MES.data
                     return batch.Key;
                 }
             }
+
             return 0;
         }
 
@@ -457,9 +454,11 @@ namespace MES.data
         {
             // query for db
             string sql = String.Format("SELECT speed FROM {0} WHERE ppm = (SELECT MAX(ppm) FROM batches WHERE beerid = {1});", batchesTable, recipe.BeerId);
+
             // executes query and returns first column of the first row as a double
             NpgsqlConnection conn = new NpgsqlConnection(connString);
             conn.Open();
+
             try
             {
                 return (double)new NpgsqlCommand(sql, conn).ExecuteScalar();
