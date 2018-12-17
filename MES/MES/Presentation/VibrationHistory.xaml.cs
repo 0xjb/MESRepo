@@ -71,14 +71,6 @@ namespace MES.Presentation
             this.history.Show();
         }
 
-        //TODO Skal fjernes bare til Test
-        int generateRandomNumber()
-        {
-            int number = 0;
-            Random randomNumber = new Random();
-            number = randomNumber.Next(19, 26);
-            return number;
-        }
         private void InsertVibrationData()
         {
             try
@@ -93,15 +85,6 @@ namespace MES.Presentation
             }
             catch (NullReferenceException) { }
         }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            LabelsVibration[indexOfArray] = DateTime.Now.ToString();
-            _value = generateRandomNumber();
-            SeriesCollectionVibration[0].Values.Add(Value);
-            indexOfArray++;
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
             if (closeApp)

@@ -32,16 +32,7 @@ namespace MES.Presentation
             mw.Show();
         }
 
-        private void listViewAlarms_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if(listViewAlarms.Ge)
-        }
-
-        private void ShowPopUp()
-        {
-            //listViewAlarms.
-        }
-
+   
         private void Window_Closed(object sender, EventArgs e)
         {
             if (closeApp)
